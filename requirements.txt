@@ -1,0 +1,2 @@
+telepot
+https://github.com/google/chatbase-python.git@refs/pull/6/merge

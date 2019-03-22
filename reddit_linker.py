@@ -42,7 +42,7 @@ def send_random_post(bot, chat_id, link):
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Show more', callback_data='reddit')]
         ])
-        msg_text = f"{post_title}\n\n[Link al post]({post_url}) | [{link}]({subreddit_url})"
+        msg_text = f"{post_title}\n\n[Link to post]({post_url}) | [{link}]({subreddit_url})"
 
         post_is_gif, gif_url = is_gif(post_url)
 
@@ -65,6 +65,12 @@ def send_random_post(bot, chat_id, link):
             intent="random_post")
         msg.send()
     except Exception as e:
+        keyboard = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text='Try again', callback_data='reddit')]
+        ])
+        print(e)
+        bot.sendMessage(chat_id, f"I'm sorry, an error occurred in retrieving\nthe random post from {link} :(\n"\
+            "The developer must have missed an if statement!", reply_markup=keyboard, parse_mode='Markdown')
         msg = Message(api_key=TOKEN,
             platform="Telegram",
             version="1.0",
@@ -80,6 +86,11 @@ def is_gif(post_url):
     gif = False
     if 'gfycat.com' in post_url:
         post_url, gif = post_url.replace('gfycat.com','thumbs.gfycat.com') + '-size_restricted.gif', True
+        try:
+            requests.get(post_url)
+        except:
+            post_url, gif = post_url.replace('gfycat.com','thumbs.gfycat.com') + '-mobile.mp4', True
+            
     if 'v.redd.it' in post_url:
         post_url, gif = f'{post_url}/DASH_1_2_M', True
     if 'imgur' in post_url and '.gif' in post_url:
@@ -92,8 +103,9 @@ def is_gif(post_url):
 
 # upon clicking the "more" button, send another random reddit post
 def more_button_callback(bot, msg):
-    chat_id = msg['message']['chat']['id']
-    text = msg['message']['caption']
+    message = msg['message'] 
+    chat_id = message['chat']['id']
+    text = message.get('caption', message.get('text')) + '\n'
     start = text.find('r/')
     link = text[start:text.find('\n', start)]
 
