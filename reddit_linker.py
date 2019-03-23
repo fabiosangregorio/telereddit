@@ -7,24 +7,32 @@ from config import MAX_REDDIT_POST_LENGTH
 from secret import CHATBASE_TOKEN as TOKEN
 
 
-def send_link(bot, chat_id, text):
-    if 'r/' not in text.lower():
-        return
+def get_subreddit_name(text):
+    start = text.find('r/')
+    end = text.find(' ', start)
+    word = text[start:end] if end is not -1 else text[start:]
+    subreddit = word.split('/')[0] + '/' + word.split('/')[1]
+    return subreddit
 
+
+def escape_markdown(text):
+    return text.replace('*', '\\*').replace('_', '\\_')
+
+
+def send_random_posts(bot, chat_id, text):
     while 'r/' in text:
         # remove reddit links from the text and send it to the chat
-        start = text.find('r/')
-        end = text.find(' ', start)
-        link = text[start:end] if end is not -1 else text[start:]
-        text = text.replace(link, '')
-
-        send_random_post(bot, chat_id, link)
+        subreddit = get_subreddit_name(text)
+        text = text.replace(subreddit, '')
+        post_url = 'https://' + f'www.reddit.com/{subreddit}/random.json'.replace('//', '/')
+        send_post(bot, chat_id, subreddit, post_url)
 
 
-def send_random_post(bot, chat_id, link):
+def send_post(bot, chat_id, subreddit=None, post_url=None):
     try:
-        random_url = 'https://' + f'www.reddit.com/{link}/random.json'.replace('//', '/')
-        req = requests.get(random_url, headers={'User-agent': 'telereddit_bot'}).json()
+        req = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
+        if not subreddit:
+            subreddit = get_subreddit_name(post_url)
 
         # check if subreddit is private
         if hasattr(req, 'reason') and req['reason'] == 'private':
@@ -33,7 +41,7 @@ def send_random_post(bot, chat_id, link):
 
         # some subreddits have the json data wrapped in brackets, some do not
         data = req['data']['children'][0]['data'] if isinstance(req, dict) else req[0]['data']['children'][0]['data']
-        subreddit_url = f'www.reddit.com/{link}'
+        subreddit_url = f'www.reddit.com/{subreddit}'
         post_title = data['title'][:100] + (data['title'][100:] and '...') # truncate the title if it's too long
         post_text = data['selftext']
         post_url = data['url']
@@ -42,13 +50,17 @@ def send_random_post(bot, chat_id, link):
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Show more', callback_data='reddit')]
         ])
-        msg_text = f"{post_title}\n\n[Link to post]({post_url}) | [{link}]({subreddit_url})"
+        msg_text = f"{escape_markdown(post_title)}\n\n[Link to post]({post_url}) | [{subreddit}]({subreddit_url})"
 
         post_is_gif, gif_url = is_gif(post_url)
+    except Exception as e:
+        send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
+            "The developer must have missed an if statement!")
 
+    try:
         # check if the post is a text post
         if '/comments/' in post_url:
-            post_text = post_text[:MAX_REDDIT_POST_LENGTH] + (post_text[MAX_REDDIT_POST_LENGTH:] and '...')
+            post_text = escape_markdown(post_text[:MAX_REDDIT_POST_LENGTH] + (post_text[MAX_REDDIT_POST_LENGTH:] and '...'))
             bot.sendMessage(chat_id, f"{msg_text}\n\n{post_text}", reply_markup=keyboard, parse_mode='Markdown')
         # check if the post contains a gif
         elif post_is_gif:
@@ -61,24 +73,28 @@ def send_random_post(bot, chat_id, link):
             platform="Telegram",
             version="1.0",
             user_id=chat_id,
-            message=link,
+            message=subreddit,
             intent="random_post")
         msg.send()
     except Exception as e:
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in sending\nthe post from {subreddit} :(\n"\
+            "The developer must have missed an if statement!")
+
+
+def send_exception_message(bot, chat_id, msg):
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Try again', callback_data='reddit')]
-        ])
-        print(e)
-        bot.sendMessage(chat_id, f"I'm sorry, an error occurred in retrieving\nthe random post from {link} :(\n"\
-            "The developer must have missed an if statement!", reply_markup=keyboard, parse_mode='Markdown')
-        msg = Message(api_key=TOKEN,
-            platform="Telegram",
-            version="1.0",
-            user_id=chat_id,
-            message=link,
-            not_handled=True,
-            intent="random_post")
-        msg.send()
+    ])
+    print(e)
+    bot.sendMessage(chat_id, msg, reply_markup=keyboard, parse_mode='Markdown')
+    msg = Message(api_key=TOKEN,
+        platform="Telegram",
+        version="1.0",
+        user_id=chat_id,
+        message=subreddit,
+        not_handled=True,
+        intent="random_post")
+    msg.send()
 
 
 # check if content is gif and return the gif url
@@ -117,4 +133,4 @@ def more_button_callback(bot, msg):
         intent="show_more")
     msg.send()
 
-    send_link(bot, chat_id, link)
+    send_random_posts(bot, chat_id, link)
