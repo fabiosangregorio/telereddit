@@ -54,6 +54,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
 
         post_is_gif, gif_url = is_gif(post_url)
     except Exception as e:
+        print(e)
         send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
             "The developer must have missed an if statement!")
 
@@ -77,6 +78,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             intent="random_post")
         msg.send()
     except Exception as e:
+        print(e)
         send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in sending\nthe post from {subreddit} :(\n"\
             "The developer must have missed an if statement!")
 
@@ -85,7 +87,6 @@ def send_exception_message(bot, chat_id, msg):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Try again', callback_data='reddit')]
     ])
-    print(e)
     bot.sendMessage(chat_id, msg, reply_markup=keyboard, parse_mode='Markdown')
     msg = Message(api_key=TOKEN,
         platform="Telegram",
