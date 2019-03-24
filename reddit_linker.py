@@ -2,6 +2,7 @@ import requests
 
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from chatbase import Message
+from sentry_sdk import capture_exception
 
 from config import MAX_REDDIT_POST_LENGTH
 from secret import CHATBASE_TOKEN as TOKEN
@@ -54,9 +55,8 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
 
         post_is_gif, gif_url = is_gif(post_url)
     except Exception as e:
-        print(e)
         send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
-            "The developer must have missed an if statement!")
+            "The developer must have missed an if statement!", e)
 
     try:
         # check if the post is a text post
@@ -78,12 +78,12 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             intent="random_post")
         msg.send()
     except Exception as e:
-        print(e)
         send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in sending\nthe post from {subreddit} :(\n"\
-            "The developer must have missed an if statement!")
+            "The developer must have missed an if statement!", e)
 
 
-def send_exception_message(bot, chat_id, msg):
+def send_exception_message(bot, chat_id, msg, e):
+    capture_exception(e)
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Try again', callback_data='reddit')]
     ])

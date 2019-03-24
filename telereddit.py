@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import time
 import telepot
+import sentry_sdk
 
 from secret import TELEGRAM_TOKEN as TOKEN
 import reddit_linker
@@ -41,6 +42,7 @@ def main():
         time.sleep(3)
 
 
+sentry_sdk.init("https://1c1125efdc90436db107fe56673bef1b@sentry.io/1422477")
 bot = telepot.Bot(TOKEN)
 
 if __name__ == "__main__":
