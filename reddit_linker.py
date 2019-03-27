@@ -52,8 +52,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             [InlineKeyboardButton(text='Show more', callback_data='reddit')]
         ])
         msg_text = f"{_escape_markdown(post_title)}\n\n[Link to post]({post_url}) | [{subreddit}]({subreddit_url})"
-
-        post_is_gif, gif_url = _is_gif(post_url)
+        media_type, media_url = _get_media(post_url)
     except Exception as e:
         _send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
             "The developer must have missed an if statement!", e)
@@ -63,13 +62,13 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         if '/comments/' in post_url:
             post_text = _escape_markdown(post_text[:MAX_REDDIT_POST_LENGTH] + (post_text[MAX_REDDIT_POST_LENGTH:] and '...'))
             bot.sendMessage(chat_id, f"{msg_text}\n\n{post_text}", reply_markup=keyboard, parse_mode='Markdown')
-        # check if the post contains a gif
-        elif post_is_gif:
-            bot.sendDocument(chat_id, gif_url, msg_text, reply_markup=keyboard, parse_mode='Markdown')
-        elif '.mp4' in post_url:
-            bot.sendVideo(chat_id, post_url, msg_text, reply_markup=keyboard, parse_mode='Markdown')
+        elif media_type == 'gif':
+            bot.sendDocument(chat_id, media_url, msg_text, reply_markup=keyboard, parse_mode='Markdown')
+        elif media_type == 'video':
+            bot.sendVideo(chat_id, media_url, msg_text, reply_markup=keyboard, parse_mode='Markdown')
         else:
-            bot.sendPhoto(chat_id, post_url, msg_text, reply_markup=keyboard, parse_mode='Markdown')
+            bot.sendPhoto(chat_id, media_url, msg_text, reply_markup=keyboard, parse_mode='Markdown')
+
         msg = Message(api_key=TOKEN,
             platform="Telegram",
             version="1.0",
@@ -99,23 +98,32 @@ def _send_exception_message(bot, chat_id, msg, e):
 
 
 # check if content is gif and return the gif url
-def _is_gif(post_url):
-    gif = False
+def _get_media(post_url):
+    type = 'photo'
     if 'gfycat.com' in post_url:
-        post_url, gif = post_url.replace('gfycat.com','thumbs.gfycat.com') + '-size_restricted.gif', True
+        post_url, type = post_url.replace('gfycat.com','thumbs.gfycat.com') + '-size_restricted.gif', 'gif'
         try:
             requests.get(post_url)
         except:
-            post_url, gif = post_url.replace('gfycat.com','thumbs.gfycat.com') + '-mobile.mp4', True
+            post_url, type = post_url.replace('gfycat.com','thumbs.gfycat.com') + '-mobile.mp4', 'gif'
             
     if 'v.redd.it' in post_url:
-        post_url, gif = f'{post_url}/DASH_1_2_M', True
-    if 'imgur' in post_url and '.gif' in post_url:
-        post_url, gif = post_url.replace('.gifv','.jpg'), True
-    if '.gif' in post_url:
-        gif = True
+        post_url, type = f'{post_url}/DASH_1_2_M', 'gif'
 
-    return gif, post_url
+    if 'imgur' in post_url:
+        post_url = post_url.replace('.png', '.jpg')
+        if '.gif' in post_url:
+            post_url, type = post_url.replace('.gifv','.jpg'), 'gif'
+        elif not post_url.replace('.jpg', '').endswith(('s', 'b', 't', 'm', 'l', 'h')):
+            post_url, type = post_url.replace('.jpg', '') + 'h.jpg', 'photo'
+
+    if '.gif' in post_url:
+        type = 'gif'
+    
+    if '.mp4' in post_url:
+        type = 'video'
+
+    return type, post_url
 
 
 # upon clicking the "more" button, send another random reddit post
