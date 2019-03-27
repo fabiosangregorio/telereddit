@@ -46,7 +46,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             req = req[0]
         idx = random.randint(0, len(req['data']['children']) - 1)
         data = req['data']['children'][idx]['data']
-        
+
         subreddit_url = f'www.reddit.com/{subreddit}'
         post_title = data['title'][:100] + (data['title'][100:] and '...') # truncate the title if it's too long
         post_text = data['selftext']
@@ -60,7 +60,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         msg_text = f"{_escape_markdown(post_title)}\n\n[Link to post](https://reddit.com{permalink}) | [{subreddit}]({subreddit_url})"
         media_type, media_url = _get_media(post_url)
     except Exception as e:
-        _send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
+        _send_exception_message(bot, chat_id, subreddit, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
             "The developer must have missed an if statement!", e)
 
     try:
@@ -83,11 +83,11 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             intent="random_post")
         msg.send()
     except Exception as e:
-        _send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in sending\nthe post from {subreddit} :(\n"\
+        _send_exception_message(bot, chat_id, subreddit, f"I'm sorry, an error occurred in sending\nthe post from {subreddit} :(\n"\
             "The developer must have missed an if statement!", e)
 
 
-def _send_exception_message(bot, chat_id, msg, e):
+def _send_exception_message(bot, chat_id, subreddit, msg, e):
     capture_exception(e)
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Try again', callback_data='reddit')]
@@ -118,8 +118,9 @@ def _get_media(post_url):
 
     if 'imgur' in post_url:
         post_url = post_url.replace('.png', '.jpg')
-        if '.gif' in post_url:
-            post_url, type = post_url.replace('.gifv','.jpg'), 'gif'
+        if '.gifv' in post_url:
+            gif_hash = post_url.split('/')[-1].replace('.gifv', '')
+            post_url, type = f'https://imgur.com/download/{gif_hash}', 'gif'
         elif not post_url.replace('.jpg', '').endswith(('s', 'b', 't', 'm', 'l', 'h')):
             post_url, type = post_url.replace('.jpg', '') + 'h.jpg', 'photo'
 
