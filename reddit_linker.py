@@ -46,12 +46,13 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         post_title = data['title'][:100] + (data['title'][100:] and '...') # truncate the title if it's too long
         post_text = data['selftext']
         post_url = data['url']
+        permalink = data['permalink']
 
         # setting up the "more" button
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Show more', callback_data='reddit')]
         ])
-        msg_text = f"{_escape_markdown(post_title)}\n\n[Link to post]({post_url}) | [{subreddit}]({subreddit_url})"
+        msg_text = f"{_escape_markdown(post_title)}\n\n[Link to post](https://reddit.com{permalink}) | [{subreddit}]({subreddit_url})"
         media_type, media_url = _get_media(post_url)
     except Exception as e:
         _send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
@@ -61,7 +62,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         # check if the post is a text post
         if '/comments/' in post_url:
             post_text = _escape_markdown(post_text[:MAX_REDDIT_POST_LENGTH] + (post_text[MAX_REDDIT_POST_LENGTH:] and '...'))
-            bot.sendMessage(chat_id, f"{msg_text}\n\n{post_text}", reply_markup=keyboard, parse_mode='Markdown')
+            bot.sendMessage(chat_id, f"{post_text}\n\n{msg_text}", reply_markup=keyboard, parse_mode='Markdown')
         elif media_type == 'gif':
             bot.sendDocument(chat_id, media_url, msg_text, reply_markup=keyboard, parse_mode='Markdown')
         elif media_type == 'video':
