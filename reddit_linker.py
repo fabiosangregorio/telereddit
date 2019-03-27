@@ -8,7 +8,7 @@ from config import MAX_REDDIT_POST_LENGTH
 from secret import CHATBASE_TOKEN as TOKEN
 
 
-def get_subreddit_name(text):
+def _get_subreddit_name(text):
     start = text.find('r/')
     end = text.find(' ', start)
     word = text[start:end] if end is not -1 else text[start:]
@@ -16,14 +16,14 @@ def get_subreddit_name(text):
     return subreddit
 
 
-def escape_markdown(text):
+def _escape_markdown(text):
     return text.replace('*', '\\*').replace('_', '\\_')
 
 
 def send_random_posts(bot, chat_id, text):
     while 'r/' in text:
         # remove reddit links from the text and send it to the chat
-        subreddit = get_subreddit_name(text)
+        subreddit = _get_subreddit_name(text)
         text = text.replace(subreddit, '')
         post_url = 'https://' + f'www.reddit.com/{subreddit}/random.json'.replace('//', '/')
         send_post(bot, chat_id, subreddit, post_url)
@@ -33,7 +33,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
     try:
         req = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
         if not subreddit:
-            subreddit = get_subreddit_name(post_url)
+            subreddit = _get_subreddit_name(post_url)
 
         # check if subreddit is private
         if hasattr(req, 'reason') and req['reason'] == 'private':
@@ -51,17 +51,17 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Show more', callback_data='reddit')]
         ])
-        msg_text = f"{escape_markdown(post_title)}\n\n[Link to post]({post_url}) | [{subreddit}]({subreddit_url})"
+        msg_text = f"{_escape_markdown(post_title)}\n\n[Link to post]({post_url}) | [{subreddit}]({subreddit_url})"
 
-        post_is_gif, gif_url = is_gif(post_url)
+        post_is_gif, gif_url = _is_gif(post_url)
     except Exception as e:
-        send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
+        _send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in retrieving\nthe post from {subreddit} :(\n"\
             "The developer must have missed an if statement!", e)
 
     try:
         # check if the post is a text post
         if '/comments/' in post_url:
-            post_text = escape_markdown(post_text[:MAX_REDDIT_POST_LENGTH] + (post_text[MAX_REDDIT_POST_LENGTH:] and '...'))
+            post_text = _escape_markdown(post_text[:MAX_REDDIT_POST_LENGTH] + (post_text[MAX_REDDIT_POST_LENGTH:] and '...'))
             bot.sendMessage(chat_id, f"{msg_text}\n\n{post_text}", reply_markup=keyboard, parse_mode='Markdown')
         # check if the post contains a gif
         elif post_is_gif:
@@ -78,11 +78,11 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             intent="random_post")
         msg.send()
     except Exception as e:
-        send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in sending\nthe post from {subreddit} :(\n"\
+        _send_exception_message(bot, chat_id, f"I'm sorry, an error occurred in sending\nthe post from {subreddit} :(\n"\
             "The developer must have missed an if statement!", e)
 
 
-def send_exception_message(bot, chat_id, msg, e):
+def _send_exception_message(bot, chat_id, msg, e):
     capture_exception(e)
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Try again', callback_data='reddit')]
@@ -99,7 +99,7 @@ def send_exception_message(bot, chat_id, msg, e):
 
 
 # check if content is gif and return the gif url
-def is_gif(post_url):
+def _is_gif(post_url):
     gif = False
     if 'gfycat.com' in post_url:
         post_url, gif = post_url.replace('gfycat.com','thumbs.gfycat.com') + '-size_restricted.gif', True
