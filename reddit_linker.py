@@ -1,4 +1,5 @@
 import requests
+import random
 
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from chatbase import Message
@@ -41,7 +42,11 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             return
 
         # some subreddits have the json data wrapped in brackets, some do not
-        data = req['data']['children'][0]['data'] if isinstance(req, dict) else req[0]['data']['children'][0]['data']
+        if not isinstance(req, dict):
+            req = req[0]
+        idx = random.randint(0, len(req['data']['children']) - 1)
+        data = req['data']['children'][idx]['data']
+        
         subreddit_url = f'www.reddit.com/{subreddit}'
         post_title = data['title'][:100] + (data['title'][100:] and '...') # truncate the title if it's too long
         post_text = data['selftext']
