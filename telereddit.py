@@ -3,7 +3,7 @@ import time
 import telepot
 import sentry_sdk
 
-from secret import TELEGRAM_TOKEN as TOKEN
+from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
 import reddit_linker
 
 
@@ -31,8 +31,10 @@ def on_callback_query(msg):
     bot.answerCallbackQuery(query_id)
 
 
-# main function
-def main():
+sentry_sdk.init(SENTRY_TOKEN)
+bot = telepot.Bot(TELEGRAM_TOKEN)
+
+if __name__ == "__main__":
     bot.message_loop({
         'chat': on_chat_message, 
         'callback_query': on_callback_query})
@@ -40,10 +42,3 @@ def main():
     # Keep the program running
     while 1:
         time.sleep(3)
-
-
-sentry_sdk.init("https://1c1125efdc90436db107fe56673bef1b@sentry.io/1422477")
-bot = telepot.Bot(TOKEN)
-
-if __name__ == "__main__":
-    main()
