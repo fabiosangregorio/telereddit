@@ -6,6 +6,8 @@ import sentry_sdk
 from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
 import reddit_linker
 
+from config import MAX_TRIES
+
 
 # handle chat messages
 def on_chat_message(msg):
@@ -14,11 +16,10 @@ def on_chat_message(msg):
         return
 
     text = msg['text']
-    if 'www.reddit.com' in text.lower():
-        post_url = [word for word in text.lower().split(' ') 
-                    if 'www.reddit.com' in word][0]
+    if 'reddit.com' in text.lower():
+        post_url = [w for w in text.lower().split(' ') if 'reddit.com' in w][0]
         post_url = post_url.partition('/?')[0] + '.json'
-        reddit_linker.send_post(bot, chat_id, post_url=post_url)
+        reddit_linker.send_post_from_url(bot, chat_id, post_url)
     elif 'r/' in text.lower():
         reddit_linker.send_random_posts(bot, chat_id, text)
 
