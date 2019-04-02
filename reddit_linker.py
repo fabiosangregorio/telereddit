@@ -16,6 +16,8 @@ import helpers
 def send_random_posts(bot, chat_id, text):
     while ' r/' in f" {text}":
         subreddit = helpers.get_subreddit_name(text)
+        if not subreddit:
+            continue
         text = text.replace(subreddit, '')
         tries = 0
         while tries < MAX_TRIES:
@@ -40,6 +42,11 @@ def send_post(bot, chat_id, subreddit, post_url=None):
         post_url = 'https://' + f'www.reddit.com/{subreddit}/random.json'.replace('//', '/')
     try:
         json = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
+    except ValueError:
+        bot.sendMessage(chat_id, f"I'm sorry, I didn't find the subreddit {subreddit}.")
+        return 'success', None
+
+    try:
         # some subreddits have the json data wrapped in brackets, some do not
         json = json if isinstance(json, dict) else json[0]
         if _subreddit_not_found(json):
@@ -59,7 +66,7 @@ def send_post(bot, chat_id, subreddit, post_url=None):
         post_footer =f"[Link to post](https://reddit.com{permalink}) | "\
             f"[{subreddit}]({subreddit_url})"
         full_msg = post_title + '\n\n' + post_footer
-        media_type, media_url = _get_media(content_url)
+        media_type, media_url = _get_media(content_url, data)
     except Exception as e:
         capture_exception(e)
         traceback.print_exc()
@@ -73,8 +80,7 @@ def send_post(bot, chat_id, subreddit, post_url=None):
         ])
         if 'www.youtube.com' in media_url:
             bot.sendMessage(chat_id, 
-                f"I'm sorry, youtube videos are not supported yet :(", 
-                'Markdown', reply_markup=keyboard)
+                f"I'm sorry, youtube videos are not supported yet :(", 'Markdown')
             return 'success', None
 
         # check if the post is a text post
@@ -105,7 +111,7 @@ def send_post(bot, chat_id, subreddit, post_url=None):
 
 
 # check if content is gif and return the gif url
-def _get_media(post_url):
+def _get_media(post_url, data):
     type = 'photo'
     if 'gfycat.com' in post_url:
         post_url, type = (post_url.replace('gfycat.com','thumbs.gfycat.com') + 
@@ -117,7 +123,9 @@ def _get_media(post_url):
                 '-mobile.mp4'), 'gif'
             
     if 'v.redd.it' in post_url:
-        post_url, type = f'{post_url}/DASH_1_2_M', 'gif'
+        fallback_url = data.get('media', {}).get('reddit_video', {}).get('scrubber_media_url')
+        post_url = fallback_url if fallback_url else f'{post_url}/DASH_1_2_M'
+        type = 'gif'
 
     if 'imgur' in post_url:
         post_url = post_url.replace('.png', '.jpg')
@@ -160,4 +168,4 @@ def _is_private_subreddit(json):
 
 
 def _subreddit_not_found(json):
-    return json.get('error', 200) == 404
+    return json.get('error', 200) == 404 or len(json['data']['children']) == 0
