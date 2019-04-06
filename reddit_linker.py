@@ -88,7 +88,7 @@ def send_post(bot, chat_id, subreddit, post_url=None):
             post_text = helpers.escape_markdown(
                 post_text[:MAX_POST_LENGTH] + 
                 (post_text[MAX_POST_LENGTH:] and '...'))
-            bot.sendMessage(chat_id, f"{title}\n\n{post_text}\n\n{post_footer}", 
+            bot.sendMessage(chat_id, f"{post_title}\n\n{post_text}\n\n{post_footer}", 
                 'Markdown', reply_markup=keyboard)
         elif media_type == 'gif':
             bot.sendDocument(chat_id, media_url, full_msg, 
