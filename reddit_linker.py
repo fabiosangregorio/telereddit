@@ -3,11 +3,9 @@ import random
 import traceback
 
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
-from chatbase import Message
 from sentry_sdk import capture_exception
 
 from config import MAX_POST_LENGTH, MAX_TRIES
-from secret import CHATBASE_TOKEN as TOKEN
 
 import helpers
 
@@ -100,7 +98,6 @@ def send_post(bot, chat_id, subreddit, post_url=None):
             bot.sendPhoto(chat_id, media_url, full_msg, 
                 'Markdown', reply_markup=keyboard)
 
-        Message(TOKEN, "Telegram", subreddit, "random_post", "1.0", chat_id).send()
     except Exception as e:
         capture_exception(e)
         traceback.print_exc()
@@ -149,8 +146,6 @@ def more_button_callback(bot, msg):
     chat_id = message['chat']['id']
     text = message.get('caption', message.get('text')) + '\n'
     subreddit = helpers.get_subreddit_name(text)
-
-    Message(TOKEN, "Telegram", subreddit, "show_more", "1.0", chat_id).send()
     send_random_posts(bot, chat_id, subreddit)
 
 
@@ -159,8 +154,6 @@ def _send_exception_message(bot, chat_id, subreddit, msg):
         [InlineKeyboardButton(text='Try with another random post', callback_data='reddit')]
     ])
     bot.sendMessage(chat_id, msg, 'Markdown', reply_markup=keyboard)
-    Message(TOKEN, "Telegram", subreddit, "random_post", 
-        "1.0", chat_id, not_handled=True).send()
 
 
 def _is_private_subreddit(json):
