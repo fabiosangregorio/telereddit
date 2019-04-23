@@ -14,11 +14,8 @@ import helpers
 
 # searches in text for subreddit names and sends a random post from the subreddit
 def send_random_posts(bot, chat_id, text):
-    while ' r/' in f" {text}":
-        subreddit = helpers.get_subreddit_name(text)
-        if not subreddit:
-            continue
-        text = text.replace(subreddit, '')
+    subreddits = helpers.get_subreddit_names(text)
+    for subreddit in subreddits:
         tries = 0
         while tries < MAX_TRIES:
             status, fail_msg = send_post(bot, chat_id, subreddit)
@@ -31,7 +28,10 @@ def send_random_posts(bot, chat_id, text):
 
 
 def send_post_from_url(bot, chat_id, post_url):
-    subreddit = helpers.get_subreddit_name(post_url)
+    subreddit = helpers.get_subreddit_names(post_url)
+    if not len(subreddit):
+        return
+    subreddit = subreddit[0]
     status, fail_msg = send_post(bot, chat_id, subreddit, post_url)
     if status == 'failed':
         _send_exception_message(bot, chat_id, subreddit, fail_msg)
