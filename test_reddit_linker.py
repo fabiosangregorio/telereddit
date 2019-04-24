@@ -23,3 +23,13 @@ class TestRedditLinker(unittest.TestCase):
         ]
 
         self.assertListEqual(helpers.get_subreddit_names(text), subreddits)
+
+    def test_get_post(self):
+        json, _ = reddit_linker._get_post('r/n_o_t_a_n_a_m_e_i_h_ox_p_e')
+        self.assertEqual(json, None)
+
+        json, _ = reddit_linker._get_post('r/CenturyClub/')
+        self.assertEqual(json, None)
+
+        _, err_msg = reddit_linker._get_post('r/funny')
+        self.assertEqual(err_msg, None)
