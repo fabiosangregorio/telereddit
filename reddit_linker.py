@@ -37,10 +37,9 @@ def send_post_from_url(bot, chat_id, post_url):
 
 def _get_post(subreddit, post_url=None):
     if not post_url:
-        post_url = f'www.reddit.com/{subreddit}/random.json'.replace('//', '/')
+        post_url = f'https://www.reddit.com/{subreddit}/random.json'
     try:
-        json = requests.get('https://' + post_url,
-                            headers={'User-agent': 'telereddit_bot'}).json()
+        json = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
     except ValueError:
         return None, f"I'm sorry, I can't find {subreddit}."
 

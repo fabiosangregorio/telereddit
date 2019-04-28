@@ -22,14 +22,22 @@ class TestRedditLinker(unittest.TestCase):
             "r/leading"
         ]
 
-        self.assertListEqual(helpers.get_subreddit_names(text), subreddits)
+        self.assertEqual(helpers.get_subreddit_names(text), subreddits)
+        
+        # subreddit in a link
+        text = 'https://www.reddit.com/r/comics/comments/bia7qy/guess_i_love_dark_humor_oc'
+        self.assertEqual(helpers.get_subreddit_names(text), ['r/comics'])
+        self.assertNotEqual(helpers.get_subreddit_names(text), ['/r/comics'])
 
     def test_get_post(self):
+        # subreddit that doesn't exist
         json, _ = reddit_linker._get_post('r/n_o_t_a_n_a_m_e_i_h_ox_p_e')
         self.assertEqual(json, None)
 
+        # private subreddit
         json, _ = reddit_linker._get_post('r/CenturyClub/')
         self.assertEqual(json, None)
 
+        # valid subreddit
         _, err_msg = reddit_linker._get_post('r/funny')
         self.assertEqual(err_msg, None)
