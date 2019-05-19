@@ -15,3 +15,14 @@ def truncate_text(text, length=100):
 
 def polish_text(text):
     return text.replace('\n', ' ')
+
+
+def get_urls_from_text(text):
+    polished = polish_text(text)
+    urls = list()
+    for w in polished.lower().split(' '):
+        if 'reddit.com' in w:
+            urls.append(w.partition('/?')[0] + '.json')
+        if 'redd.it' in w:
+            urls.append(f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}.json')
+    return urls
