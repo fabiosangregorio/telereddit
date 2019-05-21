@@ -17,11 +17,10 @@ def on_chat_message(msg):
         return
 
     text = msg['text']
-    if 'reddit.com' in text.lower():
-        polished = helpers.polish_text(text)
-        post_url = [w for w in polished.lower().split(' ') if 'reddit.com' in w][0]
-        post_url = post_url.partition('/?')[0] + '.json'
-        reddit_linker.send_post_from_url(bot, chat_id, post_url)
+    if any(r in text.lower() for r in ['reddit.com', 'redd.it']):
+        posts_url = helpers.get_urls_from_text(text)
+        for url in posts_url:
+            reddit_linker.send_post_from_url(bot, chat_id, url)
     elif 'r/' in text.lower():
         reddit_linker.send_random_posts(bot, chat_id, text)
 

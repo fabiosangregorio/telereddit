@@ -22,54 +22,53 @@ def send_random_posts(bot, chat_id, text):
             if status == 'failed':
                 tries += 1
         if status != 'success':
-            _send_exception_message(bot, chat_id, subreddit, fail_msg)
+            _send_exception_message(bot, chat_id, fail_msg)
 
 
 def send_post_from_url(bot, chat_id, post_url):
-    subreddit = helpers.get_subreddit_names(post_url)
-    if not len(subreddit):
-        return
-    subreddit = subreddit[0]
-    status, fail_msg = send_post(bot, chat_id, subreddit, post_url)
+    status, fail_msg = send_post(bot, chat_id, post_url=post_url)
     if status == 'failed':
-        _send_exception_message(bot, chat_id, subreddit, fail_msg)
+        _send_exception_message(bot, chat_id, fail_msg)
 
 
-def _get_post(subreddit, post_url=None):
+def _get_post(subreddit=None, post_url=None):
     if not post_url:
         post_url = f'https://www.reddit.com/{subreddit}/random.json'
     try:
         json = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
     except ValueError:
-        return None, f"I'm sorry, I can't find {subreddit}."
+        return None, f"I'm sorry, I can't find that subreddit."
 
     if not json:
-        return None, f"I'm sorry, I can't find {subreddit}."
+        return None, f"I'm sorry, I can't find that subreddit."
 
     # some subreddits have the json data wrapped in brackets, some do not
     json = json if isinstance(json, dict) else json[0]
 
     if json.get('reason') == 'private':
-        return None, f"I'm sorry, the subreddit {subreddit} is private."
+        return None, f"I'm sorry, this subreddit is private."
 
     not_found = json.get('error', 200) == 404 or len(json['data']['children']) == 0
     if not_found:
-        return None, f"I'm sorry, the subreddit {subreddit} doesn't exist!"
+        return None, f"I'm sorry, this subreddit doesn't exist!"
 
     return json, None
 
 
-def send_post(bot, chat_id, subreddit, post_url=None):
+def send_post(bot, chat_id, subreddit=None, post_url=None):
+    if not subreddit and not post_url:
+        return
+
     json, err_msg = _get_post(subreddit, post_url)
     if err_msg:
         bot.sendMessage(chat_id, err_msg)
         return 'success', None
 
-    subreddit_url = f'https://www.reddit.com/{subreddit}'
     try:
         idx = random.randint(0, len(json['data']['children']) - 1)
         data = json['data']['children'][idx]['data']
-
+        subreddit = data['subreddit_name_prefixed']
+        subreddit_url = f'https://www.reddit.com/{subreddit}'
         post_text = data['selftext']
         content_url = data['url']
         permalink = data['permalink']
@@ -164,7 +163,7 @@ def more_button_callback(bot, msg):
     send_random_posts(bot, chat_id, subreddit)
 
 
-def _send_exception_message(bot, chat_id, subreddit, msg):
+def _send_exception_message(bot, chat_id, msg):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='Try with another random post', callback_data='reddit')]
     ])
