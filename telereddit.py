@@ -7,6 +7,7 @@ from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 
 from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
 import reddit_linker
+import reddit
 import helpers
 
 
@@ -28,23 +29,29 @@ def on_chat_message(msg):
 # handle inline keyboard
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query', long=True)
+    message = msg['message']
+    chat_id = message['chat']['id']
+    # message_id = message['message_id']
+
     if query_data == 'more':
         # upon clicking the "more" button, send another random reddit post
-        message = msg['message']
-        chat_id = message['chat']['id']
         text = message.get('caption', message.get('text')) + '\n'
-        subreddit = helpers.get_subreddit_names(text)
-        if len(subreddit):
-            subreddit = subreddit[0]
-        reddit_linker.send_random_posts(bot, chat_id, subreddit)
-    elif query_data == 'send':
-        message_id = msg['message']['message_id']
-        chat_id = msg['message']['chat']['id']
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-            InlineKeyboardButton(text="Show another one", callback_data="more")
-        ]])
-        bot.editMessageReplyMarkup((chat_id, message_id), keyboard)
+        subreddit = helpers.get_subreddit_name(text)
+        if subreddit is not None:
+            reddit_linker.send_random_posts(bot, chat_id, subreddit)
+    # elif query_data == 'send':
+    #     keyboard = InlineKeyboardMarkup(inline_keyboard=[[
+    #         InlineKeyboardButton(text="Show another one", callback_data="more")
+    #     ]])
+    #     bot.editMessageReplyMarkup((chat_id, message_id), keyboard)
     # elif query_data == 'edit':
+    #     subreddit = helpers.get_subreddit_name(text)
+    #     if subreddit is None:
+    #         return
+
+    #     post, status, err_msg = reddit.get_post(subreddit)
+    #     if status == 'success':
+    #         bot.editmessage
 
     bot.answerCallbackQuery(query_id)
 

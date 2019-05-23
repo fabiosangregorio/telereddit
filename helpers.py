@@ -6,6 +6,14 @@ def get_subreddit_names(text):
     return re.findall(regex, text, re.MULTILINE)
 
 
+def get_subreddit_name(text):
+    subs = get_subreddit_names(text)
+    if len(subs):
+        return subs[0]
+    else:
+        return None
+
+
 def escape_markdown(text):
     return text.replace('*', '\\*').replace('_', '\\_')
 
