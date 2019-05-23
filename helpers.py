@@ -1,8 +1,17 @@
 import re
 
+
 def get_subreddit_names(text):
     regex = r'r/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)'
     return re.findall(regex, text, re.MULTILINE)
+
+
+def get_subreddit_name(text):
+    subs = get_subreddit_names(text)
+    if len(subs):
+        return subs[0]
+    else:
+        return None
 
 
 def escape_markdown(text):
