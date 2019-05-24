@@ -1,4 +1,5 @@
 import re
+from config import MAX_TITLE_LENGTH
 
 
 def get_subreddit_names(text):
@@ -18,7 +19,7 @@ def escape_markdown(text):
     return text.replace('*', '\\*').replace('_', '\\_')
 
 
-def truncate_text(text, length=100):
+def truncate_text(text, length=MAX_TITLE_LENGTH):
     return text[:length] + (text[length:] and '...')
 
 

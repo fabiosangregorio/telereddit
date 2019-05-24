@@ -1,6 +1,6 @@
 import traceback
 
-from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from sentry_sdk import capture_exception
 
 from config import MAX_POST_LENGTH, MAX_TRIES
@@ -42,12 +42,12 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         #     InlineKeyboardButton(text="↻", callback_data="edit"),
         #     InlineKeyboardButton(text="✓", callback_data="send")
         # ]])
-        keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-            InlineKeyboardButton(text="Show another one", callback_data="more")
+        keyboard = InlineKeyboardMarkup([[
+            InlineKeyboardButton("Show another one", callback_data="more")
         ]])
         if 'www.youtube.com' in post.media_url:
             bot.sendMessage(chat_id, f"I'm sorry, youtube videos are not"
-                            "supported yet :(", 'Markdown')
+                            "supported yet :(", parse_mode='Markdown')
             return 'success', None
 
         # check if the post is a text post
@@ -55,17 +55,23 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             post_text = helpers.escape_markdown(
                 post.text[:MAX_POST_LENGTH] +
                 (post.text[MAX_POST_LENGTH:] and '...'))
-            bot.sendMessage(chat_id, f"{post.title}\n\n{post_text}",
-                            'Markdown', reply_markup=keyboard)
+            post_text = post_text + '\n\n' if post_text else ''
+            post_msg = f"{post.title}{post_text}\n\n{post.footer}"
+            bot.sendMessage(chat_id, text=post_msg,
+                            parse_mode='Markdown', reply_markup=keyboard,
+                            disable_web_page_preview=True)
         elif post.media_type == 'gif':
-            bot.sendDocument(chat_id, post.media_url, post.msg,
-                             'Markdown', reply_markup=keyboard)
+            bot.sendDocument(chat_id, post.media_url, caption=post.msg,
+                             parse_mode='Markdown', reply_markup=keyboard,
+                             disable_web_page_preview=True)
         elif post.media_type == 'video':
-            bot.sendVideo(chat_id, post.media_url, post.msg,
-                          'Markdown', reply_markup=keyboard)
+            bot.sendVideo(chat_id, post.media_url, caption=post.msg,
+                          parse_mode='Markdown', reply_markup=keyboard,
+                          disable_web_page_preview=True)
         else:
-            bot.sendPhoto(chat_id, post.media_url, post.msg,
-                          'Markdown', reply_markup=keyboard)
+            bot.sendPhoto(chat_id, post.media_url, caption=post.msg,
+                          parse_mode='Markdown', reply_markup=keyboard,
+                          disable_web_page_preview=True)
 
     except Exception as e:
         capture_exception(e)
