@@ -1,14 +1,16 @@
 #!/usr/bin/env python
-import time
-import telepot
 import sentry_sdk
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from telegram.ext import Updater, MessageHandler, CallbackQueryHandler, Filters
 import logging
 
 from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
 import reddit_linker
 import helpers
+import reddit
+
+from config import MAX_TRIES
 
 
 # handle chat messages
@@ -30,27 +32,42 @@ def on_callback_query(bot, update):
     query_data = update.callback_query.data
     message = update.effective_message
     chat_id = message.chat_id
-    # message_id = message['message_id']
+    message_id = message.message_id
+    text = (message.caption or message.text) + '\n'
 
     if query_data == 'more':
         # upon clicking the "more" button, send another random reddit post
-        text = (message.caption or message.text) + '\n'
         subreddit = helpers.get_subreddit_name(text)
         if subreddit is not None:
             reddit_linker.send_random_posts(bot, chat_id, subreddit)
-    # elif query_data == 'send':
-    #     keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-    #         InlineKeyboardButton(text="Show another one", callback_data="more")
-    #     ]])
-    #     bot.editMessageReplyMarkup((chat_id, message_id), keyboard)
-    # elif query_data == 'edit':
-    #     subreddit = helpers.get_subreddit_name(text)
-    #     if subreddit is None:
-    #         return
+    elif query_data == 'send':
+        keyboard = InlineKeyboardMarkup([[
+            InlineKeyboardButton(text="Show another one", callback_data="more")
+        ]])
+        bot.editMessageReplyMarkup(chat_id, message_id, reply_markup=keyboard)
+    elif query_data == 'edit':
+        subreddit = helpers.get_subreddit_name(text)
+        if subreddit is None:
+            return
 
-    #     post, status, err_msg = reddit.get_post(subreddit)
-    #     if status == 'success':
-    #         bot.editmessage
+        keyboard = InlineKeyboardMarkup([[
+            InlineKeyboardButton(text="↻", callback_data="edit"),
+            InlineKeyboardButton(text="✓", callback_data="send")
+        ]])
+        tries = 0
+        while tries < MAX_TRIES:
+            post, status, err_msg = reddit.get_post(subreddit)
+            if status != 'success':
+                continue
+            if '/comments/' not in post.content_url and message.caption is not None:
+                bot.editMessageMedia(chat_id, message_id, media=InputMediaPhoto(post.content_url,post.msg, 'Markdown'),
+                                     reply_markup=keyboard)
+                break
+            elif '/comments/' in post.content_url and message.caption is None:
+                bot.editMessageText(post.msg, chat_id, message_id,
+                                    reply_markup=keyboard)
+                break
+
     bot.answerCallbackQuery(query_id)
 
 

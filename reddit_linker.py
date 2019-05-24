@@ -38,12 +38,9 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         return status, err_msg
 
     try:
-        # keyboard = InlineKeyboardMarkup(inline_keyboard=[[
-        #     InlineKeyboardButton(text="↻", callback_data="edit"),
-        #     InlineKeyboardButton(text="✓", callback_data="send")
-        # ]])
         keyboard = InlineKeyboardMarkup([[
-            InlineKeyboardButton("Show another one", callback_data="more")
+            InlineKeyboardButton(text="↻", callback_data="edit"),
+            InlineKeyboardButton(text="✓", callback_data="send")
         ]])
         if 'www.youtube.com' in post.media_url:
             bot.sendMessage(chat_id, f"I'm sorry, youtube videos are not"
