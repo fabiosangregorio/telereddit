@@ -88,9 +88,9 @@ def get_post(subreddit=None, post_url=None):
         full_msg = f"{post_title}\n\n{post_footer}"
         media_type, media_url = _get_media(content_url, data)
 
-        post = namedtuple('Post', 'subreddit title text msg permalink '
+        post = namedtuple('Post', 'subreddit title text msg footer permalink '
                           'content_url media_type media_url')
-        return post(subreddit, post_title, post_text, full_msg, permalink,
+        return post(subreddit, post_title, post_text, full_msg, post_footer, permalink,
                     content_url, media_type, media_url), 'success', None
 
     except Exception as e:

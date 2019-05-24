@@ -3,39 +3,38 @@ import time
 import telepot
 import sentry_sdk
 
-from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+from telegram.ext import Updater, MessageHandler, CallbackQueryHandler, Filters
+import logging
 
 from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
 import reddit_linker
-import reddit
 import helpers
 
 
 # handle chat messages
-def on_chat_message(msg):
-    content_type, chat_type, chat_id = telepot.glance(msg)
-    if content_type != 'text':
+def on_chat_message(bot, update):
+    msg = update.message
+    if not msg.text:
         return
-
-    text = msg['text']
-    if any(r in text.lower() for r in ['reddit.com', 'redd.it']):
-        posts_url = helpers.get_urls_from_text(text)
+    if any(r in msg.text.lower() for r in ['reddit.com', 'redd.it']):
+        posts_url = helpers.get_urls_from_text(msg.text)
         for url in posts_url:
-            reddit_linker.send_post_from_url(bot, chat_id, url)
-    elif 'r/' in text.lower():
-        reddit_linker.send_random_posts(bot, chat_id, text)
+            reddit_linker.send_post_from_url(bot, msg.chat_id, url)
+    elif 'r/' in msg.text.lower():
+        reddit_linker.send_random_posts(bot, msg.chat_id, msg.text)
 
 
 # handle inline keyboard
-def on_callback_query(msg):
-    query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query', long=True)
-    message = msg['message']
-    chat_id = message['chat']['id']
+def on_callback_query(bot, update):
+    query_id = update.callback_query.id
+    query_data = update.callback_query.data
+    message = update.effective_message
+    chat_id = message.chat_id
     # message_id = message['message_id']
 
     if query_data == 'more':
         # upon clicking the "more" button, send another random reddit post
-        text = message.get('caption', message.get('text')) + '\n'
+        text = (message.caption or message.text) + '\n'
         subreddit = helpers.get_subreddit_name(text)
         if subreddit is not None:
             reddit_linker.send_random_posts(bot, chat_id, subreddit)
@@ -52,18 +51,17 @@ def on_callback_query(msg):
     #     post, status, err_msg = reddit.get_post(subreddit)
     #     if status == 'success':
     #         bot.editmessage
-
     bot.answerCallbackQuery(query_id)
 
 
-sentry_sdk.init(SENTRY_TOKEN)
-bot = telepot.Bot(TELEGRAM_TOKEN)
-
 if __name__ == "__main__":
-    bot.message_loop({
-        'chat': on_chat_message,
-        'callback_query': on_callback_query})
+    sentry_sdk.init(SENTRY_TOKEN)
 
-    # Keep the program running
-    while 1:
-        time.sleep(3)
+    updater = Updater(token=TELEGRAM_TOKEN)
+    dispatcher = updater.dispatcher
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                        level=logging.INFO)
+
+    dispatcher.add_handler(MessageHandler(Filters.text, on_chat_message))
+    dispatcher.add_handler(CallbackQueryHandler(on_callback_query))
+    updater.start_polling()
