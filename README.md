@@ -1,5 +1,6 @@
 # TeleReddit
 [![Build Status](https://travis-ci.org/fabiosangregorio/telereddit.svg?branch=master)](https://travis-ci.org/fabiosangregorio/telereddit)
+[![Maintainability](https://api.codeclimate.com/v1/badges/bef15455da0878eae539/maintainability)](https://codeclimate.com/github/fabiosangregorio/telereddit/maintainability)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 A Reddit bot for Telegram. When you name a subreddit, TeleReddit will send you a random post from that subreddit.
