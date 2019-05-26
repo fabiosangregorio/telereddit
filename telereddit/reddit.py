@@ -46,7 +46,7 @@ def _get_media(post_url, data):
                               '-mobile.mp4'), 'gif'
 
     if 'v.redd.it' in post_url:
-        fallback_url = data.get('media', {}).get('reddit_video', {}).get('scrubber_media_url')
+        fallback_url = data.get('media', {}).get('reddit_video', {}).get('fallback_url')
         post_url = fallback_url if fallback_url else f'{post_url}/DASH_1_2_M'
         type = 'gif'
 

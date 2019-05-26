@@ -73,7 +73,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
     return 'success', None
 
 
-def navigate_results(bot, update):
+def edit_result(bot, update):
     message = update.effective_message
     chat_id = message.chat_id
     message_id = message.message_id

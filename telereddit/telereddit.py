@@ -43,7 +43,7 @@ def on_callback_query(bot, update):
         ]])
         bot.editMessageReplyMarkup(chat_id, message_id, reply_markup=keyboard)
     elif query_data == 'edit':
-        reddit_linker.navigate_results(bot, update)
+        reddit_linker.edit_result(bot, update)
 
     bot.answerCallbackQuery(query_id)
 
