@@ -9,7 +9,10 @@ import helpers
 
 
 def send_random_posts(bot, chat_id, text):
-    # searches in text for subreddit names and sends a random post from the subreddit
+    '''
+    Searches the text for subreddit names and sends a random post from that
+    subreddit.
+    '''
     subreddits = helpers.get_subreddit_names(text)
     for subreddit in subreddits:
         tries = 0
@@ -24,12 +27,17 @@ def send_random_posts(bot, chat_id, text):
 
 
 def send_post_from_url(bot, chat_id, post_url):
+    '''Sends the post from the given url.'''
     status, err_msg = send_post(bot, chat_id, post_url=post_url)
     if status != 'success':
         _send_exception_message(bot, chat_id, err_msg)
 
 
 def send_post(bot, chat_id, subreddit=None, post_url=None):
+    '''
+    Sends a random post from the given subreddit if not None, sends the post
+    from post_url otherwise.
+    '''
     post, status, err_msg = reddit.get_post(subreddit, post_url)
     if status == 'not_found':
         bot.sendMessage(chat_id, err_msg)
@@ -37,17 +45,24 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         return status, err_msg
 
     try:
-        keyboard = InlineKeyboardMarkup([[
-            InlineKeyboardButton(text="↻", callback_data="edit"),
-            InlineKeyboardButton(text="✓", callback_data="send")
-        ]])
+        # if it is not a random post (e.g. shared via link) don't show the edit
+        # custom keyboard
+        if post_url:
+            keyboard = InlineKeyboardMarkup([[
+                InlineKeyboardButton(text="Show another one", callback_data="more")
+            ]])
+        else:
+            keyboard = InlineKeyboardMarkup([[
+                InlineKeyboardButton(text="↻", callback_data="edit"),
+                InlineKeyboardButton(text="✓", callback_data="send")
+            ]])
         if 'www.youtube.com' in post.media_url:
             bot.sendMessage(chat_id, f"I'm sorry, youtube videos are not"
                             "supported yet :(", parse_mode='Markdown')
             return 'success', None
 
-        # check if the post is a text post
         if '/comments/' in post.content_url:
+            # check if the post is a text post
             bot.sendMessage(chat_id, text=post.msg,
                             parse_mode='Markdown', reply_markup=keyboard,
                             disable_web_page_preview=True)
@@ -73,7 +88,11 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
     return 'success', None
 
 
-def navigate_results(bot, update):
+def edit_result(bot, update):
+    '''
+    Edits the given message with a new post from that subreddit, and edits the
+    keyboard markup to give the user the ability to edit or confirm the message.
+    '''
     message = update.effective_message
     chat_id = message.chat_id
     message_id = message.message_id
@@ -112,6 +131,7 @@ def navigate_results(bot, update):
 
 
 def _send_exception_message(bot, chat_id, msg):
+    '''Handles the errors created in post retrieval and sending.'''
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='Try with another random post', callback_data='more')]
     ])

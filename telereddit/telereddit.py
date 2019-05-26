@@ -10,8 +10,8 @@ import reddit_linker
 import helpers
 
 
-# handle chat messages
 def on_chat_message(bot, update):
+    '''Handles a single update message.'''
     msg = update.message
     if not msg.text:
         return
@@ -23,8 +23,8 @@ def on_chat_message(bot, update):
         reddit_linker.send_random_posts(bot, msg.chat_id, msg.text)
 
 
-# handle inline keyboard
 def on_callback_query(bot, update):
+    '''Handles all the several types of callback queries.'''
     query_id = update.callback_query.id
     query_data = update.callback_query.data
     message = update.effective_message
@@ -43,7 +43,7 @@ def on_callback_query(bot, update):
         ]])
         bot.editMessageReplyMarkup(chat_id, message_id, reply_markup=keyboard)
     elif query_data == 'edit':
-        reddit_linker.navigate_results(bot, update)
+        reddit_linker.edit_result(bot, update)
 
     bot.answerCallbackQuery(query_id)
 

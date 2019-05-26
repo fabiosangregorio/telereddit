@@ -10,6 +10,25 @@ from config import MAX_POST_LENGTH
 
 
 def _get_json(subreddit=None, post_url=None):
+    '''
+    Handles the http request and gets the json for the given subreddit/post url.
+
+    Parameters
+    ----------
+    subreddit : str
+        Prefixed subreddit name for which to get the json. Can be None if
+        `post_url` is provided.
+    post_url : str
+        Full url of the post to retrieve. Can be None if `subreddit` is provided.
+
+    Returns
+    -------
+    json
+        Json for the given subreddit/post url if the subreddit exists
+        and is public, an error otherwise.
+    err_msg
+        Message containing the reason for the error.
+    '''
     if not post_url:
         post_url = f'https://www.reddit.com/{subreddit}/random.json'
     try:
@@ -34,7 +53,23 @@ def _get_json(subreddit=None, post_url=None):
 
 
 def _get_media(post_url, data):
-    # check if content is gif and return the gif url
+    '''
+    Processes the post url to get the media url, based on common url patterns.
+
+    Parameters
+    ----------
+    post_url : str
+        Unprocessed media url.
+    data : json
+        Full json post data.
+
+    Returns
+    -------
+    type
+        The type of the media. Can be photo, gif, or video.
+    media_url
+        The processed media url.
+    '''
     type = 'photo'
     if 'gfycat.com' in post_url:
         post_url, type = (post_url.replace('gfycat.com', 'thumbs.gfycat.com') +
@@ -46,7 +81,7 @@ def _get_media(post_url, data):
                               '-mobile.mp4'), 'gif'
 
     if 'v.redd.it' in post_url:
-        fallback_url = data.get('media', {}).get('reddit_video', {}).get('scrubber_media_url')
+        fallback_url = data.get('media', {}).get('reddit_video', {}).get('fallback_url')
         post_url = fallback_url if fallback_url else f'{post_url}/DASH_1_2_M'
         type = 'gif'
 
@@ -67,6 +102,27 @@ def _get_media(post_url, data):
 
 
 def get_post(subreddit=None, post_url=None):
+    '''
+    Processes the json and gets the post out of it, ready to be sent.
+
+    Parameters
+    ----------
+    subreddit : str
+        Prefixed subreddit name for which to get the json. Can be None if
+        `post_url` is provided.
+    post_url : str
+        Full url of the post to retrieve. Can be None if `subreddit` is provided.
+
+    Returns
+    -------
+    Post
+        A namedtuple containing: subreddit, title, text, msg, footer, permalink,
+        content_url, media_type, media_url
+    Status
+        The result of the post processing. Can be: success, not_found, failed.
+    err_msg
+        Message containing the reason for the error.
+    '''
     if not subreddit and not post_url:
         return None, None, None
 
