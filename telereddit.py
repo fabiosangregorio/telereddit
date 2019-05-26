@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 import sentry_sdk
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, MessageHandler, CallbackQueryHandler, Filters
 import logging
 
 from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
 import reddit_linker
 import helpers
-import reddit
-
-from config import MAX_TRIES
 
 
 # handle chat messages
@@ -46,29 +43,7 @@ def on_callback_query(bot, update):
         ]])
         bot.editMessageReplyMarkup(chat_id, message_id, reply_markup=keyboard)
     elif query_data == 'edit':
-        subreddit = helpers.get_subreddit_name(text)
-        if subreddit is None:
-            return
-
-        keyboard = InlineKeyboardMarkup([[
-            InlineKeyboardButton(text="↻", callback_data="edit"),
-            InlineKeyboardButton(text="✓", callback_data="send")
-        ]])
-        tries = 0
-        while tries < MAX_TRIES:
-            post, status, err_msg = reddit.get_post(subreddit)
-            if status != 'success':
-                continue
-            if '/comments/' not in post.content_url and message.caption is not None:
-                media = InputMediaPhoto(post.content_url, post.msg, 'Markdown')
-                bot.editMessageMedia(chat_id, message_id, media=media,
-                                     reply_markup=keyboard)
-                break
-            elif '/comments/' in post.content_url and message.caption is None:
-                bot.editMessageText(post.msg, chat_id, message_id,
-                                    parse_mode='Markdown', reply_markup=keyboard,
-                                    disable_web_page_preview=True)
-                break
+        reddit_linker.navigate_results(bot, update)
 
     bot.answerCallbackQuery(query_id)
 
