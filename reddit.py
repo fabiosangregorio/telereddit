@@ -6,6 +6,7 @@ import traceback
 from sentry_sdk import capture_exception
 
 import helpers
+from config import MAX_POST_LENGTH
 
 
 def _get_json(subreddit=None, post_url=None):
@@ -83,9 +84,13 @@ def get_post(subreddit=None, post_url=None):
                       f"[{subreddit}]({subreddit_url})"
 
         subreddit = data['subreddit_name_prefixed']
-        post_text = data['selftext']
-        post_title = helpers.escape_markdown(helpers.truncate_text(data['title']))
-        full_msg = f"{post_title}\n\n{post_footer}"
+        post_title = data['title']
+
+        post_text = helpers.truncate_text(data['selftext'], MAX_POST_LENGTH)
+        post_text = helpers.escape_markdown(post_text)
+        post_text = post_text + '\n\n' if post_text else ''
+        full_msg = f"{post_title}{post_text}\n\n{post_footer}"
+
         media_type, media_url = _get_media(content_url, data)
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '

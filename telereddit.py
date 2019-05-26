@@ -60,12 +60,14 @@ def on_callback_query(bot, update):
             if status != 'success':
                 continue
             if '/comments/' not in post.content_url and message.caption is not None:
-                bot.editMessageMedia(chat_id, message_id, media=InputMediaPhoto(post.content_url,post.msg, 'Markdown'),
+                media = InputMediaPhoto(post.content_url, post.msg, 'Markdown')
+                bot.editMessageMedia(chat_id, message_id, media=media,
                                      reply_markup=keyboard)
                 break
             elif '/comments/' in post.content_url and message.caption is None:
                 bot.editMessageText(post.msg, chat_id, message_id,
-                                    reply_markup=keyboard)
+                                    parse_mode='Markdown', reply_markup=keyboard,
+                                    disable_web_page_preview=True)
                 break
 
     bot.answerCallbackQuery(query_id)

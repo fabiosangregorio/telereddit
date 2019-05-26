@@ -49,11 +49,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
 
         # check if the post is a text post
         if '/comments/' in post.content_url:
-            post_text = helpers.escape_markdown(
-                post.text[:MAX_POST_LENGTH] +
-                (post.text[MAX_POST_LENGTH:] and '...'))
-            post_text = post_text + '\n\n' if post_text else ''
-            post_msg = f"{post.title}{post_text}\n\n{post.footer}"
+            
             bot.sendMessage(chat_id, text=post_msg,
                             parse_mode='Markdown', reply_markup=keyboard,
                             disable_web_page_preview=True)
