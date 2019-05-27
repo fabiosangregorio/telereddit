@@ -20,8 +20,7 @@ def send_random_posts(bot, chat_id, text):
             status, err_msg = send_post(bot, chat_id, subreddit)
             if status == 'success':
                 break
-            if status == 'retry':
-                tries += 1
+            tries += 1
         if status != 'success':
             _send_exception_message(bot, chat_id, err_msg)
 

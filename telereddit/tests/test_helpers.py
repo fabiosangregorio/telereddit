@@ -33,3 +33,40 @@ class TestHelpers(unittest.TestCase):
         urls = ['https://www.reddit.com/comments/bqdlxe.json',
                 'https://www.reddit.com/comments/bqekoq.json']
         self.assertListEqual(helpers.get_urls_from_text(text), urls)
+
+    def test_get(self):
+        obj = {
+            'with_value': 'ok',
+            'with_true': True,
+            'with_false': False,
+            'with_obj': {'level_2': 'ok'},
+            'with_empty_obj': {},
+            'with_none': None
+        }
+
+        self.assertEqual(helpers.get(obj, 'with_value'), 'ok')
+        self.assertEqual(helpers.get(obj, 'with_true'), True)
+        self.assertEqual(helpers.get(obj, 'with_false'), False)
+        self.assertEqual(helpers.get(obj, 'with_obj'), {'level_2': 'ok'})
+        self.assertEqual(helpers.get(obj, 'with_empty_obj'), {})
+        self.assertEqual(helpers.get(obj, 'with_none'), None)
+        self.assertEqual(helpers.get(obj, 'with_none', {}), {})
+        self.assertEqual(helpers.get(obj, 'not_in_obj'), None)
+
+    def test_chained_get(self):
+        obj = {
+            'l1': {
+                'l2_with_value': 'ok',
+                'l2_with_none': None,
+                'l2': {
+                    'l3_with_value': 'ok'
+                }
+            }
+        }
+
+        self.assertEqual(helpers.chained_get(obj, ['l1', 'l2_with_value']), 'ok')
+        self.assertEqual(helpers.chained_get(obj, ['l1', 'l2_with_none']), None)
+        self.assertEqual(helpers.chained_get(obj, ['l1', 'l2']), {'l3_with_value': 'ok'})
+        self.assertEqual(helpers.chained_get(obj, ['l1', 'l2', 'l3_with_value']), 'ok')
+        self.assertEqual(helpers.chained_get(obj, ['l1', 'l3', 'l3_with_value']), None)
+        self.assertEqual(helpers.chained_get(obj, ['l1', 'l3', 'l3_with_value'], {}), {})
