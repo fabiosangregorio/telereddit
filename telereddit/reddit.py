@@ -52,7 +52,7 @@ def _get_json(subreddit=None, post_url=None):
     return json, None
 
 
-def _get_media(post_url, data):
+def _get_media(post_url, fallback_url=None):
     '''
     Processes the post url to get the media url, based on common url patterns.
 
@@ -72,16 +72,14 @@ def _get_media(post_url, data):
     '''
     type = 'photo'
     if 'gfycat.com' in post_url:
-        post_url, type = (post_url.replace('gfycat.com', 'thumbs.gfycat.com') +
-                          '-size_restricted.gif'), 'gif'
+        url_prefix = post_url.replace('gfycat.com', 'thumbs.gfycat.com')
+        post_url = url_prefix + '-size_restricted.gif'
         try:
             requests.get(post_url)
         except Exception:
-            post_url, type = (post_url.replace('gfycat.com', 'thumbs.gfycat.com') +
-                              '-mobile.mp4'), 'gif'
+            post_url = url_prefix + '-mobile.mp4'
 
     if 'v.redd.it' in post_url:
-        fallback_url = data.get('media', {}).get('reddit_video', {}).get('fallback_url')
         post_url = fallback_url if fallback_url else f'{post_url}/DASH_1_2_M'
         type = 'gif'
 
@@ -147,7 +145,9 @@ def get_post(subreddit=None, post_url=None):
         post_text = post_text + '\n\n' if post_text else ''
         full_msg = f"{post_title}{post_text}\n\n{post_footer}"
 
-        media_type, media_url = _get_media(content_url, data)
+        fallback_url = helpers.chained_get(data, ['media', 'reddit_video', 'fallback_url'])
+
+        media_type, media_url = _get_media(content_url, fallback_url)
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '
                           'content_url media_type media_url')

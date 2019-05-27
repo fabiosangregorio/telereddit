@@ -55,3 +55,22 @@ def get_urls_from_text(text):
         if 'redd.it' in w:
             urls.append(f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}.json')
     return urls
+
+
+def get(obj, attr, default=None):
+    '''
+    Returns the value `attr` if it is not None, default otherwise.
+    '''
+    return obj[attr] if attr in obj and obj[attr] is not None else default
+
+
+def chained_get(obj, attrs, default=None):
+    '''
+    Travels the nested object based on `attrs` and returns the value of the
+    last attr if not None, default otherwise.
+    '''
+    for attr in attrs:
+        obj = get(obj, attr, default)
+        if obj == default:
+            break
+    return obj
