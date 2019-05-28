@@ -60,11 +60,11 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             bot.sendMessage(chat_id, text=post.msg,
                             parse_mode='Markdown', reply_markup=keyboard,
                             disable_web_page_preview=True)
-        elif post.media_type == 'gif':
+        elif post.type == 'gif':
             bot.sendDocument(chat_id, post.media_url, caption=post.msg,
                              parse_mode='Markdown', reply_markup=keyboard,
                              disable_web_page_preview=True)
-        elif post.media_type == 'video':
+        elif post.type == 'video':
             bot.sendVideo(chat_id, post.media_url, caption=post.msg,
                           parse_mode='Markdown', reply_markup=keyboard,
                           disable_web_page_preview=True)
