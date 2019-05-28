@@ -51,6 +51,7 @@ class TestReddit(unittest.TestCase):
         self.assertEqual(post.subreddit.lower(), 'r/showerthoughts')
         self.assertIsNotNone(post.title)
         self.assertIn('https://www.reddit.com/r/showerthoughts', post.footer)
+        self.assertEqual(post.type, 'text')
 
         # photo post
         post, status, err_msg = reddit.get_post('r/pics')
@@ -60,4 +61,4 @@ class TestReddit(unittest.TestCase):
         self.assertIsNotNone(post.title)
         self.assertIn('https://www.reddit.com/r/pics', post.footer)
         self.assertIsNotNone(post.media_url)
-        self.assertEqual(post.media_type, 'photo')
+        self.assertEqual(post.type, 'photo')
