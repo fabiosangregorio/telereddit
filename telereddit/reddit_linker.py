@@ -15,7 +15,7 @@ def send_random_posts(bot, chat_id, text):
     '''
     subreddits = helpers.get_subreddit_names(text)
     for subreddit in subreddits:
-        for tries in range(MAX_TRIES):
+        for _ in range(MAX_TRIES):
             status, err_msg = send_post(bot, chat_id, subreddit)
             if status == 'success':
                 break

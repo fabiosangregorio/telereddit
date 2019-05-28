@@ -34,7 +34,7 @@ def _get_json(subreddit=None, post_url=None):
     try:
         json = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
         if not json:
-            raise
+            raise ValueError
     except ValueError:
         return None, "I'm sorry, I can't find that subreddit."
 
