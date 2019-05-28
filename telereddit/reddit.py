@@ -33,23 +33,21 @@ def _get_json(subreddit=None, post_url=None):
         post_url = f'https://www.reddit.com/{subreddit}/random.json'
     try:
         json = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
+        if not json:
+            raise
     except ValueError:
-        return None, f"I'm sorry, I can't find that subreddit."
-
-    if not json:
-        return None, f"I'm sorry, I can't find that subreddit."
+        return None, "I'm sorry, I can't find that subreddit."
 
     # some subreddits have the json data wrapped in brackets, some do not
     json = json if isinstance(json, dict) else json[0]
+    err_msg = None
 
     if json.get('reason') == 'private':
-        return None, f"I'm sorry, this subreddit is private."
+        json, err_msg = None, "I'm sorry, this subreddit is private."
+    elif json.get('error') == 404 or len(json['data']['children']) == 0:
+        json, err_msg = None, "I'm sorry, this subreddit doesn't exist!"
 
-    not_found = json.get('error', 200) == 404 or len(json['data']['children']) == 0
-    if not_found:
-        return None, f"I'm sorry, this subreddit doesn't exist!"
-
-    return json, None
+    return json, err_msg
 
 
 def _get_media(post_url, fallback_url=None):
@@ -132,27 +130,27 @@ def get_post(subreddit=None, post_url=None):
         idx = random.randint(0, len(json['data']['children']) - 1)
         data = json['data']['children'][idx]['data']
         subreddit_url = f'https://www.reddit.com/{subreddit}'
-        content_url = data['url']
         permalink = data['permalink']
         subreddit = data['subreddit_name_prefixed']
         post_footer = f"[Link to post](https://reddit.com{permalink}) | "\
                       f"[{subreddit}]({subreddit_url})"
-
         post_title = data['title']
-
         post_text = helpers.truncate_text(data['selftext'], MAX_POST_LENGTH)
         post_text = helpers.escape_markdown(post_text)
         post_text = post_text + '\n\n' if post_text else ''
         full_msg = f"{post_title}{post_text}\n\n{post_footer}"
+        content_url = data['url']
 
-        fallback_url = helpers.chained_get(data, ['media', 'reddit_video', 'fallback_url'])
-
-        media_type, media_url = _get_media(content_url, fallback_url)
+        if '/comments/' in content_url:
+            post_type, media_url = 'text', None
+        else:
+            fallback_url = helpers.chained_get(data, ['media', 'reddit_video', 'fallback_url'])
+            post_type, media_url = _get_media(content_url, fallback_url)
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '
-                          'content_url media_type media_url')
+                          'content_url type media_url')
         return post(subreddit, post_title, post_text, full_msg, post_footer, permalink,
-                    content_url, media_type, media_url), 'success', None
+                    content_url, post_type, media_url), 'success', None
 
     except Exception as e:
         capture_exception(e)

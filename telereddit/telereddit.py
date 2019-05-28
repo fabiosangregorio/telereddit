@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import sentry_sdk
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, MessageHandler, CallbackQueryHandler, Filters
 import logging
 
 from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
+from config import CONFIRMED_KEYBOARD
+
 import reddit_linker
 import helpers
 
@@ -33,17 +34,13 @@ def on_callback_query(bot, update):
     text = (message.caption or message.text) + '\n'
 
     if query_data == 'more':
-        # upon clicking the "more" button, send another random reddit post
-        subreddit = helpers.get_subreddit_name(text)
-        if subreddit is not None:
-            reddit_linker.send_random_posts(bot, chat_id, subreddit)
-    elif query_data == 'send':
-        keyboard = InlineKeyboardMarkup([[
-            InlineKeyboardButton(text="Show another one", callback_data="more")
-        ]])
-        bot.editMessageReplyMarkup(chat_id, message_id, reply_markup=keyboard)
+        reddit_linker.send_random_posts(bot, chat_id, text)
+    elif query_data == 'confirm':
+        bot.editMessageReplyMarkup(chat_id, message_id, reply_markup=CONFIRMED_KEYBOARD)
     elif query_data == 'edit':
         reddit_linker.edit_result(bot, update)
+    elif query_data == 'delete':
+        bot.deleteMessage(chat_id, message_id)
 
     bot.answerCallbackQuery(query_id)
 
