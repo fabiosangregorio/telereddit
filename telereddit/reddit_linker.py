@@ -2,7 +2,7 @@ import traceback
 
 from telegram import InputMediaPhoto
 from sentry_sdk import capture_exception
-from config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, CONFIRMED_KEYBOARD
+from config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD
 
 import reddit
 import helpers
@@ -51,7 +51,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         if post_url:
             # if it is not a random post (e.g. shared via link) don't show the
             # edit custom keyboard
-            keyboard = CONFIRMED_KEYBOARD
+            keyboard = NO_EDIT_KEYBOARD
         else:
             keyboard = EDIT_KEYBOARD
 

@@ -5,7 +5,6 @@ from telegram.ext import Updater, MessageHandler, CallbackQueryHandler, Filters
 import logging
 
 from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
-from config import CONFIRMED_KEYBOARD
 
 import reddit_linker
 import helpers
@@ -35,8 +34,6 @@ def on_callback_query(bot, update):
 
     if query_data == 'more':
         reddit_linker.send_random_posts(bot, chat_id, text)
-    elif query_data == 'confirm':
-        bot.editMessageReplyMarkup(chat_id, message_id, reply_markup=CONFIRMED_KEYBOARD)
     elif query_data == 'edit':
         reddit_linker.edit_result(bot, update)
     elif query_data == 'delete':
