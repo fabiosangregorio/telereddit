@@ -16,6 +16,7 @@ def on_chat_message(bot, update):
     msg = update.message
     if not msg.text:
         return
+
     if any(r in msg.text.lower() for r in ['reddit.com', 'redd.it']):
         posts_url = helpers.get_urls_from_text(msg.text)
         for url in posts_url:
@@ -53,6 +54,6 @@ if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                         level=logging.INFO)
 
-    dispatcher.add_handler(MessageHandler(Filters.text, on_chat_message))
+    dispatcher.add_handler(MessageHandler(Filters.all, on_chat_message))
     dispatcher.add_handler(CallbackQueryHandler(on_callback_query))
     updater.start_polling()

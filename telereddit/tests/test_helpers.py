@@ -9,7 +9,7 @@ class TestHelpers(unittest.TestCase):
             "r/invalid_subreddit_names (too long).\nr/start_of_line and "
             "/r/CaseSensitive should work, but r/spec!ial characters "
             "r/shouldnotwork. r/numb3rs are r/permitted, r/_underscores too if "
-            "they're not r/leading.")
+            "they're not r/leading. /r/subreddit should also work.")
 
         subreddits = [
             "r/valid_subreddit_names",
@@ -18,7 +18,8 @@ class TestHelpers(unittest.TestCase):
             "r/shouldnotwork",
             "r/numb3rs",
             "r/permitted",
-            "r/leading"
+            "r/leading",
+            "r/subreddit"
         ]
 
         self.assertEqual(helpers.get_subreddit_names(text), subreddits)
