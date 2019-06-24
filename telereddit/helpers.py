@@ -51,9 +51,9 @@ def get_urls_from_text(text):
     urls = list()
     for w in polished.lower().split(' '):
         if 'reddit.com' in w:
-            urls.append(w.partition('/?')[0] + '.json')
+            urls.append(w.partition('/?')[0])
         if 'redd.it' in w:
-            urls.append(f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}.json')
+            urls.append(f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}')
     return urls
 
 

@@ -30,9 +30,10 @@ def _get_json(subreddit=None, post_url=None):
         Message containing the reason for the error.
     '''
     if not post_url:
-        post_url = f'https://www.reddit.com/{subreddit}/random.json'
+        post_url = f'https://www.reddit.com/{subreddit}/random'
     try:
-        json = requests.get(post_url, headers={'User-agent': 'telereddit_bot'}).json()
+        json = requests.get(f'{post_url}.json',
+                            headers={'User-agent': 'telereddit_bot'}).json()
         if not json:
             raise ValueError
     except ValueError:
@@ -129,9 +130,9 @@ def get_post(subreddit=None, post_url=None):
     try:
         idx = random.randint(0, len(json['data']['children']) - 1)
         data = json['data']['children'][idx]['data']
-        subreddit_url = f'https://www.reddit.com/{subreddit}'
         permalink = data['permalink']
         subreddit = data['subreddit_name_prefixed']
+        subreddit_url = f'https://www.reddit.com/{subreddit}'
         post_footer = f"[Link to post](https://reddit.com{permalink}) | "\
                       f"[{subreddit}]({subreddit_url})"
         post_title = helpers.escape_markdown(data['title'])
@@ -157,3 +158,7 @@ def get_post(subreddit=None, post_url=None):
         traceback.print_exc()
         return None, 'failed', f"I'm sorry, an error occurred in retrieving the post from "\
             f"{subreddit} :(\nThe developer must have missed an if statement!"
+
+
+
+get_post(post_url='https://www.reddit.com/r/bicycling/comments/aevkgj/finally_know_how_to_crosspost/')

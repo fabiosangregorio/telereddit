@@ -50,7 +50,7 @@ class TestReddit(unittest.TestCase):
         self.assertIsNone(err_msg)
         self.assertEqual(post.subreddit.lower(), 'r/showerthoughts')
         self.assertIsNotNone(post.title)
-        self.assertIn('https://www.reddit.com/r/showerthoughts', post.footer)
+        self.assertIn('https://www.reddit.com/r/showerthoughts', post.footer.lower())
         self.assertEqual(post.type, 'text')
 
         # photo post
@@ -59,6 +59,16 @@ class TestReddit(unittest.TestCase):
         self.assertIsNone(err_msg)
         self.assertEqual(post.subreddit.lower(), 'r/pics')
         self.assertIsNotNone(post.title)
-        self.assertIn('https://www.reddit.com/r/pics', post.footer)
+        self.assertIn('https://www.reddit.com/r/pics', post.footer.lower())
+        self.assertIsNotNone(post.media_url)
+        self.assertEqual(post.type, 'photo')
+
+        # crosspost
+        post, status, err_msg = reddit.get_post(post_url='https://www.reddit.com/r/bicycling/comments/aevkgj/finally_know_how_to_crosspost/')
+        self.assertEqual(status, 'success')
+        self.assertIsNone(err_msg)
+        self.assertEqual(post.subreddit.lower(), 'r/bicycling')
+        self.assertIsNotNone(post.title)
+        self.assertIn('https://www.reddit.com/r/bicycling', post.footer.lower())
         self.assertIsNotNone(post.media_url)
         self.assertEqual(post.type, 'photo')
