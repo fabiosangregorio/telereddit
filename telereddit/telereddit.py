@@ -16,7 +16,7 @@ def on_chat_message(bot, update):
     if not msg.text:
         return
 
-    if any(r in msg.text.lower() for r in ['reddit.com', 'redd.it']):
+    if any(r in msg.text.lower() for r in ['reddit.com', 'redd.it', 'reddit.app.link']):
         posts_url = helpers.get_urls_from_text(msg.text)
         for url in posts_url:
             reddit_linker.send_post_from_url(bot, msg.chat_id, url)

@@ -30,9 +30,10 @@ class TestHelpers(unittest.TestCase):
         self.assertNotEqual(helpers.get_subreddit_names(text), ['/r/comics'])
 
     def test_get_urls_from_text(self):
-        text = 'https://redd.it/bqdlxe https://redd.it/bqekoq'
+        text = 'https://redd.it/bqdlxe https://redd.it/bqekoq https://reddit.app.link/coCUmdItLX'
         urls = ['https://www.reddit.com/comments/bqdlxe',
-                'https://www.reddit.com/comments/bqekoq']
+                'https://www.reddit.com/comments/bqekoq',
+                'https://www.reddit.com/r/tumblr/comments/c42tf6/woah']
         self.assertListEqual(helpers.get_urls_from_text(text), urls)
 
     def test_get(self):
