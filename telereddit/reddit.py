@@ -158,7 +158,3 @@ def get_post(subreddit=None, post_url=None):
         traceback.print_exc()
         return None, 'failed', f"I'm sorry, an error occurred in retrieving the post from "\
             f"{subreddit} :(\nThe developer must have missed an if statement!"
-
-
-
-get_post(post_url='https://www.reddit.com/r/bicycling/comments/aevkgj/finally_know_how_to_crosspost/')

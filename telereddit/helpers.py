@@ -1,4 +1,6 @@
 import re
+import requests
+
 from config import MAX_TITLE_LENGTH
 
 
@@ -49,11 +51,20 @@ def get_urls_from_text(text):
     '''
     polished = polish_text(text)
     urls = list()
-    for w in polished.lower().split(' '):
-        if 'reddit.com' in w:
+    for w in polished.split(' '):
+        w_lower = w.lower()
+        if 'reddit.com' in w_lower:
             urls.append(w.partition('/?')[0])
-        if 'redd.it' in w:
+        if 'redd.it' in w_lower:
             urls.append(f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}')
+        if 'reddit.app.link' in w_lower:
+            try:
+                r = requests.get(w, headers={'User-agent': 'telereddit_bot'})
+                start = r.text.find('https://')
+                url = r.text[start:r.text.find('"', start)]
+                urls.append(url.partition('/?')[0])
+            except Exception:
+                urls.append('None')
     return urls
 
 
