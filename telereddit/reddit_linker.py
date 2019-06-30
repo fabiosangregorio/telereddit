@@ -27,7 +27,7 @@ def send_post_from_url(bot, chat_id, post_url):
     '''Sends the post from the given url.'''
     status, err_msg = send_post(bot, chat_id, post_url=post_url)
     if status != 'success':
-        _send_exception_message(bot, chat_id, err_msg)
+        _send_exception_message(bot, chat_id, err_msg, keyboard=False)
 
 
 def send_post(bot, chat_id, subreddit=None, post_url=None):
@@ -38,16 +38,11 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
     post, status, err_msg = reddit.get_post(subreddit, post_url)
     if status == 'not_found':
         bot.sendMessage(chat_id, err_msg)
-        return
+        return 'success', None
     elif status != 'success':
         return status, err_msg
 
     try:
-        if 'www.youtube.com' in post.media_url:
-            bot.sendMessage(chat_id, f"I'm sorry, youtube videos are not"
-                            "supported yet :(", parse_mode='Markdown')
-            return 'success', None
-
         if post_url:
             # if it is not a random post (e.g. shared via link) don't show the
             # edit custom keyboard
@@ -60,6 +55,12 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             bot.sendMessage(chat_id, text=post.msg,
                             parse_mode='Markdown', reply_markup=keyboard,
                             disable_web_page_preview=True)
+        elif 'www.youtube.com' in post.media_url:
+            bot.sendMessage(chat_id, f"Youtube videos are not supported yet.",
+                            parse_mode='Markdown')
+            return 'success', None
+        elif post.media_size > 20000000:
+            bot.sendMessage(chat_id, text="Media is too big to be sent.")
         elif post.type == 'gif':
             bot.sendDocument(chat_id, post.media_url, caption=post.msg,
                              parse_mode='Markdown', reply_markup=keyboard,
@@ -76,8 +77,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
     except Exception as e:
         capture_exception(e)
         traceback.print_exc()
-        return 'retry', "I'm sorry, an error occurred in sending the post"\
-            " :(\nThe developer must have missed an if statement!"
+        return 'retry', "I'm sorry, there has been an error in sending the post."
 
     return 'success', None
 
@@ -118,6 +118,9 @@ def edit_result(bot, update):
                                    reply_markup=EDIT_FAILED_KEYBOARD)
 
 
-def _send_exception_message(bot, chat_id, msg):
+def _send_exception_message(bot, chat_id, msg, keyboard=True):
     '''Handles the errors created in post retrieval and sending.'''
-    bot.sendMessage(chat_id, msg, 'Markdown', reply_markup=EDIT_KEYBOARD)
+    if keyboard:
+        bot.sendMessage(chat_id, msg, 'Markdown', reply_markup=NO_EDIT_KEYBOARD)
+    else:
+        bot.sendMessage(chat_id, msg, 'Markdown')

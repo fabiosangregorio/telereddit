@@ -46,7 +46,7 @@ def _get_json(subreddit=None, post_url=None):
     if json.get('reason') == 'private':
         json, err_msg = None, "I'm sorry, this subreddit is private."
     elif json.get('error') == 404 or len(json['data']['children']) == 0:
-        json, err_msg = None, "I'm sorry, this subreddit doesn't exist!"
+        json, err_msg = None, "I'm sorry, this subreddit doesn't exist."
 
     return json, err_msg
 
@@ -69,33 +69,36 @@ def _get_media(post_url, fallback_url=None):
     media_url
         The processed media url.
     '''
-    type = 'photo'
+    media_type = 'photo'
     if 'gfycat.com' in post_url:
         url_prefix = post_url.replace('gfycat.com', 'thumbs.gfycat.com')
         post_url = url_prefix + '-size_restricted.gif'
         try:
-            requests.get(post_url)
+            requests.get(post_url, stream=True)
         except Exception:
             post_url = url_prefix + '-mobile.mp4'
 
     if 'v.redd.it' in post_url:
         post_url = fallback_url if fallback_url else f'{post_url}/DASH_1_2_M'
-        type = 'gif'
+        media_type = 'gif'
 
     if 'imgur' in post_url:
         post_url = post_url.replace('.png', '.jpg')
         if '.gifv' in post_url:
             gif_hash = post_url.split('/')[-1].replace('.gifv', '')
-            post_url, type = f'https://imgur.com/download/{gif_hash}', 'gif'
+            post_url, media_type = f'https://imgur.com/download/{gif_hash}', 'gif'
         elif not post_url.replace('.jpg', '').endswith(('s', 'b', 't', 'm', 'l', 'h')):
-            post_url, type = post_url.replace('.jpg', '') + 'h.jpg', 'photo'
+            post_url, media_type = post_url.replace('.jpg', '') + 'h.jpg', 'photo'
 
     if '.gif' in post_url:
-        type = 'gif'
+        media_type = 'gif'
     if '.mp4' in post_url:
-        type = 'video'
+        media_type = 'video'
 
-    return type, post_url
+    file_size = int(requests.get(post_url, stream=True).headers['Content-length'])
+
+    media = namedtuple('media', 'type url size')
+    return media(media_type, post_url, file_size)
 
 
 def get_post(subreddit=None, post_url=None):
@@ -141,20 +144,22 @@ def get_post(subreddit=None, post_url=None):
         post_text = post_text + '\n\n' if post_text else ''
         full_msg = f"{post_title}{post_text}\n\n{post_footer}"
         content_url = data['url']
-
+        media_size = None
         if '/comments/' in content_url:
             post_type, media_url = 'text', None
         else:
             fallback_url = helpers.chained_get(data, ['media', 'reddit_video', 'fallback_url'])
-            post_type, media_url = _get_media(content_url, fallback_url)
+            media = _get_media(content_url, fallback_url)
+            post_type = media.type
+            media_url = media.url
+            media_size = media.size
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '
-                          'content_url type media_url')
+                          'content_url type media_url media_size')
         return post(subreddit, post_title, post_text, full_msg, post_footer, permalink,
-                    content_url, post_type, media_url), 'success', None
+                    content_url, post_type, media_url, media_size), 'success', None
 
     except Exception as e:
         capture_exception(e)
         traceback.print_exc()
-        return None, 'failed', f"I'm sorry, an error occurred in retrieving the post from "\
-            f"{subreddit} :(\nThe developer must have missed an if statement!"
+        return None, 'failed', f"I'm sorry, the retrieval of the post failed."
