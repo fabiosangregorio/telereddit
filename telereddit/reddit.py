@@ -51,7 +51,7 @@ def _get_json(subreddit=None, post_url=None):
     return json, err_msg
 
 
-def _get_media(post_url, fallback_url=None):
+def _get_media(post_url, json={}):
     '''
     Processes the post url to get the media url, based on common url patterns.
 
@@ -59,17 +59,22 @@ def _get_media(post_url, fallback_url=None):
     ----------
     post_url : str
         Unprocessed media url.
-    data : json
+    json : json
         Full json post data.
 
     Returns
     -------
+    A namedtuple (type, url, size)
     type
         The type of the media. Can be photo, gif, or video.
-    media_url
+    url
         The processed media url.
+    size
+        The filesize of the media. It can be None.
     '''
+    fallback_url = helpers.chained_get(json, ['media', 'reddit_video', 'fallback_url'])
     media_type = 'photo'
+    file_size = None
     if 'gfycat.com' in post_url:
         url_prefix = post_url.replace('gfycat.com', 'thumbs.gfycat.com')
         post_url = url_prefix + '-size_restricted.gif'
@@ -95,7 +100,13 @@ def _get_media(post_url, fallback_url=None):
     if '.mp4' in post_url:
         media_type = 'video'
 
-    file_size = int(requests.get(post_url, stream=True).headers['Content-length'])
+    if 'youtube.com' in post_url or 'youtu.be' in post_url:
+        oembed_url = helpers.chained_get(json, ['media', 'oembed', 'url'])
+        if oembed_url:
+            post_url = oembed_url
+        media_type = 'youtube'
+    else:
+        file_size = int(requests.get(post_url, stream=True).headers['Content-length'])
 
     media = namedtuple('media', 'type url size')
     return media(media_type, post_url, file_size)
@@ -140,19 +151,23 @@ def get_post(subreddit=None, post_url=None):
                       f"[{subreddit}]({subreddit_url})"
         post_title = helpers.escape_markdown(data['title'])
         post_text = helpers.truncate_text(data['selftext'], MAX_POST_LENGTH)
-        post_text = helpers.escape_markdown(post_text)
-        post_text = post_text + '\n\n' if post_text else ''
-        full_msg = f"{post_title}{post_text}\n\n{post_footer}"
         content_url = data['url']
+
         media_size = None
+        media = media_url = media_size = None
         if '/comments/' in content_url:
             post_type, media_url = 'text', None
         else:
-            fallback_url = helpers.chained_get(data, ['media', 'reddit_video', 'fallback_url'])
-            media = _get_media(content_url, fallback_url)
+            media = _get_media(content_url, data)
             post_type = media.type
             media_url = media.url
             media_size = media.size
+
+        post_text = helpers.escape_markdown(post_text)
+        if media and media.type == 'youtube':
+            post_text = post_text + f"\n\n[Link to youtube video]({media.url})"
+
+        full_msg = f"{post_title}{post_text}\n\n{post_footer}"
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '
                           'content_url type media_url media_size')

@@ -42,25 +42,23 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
     elif status != 'success':
         return status, err_msg
 
+    if post.media_size and post.media_size > 20000000:
+        return 'failed', "I'm sorry, media is too big to be sent."
+
     try:
-        if post_url:
-            # if it is not a random post (e.g. shared via link) don't show the
-            # edit custom keyboard
-            keyboard = NO_EDIT_KEYBOARD
-        else:
-            keyboard = EDIT_KEYBOARD
+        # if it is not a random post (e.g. shared via link) don't show the
+        # edit custom keyboard
+        keyboard = NO_EDIT_KEYBOARD if post_url else EDIT_KEYBOARD
 
         if post.type == 'text':
             # check if the post is a text post
             bot.sendMessage(chat_id, text=post.msg,
                             parse_mode='Markdown', reply_markup=keyboard,
                             disable_web_page_preview=True)
-        elif 'www.youtube.com' in post.media_url:
-            bot.sendMessage(chat_id, f"Youtube videos are not supported yet.",
-                            parse_mode='Markdown')
+        elif post.type == 'youtube':
+            bot.sendMessage(chat_id, text=post.msg,
+                            parse_mode='Markdown', reply_markup=keyboard)
             return 'success', None
-        elif post.media_size > 20000000:
-            bot.sendMessage(chat_id, text="Media is too big to be sent.")
         elif post.type == 'gif':
             bot.sendDocument(chat_id, post.media_url, caption=post.msg,
                              parse_mode='Markdown', reply_markup=keyboard,
@@ -103,13 +101,18 @@ def edit_result(bot, update):
         msg_is_text = message.caption is None
         if post.type != 'text' and not msg_is_text:
             media = InputMediaPhoto(post.content_url, post.msg, 'Markdown')
+            if message.caption_markdown == media.caption:
+                continue
             bot.editMessageMedia(chat_id, message_id, media=media,
                                  reply_markup=EDIT_KEYBOARD)
             break
-        elif post.type == 'text' and msg_is_text:
+        elif post.type in ['text', 'youtube'] and msg_is_text:
+            is_youtube = post.type == 'youtube'
+            if message.text_markdown == post.msg:
+                continue
             bot.editMessageText(post.msg, chat_id, message_id,
                                 parse_mode='Markdown', reply_markup=EDIT_KEYBOARD,
-                                disable_web_page_preview=True)
+                                disable_web_page_preview=(not is_youtube))
             break
         tries += 1
 

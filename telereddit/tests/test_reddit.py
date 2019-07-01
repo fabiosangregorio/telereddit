@@ -23,8 +23,14 @@ class TestReddit(unittest.TestCase):
         self.assertEqual(media.type, 'photo')
 
         # v.redd.it video
-        media = reddit._get_media("https://v.redd.it/4phan5t9wq031",
-                                  "https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback")
+        json = {
+            "media": {
+                "reddit_video": {
+                    "fallback_url": "https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback"
+                }
+            }
+        }
+        media = reddit._get_media("https://v.redd.it/4phan5t9wq031", json)
         self.assertEqual(media.url, "https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback")
         self.assertEqual(media.type, 'gif')
 
@@ -42,6 +48,40 @@ class TestReddit(unittest.TestCase):
         media = reddit._get_media("https://gfycat.com/HeartfeltHollowIberianchiffchaff")
         self.assertEqual(media.url, "https://thumbs.gfycat.com/HeartfeltHollowIberianchiffchaff-size_restricted.gif")
         self.assertEqual(media.type, 'gif')
+
+        # youtube link (attribution link)
+        json = {
+            "media": {
+                "oembed": {
+                    "url": "https://www.youtube.com/watch?v=DJxchZ7qAzE"
+                }
+            }
+        }
+        media = reddit._get_media("https://www.youtube.com/attribution_link?a=o3Cq80oOnoc&u=%2Fwatch%3Fv%3D3OSc_psp4k0%26feature%3Dshare", json)
+        self.assertEqual(media.url, "https://www.youtube.com/watch?v=DJxchZ7qAzE")
+        self.assertEqual(media.type, 'youtube')
+
+        # youtube link (youtube.com)
+        json = {
+            "media": {
+                "oembed": {}
+            }
+        }
+        media = reddit._get_media("https://www.youtube.com/watch?v=DJxchZ7qAzE", json)
+        self.assertEqual(media.url, "https://www.youtube.com/watch?v=DJxchZ7qAzE")
+        self.assertEqual(media.type, 'youtube')
+
+        # youtube link (youtube.com)
+        json = {
+            "media": {
+                "oembed": {
+                    "url": "https://www.youtube.com/watch?v=DJxchZ7qAzE"
+                }
+            }
+        }
+        media = reddit._get_media("https://www.youtu.be/watch?v=DJxchZ7qAzE", json)
+        self.assertEqual(media.url, "https://www.youtube.com/watch?v=DJxchZ7qAzE")
+        self.assertEqual(media.type, 'youtube')
 
     def test_get_post(self):
         # text post
