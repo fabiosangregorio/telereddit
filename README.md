@@ -13,3 +13,4 @@ TeleReddit currently supports text, picture, video and gifs posts with media fro
 
 ## Bugs and feature requests
 If you want to report a bug or would like a feature to be added, feel free to open an issue.
+ 
