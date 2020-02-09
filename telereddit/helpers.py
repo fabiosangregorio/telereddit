@@ -12,14 +12,14 @@ def get_subreddit_names(text):
     return re.findall(regex, text, re.MULTILINE)
 
 
-def get_subreddit_name(text):
+def get_subreddit_name(text, reverse=False):
     '''
-    Returns the first (prefixed) subreddit name if present in the given text,
-    None otherwise.
+    Returns the first (or last if reverse=True) (prefixed) subreddit name if
+    present in the given text, None otherwise.
     '''
     subs = get_subreddit_names(text)
     if len(subs):
-        return subs[0]
+        return subs[-1] if reverse else subs[0]
     else:
         return None
 
