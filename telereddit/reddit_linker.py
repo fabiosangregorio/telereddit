@@ -89,7 +89,7 @@ def edit_result(bot, update):
     chat_id = message.chat_id
     message_id = message.message_id
     text = (message.caption or message.text) + '\n'
-    subreddit = helpers.get_subreddit_name(text)
+    subreddit = helpers.get_subreddit_name(text, True)
     if subreddit is None:
         return
 
