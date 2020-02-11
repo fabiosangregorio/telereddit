@@ -106,7 +106,12 @@ def _get_media(post_url, json={}):
             post_url = oembed_url
         media_type = 'youtube'
     else:
-        file_size = int(requests.get(post_url, stream=True).headers['Content-length'])
+        file_size = int(
+            requests.get(
+                post_url, 
+                headers={'Authorization': 'Client-ID 90bd24c00c6efe0'}, 
+                stream=True
+            ).headers['Content-length'])
 
     media = namedtuple('media', 'type url size')
     return media(media_type, post_url, file_size)
