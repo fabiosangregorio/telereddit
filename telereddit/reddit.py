@@ -167,7 +167,7 @@ def get_post(subreddit=None, post_url=None):
         if media and media.type == 'youtube':
             post_text = post_text + f"\n\n[Link to youtube video]({media.url})"
 
-        full_msg = f"{post_title}{post_text}\n\n{post_footer}"
+        full_msg = f"*{post_title}*\n{post_text}\n\n{post_footer}"
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '
                           'content_url type media_url media_size')
