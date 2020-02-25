@@ -106,7 +106,12 @@ def _get_media(post_url, json={}):
             post_url = oembed_url
         media_type = 'youtube'
     else:
-        file_size = int(requests.get(post_url, stream=True).headers['Content-length'])
+        file_size = int(
+            requests.get(
+                post_url, 
+                headers={'Authorization': 'Client-ID 90bd24c00c6efe0'}, 
+                stream=True
+            ).headers['Content-length'])
 
     media = namedtuple('media', 'type url size')
     return media(media_type, post_url, file_size)
@@ -167,7 +172,7 @@ def get_post(subreddit=None, post_url=None):
         if media and media.type == 'youtube':
             post_text = post_text + f"\n\n[Link to youtube video]({media.url})"
 
-        full_msg = f"{post_title}{post_text}\n\n{post_footer}"
+        full_msg = f"*{post_title}*\n{post_text}\n\n{post_footer}"
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '
                           'content_url type media_url media_size')
