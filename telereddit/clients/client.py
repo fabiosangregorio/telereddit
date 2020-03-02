@@ -2,28 +2,36 @@ from abc import ABC, abstractmethod
 
 
 class Client(ABC):
+    is_authenticated = False
+
+    @classmethod
     @abstractmethod
-    def preprocess(self, parsed_url):
+    def preprocess(cls, parsed_url, json):
         pass
 
+    @classmethod
     @abstractmethod
-    def get(self, url, status):
+    def get(cls, url):
         pass
 
+    @classmethod
     @abstractmethod
-    def postprocess(self, response):
+    def postprocess(cls, response):
         pass
 
+    @classmethod
     @abstractmethod
-    def authenticate(self):
+    def authenticate(cls):
         pass
 
-    def get_media(self, url):
-        processed_url = self.preprocess(url)
-        response = self.get(processed_url)
-        if response.status == 401:
-            self.authenticate()
-            response = self.get(processed_url)
-        elif response.status != 200:
-            response = self.get(processed_url, response.status)
-        return self.postprocess(response)
+    @classmethod
+    def get_media(cls, url, json):
+        processed_url = cls.preprocess(url, json)
+
+        response = cls.get(processed_url)
+        if cls.is_authenticated and response.status_code == 401:
+            cls.authenticate()
+            response = cls.get(processed_url)
+        if response.status_code >= 300:
+            raise Exception("client.get_media: error in getting the media")
+        return cls.postprocess(response)

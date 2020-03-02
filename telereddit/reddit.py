@@ -10,6 +10,8 @@ import helpers
 from config import MAX_POST_LENGTH
 from secret import *
 
+from clients.web import Web
+
 
 def _get_json(subreddit=None, post_url=None):
     """
@@ -78,53 +80,43 @@ def _get_media(url, json={}):
     parsed_url = urlparse(url)
     base_url = parsed_url.netloc
 
-    if 'gfycat.com' in base_url:
-
-    else if 'v.redd.it' in base_url:
-
-    else if 'imgur.com' in base_url:
-
-    else if 'youtube.com' in base_url or 'youtu.be' in base_url:
-
-    else:
-
     fallback_url = helpers.chained_get(json, ['media', 'reddit_video', 'fallback_url'])
     media_type = 'photo'
     file_size = None
-    if 'gfycat.com' in post_url:
-        url_prefix = post_url.replace('gfycat.com', 'thumbs.gfycat.com')
-        post_url = url_prefix + '-size_restricted.gif'
+    if 'gfycat.com' in url:
+        url_prefix = url.replace('gfycat.com', 'thumbs.gfycat.com')
+        url = url_prefix + '-size_restricted.gif'
         try:
-            requests.get(post_url, stream=True)
+            requests.get(url, stream=True)
         except Exception:
-            post_url = url_prefix + '-mobile.mp4'
+            url = url_prefix + '-mobile.mp4'
 
-    if 'v.redd.it' in post_url:
-        post_url = fallback_url if fallback_url else f'{post_url}/DASH_1_2_M'
+    if 'v.redd.it' in url:
+        url = fallback_url if fallback_url else f'{url}/DASH_1_2_M'
         media_type = 'gif'
 
-    if 'imgur' in post_url:
-        post_url = post_url.replace('.png', '.jpg')
-        if '.gifv' in post_url:
-            gif_hash = post_url.split('/')[-1].replace('.gifv', '')
+    if 'imgur' in url:
+        url = url.replace('.png', '.jpg')
+        if '.gifv' in url:
+            gif_hash = url.split('/')[-1].replace('.gifv', '')
             post_url, media_type = f'https://imgur.com/download/{gif_hash}', 'gif'
-        elif not post_url.replace('.jpg', '').endswith(('s', 'b', 't', 'm', 'l', 'h')):
-            post_url, media_type = post_url.replace('.jpg', '') + 'h.jpg', 'photo'
+        elif not url.replace('.jpg', '').endswith(('s', 'b', 't', 'm', 'l', 'h')):
+            post_url, media_type = url.replace('.jpg', '') + 'h.jpg', 'photo'
 
-    if '.gif' in post_url:
+    if '.gif' in url:
         media_type = 'gif'
-    if '.mp4' in post_url:
+    if '.mp4' in url:
         media_type = 'video'
 
-    if 'youtube.com' in post_url or 'youtu.be' in post_url:
+    if 'youtube.com' in url or 'youtu.be' in url:
         oembed_url = helpers.chained_get(json, ['media', 'oembed', 'url'])
         if oembed_url:
-            post_url = oembed_url
+            url = oembed_url
         media_type = 'youtube'
     else:
         request = requests.get(
-            post_url,
-            headers={'Authorization': 'Client-ID 90bd24c00c6efe0'},
+            url,
+            headers={'Authorization': 'Client-ID 90bd24c00c6efe0'}, # imgur client id
             stream=True
         )
         if 'Content-length' in request.headers:
@@ -133,7 +125,7 @@ def _get_media(url, json={}):
             return
 
     media = namedtuple('media', 'type url size')
-    return media(media_type, post_url, file_size)
+    return media(media_type, url, file_size)
 
 
 def get_post(subreddit=None, post_url=None):
@@ -177,12 +169,13 @@ def get_post(subreddit=None, post_url=None):
         post_text = helpers.truncate_text(data['selftext'], MAX_POST_LENGTH)
         content_url = data['url']
 
-        media_size = None
-        media = media_url = media_size = None
+        media = None
+        media_size = 0
         if '/comments/' in content_url:
             post_type, media_url = 'text', None
         else:
-            media = _get_media(content_url, data)
+            # media = Web.get_media(content_url, data)
+            media = Web.get_media(content_url, data)
             post_type = media.type
             media_url = media.url
             media_size = media.size
