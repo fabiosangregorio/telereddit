@@ -2,15 +2,17 @@ import requests
 from collections import namedtuple
 import random
 import traceback
+from urllib.parse import urlparse
 
 from sentry_sdk import capture_exception
 
 import helpers
 from config import MAX_POST_LENGTH
+from secret import *
 
 
 def _get_json(subreddit=None, post_url=None):
-    '''
+    """
     Handles the http request and gets the json for the given subreddit/post url.
 
     Parameters
@@ -28,7 +30,7 @@ def _get_json(subreddit=None, post_url=None):
         and is public, an error otherwise.
     err_msg
         Message containing the reason for the error.
-    '''
+    """
     if not post_url:
         post_url = f'https://www.reddit.com/{subreddit}/random'
     try:
@@ -51,13 +53,13 @@ def _get_json(subreddit=None, post_url=None):
     return json, err_msg
 
 
-def _get_media(post_url, json={}):
-    '''
+def _get_media(url, json={}):
+    """
     Processes the post url to get the media url, based on common url patterns.
 
     Parameters
     ----------
-    post_url : str
+    url : str
         Unprocessed media url.
     json : json
         Full json post data.
@@ -71,7 +73,21 @@ def _get_media(post_url, json={}):
         The processed media url.
     size
         The filesize of the media. It can be None.
-    '''
+    """
+
+    parsed_url = urlparse(url)
+    base_url = parsed_url.netloc
+
+    if 'gfycat.com' in base_url:
+
+    else if 'v.redd.it' in base_url:
+
+    else if 'imgur.com' in base_url:
+
+    else if 'youtube.com' in base_url or 'youtu.be' in base_url:
+
+    else:
+
     fallback_url = helpers.chained_get(json, ['media', 'reddit_video', 'fallback_url'])
     media_type = 'photo'
     file_size = None
@@ -106,12 +122,15 @@ def _get_media(post_url, json={}):
             post_url = oembed_url
         media_type = 'youtube'
     else:
-        file_size = int(
-            requests.get(
-                post_url, 
-                headers={'Authorization': 'Client-ID 90bd24c00c6efe0'}, 
-                stream=True
-            ).headers['Content-length'])
+        request = requests.get(
+            post_url,
+            headers={'Authorization': 'Client-ID 90bd24c00c6efe0'},
+            stream=True
+        )
+        if 'Content-length' in request.headers:
+            file_size = int(request.headers['Content-length'])
+        else:
+            return
 
     media = namedtuple('media', 'type url size')
     return media(media_type, post_url, file_size)
