@@ -3,11 +3,11 @@ import json
 import requests
 
 import secret
-from clients.client import Client
+from services.service import Service
 from media import Media
 
 
-class Gfycat(Client):
+class Gfycat(Service):
     access_token = None
     is_authenticated = True
 

@@ -2,7 +2,7 @@ import requests
 from collections import namedtuple
 import random
 import traceback
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 from sentry_sdk import capture_exception
 
@@ -10,7 +10,7 @@ import helpers
 from config import MAX_POST_LENGTH
 from secret import *
 
-from clients.web import Web
+from services.services_wrapper import ServicesWrapper
 
 
 def _get_json(subreddit=None, post_url=None):
@@ -129,7 +129,7 @@ def _get_media(url, json={}):
 
 
 def get_post(subreddit=None, post_url=None):
-    '''
+    """
     Processes the json and gets the post out of it, ready to be sent.
 
     Parameters
@@ -149,7 +149,7 @@ def get_post(subreddit=None, post_url=None):
         The result of the post processing. Can be: success, not_found, failed.
     err_msg
         Message containing the reason for the error.
-    '''
+    """
     if not subreddit and not post_url:
         return None, None, None
 
@@ -174,16 +174,15 @@ def get_post(subreddit=None, post_url=None):
         if '/comments/' in content_url:
             post_type, media_url = 'text', None
         else:
-            # media = Web.get_media(content_url, data)
-            media = Web.get_media(content_url, data)
+            media = ServicesWrapper.get_media(content_url, data)
             post_type = media.type
             media_url = media.url
             media_size = media.size
 
-        post_text = helpers.escape_markdown(post_text)
         if media and media.type == 'youtube':
-            post_text = post_text + f"\n\n[Link to youtube video]({media.url})"
+            post_text = post_text + f"\n\n[Link to youtube video]({urlunparse(media.url)})"
 
+        post_text = helpers.escape_markdown(post_text)
         full_msg = f"*{post_title}*\n{post_text}\n\n{post_footer}"
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '

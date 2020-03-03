@@ -1,11 +1,11 @@
 import helpers
 import requests
-from clients.client import Client
+from services.service import Service
 
 from media import Media
 
 
-class Vreddit(Client):
+class Vreddit(Service):
     is_authenticated = False
 
     @classmethod

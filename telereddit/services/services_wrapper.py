@@ -1,14 +1,17 @@
+import logging
 from urllib.parse import urlparse
 
-from clients.gfycat import Gfycat
-from clients.vreddit import Vreddit
-from clients.imgur import Imgur
+from services.gfycat_service import Gfycat
+from services.vreddit_service import Vreddit
+from services.imgur_service import Imgur
+from services.youtube_service import Youtube
 
 
-class Web:
+class ServicesWrapper:
     gfycat = Gfycat()
     vreddit = Vreddit()
     imgur = Imgur()
+    youtube = Youtube()
 
     @classmethod
     def get_media(cls, url, json={}):
@@ -22,11 +25,9 @@ class Web:
             media = cls.vreddit.get_media(parsed_url, json)
         elif 'imgur.com' in base_url:
             media = cls.imgur.get_media(parsed_url, json)
+        elif 'youtube.com' in base_url or 'youtu.be' in base_url:
+            media = cls.youtube.get_media(parsed_url, json)
+        else:
+            logging.warning("services_wrapper: no suitable service found")
 
         return media
-
-        # else if 'imgur.com' in base_url:
-        #
-        # else if 'youtube.com' in base_url or 'youtu.be' in base_url:
-        #
-        # else:

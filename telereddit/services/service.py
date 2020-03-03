@@ -1,8 +1,12 @@
 from abc import ABC, abstractmethod
 
+import requests
 
-class Client(ABC):
+
+class Service(ABC):
+    access_token = None
     is_authenticated = False
+    has_external_request = True
 
     @classmethod
     @abstractmethod
@@ -29,9 +33,10 @@ class Client(ABC):
         processed_url = cls.preprocess(url, json)
 
         response = cls.get(processed_url)
-        if cls.is_authenticated and response.status_code == 401:
-            cls.authenticate()
-            response = cls.get(processed_url)
-        if response.status_code >= 300:
-            raise Exception("client.get_media: error in getting the media")
+        if cls.has_external_request:
+            if cls.is_authenticated and response.status_code == 401:
+                cls.authenticate()
+                response = cls.get(processed_url)
+            if response.status_code >= 300:
+                raise Exception("service.get_media: error in getting the media")
         return cls.postprocess(response)
