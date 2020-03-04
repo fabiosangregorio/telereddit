@@ -1,10 +1,5 @@
-import json
-
-import requests
-
-import secret
 from services.service import Service
-from media import Media
+from media import Media, MediaType
 
 from telereddit import helpers
 
@@ -25,7 +20,7 @@ class Youtube(Service):
 
     @classmethod
     def postprocess(cls, url):
-        return Media(url, 'youtube')
+        return Media(url, MediaType.YOUTUBE)
 
     @classmethod
     def authenticate(cls):

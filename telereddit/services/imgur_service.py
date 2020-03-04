@@ -4,7 +4,7 @@ import requests
 
 import secret
 from services.service import Service
-from media import Media
+from media import Media, MediaType
 
 
 class Imgur(Service):
@@ -32,9 +32,9 @@ class Imgur(Service):
         data = json.loads(response.content)['data']
         media = None
         if 'image/jpeg' in data['type'] or 'image/png' in data['type']:
-            media = Media(data['link'], 'photo', data['size'])
+            media = Media(data['link'], MediaType.PHOTO, data['size'])
         elif 'video' or 'image/gif' in data['type']:
-            media = Media(data['mp4'], 'video', data['mp4_size'])
+            media = Media(data['mp4'], MediaType.VIDEO, data['mp4_size'])
 
         return media
 

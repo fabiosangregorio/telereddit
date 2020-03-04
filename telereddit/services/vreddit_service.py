@@ -2,7 +2,7 @@ import helpers
 import requests
 from services.service import Service
 
-from media import Media
+from media import Media, MediaType
 
 
 class Vreddit(Service):
@@ -20,7 +20,7 @@ class Vreddit(Service):
 
     @classmethod
     def postprocess(cls, response):
-        media = Media(response.url, 'gif')
+        media = Media(response.url, MediaType.GIF)
         if 'Content-length' in response.headers:
             media.size = int(response.headers['Content-length'])
         return media
