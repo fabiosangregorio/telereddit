@@ -2,15 +2,19 @@ import requests
 from collections import namedtuple
 import random
 import traceback
+from urllib.parse import urlparse, urlunparse
 
 from sentry_sdk import capture_exception
 
 import helpers
 from config import MAX_POST_LENGTH
+from secret import *
+
+from services.services_wrapper import ServicesWrapper
 
 
 def _get_json(subreddit=None, post_url=None):
-    '''
+    """
     Handles the http request and gets the json for the given subreddit/post url.
 
     Parameters
@@ -28,7 +32,7 @@ def _get_json(subreddit=None, post_url=None):
         and is public, an error otherwise.
     err_msg
         Message containing the reason for the error.
-    '''
+    """
     if not post_url:
         post_url = f'https://www.reddit.com/{subreddit}/random'
     try:
@@ -51,74 +55,8 @@ def _get_json(subreddit=None, post_url=None):
     return json, err_msg
 
 
-def _get_media(post_url, json={}):
-    '''
-    Processes the post url to get the media url, based on common url patterns.
-
-    Parameters
-    ----------
-    post_url : str
-        Unprocessed media url.
-    json : json
-        Full json post data.
-
-    Returns
-    -------
-    A namedtuple (type, url, size)
-    type
-        The type of the media. Can be photo, gif, or video.
-    url
-        The processed media url.
-    size
-        The filesize of the media. It can be None.
-    '''
-    fallback_url = helpers.chained_get(json, ['media', 'reddit_video', 'fallback_url'])
-    media_type = 'photo'
-    file_size = None
-    if 'gfycat.com' in post_url:
-        url_prefix = post_url.replace('gfycat.com', 'thumbs.gfycat.com')
-        post_url = url_prefix + '-size_restricted.gif'
-        try:
-            requests.get(post_url, stream=True)
-        except Exception:
-            post_url = url_prefix + '-mobile.mp4'
-
-    if 'v.redd.it' in post_url:
-        post_url = fallback_url if fallback_url else f'{post_url}/DASH_1_2_M'
-        media_type = 'gif'
-
-    if 'imgur' in post_url:
-        post_url = post_url.replace('.png', '.jpg')
-        if '.gifv' in post_url:
-            gif_hash = post_url.split('/')[-1].replace('.gifv', '')
-            post_url, media_type = f'https://imgur.com/download/{gif_hash}', 'gif'
-        elif not post_url.replace('.jpg', '').endswith(('s', 'b', 't', 'm', 'l', 'h')):
-            post_url, media_type = post_url.replace('.jpg', '') + 'h.jpg', 'photo'
-
-    if '.gif' in post_url:
-        media_type = 'gif'
-    if '.mp4' in post_url:
-        media_type = 'video'
-
-    if 'youtube.com' in post_url or 'youtu.be' in post_url:
-        oembed_url = helpers.chained_get(json, ['media', 'oembed', 'url'])
-        if oembed_url:
-            post_url = oembed_url
-        media_type = 'youtube'
-    else:
-        file_size = int(
-            requests.get(
-                post_url, 
-                headers={'Authorization': 'Client-ID 90bd24c00c6efe0'}, 
-                stream=True
-            ).headers['Content-length'])
-
-    media = namedtuple('media', 'type url size')
-    return media(media_type, post_url, file_size)
-
-
 def get_post(subreddit=None, post_url=None):
-    '''
+    """
     Processes the json and gets the post out of it, ready to be sent.
 
     Parameters
@@ -138,7 +76,7 @@ def get_post(subreddit=None, post_url=None):
         The result of the post processing. Can be: success, not_found, failed.
     err_msg
         Message containing the reason for the error.
-    '''
+    """
     if not subreddit and not post_url:
         return None, None, None
 
@@ -158,20 +96,20 @@ def get_post(subreddit=None, post_url=None):
         post_text = helpers.truncate_text(data['selftext'], MAX_POST_LENGTH)
         content_url = data['url']
 
-        media_size = None
-        media = media_url = media_size = None
+        media = None
+        media_size = 0
         if '/comments/' in content_url:
             post_type, media_url = 'text', None
         else:
-            media = _get_media(content_url, data)
+            media = ServicesWrapper.get_media(content_url, data)
             post_type = media.type
             media_url = media.url
             media_size = media.size
 
-        post_text = helpers.escape_markdown(post_text)
         if media and media.type == 'youtube':
-            post_text = post_text + f"\n\n[Link to youtube video]({media.url})"
+            post_text = post_text + f"\n\n[Link to youtube video]({urlunparse(media.url)})"
 
+        post_text = helpers.escape_markdown(post_text)
         full_msg = f"*{post_title}*\n{post_text}\n\n{post_footer}"
 
         post = namedtuple('Post', 'subreddit title text msg footer permalink '

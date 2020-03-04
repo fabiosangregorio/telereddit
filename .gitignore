@@ -104,6 +104,7 @@ venv.bak/
 .mypy_cache/
 
 .vscode
+.idea
 secret.py
 
 __pycache__
