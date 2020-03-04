@@ -16,7 +16,7 @@ class Gfycat(Service):
 
     @classmethod
     def preprocess(cls, parsed_url, json):
-        gfyid = parsed_url.path
+        gfyid = parsed_url.path.partition('-')[0]
         return f'https://api.gfycat.com/v1/gfycats/{gfyid}'
 
     @classmethod

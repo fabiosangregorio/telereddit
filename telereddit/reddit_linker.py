@@ -7,6 +7,8 @@ from config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBO
 import reddit
 import helpers
 
+from media import MediaType
+
 
 def send_random_posts(bot, chat_id, text):
     '''
@@ -55,15 +57,15 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
             bot.sendMessage(chat_id, text=post.msg,
                             parse_mode='Markdown', reply_markup=keyboard,
                             disable_web_page_preview=True)
-        elif post.type == 'youtube':
+        elif post.type == MediaType.YOUTUBE:
             bot.sendMessage(chat_id, text=post.msg,
                             parse_mode='Markdown', reply_markup=keyboard)
             return 'success', None
-        elif post.type == 'gif':
+        elif post.type == MediaType.GIF:
             bot.sendDocument(chat_id, post.media_url, caption=post.msg,
                              parse_mode='Markdown', reply_markup=keyboard,
                              disable_web_page_preview=True)
-        elif post.type == 'video':
+        elif post.type == MediaType.VIDEO:
             bot.sendVideo(chat_id, post.media_url, caption=post.msg,
                           parse_mode='Markdown', reply_markup=keyboard,
                           disable_web_page_preview=True)

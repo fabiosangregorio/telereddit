@@ -1,6 +1,8 @@
 from services.service import Service
 from media import Media, MediaType
 
+from urllib.parse import urlunparse
+
 from telereddit import helpers
 
 
@@ -12,7 +14,7 @@ class Youtube(Service):
     @classmethod
     def preprocess(cls, parsed_url, json):
         oembed_url = helpers.chained_get(json, ['media', 'oembed', 'url'])
-        return oembed_url if oembed_url else parsed_url
+        return oembed_url if oembed_url else urlunparse(parsed_url)
 
     @classmethod
     def get(cls, url):
