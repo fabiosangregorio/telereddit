@@ -1,0 +1,21 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+    - github-actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Unlock git-crypt secrets
+      uses: sliteteam/github-action-git-crypt-unlock@1.0.2
+      env:
+        GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+
+    - name: Test git-crypt
+      run:
+        cat telereddit/test.py
