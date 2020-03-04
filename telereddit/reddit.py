@@ -10,6 +10,8 @@ import helpers
 from config import MAX_POST_LENGTH
 from secret import *
 
+from media import MediaType
+
 from services.services_wrapper import ServicesWrapper
 
 
@@ -106,8 +108,8 @@ def get_post(subreddit=None, post_url=None):
             media_url = media.url
             media_size = media.size
 
-        if media and media.type == 'youtube':
-            post_text = post_text + f"\n\n[Link to youtube video]({urlunparse(media.url)})"
+        if media and media.type == MediaType.YOUTUBE:
+            post_text = post_text + f"\n\n[Link to youtube video]({media.url})"
 
         post_text = helpers.escape_markdown(post_text)
         full_msg = f"*{post_title}*\n{post_text}\n\n{post_footer}"
