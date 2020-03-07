@@ -34,4 +34,6 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Run tests
-      run: python -m unittest
+      run: |
+        cd telereddit
+        python -m unittest
