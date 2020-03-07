@@ -1,1 +1,1 @@
-test.py filter=git-crypt diff=git-crypt 
+secret.py filter=git-crypt diff=git-crypt 
