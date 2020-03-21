@@ -11,10 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    - name: Unlock git-crypt secrets
-      uses: sliteteam/github-action-git-crypt-unlock@1.0.2
-      env:
-        GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+    - name: Git-Crypt Unlock
+      uses: zemuldo/git-crypt-unlock@master
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }}
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
