@@ -1,6 +1,7 @@
 import helpers
 import requests
 from services.service import Service
+from urllib.parse import urlunparse
 
 from media import Media, MediaType
 
@@ -11,7 +12,7 @@ class Vreddit(Service):
     @classmethod
     def preprocess(cls, parsed_url, json):
         fallback_url = helpers.chained_get(json, ['media', 'reddit_video', 'fallback_url'])
-        url = fallback_url if fallback_url else f'{parsed_url}/DASH_1_2_M'
+        url = fallback_url if fallback_url else f'{urlunparse(parsed_url)}/DASH_1_2_M'
         return url
 
     @classmethod

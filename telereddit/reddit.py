@@ -36,8 +36,9 @@ def _get_json(subreddit=None, post_url=None):
     if not post_url:
         post_url = f'https://www.reddit.com/{subreddit}/random'
     try:
-        json = requests.get(f'{post_url}.json',
-                            headers={'User-agent': 'telereddit_bot'}).json()
+        response = requests.get(f'{post_url}.json',
+                                headers={'User-agent': 'telereddit_bot'})
+        json = response.json()
         if not json:
             raise ValueError
     except ValueError:
@@ -49,7 +50,9 @@ def _get_json(subreddit=None, post_url=None):
 
     if json.get('reason') == 'private':
         json, err_msg = None, "I'm sorry, this subreddit is private."
-    elif json.get('error') == 404 or len(json['data']['children']) == 0:
+    elif (json.get('error') == 404 or len(json['data']['children']) == 0
+          or (len(response.history) > 0 and "search.json" in response.url)):
+        # r/opla redirects to search.json page but subreddit doesn't exist
         json, err_msg = None, "I'm sorry, this subreddit doesn't exist."
 
     return json, err_msg
