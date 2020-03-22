@@ -63,4 +63,3 @@ if __name__ == "__main__":
     dispatcher.add_handler(MessageHandler(Filters.all, on_chat_message))
     dispatcher.add_handler(CallbackQueryHandler(on_callback_query))
     updater.start_polling()
- 

@@ -5,7 +5,8 @@ import requests
 from telereddit import secret
 
 from services.service import Service
-from media import Media, MediaType
+from media import Media
+from content_type import ContentType
 
 
 class Gfycat(Service):
@@ -27,12 +28,12 @@ class Gfycat(Service):
     @classmethod
     def postprocess(cls, response):
         gfy_item = json.loads(response.content)['gfyItem']
-        media = Media(gfy_item["webmUrl"].replace('.webm', '.mp4'), MediaType.VIDEO, gfy_item["webmSize"])
+        media = Media(gfy_item["webmUrl"].replace('.webm', '.mp4'), ContentType.VIDEO, gfy_item["webmSize"])
         # Telegram does not support webm
         # See: https://www.reddit.com/r/Telegram/comments/5wcqh8/sending_webms_as_videos/
         if media.size > 20000000:
             media.url = gfy_item["max5mbGif"]
-            media.type = MediaType.GIF
+            media.type = ContentType.GIF
             media.size = 5000000
         return media
 

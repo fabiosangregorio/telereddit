@@ -1,5 +1,4 @@
 import requests
-from collections import namedtuple
 import random
 import traceback
 
@@ -8,7 +7,8 @@ from sentry_sdk import capture_exception
 import helpers
 from config.config import MAX_POST_LENGTH
 
-from media import MediaType
+from post import Post
+from content_type import ContentType
 
 from services.services_wrapper import ServicesWrapper
 
@@ -100,25 +100,15 @@ def get_post(subreddit=None, post_url=None):
         content_url = data['url']
 
         media = None
-        media_size = 0
-        if '/comments/' in content_url:
-            post_type, media_url = 'text', None
-        else:
+        if '/comments/' not in content_url:
             media = ServicesWrapper.get_media(content_url, data)
-            post_type = media.type
-            media_url = media.url
-            media_size = media.size
-
-        if media and media.type == MediaType.YOUTUBE:
-            post_text = post_text + f"\n\n[Link to youtube video]({media.url})"
+            if media.type == ContentType.YOUTUBE:
+                post_text = f"{post_text}\n\n[Link to youtube video]({media.url})"
 
         post_text = helpers.escape_markdown(post_text)
-        full_msg = f"*{post_title}*\n{post_text}\n\n{post_footer}"
 
-        post = namedtuple('Post', 'subreddit title text msg footer permalink '
-                          'content_url type media_url media_size')
-        return post(subreddit, post_title, post_text, full_msg, post_footer, permalink,
-                    content_url, post_type, media_url, media_size), 'success', None
+        post = Post(subreddit, post_title, post_text, post_footer, media)
+        return post, 'success', None
 
     except Exception as e:
         capture_exception(e)

@@ -1,7 +1,7 @@
 import unittest
 import reddit
 
-from media import MediaType
+from content_type import ContentType
 
 
 class TestReddit(unittest.TestCase):
@@ -26,7 +26,7 @@ class TestReddit(unittest.TestCase):
         self.assertEqual(post.subreddit.lower(), 'r/showerthoughts')
         self.assertIsNotNone(post.title)
         self.assertIn('https://www.reddit.com/r/showerthoughts', post.footer.lower())
-        self.assertEqual(post.type, 'text')
+        self.assertEqual(post.get_type(), ContentType.TEXT)
 
         # photo post
         post, status, err_msg = reddit.get_post('r/pics')
@@ -35,8 +35,8 @@ class TestReddit(unittest.TestCase):
         self.assertEqual(post.subreddit.lower(), 'r/pics')
         self.assertIsNotNone(post.title)
         self.assertIn('https://www.reddit.com/r/pics', post.footer.lower())
-        self.assertIsNotNone(post.media_url)
-        self.assertEqual(post.type, MediaType.PHOTO)
+        self.assertIsNotNone(post.media.url)
+        self.assertEqual(post.get_type(), ContentType.PHOTO)
 
         # crosspost
         post, status, err_msg = reddit.get_post(post_url='https://www.reddit.com/r/bicycling/comments/aevkgj/finally_know_how_to_crosspost/')
@@ -45,5 +45,5 @@ class TestReddit(unittest.TestCase):
         self.assertEqual(post.subreddit.lower(), 'r/bicycling')
         self.assertIsNotNone(post.title)
         self.assertIn('https://www.reddit.com/r/bicycling', post.footer.lower())
-        self.assertIsNotNone(post.media_url)
-        self.assertEqual(post.type, MediaType.PHOTO)
+        self.assertIsNotNone(post.media.url)
+        self.assertEqual(post.get_type(), ContentType.PHOTO)
