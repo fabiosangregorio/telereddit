@@ -2,7 +2,7 @@ import json
 
 import requests
 
-import secret
+from telereddit import secret
 from services.service import Service
 from media import Media, MediaType
 

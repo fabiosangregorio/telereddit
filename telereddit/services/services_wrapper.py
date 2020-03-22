@@ -29,8 +29,7 @@ class ServicesWrapper:
         elif 'youtube.com' in base_url or 'youtu.be' in base_url:
             media = cls.youtube.get_media(parsed_url, json)
         else:
-            logging.warning("services_wrapper: no suitable service found")
+            logging.warning(f"services_wrapper: no suitable service found. base_url: {base_url}")
             media = cls.generic.get_media(parsed_url, json)
 
         return media
-

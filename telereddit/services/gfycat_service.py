@@ -2,7 +2,8 @@ import json
 
 import requests
 
-import secret
+from telereddit import secret
+
 from services.service import Service
 from media import Media, MediaType
 
@@ -40,7 +41,7 @@ class Gfycat(Service):
         response = requests.post("https://api.gfycat.com/v1/oauth/token", data=json.dumps({
             'grant_type': 'client_credentials',
             'client_id': secret.GFYCAT_CLIENT_ID,
-            'client_secret': secret.GFYCAT_CLINET_SECRET
+            'client_secret': secret.GFYCAT_CLIENT_SECRET
         }))
         if response.status_code >= 300:
             raise Exception("Gfycat authentication failed")

@@ -1,7 +1,7 @@
 import re
 import requests
 
-from config import MAX_TITLE_LENGTH
+from config.config import MAX_TITLE_LENGTH
 
 
 def get_subreddit_names(text):

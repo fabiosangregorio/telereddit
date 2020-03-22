@@ -4,8 +4,8 @@ import sentry_sdk
 from telegram.ext import Updater, CallbackContext, MessageHandler, CallbackQueryHandler, Filters
 from telegram import Update
 import logging
-
-from secret import TELEGRAM_TOKEN, SENTRY_TOKEN
+import os
+import importlib
 
 import reddit_linker
 import helpers
@@ -44,10 +44,17 @@ def on_callback_query(update: Update, context: CallbackContext):
     context.bot.answerCallbackQuery(query_id)
 
 
-if __name__ == "__main__":
-    sentry_sdk.init(SENTRY_TOKEN)
+# Dynamic environment secret configuration
+env_key = os.environ.get('TELEREDDIT_MACHINE')
+if env_key is not None:
+    secret = importlib.import_module(f'config.secret_{env_key.lower()}').secret_config
+else:
+    secret = importlib.import_module('config.secret_generic').secret_config
 
-    updater = Updater(token=TELEGRAM_TOKEN, use_context=True)
+if __name__ == "__main__":
+    sentry_sdk.init(secret.SENTRY_TOKEN)
+
+    updater = Updater(token=secret.TELEGRAM_TOKEN, use_context=True)
     print("Listening...")
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

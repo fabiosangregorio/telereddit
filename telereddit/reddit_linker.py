@@ -2,7 +2,7 @@ import traceback
 
 from telegram import InputMediaPhoto
 from sentry_sdk import capture_exception
-from config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD
+from config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD
 
 import reddit
 import helpers

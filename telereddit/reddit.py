@@ -2,13 +2,11 @@ import requests
 from collections import namedtuple
 import random
 import traceback
-from urllib.parse import urlparse, urlunparse
 
 from sentry_sdk import capture_exception
 
 import helpers
-from config import MAX_POST_LENGTH
-from secret import *
+from config.config import MAX_POST_LENGTH
 
 from media import MediaType
 
