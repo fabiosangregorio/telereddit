@@ -2,7 +2,8 @@ import requests
 from urllib.parse import urlunparse
 
 from services.service import Service
-from media import Media, MediaType
+from media import Media
+from content_type import ContentType
 
 
 class Generic(Service):
@@ -20,12 +21,12 @@ class Generic(Service):
     @classmethod
     def postprocess(cls, response):
         file_size = None
-        media_type = MediaType.PHOTO
+        media_type = ContentType.PHOTO
 
         if '.gif' in response.url:
-            media_type = MediaType.GIF
+            media_type = ContentType.GIF
         elif '.mp4' in response.url:
-            media_type = MediaType.VIDEO
+            media_type = ContentType.VIDEO
 
         if 'Content-length' in response.headers:
             file_size = int(response.headers['Content-length'])

@@ -3,7 +3,8 @@ import requests
 from services.service import Service
 from urllib.parse import urlunparse
 
-from media import Media, MediaType
+from media import Media
+from content_type import ContentType
 
 
 class Vreddit(Service):
@@ -21,7 +22,7 @@ class Vreddit(Service):
 
     @classmethod
     def postprocess(cls, response):
-        media = Media(response.url, MediaType.GIF)
+        media = Media(response.url, ContentType.GIF)
         if 'Content-length' in response.headers:
             media.size = int(response.headers['Content-length'])
         return media

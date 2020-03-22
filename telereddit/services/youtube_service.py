@@ -1,5 +1,6 @@
 from services.service import Service
-from media import Media, MediaType
+from media import Media
+from content_type import ContentType
 
 from urllib.parse import urlunparse
 
@@ -22,7 +23,7 @@ class Youtube(Service):
 
     @classmethod
     def postprocess(cls, url):
-        return Media(url, MediaType.YOUTUBE)
+        return Media(url, ContentType.YOUTUBE)
 
     @classmethod
     def authenticate(cls):

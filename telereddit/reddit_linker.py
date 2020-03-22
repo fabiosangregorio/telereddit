@@ -1,13 +1,13 @@
 import traceback
 
-from telegram import InputMediaPhoto
+from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument
 from sentry_sdk import capture_exception
 from config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD
 
 import reddit
 import helpers
 
-from media import MediaType
+from media import ContentType
 
 
 def send_random_posts(bot, chat_id, text, num_posts=None):
@@ -45,7 +45,7 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
     elif status != 'success':
         return status, err_msg
 
-    if post.media_size and post.media_size > 20000000:
+    if post.media and post.media.size and post.media.size > 20000000:
         return 'failed', "I'm sorry, media is too big to be sent."
 
     try:
@@ -53,25 +53,25 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         # edit custom keyboard
         keyboard = NO_EDIT_KEYBOARD if post_url else EDIT_KEYBOARD
 
-        if post.type == 'text':
+        if post.get_type() == ContentType.TEXT:
             # check if the post is a text post
-            bot.sendMessage(chat_id, text=post.msg,
+            bot.sendMessage(chat_id, text=post.get_msg(),
                             parse_mode='Markdown', reply_markup=keyboard,
                             disable_web_page_preview=True)
-        elif post.type == MediaType.YOUTUBE:
-            bot.sendMessage(chat_id, text=post.msg,
+        elif post.get_type() == ContentType.YOUTUBE:
+            bot.sendMessage(chat_id, text=post.get_msg(),
                             parse_mode='Markdown', reply_markup=keyboard)
             return 'success', None
-        elif post.type == MediaType.GIF:
-            bot.sendDocument(chat_id, post.media_url, caption=post.msg,
+        elif post.get_type() == ContentType.GIF:
+            bot.sendDocument(chat_id, post.media.url, caption=post.get_msg(),
                              parse_mode='Markdown', reply_markup=keyboard,
                              disable_web_page_preview=True)
-        elif post.type == MediaType.VIDEO:
-            bot.sendVideo(chat_id, post.media_url, caption=post.msg,
+        elif post.get_type() == ContentType.VIDEO:
+            bot.sendVideo(chat_id, post.media.url, caption=post.get_msg(),
                           parse_mode='Markdown', reply_markup=keyboard,
                           disable_web_page_preview=True)
-        else:
-            bot.sendPhoto(chat_id, post.media_url, caption=post.msg,
+        elif post.get_type() == ContentType.PHOTO:
+            bot.sendPhoto(chat_id, post.media.url, caption=post.get_msg(),
                           parse_mode='Markdown', reply_markup=keyboard,
                           disable_web_page_preview=True)
 
@@ -101,23 +101,37 @@ def edit_result(bot, update):
         post, status, err_msg = reddit.get_post(subreddit)
         if status != 'success':
             continue
+
         msg_is_text = message.caption is None
-        if post.type != 'text' and not msg_is_text:
-            media = InputMediaPhoto(post.content_url, post.msg, 'Markdown')
-            if message.caption_markdown == media.caption:
-                continue
-            bot.editMessageMedia(chat_id, message_id, media=media,
+
+        if ((msg_is_text and message.text_markdown == post.get_msg())
+           or message.caption_markdown == post.get_msg()):
+            tries += 1
+            continue  # if post is the same retry
+
+        if not msg_is_text and post.get_type() in [ContentType.TEXT, ContentType.YOUTUBE]:
+            tries += 1
+            continue  # if message is not text and post is retry
+
+        if msg_is_text:
+            if post.get_type() == ContentType.TEXT:
+                bot.editMessageText(post.get_msg(), chat_id, message_id,
+                                    parse_mode='Markdown', reply_markup=EDIT_KEYBOARD,
+                                    disable_web_page_preview=True)
+            elif post.get_type() == ContentType.YOUTUBE:
+                bot.editMessageText(post.get_msg(), chat_id, message_id,
+                                    parse_mode='Markdown', reply_markup=EDIT_KEYBOARD)
+        else:
+            if post.get_type() == ContentType.GIF:
+                media = InputMediaDocument(post.media.url, caption=post.get_msg(), parse_mode='Markdown')
+            elif post.get_type() == ContentType.VIDEO:
+                media = InputMediaVideo(post.media.url, caption=post.get_msg(), parse_mode='Markdown')
+            elif post.get_type() == ContentType.PHOTO:
+                media = InputMediaPhoto(post.media.url, caption=post.get_msg(), parse_mode='Markdown')
+            bot.editMessageMedia(chat_id=chat_id, message_id=message_id, media=media,
                                  reply_markup=EDIT_KEYBOARD)
-            break
-        elif post.type in ['text', 'youtube'] and msg_is_text:
-            is_youtube = post.type == 'youtube'
-            if message.text_markdown == post.msg:
-                continue
-            bot.editMessageText(post.msg, chat_id, message_id,
-                                parse_mode='Markdown', reply_markup=EDIT_KEYBOARD,
-                                disable_web_page_preview=(not is_youtube))
-            break
-        tries += 1
+
+        break
 
     if tries >= MAX_TRIES:
         bot.editMessageReplyMarkup(chat_id, message_id,
