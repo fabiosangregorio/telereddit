@@ -10,12 +10,13 @@ import helpers
 from media import MediaType
 
 
-def send_random_posts(bot, chat_id, text):
+def send_random_posts(bot, chat_id, text, num_posts=None):
     '''
     Searches the text for subreddit names and sends a random post from that
     subreddit.
     '''
     subreddits = helpers.get_subreddit_names(text)
+    subreddits = subreddits[0:num_posts]
     for subreddit in subreddits:
         for _ in range(MAX_TRIES):
             status, err_msg = send_post(bot, chat_id, subreddit)
