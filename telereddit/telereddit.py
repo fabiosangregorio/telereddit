@@ -35,7 +35,7 @@ def on_callback_query(update: Update, context: CallbackContext):
     text = (message.caption or message.text) + '\n'
 
     if query_data == 'more':
-        reddit_linker.send_random_posts(context.bot, chat_id, text)
+        reddit_linker.send_random_posts(context.bot, chat_id, text, num_posts=1)
     elif query_data == 'edit':
         reddit_linker.edit_result(context.bot, update)
     elif query_data == 'delete':
