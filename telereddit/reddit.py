@@ -93,7 +93,7 @@ def get_post(subreddit=None, post_url=None):
         permalink = data['permalink']
         subreddit = data['subreddit_name_prefixed']
         subreddit_url = f'https://www.reddit.com/{subreddit}'
-        post_footer = f"[Link to post](https://reddit.com{permalink}) | "\
+        post_footer = f"[Link to post](https://reddit.com{permalink}) \\| "\
                       f"[{subreddit}]({subreddit_url})"
         post_title = helpers.escape_markdown(data['title'])
         post_text = helpers.truncate_text(data['selftext'], MAX_POST_LENGTH)

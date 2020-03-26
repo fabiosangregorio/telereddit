@@ -10,7 +10,7 @@ class Post():
         self.media = media
 
     def get_msg(self):
-        return f"*{self.title}*\n{self.text}\n\n{self.footer}"
+        return f" *{self.title}*\n{self.text}\n\n{self.footer}"
 
     def get_type(self):
         return self.media.type if self.media else ContentType.TEXT

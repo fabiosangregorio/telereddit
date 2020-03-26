@@ -56,23 +56,23 @@ def send_post(bot, chat_id, subreddit=None, post_url=None):
         if post.get_type() == ContentType.TEXT:
             # check if the post is a text post
             bot.sendMessage(chat_id, text=post.get_msg(),
-                            parse_mode='Markdown', reply_markup=keyboard,
+                            parse_mode='MarkdownV2', reply_markup=keyboard,
                             disable_web_page_preview=True)
         elif post.get_type() == ContentType.YOUTUBE:
             bot.sendMessage(chat_id, text=post.get_msg(),
-                            parse_mode='Markdown', reply_markup=keyboard)
+                            parse_mode='MarkdownV2', reply_markup=keyboard)
             return 'success', None
         elif post.get_type() == ContentType.GIF:
             bot.sendDocument(chat_id, post.media.url, caption=post.get_msg(),
-                             parse_mode='Markdown', reply_markup=keyboard,
+                             parse_mode='MarkdownV2', reply_markup=keyboard,
                              disable_web_page_preview=True)
         elif post.get_type() == ContentType.VIDEO:
             bot.sendVideo(chat_id, post.media.url, caption=post.get_msg(),
-                          parse_mode='Markdown', reply_markup=keyboard,
+                          parse_mode='MarkdownV2', reply_markup=keyboard,
                           disable_web_page_preview=True)
         elif post.get_type() == ContentType.PHOTO:
             bot.sendPhoto(chat_id, post.media.url, caption=post.get_msg(),
-                          parse_mode='Markdown', reply_markup=keyboard,
+                          parse_mode='MarkdownV2', reply_markup=keyboard,
                           disable_web_page_preview=True)
 
     except Exception as e:
@@ -116,18 +116,18 @@ def edit_result(bot, update):
         if msg_is_text:
             if post.get_type() == ContentType.TEXT:
                 bot.editMessageText(post.get_msg(), chat_id, message_id,
-                                    parse_mode='Markdown', reply_markup=EDIT_KEYBOARD,
+                                    parse_mode='MarkdownV2', reply_markup=EDIT_KEYBOARD,
                                     disable_web_page_preview=True)
             elif post.get_type() == ContentType.YOUTUBE:
                 bot.editMessageText(post.get_msg(), chat_id, message_id,
-                                    parse_mode='Markdown', reply_markup=EDIT_KEYBOARD)
+                                    parse_mode='MarkdownV2', reply_markup=EDIT_KEYBOARD)
         else:
             if post.get_type() == ContentType.GIF:
-                media = InputMediaDocument(post.media.url, caption=post.get_msg(), parse_mode='Markdown')
+                media = InputMediaDocument(post.media.url, caption=post.get_msg(), parse_mode='MarkdownV2')
             elif post.get_type() == ContentType.VIDEO:
-                media = InputMediaVideo(post.media.url, caption=post.get_msg(), parse_mode='Markdown')
+                media = InputMediaVideo(post.media.url, caption=post.get_msg(), parse_mode='MarkdownV2')
             elif post.get_type() == ContentType.PHOTO:
-                media = InputMediaPhoto(post.media.url, caption=post.get_msg(), parse_mode='Markdown')
+                media = InputMediaPhoto(post.media.url, caption=post.get_msg(), parse_mode='MarkdownV2')
             bot.editMessageMedia(chat_id=chat_id, message_id=message_id, media=media,
                                  reply_markup=EDIT_KEYBOARD)
 
@@ -141,6 +141,6 @@ def edit_result(bot, update):
 def _send_exception_message(bot, chat_id, msg, keyboard=True):
     '''Handles the errors created in post retrieval and sending.'''
     if keyboard:
-        bot.sendMessage(chat_id, msg, 'Markdown', reply_markup=NO_EDIT_KEYBOARD)
+        bot.sendMessage(chat_id, msg, 'MarkdownV2', reply_markup=NO_EDIT_KEYBOARD)
     else:
-        bot.sendMessage(chat_id, msg, 'Markdown')
+        bot.sendMessage(chat_id, msg, 'MarkdownV2')
