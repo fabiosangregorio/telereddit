@@ -7,8 +7,9 @@ import logging
 import os
 import importlib
 
-import reddit_linker
+from linker import Linker
 import helpers
+from config import config
 
 
 def on_chat_message(update: Update, context: CallbackContext):
@@ -17,12 +18,14 @@ def on_chat_message(update: Update, context: CallbackContext):
     if not msg.text:
         return
 
-    if any(r in msg.text.lower() for r in ['reddit.com', 'redd.it', 'reddit.app.link']):
+    linker = Linker(msg.chat_id)
+
+    if any(r in msg.text.lower() for r in config.REDDIT_DOMAINS):
         posts_url = helpers.get_urls_from_text(msg.text)
         for url in posts_url:
-            reddit_linker.send_post_from_url(context.bot, msg.chat_id, url)
+            linker.send_post_from_url(url)
     elif 'r/' in msg.text.lower():
-        reddit_linker.send_random_posts(context.bot, msg.chat_id, msg.text)
+        linker.send_random_posts(msg.text)
 
 
 def on_callback_query(update: Update, context: CallbackContext):
@@ -30,16 +33,16 @@ def on_callback_query(update: Update, context: CallbackContext):
     query_id = update.callback_query.id
     query_data = update.callback_query.data
     message = update.effective_message
-    chat_id = message.chat_id
     message_id = message.message_id
     text = (message.caption or message.text) + '\n'
 
+    linker = Linker(message.chat_id)
     if query_data == 'more':
-        reddit_linker.send_random_posts(context.bot, chat_id, text, num_posts=1)
+        linker.send_random_posts(text, num_posts=1)
     elif query_data == 'edit':
-        reddit_linker.edit_result(context.bot, update)
+        linker.edit_result(update)
     elif query_data == 'delete':
-        context.bot.deleteMessage(chat_id, message_id)
+        context.bot.deleteMessage(message_id)
 
     context.bot.answerCallbackQuery(query_id)
 
@@ -55,6 +58,8 @@ if __name__ == "__main__":
     sentry_sdk.init(secret.SENTRY_TOKEN)
 
     updater = Updater(token=secret.TELEGRAM_TOKEN, use_context=True)
+    Linker.set_bot(updater.bot)
+
     print("Listening...")
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

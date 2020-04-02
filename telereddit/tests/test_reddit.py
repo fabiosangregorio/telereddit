@@ -25,7 +25,7 @@ class TestReddit(unittest.TestCase):
         self.assertIsNone(err_msg)
         self.assertEqual(post.subreddit.lower(), 'r/showerthoughts')
         self.assertIsNotNone(post.title)
-        self.assertIn('https://www.reddit.com/r/showerthoughts', post.footer.lower())
+        self.assertIn('https://www.reddit.com/r/showerthoughts', post.get_msg().lower())
         self.assertEqual(post.get_type(), ContentType.TEXT)
 
         # photo post
@@ -34,7 +34,7 @@ class TestReddit(unittest.TestCase):
         self.assertIsNone(err_msg)
         self.assertEqual(post.subreddit.lower(), 'r/pics')
         self.assertIsNotNone(post.title)
-        self.assertIn('https://www.reddit.com/r/pics', post.footer.lower())
+        self.assertIn('https://www.reddit.com/r/pics', post.get_msg().lower())
         self.assertIsNotNone(post.media.url)
         self.assertEqual(post.get_type(), ContentType.PHOTO)
 
@@ -44,6 +44,6 @@ class TestReddit(unittest.TestCase):
         self.assertIsNone(err_msg)
         self.assertEqual(post.subreddit.lower(), 'r/bicycling')
         self.assertIsNotNone(post.title)
-        self.assertIn('https://www.reddit.com/r/bicycling', post.footer.lower())
+        self.assertIn('https://www.reddit.com/r/bicycling', post.get_msg().lower())
         self.assertIsNotNone(post.media.url)
         self.assertEqual(post.get_type(), ContentType.PHOTO)

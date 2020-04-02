@@ -9,6 +9,7 @@ def _edit_keyboard(edit_text):
     ]])
 
 
+REDDIT_DOMAINS = ['reddit.com', 'redd.it', 'reddit.app.link']
 MAX_POST_LENGTH = 500
 MAX_TITLE_LENGTH = 200
 MAX_TRIES = 4
