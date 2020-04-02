@@ -4,12 +4,10 @@ import sentry_sdk
 from telegram.ext import Updater, CallbackContext, MessageHandler, CallbackQueryHandler, Filters
 from telegram import Update
 import logging
-import os
-import importlib
 
 from linker import Linker
 import helpers
-from config import config
+import config.config as config
 
 
 def on_chat_message(update: Update, context: CallbackContext):
@@ -19,18 +17,19 @@ def on_chat_message(update: Update, context: CallbackContext):
         return
 
     linker = Linker(msg.chat_id)
-
-    if any(r in msg.text.lower() for r in config.REDDIT_DOMAINS):
+    text = msg.text.lower()
+    if any(r in text for r in config.REDDIT_DOMAINS):
         posts_url = helpers.get_urls_from_text(msg.text)
         for url in posts_url:
             linker.send_post_from_url(url)
-    elif 'r/' in msg.text.lower():
-        linker.send_random_posts(msg.text)
+    elif 'r/' in text:
+        subreddits = helpers.get_subreddit_names(text)
+        for subreddit in subreddits:
+            linker.send_random_post(subreddit)
 
 
 def on_callback_query(update: Update, context: CallbackContext):
     '''Handles all the several types of callback queries.'''
-    query_id = update.callback_query.id
     query_data = update.callback_query.data
     message = update.effective_message
     message_id = message.message_id
@@ -38,26 +37,20 @@ def on_callback_query(update: Update, context: CallbackContext):
 
     linker = Linker(message.chat_id)
     if query_data == 'more':
-        linker.send_random_posts(text, num_posts=1)
+        subreddit = helpers.get_subreddit_name(text, reverse=True)
+        linker.send_random_post(subreddit)
     elif query_data == 'edit':
-        linker.edit_result(update)
+        linker.edit_result(message)
     elif query_data == 'delete':
-        context.bot.deleteMessage(message_id)
+        context.bot.deleteMessage(message.chat_id, message_id)
 
-    context.bot.answerCallbackQuery(query_id)
+    context.bot.answerCallbackQuery(update.callback_query.id)
 
-
-# Dynamic environment secret configuration
-env_key = os.environ.get('TELEREDDIT_MACHINE')
-if env_key is not None:
-    secret = importlib.import_module(f'config.secret_{env_key.lower()}').secret_config
-else:
-    secret = importlib.import_module('config.secret_generic').secret_config
 
 if __name__ == "__main__":
-    sentry_sdk.init(secret.SENTRY_TOKEN)
+    sentry_sdk.init(config.secret.SENTRY_TOKEN)
 
-    updater = Updater(token=secret.TELEGRAM_TOKEN, use_context=True)
+    updater = Updater(token=config.secret.TELEGRAM_TOKEN, use_context=True)
     Linker.set_bot(updater.bot)
 
     print("Listening...")

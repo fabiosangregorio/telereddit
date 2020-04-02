@@ -11,7 +11,7 @@ class Post():
 
     def get_msg(self):
         subreddit_url = f'https://www.reddit.com/{self.subreddit}'
-        footer = f"[Link to post](https://reddit.com{self.permalink}) \\| "\
+        footer = f"[Link to post](https://reddit.com{self.permalink}) | "\
                  f"[{self.subreddit}]({subreddit_url})"
         return f" *{self.title}*\n{self.text}\n\n{footer}"
 

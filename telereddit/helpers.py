@@ -31,7 +31,7 @@ def get_subreddit_name(text, reverse=False):
 def escape_markdown(text):
     '''
     Returns the given text with escaped common markdown characters.
-    See: https://core.telegram.org/bots/api#markdownv2-style
+    See: https://core.telegram.org/bots/api#Markdown-style
     '''
     # Reddit escaping: \\_ \\* \\[ \\] ( ) \\~ \\` &gt; # + - = | { } . !
     return text.replace('*', '\\*').replace('_', '\\_')
@@ -91,10 +91,3 @@ def chained_get(obj, attrs, default=None):
         if obj == default:
             break
     return obj
-
-
-def try_pass(fn):
-    try:
-        fn()
-    except Exception:
-        pass

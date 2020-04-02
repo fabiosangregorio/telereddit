@@ -4,7 +4,7 @@ from content_type import ContentType
 
 from urllib.parse import urlunparse
 
-from telereddit import helpers
+import helpers
 
 
 class Youtube(Service):

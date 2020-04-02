@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from telereddit import secret
+from config.config import secret
 
 from services.service import Service
 from media import Media
