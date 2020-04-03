@@ -41,6 +41,8 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
     '''
     Returns the given text, truncated at `length` characters, plus ellipsis.
     '''
+    if length < 0:
+        return text
     return text[:length] + (text[length:] and '...')
 
 
