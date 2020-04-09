@@ -4,6 +4,10 @@ import requests
 from config.config import MAX_TITLE_LENGTH
 
 
+def get_random_post_url(subreddit):
+    return f'https://www.reddit.com/{subreddit}/random'
+
+
 def get_subreddit_names(text):
     '''
     Returns a list of the (prefixed) subreddit names present in the given text.
@@ -27,7 +31,9 @@ def get_subreddit_name(text, reverse=False):
 def escape_markdown(text):
     '''
     Returns the given text with escaped common markdown characters.
+    See: https://core.telegram.org/bots/api#Markdown-style
     '''
+    # Reddit escaping: \\_ \\* \\[ \\] ( ) \\~ \\` &gt; # + - = | { } . !
     return text.replace('*', '\\*').replace('_', '\\_')
 
 
@@ -35,6 +41,8 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
     '''
     Returns the given text, truncated at `length` characters, plus ellipsis.
     '''
+    if length < 0:
+        return text
     return text[:length] + (text[length:] and '...')
 
 
