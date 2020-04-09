@@ -1,7 +1,7 @@
 import re
 import requests
 
-from config.config import MAX_TITLE_LENGTH
+from telereddit.config.config import MAX_TITLE_LENGTH
 
 
 def get_random_post_url(subreddit):

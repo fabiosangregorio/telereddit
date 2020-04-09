@@ -4,14 +4,12 @@ import traceback
 
 from sentry_sdk import capture_exception
 
-import helpers
-from config.config import MAX_POST_LENGTH, secret
-
-from post import Post
-from content_type import ContentType
-from exceptions import RequestError, SubredditPrivateError, SubredditDoesntExistError, PostRetrievalError
-
-from services.services_wrapper import ServicesWrapper
+import telereddit.helpers as helpers
+from telereddit.config.config import MAX_POST_LENGTH, secret
+from telereddit.post import Post
+from telereddit.content_type import ContentType
+from telereddit.exceptions import RequestError, SubredditPrivateError, SubredditDoesntExistError, PostRetrievalError
+from telereddit.services.services_wrapper import ServicesWrapper
 
 
 def _get_json(post_url):

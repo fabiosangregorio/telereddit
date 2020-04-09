@@ -2,11 +2,11 @@ import json
 
 import requests
 
-from config.config import secret
+from telereddit.config.config import secret
 
-from services.service import Service
-from media import Media
-from content_type import ContentType
+from telereddit.services.service import Service
+from telereddit.media import Media
+from telereddit.content_type import ContentType
 
 
 class Gfycat(Service):

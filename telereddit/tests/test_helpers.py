@@ -1,7 +1,7 @@
 import unittest
 from parameterized import parameterized, param
 
-import helpers
+import telereddit.helpers as helpers
 
 
 class TestHelpers(unittest.TestCase):

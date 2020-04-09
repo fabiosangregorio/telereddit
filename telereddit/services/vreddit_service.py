@@ -1,10 +1,10 @@
-import helpers
 import requests
-from services.service import Service
 from urllib.parse import urlunparse
 
-from media import Media
-from content_type import ContentType
+from telereddit.services.service import Service
+import telereddit.helpers as helpers
+from telereddit.media import Media
+from telereddit.content_type import ContentType
 
 
 class Vreddit(Service):

@@ -2,14 +2,12 @@ import traceback
 
 from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument
 from sentry_sdk import capture_exception
-from config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD
 
-import reddit
-import helpers
-
-from media import ContentType
-
-from exceptions import SubredditError, TeleredditError, MediaTooBigError, PostSendError
+from telereddit.config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD
+import telereddit.reddit as reddit
+import telereddit.helpers as helpers
+from telereddit.media import ContentType
+from telereddit.exceptions import SubredditError, TeleredditError, MediaTooBigError, PostSendError
 
 
 class Linker:

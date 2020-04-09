@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    - name: Git-Crypt Unlock
+    - name: Unlock git-crypt files
       uses: zemuldo/git-crypt-unlock@master
       env: 
         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -38,9 +38,13 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Run tests
+    - name: Run tests and generate report
       run: |
-        cd telereddit
-        python -m unittest
+        pip install coverage
+        coverage run -m unittest
+        coverage xml
       env:
         TELEREDDIT_MACHINE: 'GITHUB'
+
+    - name: Upload reports to codecov.io
+      uses: codecov/codecov-action@v1

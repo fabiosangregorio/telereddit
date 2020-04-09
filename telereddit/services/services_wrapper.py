@@ -1,11 +1,11 @@
 import logging
 from urllib.parse import urlparse
 
-from services.gfycat_service import Gfycat
-from services.vreddit_service import Vreddit
-from services.imgur_service import Imgur
-from services.youtube_service import Youtube
-from services.generic_service import Generic
+from telereddit.services.gfycat_service import Gfycat
+from telereddit.services.vreddit_service import Vreddit
+from telereddit.services.imgur_service import Imgur
+from telereddit.services.youtube_service import Youtube
+from telereddit.services.generic_service import Generic
 
 
 class ServicesWrapper:

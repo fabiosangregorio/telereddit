@@ -5,9 +5,9 @@ import importlib
 # Dynamic environment secret configuration
 env_key = os.environ.get('TELEREDDIT_MACHINE')
 if env_key is not None:
-    secret = importlib.import_module(f'config.secret_{env_key.lower()}').secret_config
+    secret = importlib.import_module(f'telereddit.config.secret_{env_key.lower()}').secret_config
 else:
-    secret = importlib.import_module('config.secret_generic').secret_config
+    secret = importlib.import_module('telereddit.config.secret_generic').secret_config
 
 
 def _edit_keyboard(edit_text):

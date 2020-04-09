@@ -1,4 +1,4 @@
-from config.secret import Secret
+from telereddit.config.secret import Secret
 
 
 secret_config = Secret(

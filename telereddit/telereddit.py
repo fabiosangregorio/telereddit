@@ -5,9 +5,9 @@ from telegram.ext import Updater, CallbackContext, MessageHandler, CallbackQuery
 from telegram import Update
 import logging
 
-from linker import Linker
-import helpers
-import config.config as config
+from telereddit.linker import Linker
+import telereddit.helpers as helpers
+import telereddit.config.config as config
 
 
 def on_chat_message(update: Update, context: CallbackContext):
@@ -47,7 +47,7 @@ def on_callback_query(update: Update, context: CallbackContext):
     context.bot.answerCallbackQuery(update.callback_query.id)
 
 
-if __name__ == "__main__":
+def main():
     sentry_sdk.init(config.secret.SENTRY_TOKEN)
 
     updater = Updater(token=config.secret.TELEGRAM_TOKEN, use_context=True)

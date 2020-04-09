@@ -1,4 +1,4 @@
-from content_type import ContentType
+from telereddit.content_type import ContentType
 
 
 class Media:

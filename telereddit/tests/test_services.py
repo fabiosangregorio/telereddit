@@ -1,8 +1,8 @@
 import unittest
-from services.services_wrapper import ServicesWrapper
-from content_type import ContentType
-
 from parameterized import parameterized, param
+
+from telereddit.services.services_wrapper import ServicesWrapper
+from telereddit.content_type import ContentType
 
 
 class TestServices(unittest.TestCase):
