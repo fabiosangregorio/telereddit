@@ -1,43 +1,70 @@
+import sentry_sdk as sentry
+
+import telereddit.config.config as config
+
+
 class TeleredditError(Exception):
-    def __init__(self, msg):
+    def __init__(self, msg, data=None, capture=False):
         super().__init__(msg)
+        if config.SENTRY_ENABLED:
+            if data is not None:
+                with sentry.configure_scope() as scope:
+                    for key, value in data.items():
+                        scope.set_extra(key, value)
+            if capture:
+                sentry.capture_exception()
+
+
+class AuthenticationError(TeleredditError):
+    def __init__(self, data=None, capture=True):
+        super().__init__("Authentication failed", capture, data)
 
 
 class SubredditError(TeleredditError):
-    def __init__(self, msg):
-        super().__init__(msg)
+    def __init__(self, msg, data=None, capture=False):
+        super().__init__(msg, capture, data)
 
 
 class PostError(TeleredditError):
-    def __init__(self, msg):
-        super().__init__(msg)
+    def __init__(self, msg, data=None, capture=True):
+        super().__init__(msg, capture, data)
+
+
+class MediaError(TeleredditError):
+    def __init__(self, msg, data=None, capture=True):
+        super().__init__(msg, capture, data)
 
 
 class RequestError(TeleredditError):
-    def __init__(self):
-        super().__init__("I'm sorry, I can't find that subreddit.")
+    def __init__(self, data=None, capture=True):
+        super().__init__("I can't find that subreddit.", capture, data)
 
 
 class SubredditPrivateError(SubredditError):
-    def __init__(self):
-        super().__init__("I'm sorry, this subreddit is private.")
+    def __init__(self, data=None, capture=False):
+        super().__init__("This subreddit is private.", capture, data)
 
 
 class SubredditDoesntExistError(SubredditError):
-    def __init__(self):
-        super().__init__("I'm sorry, this subreddit doesn't exist.")
+    def __init__(self, data=None, capture=False):
+        super().__init__("This subreddit doesn't exist.", capture, data)
 
 
 class PostRetrievalError(PostError):
-    def __init__(self):
-        super().__init__("I'm sorry, the retrieval of the post failed.")
+    def __init__(self, data=None, capture=True):
+        super().__init__("The retrieval of the post failed.", capture, data)
 
 
 class PostSendError(PostError):
-    def __init__(self):
-        super().__init__("I'm sorry, there has been an error in sending the post.")
+    def __init__(self, data=None, capture=True):
+        super().__init__("There has been an error in sending the post.", capture, data)
 
 
-class MediaTooBigError(PostError):
-    def __init__(self):
-        super().__init__("I'm sorry, media is too big to be sent.")
+class MediaTooBigError(MediaError):
+    def __init__(self, data=None, capture=True):
+        super().__init__("Media is too big to be sent.", capture, data)
+
+
+class MediaRetrievalError(MediaError):
+    def __init__(self, data=None, capture=True):
+        super().__init__("Error in getting the media", capture, data)

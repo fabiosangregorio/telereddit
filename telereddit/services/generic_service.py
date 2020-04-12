@@ -1,5 +1,4 @@
 import requests
-from urllib.parse import urlunparse
 
 from telereddit.services.service import Service
 from telereddit.media import Media
@@ -11,8 +10,8 @@ class Generic(Service):
     is_authenticated = False
 
     @classmethod
-    def preprocess(cls, parsed_url, json):
-        return urlunparse(parsed_url)
+    def preprocess(cls, url, json):
+        return url
 
     @classmethod
     def get(cls, url):

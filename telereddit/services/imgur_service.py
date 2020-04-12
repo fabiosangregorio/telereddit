@@ -1,5 +1,6 @@
 import json
 
+from urllib.parse import urlparse
 import requests
 
 from telereddit.config.config import secret
@@ -16,8 +17,8 @@ class Imgur(Service):
         Imgur.authenticate()
 
     @classmethod
-    def preprocess(cls, parsed_url, json):
-        url = parsed_url.path.replace('/', '')
+    def preprocess(cls, url, json):
+        url = urlparse(url).path.replace('/', '')
         if '.' in url:
             media_hash = url.rpartition('.')[0]
         else:

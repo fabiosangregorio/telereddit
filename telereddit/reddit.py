@@ -1,11 +1,8 @@
 import requests
 import random
-import traceback
-
-from sentry_sdk import capture_exception
 
 import telereddit.helpers as helpers
-from telereddit.config.config import MAX_POST_LENGTH, secret
+from telereddit.config.config import secret
 from telereddit.post import Post
 from telereddit.content_type import ContentType
 from telereddit.exceptions import RequestError, SubredditPrivateError, SubredditDoesntExistError, PostRetrievalError
@@ -19,7 +16,7 @@ def _get_json(post_url):
         # some subreddits have the json data wrapped in brackets, some do not
         json = json if isinstance(json, dict) else json[0]
     except Exception:
-        raise RequestError()
+        raise RequestError({"post_url": post_url})
 
     if json.get('reason') == 'private':
         raise SubredditPrivateError()
@@ -40,7 +37,7 @@ def get_post(post_url):
         subreddit = data['subreddit_name_prefixed']
         permalink = data['permalink']
         post_title = helpers.escape_markdown(data['title'])
-        post_text = helpers.truncate_text(data['selftext'], MAX_POST_LENGTH)
+        post_text = helpers.truncate_text(data['selftext'])
         content_url = data['url']
 
         media = None
@@ -53,7 +50,5 @@ def get_post(post_url):
         post = Post(subreddit, permalink, post_title, post_text, media)
         return post
 
-    except Exception as e:
-        capture_exception(e)
-        traceback.print_exc()
+    except Exception:
         raise PostRetrievalError()

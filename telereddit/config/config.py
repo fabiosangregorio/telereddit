@@ -2,30 +2,28 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 import os
 import importlib
 
+
+_delete_btn = InlineKeyboardButton(text="✕", callback_data="delete")
+_edit_btn = InlineKeyboardButton(text="↻", callback_data="edit")
+_edit_failed_btn = InlineKeyboardButton(text="Retry ↻", callback_data="edit")
+_more_btn = InlineKeyboardButton(text="＋", callback_data="more")
 # Dynamic environment secret configuration
-env_key = os.environ.get('TELEREDDIT_MACHINE')
-if env_key is not None:
-    secret = importlib.import_module(f'telereddit.config.secret_{env_key.lower()}').secret_config
+_env_key = os.environ.get('TELEREDDIT_MACHINE')
+if _env_key is not None:
+    ENV = _env_key.lower()
+    secret = importlib.import_module(f'telereddit.config.secret_{_env_key.lower()}').secret_config
 else:
+    ENV = "generic"
     secret = importlib.import_module('telereddit.config.secret_generic').secret_config
-
-
-def _edit_keyboard(edit_text):
-    return InlineKeyboardMarkup([[
-        InlineKeyboardButton(text="✕", callback_data="delete"),
-        InlineKeyboardButton(text=edit_text, callback_data="edit"),
-        InlineKeyboardButton(text="＋", callback_data="more")
-    ]])
 
 
 REDDIT_DOMAINS = ['reddit.com', 'redd.it', 'reddit.app.link']
 MAX_POST_LENGTH = 500
 MAX_TITLE_LENGTH = 200
 MAX_TRIES = 4
+SENTRY_ENABLED = secret.SENTRY_TOKEN is not None and len(secret.SENTRY_TOKEN) > 0
 
-EDIT_KEYBOARD = _edit_keyboard('↻')
-EDIT_FAILED_KEYBOARD = _edit_keyboard('Retry ↻')
-NO_EDIT_KEYBOARD = InlineKeyboardMarkup([[
-    InlineKeyboardButton(text="✕", callback_data="delete"),
-    InlineKeyboardButton(text="＋", callback_data="more")
-]])
+EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _edit_btn, _more_btn]])
+EDIT_FAILED_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _edit_failed_btn, _more_btn]])
+NO_EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _more_btn]])
+DELETE_KEYBOARD = InlineKeyboardMarkup([[_delete_btn]])

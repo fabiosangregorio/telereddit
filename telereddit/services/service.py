@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from telereddit.exceptions import MediaRetrievalError
+
 
 class Service(ABC):
     access_token = None
@@ -8,7 +10,7 @@ class Service(ABC):
 
     @classmethod
     @abstractmethod
-    def preprocess(cls, parsed_url, json):
+    def preprocess(cls, url, json):
         pass
 
     @classmethod
@@ -36,5 +38,8 @@ class Service(ABC):
                 cls.authenticate()
                 response = cls.get(processed_url)
             if response.status_code >= 300:
-                raise Exception("service.get_media: error in getting the media")
+                raise MediaRetrievalError({
+                    "reddit_media_url": url,
+                    "processed_media_url": processed_url
+                })
         return cls.postprocess(response)

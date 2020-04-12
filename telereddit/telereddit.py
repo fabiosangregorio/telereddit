@@ -8,6 +8,7 @@ import logging
 from telereddit.linker import Linker
 import telereddit.helpers as helpers
 import telereddit.config.config as config
+from telereddit.config.config import secret
 
 
 def on_chat_message(update: Update, context: CallbackContext):
@@ -48,9 +49,10 @@ def on_callback_query(update: Update, context: CallbackContext):
 
 
 def main():
-    sentry_sdk.init(config.secret.SENTRY_TOKEN)
+    if config.SENTRY_ENABLED:
+        sentry_sdk.init(secret.SENTRY_TOKEN, environment=config.ENV)
 
-    updater = Updater(token=config.secret.TELEGRAM_TOKEN, use_context=True)
+    updater = Updater(token=secret.TELEGRAM_TOKEN, use_context=True)
     Linker.set_bot(updater.bot)
 
     print("Listening...")

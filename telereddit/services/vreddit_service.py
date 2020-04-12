@@ -1,5 +1,4 @@
 import requests
-from urllib.parse import urlunparse
 
 from telereddit.services.service import Service
 import telereddit.helpers as helpers
@@ -11,9 +10,9 @@ class Vreddit(Service):
     is_authenticated = False
 
     @classmethod
-    def preprocess(cls, parsed_url, json):
+    def preprocess(cls, url, json):
         fallback_url = helpers.chained_get(json, ['media', 'reddit_video', 'fallback_url'])
-        url = fallback_url if fallback_url else f'{urlunparse(parsed_url)}/DASH_1_2_M'
+        url = fallback_url if fallback_url else f'{url}/DASH_1_2_M'
         return url
 
     @classmethod

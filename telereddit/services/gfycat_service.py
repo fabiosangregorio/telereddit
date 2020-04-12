@@ -1,12 +1,14 @@
 import json
 
 import requests
+from urllib.parse import urlparse
 
 from telereddit.config.config import secret
 
 from telereddit.services.service import Service
 from telereddit.media import Media
 from telereddit.content_type import ContentType
+from telereddit.exceptions import AuthenticationError
 
 
 class Gfycat(Service):
@@ -17,8 +19,8 @@ class Gfycat(Service):
         Gfycat.authenticate()
 
     @classmethod
-    def preprocess(cls, parsed_url, json):
-        gfyid = parsed_url.path.partition('-')[0]
+    def preprocess(cls, url, json):
+        gfyid = urlparse(url).path.partition('-')[0]
         return f'https://api.gfycat.com/v1/gfycats/{gfyid}'
 
     @classmethod
@@ -45,6 +47,6 @@ class Gfycat(Service):
             'client_secret': secret.GFYCAT_CLIENT_SECRET
         }))
         if response.status_code >= 300:
-            raise Exception("Gfycat authentication failed")
+            raise AuthenticationError()
 
         cls.access_token = json.loads(response.content)["access_token"]

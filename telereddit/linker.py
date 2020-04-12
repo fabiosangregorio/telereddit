@@ -1,9 +1,6 @@
-import traceback
-
 from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument
-from sentry_sdk import capture_exception
 
-from telereddit.config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD
+from telereddit.config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD, DELETE_KEYBOARD
 import telereddit.reddit as reddit
 import telereddit.helpers as helpers
 from telereddit.media import ContentType
@@ -58,9 +55,7 @@ class Linker:
             elif post.get_type() == ContentType.PHOTO:
                 self.bot.sendPhoto(photo=post.media.url, caption=post.get_msg(), **args)
 
-        except Exception as e:
-            capture_exception(e)
-            traceback.print_exc()
+        except TeleredditError:
             raise PostSendError()
 
     def edit_result(self, message):
@@ -116,5 +111,5 @@ class Linker:
         '''Handles the errors created in post retrieval and sending.'''
         args = dict(chat_id=self.chat_id, text=str(e), parse_mode='Markdown')
         if keyboard:
-            args["reply_markup"] = NO_EDIT_KEYBOARD
+            args["reply_markup"] = DELETE_KEYBOARD
         self.bot.sendMessage(**args)
