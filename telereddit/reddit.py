@@ -51,4 +51,4 @@ def get_post(post_url):
         return post
 
     except Exception:
-        raise PostRetrievalError()
+        raise PostRetrievalError({"post_url": post_url})

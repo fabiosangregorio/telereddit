@@ -1,4 +1,5 @@
 import sentry_sdk as sentry
+import traceback
 
 import telereddit.config.config as config
 
@@ -13,6 +14,9 @@ class TeleredditError(Exception):
                         scope.set_extra(key, value)
             if capture:
                 sentry.capture_exception()
+        traceback.print_exc()
+        print(self)
+        print(data)
 
 
 class AuthenticationError(TeleredditError):
