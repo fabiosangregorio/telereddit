@@ -14,6 +14,10 @@ class Linker:
 
     def __init__(self, chat_id):
         self.chat_id = chat_id
+        self.args = dict(chat_id=chat_id,
+                         parse_mode='Markdown',
+                         reply_markup=EDIT_KEYBOARD,
+                         disable_web_page_preview=True)
 
     def send_random_post(self, subreddit):
         for _ in range(MAX_TRIES):
@@ -36,12 +40,12 @@ class Linker:
         if post.media and post.media.size and post.media.size > 20000000:
             raise MediaTooBigError()
 
-        # if it is not a random post (e.g. shared via link) don't show the
-        # edit custom keyboard
-        args = dict(chat_id=self.chat_id,
-                    reply_markup=NO_EDIT_KEYBOARD if from_url else EDIT_KEYBOARD,
-                    disable_web_page_preview=True,
-                    parse_mode='Markdown')
+        args = self.args.copy()
+        if from_url:
+            # if it is not a random post (e.g. shared via link) don't show the
+            # edit custom keyboard
+            args["reply_markup"] = NO_EDIT_KEYBOARD
+
         try:
             if post.get_type() == ContentType.TEXT:
                 self.bot.sendMessage(text=post.get_msg(), **args)
@@ -83,11 +87,8 @@ class Linker:
                 # if post is the same or message is not text and post is: retry
                 continue
 
-            args = dict(chat_id=self.chat_id,
-                        message_id=message_id,
-                        parse_mode='Markdown',
-                        reply_markup=EDIT_KEYBOARD,
-                        disable_web_page_preview=True)
+            args = self.args.copy()
+            args["message_id"] = message_id
 
             if msg_is_text:
                 if post.get_type() == ContentType.YOUTUBE:

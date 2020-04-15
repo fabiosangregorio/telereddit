@@ -13,7 +13,7 @@ class Vreddit(Service):
     def preprocess(cls, url, json):
         xpost = helpers.get(json, "crosspost_parent_list")
         if xpost is not None and len(xpost) > 0:
-            # crossposts have media = null and have the fallback url in the 
+            # crossposts have media = null and have the fallback url in the
             # crosspost source
             fallback_url = helpers.chained_get(xpost[0], ["secure_media", "reddit_video", "fallback_url"])
         else:
