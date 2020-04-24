@@ -3,8 +3,8 @@ from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument
 from telereddit.config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD, DELETE_KEYBOARD
 import telereddit.reddit as reddit
 import telereddit.helpers as helpers
-from telereddit.media import ContentType
-from telereddit.exceptions import SubredditError, TeleredditError, MediaTooBigError, PostSendError
+from telereddit.models.media import ContentType
+from telereddit.models.exceptions import SubredditError, TeleredditError, MediaTooBigError, PostSendError
 
 
 class Linker:

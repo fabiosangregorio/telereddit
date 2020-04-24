@@ -3,9 +3,9 @@ import random
 
 import telereddit.helpers as helpers
 from telereddit.config.config import secret
-from telereddit.post import Post
+from telereddit.models.post import Post
 from telereddit.content_type import ContentType
-from telereddit.exceptions import RequestError, SubredditPrivateError, SubredditDoesntExistError, PostRetrievalError
+from telereddit.models.exceptions import RequestError, SubredditPrivateError, SubredditDoesntExistError, PostRetrievalError
 from telereddit.services.services_wrapper import ServicesWrapper
 
 

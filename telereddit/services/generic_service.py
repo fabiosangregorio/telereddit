@@ -1,7 +1,7 @@
 import requests
 
 from telereddit.services.service import Service
-from telereddit.media import Media
+from telereddit.models.media import Media
 from telereddit.content_type import ContentType
 
 

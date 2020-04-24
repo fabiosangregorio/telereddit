@@ -4,7 +4,7 @@ import telereddit.reddit as reddit
 import json
 import pathlib
 
-from telereddit.exceptions import SubredditDoesntExistError, SubredditPrivateError
+from telereddit.models.exceptions import SubredditDoesntExistError, SubredditPrivateError
 
 from telereddit.content_type import ContentType
 

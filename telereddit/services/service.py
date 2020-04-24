@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from telereddit.exceptions import MediaRetrievalError
+from telereddit.models.exceptions import MediaRetrievalError
 
 
 class Service(ABC):
