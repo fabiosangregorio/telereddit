@@ -17,7 +17,8 @@ from telereddit.services.services_wrapper import ServicesWrapper
 def _get_json(post_url):
     try:
         response = requests.get(
-            f"{post_url}.json", headers={"User-agent": secret.TELEREDDIT_USER_AGENT}
+            f"{post_url}.json",
+            headers={"User-agent": secret.TELEREDDIT_USER_AGENT},
         )
         json = response.json()
         # some subreddits have the json data wrapped in brackets, some do not
@@ -54,7 +55,9 @@ def get_post(post_url):
         if "/comments/" not in content_url:
             media = ServicesWrapper.get_media(content_url, data)
             if media.type == ContentType.YOUTUBE:
-                post_text = f"{post_text}\n\n[Link to youtube video]({media.url})"
+                post_text = (
+                    f"{post_text}\n\n[Link to youtube video]({media.url})"
+                )
 
         post_text = helpers.escape_markdown(post_text)
         post = Post(subreddit, permalink, post_title, post_text, media)

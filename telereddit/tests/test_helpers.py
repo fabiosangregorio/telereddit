@@ -52,8 +52,14 @@ class TestHelpers(unittest.TestCase):
                 reverse=True,
                 expected="r/subreddit_two",
             ),
-            param(text="r/subreddit_one", reverse=False, expected="r/subreddit_one"),
-            param(text="r/subreddit_one", reverse=True, expected="r/subreddit_one"),
+            param(
+                text="r/subreddit_one",
+                reverse=False,
+                expected="r/subreddit_one",
+            ),
+            param(
+                text="r/subreddit_one", reverse=True, expected="r/subreddit_one"
+            ),
         ]
     )
     def test_get_subreddit_name(self, text, reverse, expected):
@@ -76,7 +82,10 @@ class TestHelpers(unittest.TestCase):
             param(text="", expected=""),
             param(text="no newlines", expected="no newlines"),
             param(text="with\nnewlines", expected="with newlines"),
-            param(text="with \\n escaped newlines", expected="with n escaped newlines"),
+            param(
+                text="with \\n escaped newlines",
+                expected="with n escaped newlines",
+            ),
         ]
     )
     def polish_text(self, text, expected):
@@ -125,13 +134,19 @@ class TestHelpers(unittest.TestCase):
             }
         }
 
-        self.assertEqual(helpers.chained_get(obj, ["l1", "l2_with_value"]), "ok")
+        self.assertEqual(
+            helpers.chained_get(obj, ["l1", "l2_with_value"]), "ok"
+        )
         self.assertEqual(helpers.chained_get(obj, ["l1", "l2_with_none"]), None)
         self.assertEqual(
             helpers.chained_get(obj, ["l1", "l2"]), {"l3_with_value": "ok"}
         )
-        self.assertEqual(helpers.chained_get(obj, ["l1", "l2", "l3_with_value"]), "ok")
-        self.assertEqual(helpers.chained_get(obj, ["l1", "l3", "l3_with_value"]), None)
+        self.assertEqual(
+            helpers.chained_get(obj, ["l1", "l2", "l3_with_value"]), "ok"
+        )
+        self.assertEqual(
+            helpers.chained_get(obj, ["l1", "l3", "l3_with_value"]), None
+        )
         self.assertEqual(
             helpers.chained_get(obj, ["l1", "l3", "l3_with_value"], {}), {}
         )

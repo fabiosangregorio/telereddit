@@ -6,3 +6,7 @@ checks:
   method-complexity:
     config:
       threshold: 7
+plugins:
+  radon: 
+    config: 
+      threshold: "C"

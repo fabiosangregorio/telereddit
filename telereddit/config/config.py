@@ -21,13 +21,17 @@ else:
         'No "TELEREDDIT_MACHINE" environment variable found. Using generic secret.'
     )
     ENV = "generic"
-    secret = importlib.import_module("telereddit.config.secret_generic").secret_config
+    secret = importlib.import_module(
+        "telereddit.config.secret_generic"
+    ).secret_config
 
 REDDIT_DOMAINS = ["reddit.com", "redd.it", "reddit.app.link"]
 MAX_POST_LENGTH = 500
 MAX_TITLE_LENGTH = 200
 MAX_TRIES = 4
-SENTRY_ENABLED = secret.SENTRY_TOKEN is not None and len(secret.SENTRY_TOKEN) > 0
+SENTRY_ENABLED = (
+    secret.SENTRY_TOKEN is not None and len(secret.SENTRY_TOKEN) > 0
+)
 
 EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _edit_btn, _more_btn]])
 EDIT_FAILED_KEYBOARD = InlineKeyboardMarkup(

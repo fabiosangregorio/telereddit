@@ -13,7 +13,9 @@ class TestServices(unittest.TestCase):
                 url="https://www.youtube.com/attribution_link?a=o3Cq80oOnoc&u=%2Fwatch%3Fv%3D3OSc_psp4k0%26feature%3Dshare",
                 json={
                     "media": {
-                        "oembed": {"url": "https://www.youtube.com/watch?v=DJxchZ7qAzE"}
+                        "oembed": {
+                            "url": "https://www.youtube.com/watch?v=DJxchZ7qAzE"
+                        }
                     }
                 },
                 expected_url="https://www.youtube.com/watch?v=DJxchZ7qAzE",
@@ -29,7 +31,9 @@ class TestServices(unittest.TestCase):
                 url="https://www.youtube.com/watch?v=DJxchZ7qAzE",
                 json={
                     "media": {
-                        "oembed": {"url": "https://www.youtube.com/watch?v=DJxchZ7qAzE"}
+                        "oembed": {
+                            "url": "https://www.youtube.com/watch?v=DJxchZ7qAzE"
+                        }
                     }
                 },
                 expected_url="https://www.youtube.com/watch?v=DJxchZ7qAzE",

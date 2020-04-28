@@ -76,9 +76,13 @@ class Linker:
                     document=post.media.url, caption=post.get_msg(), **args
                 )
             elif post.get_type() == ContentType.VIDEO:
-                self.bot.sendVideo(video=post.media.url, caption=post.get_msg(), **args)
+                self.bot.sendVideo(
+                    video=post.media.url, caption=post.get_msg(), **args
+                )
             elif post.get_type() == ContentType.PHOTO:
-                self.bot.sendPhoto(photo=post.media.url, caption=post.get_msg(), **args)
+                self.bot.sendPhoto(
+                    photo=post.media.url, caption=post.get_msg(), **args
+                )
 
         except Exception:
             raise PostSendError(
@@ -128,7 +132,9 @@ class Linker:
                 self.bot.editMessageText(post.get_msg(), **args)
             else:
                 media_args = dict(
-                    media=post.media.url, caption=post.get_msg(), parse_mode="Markdown"
+                    media=post.media.url,
+                    caption=post.get_msg(),
+                    parse_mode="Markdown",
                 )
                 if post.get_type() == ContentType.GIF:
                     media = InputMediaDocument(**media_args)

@@ -16,7 +16,10 @@ class TestReddit(unittest.TestCase):
     @patch("telereddit.reddit.requests.get")
     def test_get_json_404(self, mock_get):
         mock_get.return_value.ok = False
-        mock_get.return_value.json = lambda: {"message": "Not Found", "error": 404}
+        mock_get.return_value.json = lambda: {
+            "message": "Not Found",
+            "error": 404,
+        }
         mock_get.return_value.status_code = 404
         self.assertRaises(
             SubredditDoesntExistError,

@@ -64,7 +64,9 @@ def get_urls_from_text(text):
         if "reddit.com" in w_lower:
             urls.append(w.partition("/?")[0])
         if "redd.it" in w_lower:
-            urls.append(f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}')
+            urls.append(
+                f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}'
+            )
         if "reddit.app.link" in w_lower:
             try:
                 r = requests.get(w, headers={"User-agent": "telereddit_bot"})

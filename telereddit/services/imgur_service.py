@@ -22,7 +22,8 @@ class Imgur(Service):
     @classmethod
     def get(cls, url):
         return requests.get(
-            url, headers={"Authorization": f"Client-ID {secret.IMGUR_CLIENT_ID}"}
+            url,
+            headers={"Authorization": f"Client-ID {secret.IMGUR_CLIENT_ID}"},
         )
 
     @classmethod
