@@ -11,7 +11,7 @@ class Youtube(Service):
 
     @classmethod
     def preprocess(cls, url, json):
-        oembed_url = helpers.chained_get(json, ['media', 'oembed', 'url'])
+        oembed_url = helpers.chained_get(json, ["media", "oembed", "url"])
         return oembed_url if oembed_url else url
 
     @classmethod

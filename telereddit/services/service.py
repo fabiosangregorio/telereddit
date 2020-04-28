@@ -36,9 +36,11 @@ class Service(ABC):
                 cls.authenticate()
                 response = cls.get(processed_url)
             if response.status_code >= 300:
-                raise MediaRetrievalError({
-                    "service": cls.__name__,
-                    "reddit_media_url": url,
-                    "processed_media_url": processed_url
-                })
+                raise MediaRetrievalError(
+                    {
+                        "service": cls.__name__,
+                        "reddit_media_url": url,
+                        "processed_media_url": processed_url,
+                    }
+                )
         return cls.postprocess(response)

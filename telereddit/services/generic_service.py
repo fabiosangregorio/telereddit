@@ -9,12 +9,12 @@ class Generic(Service):
         file_size = None
         media_type = ContentType.PHOTO
 
-        if '.gif' in response.url:
+        if ".gif" in response.url:
             media_type = ContentType.GIF
-        elif '.mp4' in response.url:
+        elif ".mp4" in response.url:
             media_type = ContentType.VIDEO
 
-        if 'Content-length' in response.headers:
-            file_size = int(response.headers['Content-length'])
+        if "Content-length" in response.headers:
+            file_size = int(response.headers["Content-length"])
 
         return Media(response.url, media_type, file_size)
