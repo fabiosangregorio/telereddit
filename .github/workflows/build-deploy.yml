@@ -39,12 +39,19 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Run tests and generate report
-      run: |
+      run: | 
         pip install coverage
         coverage run -m unittest
-        coverage xml
+        
       env:
         TELEREDDIT_MACHINE: 'GITHUB'
 
     - name: Upload reports to codecov.io
       uses: codecov/codecov-action@v1
+
+    - name: Upload reports to Code Climate
+      uses: paambaati/codeclimate-action@v2.6.0
+      with:
+        coverageCommand: coverage xml
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
