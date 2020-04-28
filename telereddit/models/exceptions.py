@@ -15,8 +15,9 @@ class TeleredditError(Exception):
             if capture:
                 sentry.capture_exception()
         traceback.print_exc()
-        print(self)
-        print(data)
+        print("\nException type:", self.__class__.__name__)
+        print("Exception message: ", self)
+        print("Exception data: ", data)
 
 
 class AuthenticationError(TeleredditError):
@@ -62,6 +63,11 @@ class PostRetrievalError(PostError):
 class PostSendError(PostError):
     def __init__(self, data=None, capture=True):
         super().__init__("There has been an error in sending the post.", data, capture)
+
+
+class PostEqualsMessageError(PostError):
+    def __init__(self, data=None, capture=False):
+        super().__init__("The retrieved post is equal to the already sent message.", data, capture)
 
 
 class MediaTooBigError(MediaError):

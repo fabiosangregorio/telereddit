@@ -21,7 +21,3 @@ class Youtube(Service):
     @classmethod
     def postprocess(cls, url):
         return Media(url, ContentType.YOUTUBE)
-
-    @classmethod
-    def authenticate(cls):
-        pass

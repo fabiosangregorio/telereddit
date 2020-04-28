@@ -12,7 +12,7 @@ def get_subreddit_names(text):
     '''
     Returns a list of the (prefixed) subreddit names present in the given text.
     '''
-    regex = r'r/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)'
+    regex = r"\br/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)\b"
     return re.findall(regex, text, re.MULTILINE)
 
 

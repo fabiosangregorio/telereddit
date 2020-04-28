@@ -12,7 +12,8 @@ class TestHelpers(unittest.TestCase):
                   "r/invalid_subreddit_names (too long).\nr/start_of_line and "
                   "/r/CaseSensitive should work, but r/spec!ial characters "
                   "r/shouldnotwork. r/numb3rs are r/permitted, r/_underscores too if "
-                  "they're not r/leading. /r/subreddit should also work."),
+                  "they're not r/leading. /r/subreddit should also work. Also, urls "
+                  "http://containing.com/a_leading_r/shouldnotwork."),
             expected=[
                 "r/valid_subreddit_names",
                 "r/start_of_line",
@@ -35,7 +36,7 @@ class TestHelpers(unittest.TestCase):
 
     @parameterized.expand([
         param(text="r/subreddit_one and r/subreddit_two", reverse=False, expected="r/subreddit_one"),
-        param(text="r/subreddit_one and r/subreddit_two",reverse=True, expected="r/subreddit_two"),
+        param(text="r/subreddit_one and r/subreddit_two", reverse=True, expected="r/subreddit_two"),
         param(text="r/subreddit_one", reverse=False, expected="r/subreddit_one"),
         param(text="r/subreddit_one", reverse=True, expected="r/subreddit_one"),
     ])

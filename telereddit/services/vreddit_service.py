@@ -7,8 +7,6 @@ from telereddit.content_type import ContentType
 
 
 class Vreddit(Service):
-    is_authenticated = False
-
     @classmethod
     def preprocess(cls, url, json):
         xpost = helpers.get(json, "crosspost_parent_list")
@@ -25,16 +23,8 @@ class Vreddit(Service):
         return processed_url
 
     @classmethod
-    def get(cls, url):
-        return requests.get(url, stream=True)
-
-    @classmethod
     def postprocess(cls, response):
         media = Media(response.url, ContentType.GIF)
         if 'Content-length' in response.headers:
             media.size = int(response.headers['Content-length'])
         return media
-
-    @classmethod
-    def authenticate(cls):
-        pass

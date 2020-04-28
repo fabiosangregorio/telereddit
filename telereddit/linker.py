@@ -1,10 +1,14 @@
 from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument
 
-from telereddit.config.config import MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD, DELETE_KEYBOARD
+from telereddit.config.config import (
+    MAX_TRIES, EDIT_KEYBOARD, EDIT_FAILED_KEYBOARD, NO_EDIT_KEYBOARD, DELETE_KEYBOARD
+)
 import telereddit.reddit as reddit
 import telereddit.helpers as helpers
 from telereddit.models.media import ContentType
-from telereddit.models.exceptions import SubredditError, TeleredditError, MediaTooBigError, PostSendError
+from telereddit.models.exceptions import (
+    SubredditError, TeleredditError, MediaTooBigError, PostSendError, PostEqualsMessageError
+)
 
 
 class Linker:
@@ -18,6 +22,11 @@ class Linker:
                          parse_mode='Markdown',
                          reply_markup=EDIT_KEYBOARD,
                          disable_web_page_preview=True)
+
+    def get_args(self, override_dict={}):
+        args = self.args.copy()
+        args.update(override_dict)
+        return args
 
     def send_random_post(self, subreddit):
         for _ in range(MAX_TRIES):
@@ -40,7 +49,7 @@ class Linker:
         if post.media and post.media.size and post.media.size > 20000000:
             raise MediaTooBigError()
 
-        args = self.args.copy()
+        args = self.get_args()
         if from_url:
             # if it is not a random post (e.g. shared via link) don't show the
             # edit custom keyboard
@@ -59,37 +68,43 @@ class Linker:
             elif post.get_type() == ContentType.PHOTO:
                 self.bot.sendPhoto(photo=post.media.url, caption=post.get_msg(), **args)
 
-        except TeleredditError:
-            raise PostSendError()
+        except Exception:
+            raise PostSendError({
+                "post_url": post.permalink,
+                "media_url": post.media.url
+            })
 
     def edit_result(self, message):
         '''
         Edits the given message with a new post from that subreddit, and edits the
         keyboard markup to give the user the ability to edit or confirm the message.
         '''
-        message_id = message.message_id
         subreddit = helpers.get_subreddit_name((message.caption or message.text) + '\n', True)
-        msg_is_text = message.caption is None
         if subreddit is None:
             return
 
         for _ in range(MAX_TRIES):
             try:
-                post = reddit.get_post(helpers.get_random_post_url(subreddit))
+                return self.edit_random_post(message, subreddit)
             except TeleredditError:
-                continue
+                pass
+        self.bot.editMessageReplyMarkup(self.chat_id, message.message_id,
+                                        reply_markup=EDIT_FAILED_KEYBOARD)
 
-            if (
-                (msg_is_text and message.text_markdown == post.get_msg())
-                or message.caption_markdown == post.get_msg()
-                or (not msg_is_text and post.get_type() in [ContentType.TEXT, ContentType.YOUTUBE])
-               ):
-                # if post is the same or message is not text and post is: retry
-                continue
+    def edit_random_post(self, message, subreddit):
+        msg_is_text = message.caption is None
+        post = reddit.get_post(helpers.get_random_post_url(subreddit))
 
-            args = self.args.copy()
-            args["message_id"] = message_id
+        if (
+            (msg_is_text and message.text_markdown == post.get_msg())
+            or message.caption_markdown == post.get_msg()
+            or (not msg_is_text and post.get_type() in [ContentType.TEXT, ContentType.YOUTUBE])
+             ):
+            # if post is the same or message is not text and post is: retry
+            raise PostEqualsMessageError()
 
+        args = self.get_args({"message_id": message.message_id})
+        try:
             if msg_is_text:
                 if post.get_type() == ContentType.YOUTUBE:
                     args["disable_web_page_preview"] = False
@@ -104,9 +119,11 @@ class Linker:
                     media = InputMediaPhoto(**media_args)
                 self.bot.editMessageMedia(media=media, **args)
             return
-
-        self.bot.editMessageReplyMarkup(self.chat_id, message_id,
-                                        reply_markup=EDIT_FAILED_KEYBOARD)
+        except Exception:
+            raise PostSendError({
+                "post_url": post.permalink,
+                "media_url": post.media.url
+            })
 
     def _send_exception_message(self, e, keyboard=True):
         '''Handles the errors created in post retrieval and sending.'''

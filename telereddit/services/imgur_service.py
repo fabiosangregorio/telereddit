@@ -10,12 +10,6 @@ from telereddit.content_type import ContentType
 
 
 class Imgur(Service):
-    access_token = None
-    is_authenticated = False
-
-    def __init__(self):
-        Imgur.authenticate()
-
     @classmethod
     def preprocess(cls, url, json):
         url = urlparse(url).path.replace('/', '')
@@ -39,7 +33,3 @@ class Imgur(Service):
             media = Media(data['mp4'], ContentType.VIDEO, data['mp4_size'])
 
         return media
-
-    @classmethod
-    def authenticate(cls):
-        pass

@@ -1,22 +1,21 @@
 from abc import ABC, abstractmethod
+import requests
 
 from telereddit.models.exceptions import MediaRetrievalError
 
 
 class Service(ABC):
-    access_token = None
-    is_authenticated = False
     has_external_request = True
+    is_authenticated = False
+    access_token = None
 
     @classmethod
-    @abstractmethod
     def preprocess(cls, url, json):
-        pass
+        return url
 
     @classmethod
-    @abstractmethod
     def get(cls, url):
-        pass
+        return requests.get(url, stream=True)
 
     @classmethod
     @abstractmethod
@@ -24,7 +23,6 @@ class Service(ABC):
         pass
 
     @classmethod
-    @abstractmethod
     def authenticate(cls):
         pass
 
@@ -39,6 +37,7 @@ class Service(ABC):
                 response = cls.get(processed_url)
             if response.status_code >= 300:
                 raise MediaRetrievalError({
+                    "service": cls.__name__,
                     "reddit_media_url": url,
                     "processed_media_url": processed_url
                 })

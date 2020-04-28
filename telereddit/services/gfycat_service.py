@@ -12,7 +12,6 @@ from telereddit.models.exceptions import AuthenticationError
 
 
 class Gfycat(Service):
-    access_token = None
     is_authenticated = True
 
     def __init__(self):
@@ -47,6 +46,10 @@ class Gfycat(Service):
             'client_secret': secret.GFYCAT_CLIENT_SECRET
         }))
         if response.status_code >= 300:
-            raise AuthenticationError()
+            raise AuthenticationError({
+                "response_text": response.text,
+                'client_id': secret.GFYCAT_CLIENT_ID,
+                'client_secret': secret.GFYCAT_CLIENT_SECRET
+            })
 
         cls.access_token = json.loads(response.content)["access_token"]
