@@ -1,0 +1,21 @@
+name: Lint
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    types: [opened, synchronize, repoened, edited]
+    branches:
+    - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Check black code formatting
+        uses: lgeiger/black-action@master
+        with:
+          args: ". --check"
