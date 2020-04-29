@@ -62,12 +62,18 @@ class PostRetrievalError(PostError):
 
 class PostSendError(PostError):
     def __init__(self, data=None, capture=True):
-        super().__init__("There has been an error in sending the post.", data, capture)
+        super().__init__(
+            "There has been an error in sending the post.", data, capture
+        )
 
 
 class PostEqualsMessageError(PostError):
     def __init__(self, data=None, capture=False):
-        super().__init__("The retrieved post is equal to the already sent message.", data, capture)
+        super().__init__(
+            "The retrieved post is equal to the already sent message.",
+            data,
+            capture,
+        )
 
 
 class MediaTooBigError(MediaError):

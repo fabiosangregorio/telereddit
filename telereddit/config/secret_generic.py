@@ -7,5 +7,5 @@ secret_config = Secret(
     SENTRY_TOKEN="",
     GFYCAT_CLIENT_ID="",
     GFYCAT_CLIENT_SECRET="",
-    IMGUR_CLIENT_ID=""
+    IMGUR_CLIENT_ID="",
 )

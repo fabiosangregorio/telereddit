@@ -1,0 +1,36 @@
+version: "2"
+checks:
+  argument-count:
+    config:
+      threshold: 5
+  method-complexity:
+    config:
+      threshold: 7
+plugins:
+  duplication:
+    enabled: true
+  pep8:
+    enabled: true
+  apexmetrics:
+    enabled: true
+  bandit:
+    enabled: true
+  radon: 
+    enabled: true
+    config: 
+      threshold: "C"
+exclude_patterns:
+  - "config/"
+  - "db/"
+  - "dist/"
+  - "features/"
+  - "**/node_modules/"
+  - "script/"
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - "Tests/"
+  - "**/vendor/"
+  - "**/*_test.go"
+  - "**/*.d.ts"
+  - "**/secret_*.py"
