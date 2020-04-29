@@ -2,7 +2,6 @@
 line-length = 80
 target-version = ['py38']
 exclude = '''
-
 (
   /(
       \.eggs         # exclude a few common directories in the
@@ -16,6 +15,6 @@ exclude = '''
     | build
     | dist
   )/
-  secret_(.+)\.py
+  | secret_(.+).py
 )
 '''
