@@ -1,21 +1,22 @@
 name: Lint
 
 on:
-  push:
-    branches:
-    - master
-  pull_request:
-    types: [opened, synchronize, repoened, edited]
-    branches:
-    - master
-
+  [push, pull_request]
+  
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
 
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install black
+
     - name: Check black code formatting
-        uses: lgeiger/black-action@master
-        with:
-          args: ". --check"
+      run: python -m black . -l 80 --check
