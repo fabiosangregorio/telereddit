@@ -2,6 +2,15 @@ name: Lint
 
 on:
   [push, pull_request]
+
+# on:
+#   push:
+#     branches:
+#     - master
+#   pull_request:
+#     types: [opened, synchronize, repoened, edited]
+#     branches:
+#     - master
   
 jobs:
   lint:
@@ -13,6 +22,14 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
+
+    - name: Cache dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip # This path is specific to Ubuntu
+        key: ${{ runner.os }}-pip-
+        restore-keys: |
+          ${{ runner.os }}-pip-
 
     - name: Install dependencies
       run: |
