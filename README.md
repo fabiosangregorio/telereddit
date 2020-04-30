@@ -3,10 +3,10 @@
 <h1 align="center">Telereddit</h1>
 
 <p align="center">
-  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3ATest"><img
-      src="https://github.com/fabiosangregorio/telereddit/workflows/Test/badge.svg" alt="Test status"></a>
-  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3ALint"><img
-      src="https://github.com/fabiosangregorio/telereddit/workflows/Lint/badge.svg" alt="Lint status"></a>
+  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Atest"><img
+      src="https://github.com/fabiosangregorio/telereddit/workflows/test/badge.svg" alt="Test status"></a>
+  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Alint"><img
+      src="https://github.com/fabiosangregorio/telereddit/workflows/lint/badge.svg" alt="Lint status"></a>
   <a href="https://codecov.io/gh/fabiosangregorio/telereddit">
     <img src="https://codecov.io/gh/fabiosangregorio/telereddit/branch/master/graph/badge.svg" />
   </a>
