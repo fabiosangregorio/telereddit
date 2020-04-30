@@ -1,7 +1,9 @@
 #!/bin/sh
+echo Running post-commit hook...
 if [ -e .commit ]
     then
     rm .commit
+    echo Generating telereddit dependency graph
     mkdir -p docs
     pydeps --config setup.cfg telereddit -o docs/dependency-graph.svg
     git add docs/dependency-graph.svg
