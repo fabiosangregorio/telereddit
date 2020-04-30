@@ -1,6 +1,6 @@
 #!/bin/sh
-echo Running post-commit hook...
 if [ -e .commit ]
+    echo Running post-commit hook...
     then
     rm .commit
     echo Generating telereddit dependency graph
