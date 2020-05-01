@@ -15,12 +15,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    # - name: Unlock git-crypt files
-    #   uses: zemuldo/git-crypt-unlock@master
-    #   env: 
-    #     GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-    #     GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
-    #     GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }}
+    - name: Unlock git-crypt files
+      uses: zemuldo/git-crypt-unlock@master
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }}
 
     - name: Setup Graphviz environment
       uses: kamiazya/setup-graphviz@v1
@@ -48,6 +48,7 @@ jobs:
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
       run: |
+        git status
         git config --global user.name 'Fabio Sangregorio'
         git config --global user.email 'fabio.sangregorio@gmail.com'
         git add docs/dependency-graph.svg
