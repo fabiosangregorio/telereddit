@@ -41,6 +41,10 @@ Telereddit is a Telegram bot which lets you easily see shared Reddit posts previ
 
 Get it on [telegram.me](https://telegram.me/tele_reddit_bot)!
 
+## Installation
+TODO
+transfer commit hooks from .githooks to .git/hooks
+
 ## Bugs and feature requests
 If you want to report a bug or would like a feature to be added, feel free to open an issue.
  

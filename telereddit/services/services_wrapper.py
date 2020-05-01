@@ -9,6 +9,7 @@ from telereddit.services.generic_service import Generic
 
 
 class ServicesWrapper:
+    """ """
     gfycat = Gfycat()
     vreddit = Vreddit()
     imgur = Imgur()
@@ -17,6 +18,19 @@ class ServicesWrapper:
 
     @classmethod
     def get_media(cls, url, json={}):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        json :
+             (Default value = {})
+
+        Returns
+        -------
+
+        """
         parsed_url = urlparse(url)
         base_url = parsed_url.netloc
 

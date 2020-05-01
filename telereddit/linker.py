@@ -20,8 +20,20 @@ from telereddit.models.exceptions import (
 
 
 class Linker:
+    """ """
     @classmethod
     def set_bot(cls, bot):
+        """
+
+        Parameters
+        ----------
+        bot :
+            
+
+        Returns
+        -------
+
+        """
         cls.bot = bot
 
     def __init__(self, chat_id):
@@ -34,11 +46,33 @@ class Linker:
         )
 
     def get_args(self, override_dict={}):
+        """
+
+        Parameters
+        ----------
+        override_dict :
+             (Default value = {})
+
+        Returns
+        -------
+
+        """
         args = self.args.copy()
         args.update(override_dict)
         return args
 
     def send_random_post(self, subreddit):
+        """
+
+        Parameters
+        ----------
+        subreddit :
+            
+
+        Returns
+        -------
+
+        """
         for _ in range(MAX_TRIES):
             try:
                 return self.send_post(helpers.get_random_post_url(subreddit))
@@ -49,12 +83,36 @@ class Linker:
         return self._send_exception_message(err)
 
     def send_post_from_url(self, post_url):
+        """
+
+        Parameters
+        ----------
+        post_url :
+            
+
+        Returns
+        -------
+
+        """
         try:
             self.send_post(post_url, from_url=True)
         except TeleredditError as e:
             self._send_exception_message(e, keyboard=False)
 
     def send_post(self, post_url, from_url=False):
+        """
+
+        Parameters
+        ----------
+        post_url :
+            
+        from_url :
+             (Default value = False)
+
+        Returns
+        -------
+
+        """
         post = reddit.get_post(post_url)
         if post.media and post.media.size and post.media.size > 20000000:
             raise MediaTooBigError()
@@ -90,9 +148,17 @@ class Linker:
             )
 
     def edit_result(self, message):
-        """
-        Edits the given message with a new post from that subreddit, and edits the
+        """Edits the given message with a new post from that subreddit, and edits the
         keyboard markup to give the user the ability to edit or confirm the message.
+
+        Parameters
+        ----------
+        message :
+            
+
+        Returns
+        -------
+
         """
         subreddit = helpers.get_subreddit_name(
             (message.caption or message.text) + "\n", True
@@ -110,6 +176,19 @@ class Linker:
         )
 
     def edit_random_post(self, message, subreddit):
+        """
+
+        Parameters
+        ----------
+        message :
+            
+        subreddit :
+            
+
+        Returns
+        -------
+
+        """
         msg_is_text = message.caption is None
         post = reddit.get_post(helpers.get_random_post_url(subreddit))
 
@@ -150,7 +229,19 @@ class Linker:
             )
 
     def _send_exception_message(self, e, keyboard=True):
-        """Handles the errors created in post retrieval and sending."""
+        """Handles the errors created in post retrieval and sending.
+
+        Parameters
+        ----------
+        e :
+            
+        keyboard :
+             (Default value = True)
+
+        Returns
+        -------
+
+        """
         args = dict(chat_id=self.chat_id, text=str(e), parse_mode="Markdown")
         if keyboard:
             args["reply_markup"] = DELETE_KEYBOARD

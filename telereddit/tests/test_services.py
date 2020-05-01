@@ -6,6 +6,7 @@ from telereddit.content_type import ContentType
 
 
 class TestServices(unittest.TestCase):
+    """ """
     @parameterized.expand(
         [
             # youtube link (attribution link)
@@ -41,6 +42,21 @@ class TestServices(unittest.TestCase):
         ]
     )
     def test_youtube(self, url, json, expected_url):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        json :
+            
+        expected_url :
+            
+
+        Returns
+        -------
+
+        """
         media = ServicesWrapper.get_media(url, json)
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, ContentType.YOUTUBE)
@@ -56,6 +72,21 @@ class TestServices(unittest.TestCase):
         ]
     )
     def test_imgur(self, url, expected_url, expected_type):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        expected_url :
+            
+        expected_type :
+            
+
+        Returns
+        -------
+
+        """
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, expected_type)
@@ -71,6 +102,21 @@ class TestServices(unittest.TestCase):
         ]
     )
     def test_gfycat(self, url, expected_url, expected_type):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        expected_url :
+            
+        expected_type :
+            
+
+        Returns
+        -------
+
+        """
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, expected_type)
@@ -93,6 +139,23 @@ class TestServices(unittest.TestCase):
         ]
     )
     def test_vreddit(self, url, json, expected_url, expected_type):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        json :
+            
+        expected_url :
+            
+        expected_type :
+            
+
+        Returns
+        -------
+
+        """
         media = ServicesWrapper.get_media(url, json)
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, expected_type)
@@ -114,6 +177,21 @@ class TestServices(unittest.TestCase):
         ]
     )
     def test_generic(self, url, expected_url, expected_type):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        expected_url :
+            
+        expected_type :
+            
+
+        Returns
+        -------
+
+        """
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, expected_type)
