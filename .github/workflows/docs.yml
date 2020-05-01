@@ -48,7 +48,7 @@ jobs:
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
       run: |
-        git status
+        cat .git/config
 
 # git config --global user.name 'Fabio Sangregorio'
 # git config --global user.email 'fabio.sangregorio@gmail.com'
