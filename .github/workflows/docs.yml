@@ -49,8 +49,9 @@ jobs:
     - name: Commit changes
       run: |
         git status
-        git config --global user.name 'Fabio Sangregorio'
-        git config --global user.email 'fabio.sangregorio@gmail.com'
-        git add docs/dependency-graph.svg
-        git commit -m "Commit generated from Github Actions: commits workflows/docs changes"
-        git push
+
+# git config --global user.name 'Fabio Sangregorio'
+# git config --global user.email 'fabio.sangregorio@gmail.com'
+# git add docs/dependency-graph.svg
+# git commit -m "Commit generated from Github Actions: commits workflows/docs changes"
+# git push
