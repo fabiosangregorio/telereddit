@@ -22,6 +22,7 @@ class Vreddit(Service):
         Returns
         -------
 
+        
         """
         xpost = helpers.get(json, "crosspost_parent_list")
         if xpost is not None and len(xpost) > 0:
@@ -52,6 +53,7 @@ class Vreddit(Service):
         Returns
         -------
 
+        
         """
         media = Media(response.url, ContentType.GIF)
         if "Content-length" in response.headers:

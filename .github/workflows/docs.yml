@@ -1,0 +1,55 @@
+name: docs
+
+on: [push]
+  # push:
+  #   branches:
+  #   - master
+  # pull_request:
+  #   types: [opened, synchronize, repoened, edited]
+  #   branches:
+  #   - master
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    # - name: Unlock git-crypt files
+    #   uses: zemuldo/git-crypt-unlock@master
+    #   env: 
+    #     GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+    #     GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+    #     GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }}
+
+    - name: Setup Graphviz environment
+      uses: kamiazya/setup-graphviz@v1
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+      
+    - name: Cache dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip # This path is specific to Ubuntu
+        key: ${{ runner.os }}-pip-
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        pip install pydeps
+
+    - name: Generate project dependency graph
+      run: pydeps --config setup.cfg telereddit -o docs/dependency-graph.svg
+
+    # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
+    - name: Commit changes
+      run: |
+        git config --global user.name 'Fabio Sangregorio'
+        git config --global user.email 'fabio.sangregorio@gmail.com'
+        git add docs/dependency-graph.svg
+        git commit -m "Commit generated from Github Actions: commits workflows/docs changes"
+        git push

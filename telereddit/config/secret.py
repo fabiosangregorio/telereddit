@@ -9,11 +9,12 @@ class Secret:
         key :
             
         value :
-             (Default value = None)
+            (Default value = None)
 
         Returns
         -------
 
+        
         """
         if value is not None:
             self[key] = value

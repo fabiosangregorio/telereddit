@@ -22,6 +22,10 @@ def on_chat_message(update: Update, context: CallbackContext):
 
     Parameters
     ----------
+    update : Update :
+        
+    context : CallbackContext :
+        
     update: Update :
         
     context: CallbackContext :
@@ -30,6 +34,7 @@ def on_chat_message(update: Update, context: CallbackContext):
     Returns
     -------
 
+    
     """
     msg = update.message
     if not msg.text:
@@ -52,6 +57,10 @@ def on_callback_query(update: Update, context: CallbackContext):
 
     Parameters
     ----------
+    update : Update :
+        
+    context : CallbackContext :
+        
     update: Update :
         
     context: CallbackContext :
@@ -60,6 +69,7 @@ def on_callback_query(update: Update, context: CallbackContext):
     Returns
     -------
 
+    
     """
     query_data = update.callback_query.data
     message = update.effective_message

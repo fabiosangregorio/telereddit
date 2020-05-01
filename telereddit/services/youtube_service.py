@@ -24,6 +24,7 @@ class Youtube(Service):
         Returns
         -------
 
+        
         """
         oembed_url = helpers.chained_get(json, ["media", "oembed", "url"])
         return oembed_url if oembed_url else url
@@ -40,6 +41,7 @@ class Youtube(Service):
         Returns
         -------
 
+        
         """
         return url
 
@@ -55,5 +57,6 @@ class Youtube(Service):
         Returns
         -------
 
+        
         """
         return Media(url, ContentType.YOUTUBE)

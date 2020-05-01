@@ -25,6 +25,7 @@ class Imgur(Service):
         Returns
         -------
 
+        
         """
         url = urlparse(url).path.replace("/", "")
         if "." in url:
@@ -45,6 +46,7 @@ class Imgur(Service):
         Returns
         -------
 
+        
         """
         return requests.get(
             url,
@@ -63,6 +65,7 @@ class Imgur(Service):
         Returns
         -------
 
+        
         """
         data = json.loads(response.content)["data"]
         media = None

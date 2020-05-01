@@ -33,6 +33,7 @@ class Linker:
         Returns
         -------
 
+        
         """
         cls.bot = bot
 
@@ -51,11 +52,12 @@ class Linker:
         Parameters
         ----------
         override_dict :
-             (Default value = {})
+            (Default value = {})
 
         Returns
         -------
 
+        
         """
         args = self.args.copy()
         args.update(override_dict)
@@ -72,6 +74,7 @@ class Linker:
         Returns
         -------
 
+        
         """
         for _ in range(MAX_TRIES):
             try:
@@ -93,6 +96,7 @@ class Linker:
         Returns
         -------
 
+        
         """
         try:
             self.send_post(post_url, from_url=True)
@@ -107,11 +111,12 @@ class Linker:
         post_url :
             
         from_url :
-             (Default value = False)
+            (Default value = False)
 
         Returns
         -------
 
+        
         """
         post = reddit.get_post(post_url)
         if post.media and post.media.size and post.media.size > 20000000:
@@ -159,6 +164,7 @@ class Linker:
         Returns
         -------
 
+        
         """
         subreddit = helpers.get_subreddit_name(
             (message.caption or message.text) + "\n", True
@@ -188,6 +194,7 @@ class Linker:
         Returns
         -------
 
+        
         """
         msg_is_text = message.caption is None
         post = reddit.get_post(helpers.get_random_post_url(subreddit))
@@ -236,11 +243,12 @@ class Linker:
         e :
             
         keyboard :
-             (Default value = True)
+            (Default value = True)
 
         Returns
         -------
 
+        
         """
         args = dict(chat_id=self.chat_id, text=str(e), parse_mode="Markdown")
         if keyboard:

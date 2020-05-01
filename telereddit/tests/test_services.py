@@ -56,6 +56,7 @@ class TestServices(unittest.TestCase):
         Returns
         -------
 
+        
         """
         media = ServicesWrapper.get_media(url, json)
         self.assertEqual(media.url, expected_url)
@@ -86,6 +87,7 @@ class TestServices(unittest.TestCase):
         Returns
         -------
 
+        
         """
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)
@@ -116,6 +118,7 @@ class TestServices(unittest.TestCase):
         Returns
         -------
 
+        
         """
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)
@@ -155,6 +158,7 @@ class TestServices(unittest.TestCase):
         Returns
         -------
 
+        
         """
         media = ServicesWrapper.get_media(url, json)
         self.assertEqual(media.url, expected_url)
@@ -191,6 +195,7 @@ class TestServices(unittest.TestCase):
         Returns
         -------
 
+        
         """
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)

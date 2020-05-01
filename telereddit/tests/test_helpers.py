@@ -47,11 +47,12 @@ class TestHelpers(unittest.TestCase):
         expected :
             
         not_expected :
-             (Default value = None)
+            (Default value = None)
 
         Returns
         -------
 
+        
         """
         self.assertEqual(helpers.get_subreddit_names(text), expected)
         self.assertNotEqual(helpers.get_subreddit_names(text), not_expected)
@@ -93,6 +94,7 @@ class TestHelpers(unittest.TestCase):
         Returns
         -------
 
+        
         """
         self.assertEqual(helpers.get_subreddit_name(text, reverse), expected)
 
@@ -120,6 +122,7 @@ class TestHelpers(unittest.TestCase):
         Returns
         -------
 
+        
         """
         self.assertEqual(helpers.truncate_text(text, length), expected)
 
@@ -147,6 +150,7 @@ class TestHelpers(unittest.TestCase):
         Returns
         -------
 
+        
         """
         self.assertEqual(helpers.polish_text(text), expected)
 
@@ -172,11 +176,12 @@ class TestHelpers(unittest.TestCase):
         expected :
             
         not_expected :
-             (Default value = None)
+            (Default value = None)
 
         Returns
         -------
 
+        
         """
         self.assertListEqual(helpers.get_urls_from_text(text), expected)
 

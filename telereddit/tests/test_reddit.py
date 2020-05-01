@@ -26,6 +26,7 @@ class TestReddit(unittest.TestCase):
         Returns
         -------
 
+        
         """
         mock_get.return_value.ok = False
         mock_get.return_value.json = lambda: {
@@ -51,6 +52,7 @@ class TestReddit(unittest.TestCase):
         Returns
         -------
 
+        
         """
         mock_get.return_value.ok = False
         mock_get.return_value.json = lambda: {
@@ -77,6 +79,7 @@ class TestReddit(unittest.TestCase):
         Returns
         -------
 
+        
         """
         with open(
             pathlib.Path(__file__).parent

@@ -15,6 +15,7 @@ def get_random_post_url(subreddit):
     Returns
     -------
 
+    
     """
     return f"https://www.reddit.com/{subreddit}/random"
 
@@ -30,6 +31,7 @@ def get_subreddit_names(text):
     Returns
     -------
 
+    
     """
     regex = r"\br/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)\b"
     return re.findall(regex, text, re.MULTILINE)
@@ -44,11 +46,12 @@ def get_subreddit_name(text, reverse=False):
     text :
         
     reverse :
-         (Default value = False)
+        (Default value = False)
 
     Returns
     -------
 
+    
     """
     subs = get_subreddit_names(text)
     if len(subs):
@@ -69,6 +72,7 @@ def escape_markdown(text):
     Returns
     -------
 
+    
     """
     # Reddit escaping: \\_ \\* \\[ \\] ( ) \\~ \\` &gt; # + - = | { } . !
     return text.replace("*", "\\*").replace("_", "\\_")
@@ -82,11 +86,12 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
     text :
         
     length :
-         (Default value = MAX_TITLE_LENGTH)
+        (Default value = MAX_TITLE_LENGTH)
 
     Returns
     -------
 
+    
     """
     if length < 0:
         return text
@@ -104,6 +109,7 @@ def polish_text(text):
     Returns
     -------
 
+    
     """
     return text.replace("\n", " ")
 
@@ -119,6 +125,7 @@ def get_urls_from_text(text):
     Returns
     -------
 
+    
     """
     polished = polish_text(text)
     urls = list()
@@ -151,11 +158,12 @@ def get(obj, attr, default=None):
     attr :
         
     default :
-         (Default value = None)
+        (Default value = None)
 
     Returns
     -------
 
+    
     """
     return obj[attr] if attr in obj and obj[attr] is not None else default
 
@@ -171,11 +179,12 @@ def chained_get(obj, attrs, default=None):
     attrs :
         
     default :
-         (Default value = None)
+        (Default value = None)
 
     Returns
     -------
 
+    
     """
     for attr in attrs:
         obj = get(obj, attr, default)

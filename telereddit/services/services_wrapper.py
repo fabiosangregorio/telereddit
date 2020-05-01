@@ -25,11 +25,12 @@ class ServicesWrapper:
         url :
             
         json :
-             (Default value = {})
+            (Default value = {})
 
         Returns
         -------
 
+        
         """
         parsed_url = urlparse(url)
         base_url = parsed_url.netloc

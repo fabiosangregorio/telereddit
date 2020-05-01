@@ -24,6 +24,7 @@ class Service(ABC):
         Returns
         -------
 
+        
         """
         return url
 
@@ -39,6 +40,7 @@ class Service(ABC):
         Returns
         -------
 
+        
         """
         return requests.get(url, stream=True)
 
@@ -55,6 +57,7 @@ class Service(ABC):
         Returns
         -------
 
+        
         """
         pass
 
@@ -77,6 +80,7 @@ class Service(ABC):
         Returns
         -------
 
+        
         """
         processed_url = cls.preprocess(url, json)
 

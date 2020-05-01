@@ -32,6 +32,7 @@ class Gfycat(Service):
         Returns
         -------
 
+        
         """
         gfyid = urlparse(url).path.partition("-")[0]
         return f"https://api.gfycat.com/v1/gfycats/{gfyid}"
@@ -48,6 +49,7 @@ class Gfycat(Service):
         Returns
         -------
 
+        
         """
         return requests.get(
             url, headers={"Authorization": f"Bearer {cls.access_token}"}
@@ -65,6 +67,7 @@ class Gfycat(Service):
         Returns
         -------
 
+        
         """
         gfy_item = json.loads(response.content)["gfyItem"]
         media = Media(

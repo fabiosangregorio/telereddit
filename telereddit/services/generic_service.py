@@ -17,6 +17,7 @@ class Generic(Service):
         Returns
         -------
 
+        
         """
         file_size = None
         media_type = ContentType.PHOTO

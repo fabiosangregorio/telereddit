@@ -25,6 +25,7 @@ def _get_json(post_url):
     Returns
     -------
 
+    
     """
     try:
         response = requests.get(
@@ -61,6 +62,7 @@ def get_post(post_url):
     Returns
     -------
 
+    
     """
     json = _get_json(post_url)
 
