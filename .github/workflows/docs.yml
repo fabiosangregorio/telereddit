@@ -30,14 +30,15 @@ jobs:
 
     - name: Unlock git-crypt files
       run: |
+        echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > "$HOME"/git-crypt-key.asc
+        gpg --batch --import "$HOME"/git-crypt-key.asc
+        gpgconf --kill gpg-agent
+
         echo default-cache-ttl 46000 >> ~/.gnupg/gpg-agent.conf
         echo pinentry-program /usr/bin/pinentry-gtk-2 >> ~/.gnupg/gpg-agent.conf
         echo allow-preset-passphrase >> ~/.gnupg/gpg-agent.conf
         gpg-connect-agent reloadagent /bye
 
-        echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > "$HOME"/git-crypt-key.asc
-        gpg --batch --import "$HOME"/git-crypt-key.asc
-        gpgconf --kill gpg-agent
         gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
         /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "$GPG_KEY_PASS" "$GPG_KEY_GRIP"
         git-crypt unlock
