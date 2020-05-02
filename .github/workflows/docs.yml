@@ -15,19 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    # - name: Unlock git-crypt files
-    #   uses: zemuldo/git-crypt-unlock@master
-    #   env: 
-    #     GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-    #     GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
-    #     GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }}
+    - name: Unlock git-crypt files
+      uses: zemuldo/git-crypt-unlock@master
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }}
 
-    - name: Setup git-crypt
-      run: |
-        apk --update add ca-certificates bash curl git g++ gnupg make openssh openssl openssl-dev && rm -rf /var/cache/apk/*
-        curl -L https://github.com/AGWA/git-crypt/archive/debian/$VERSION.tar.gz | tar zxv -C /var/tmp
-        cd /var/tmp/git-crypt-debian && make && make install PREFIX=/usr/local && rm -rf /var/tmp/git-crypt
-
+    
     - name: Unlock git-crypt files
       run: |
         echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > "$HOME"/git-crypt-key.asc
