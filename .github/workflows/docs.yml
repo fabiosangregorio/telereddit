@@ -34,6 +34,11 @@ jobs:
         gpg --batch --import "$HOME"/git-crypt-key.asc
         gpgconf --kill gpg-agent
         gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
+
+        echo default-cache-ttl 46000 >> ~/.gnupg/gpg-agent.conf
+        echo pinentry-program /usr/bin/pinentry-gtk-2 >> ~/.gnupg/gpg-agent.conf
+        echo allow-preset-passphrase >> ~/.gnupg/gpg-agent.conf
+        gpg-connect-agent reloadagent /bye
         /usr/lib/gnupg2/gpg-preset-passphrase -c $GPG_KEY_GRIP <<< $GPG_KEY_PASS
         git-crypt unlock
       # /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "$GPG_KEY_PASS" "$GPG_KEY_GRIP"
