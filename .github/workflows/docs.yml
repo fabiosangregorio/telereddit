@@ -39,9 +39,8 @@ jobs:
         echo pinentry-program /usr/bin/pinentry-gtk-2 >> ~/.gnupg/gpg-agent.conf
         echo allow-preset-passphrase >> ~/.gnupg/gpg-agent.conf
         gpg-connect-agent reloadagent /bye
-        /usr/lib/gnupg2/gpg-preset-passphrase -c $GPG_KEY_GRIP <<< $GPG_KEY_PASS
+        /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "$GPG_KEY_PASS" "$GPG_KEY_GRIP"
         git-crypt unlock
-      # /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "$GPG_KEY_PASS" "$GPG_KEY_GRIP"
 
     # - name: Setup Graphviz environment
     #   uses: kamiazya/setup-graphviz@v1
