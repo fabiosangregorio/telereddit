@@ -24,7 +24,8 @@ jobs:
 
     - name: Setup git-crypt
       run: |
-        sudo apt-get install ca-certificates bash curl git g++ gnupg make openssh-client openssl
+        su -
+        apt-get install ca-certificates bash curl git g++ gnupg make openssh-client openssl
         curl -L https://github.com/AGWA/git-crypt/archive/debian/$VERSION.tar.gz | tar zxv -C /var/tmp
         cd /var/tmp/git-crypt-debian && make && make install PREFIX=/usr/local
 
