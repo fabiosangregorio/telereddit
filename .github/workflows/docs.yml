@@ -35,7 +35,8 @@ jobs:
         gpgconf --kill gpg-agent
         gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
         git-crypt unlock
-      # gpg-preset-passphrase --preset --passphrase "$GPG_KEY_PASS" "$GPG_KEY_GRIP"
+        ls
+        /usr/libexec/gpg-preset-passphrase --preset --passphrase "$GPG_KEY_PASS" "$GPG_KEY_GRIP"
 
     # - name: Setup Graphviz environment
     #   uses: kamiazya/setup-graphviz@v1
