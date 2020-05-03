@@ -56,7 +56,7 @@ jobs:
       run: |
         ls docs
         rm docs/dependency-graph.svg
-        pydeps --verbose -o docs/dependency-graph.svg telereddit
+        pydeps -vvv -l DEBUG -o docs/dependency-graph.svg telereddit
 
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
