@@ -1,8 +1,0 @@
-[pydeps]
-noshow = True
-cluster = True
-max_bacon = 3
-max_cluster_size = 3
-exclude_exact = telereddit.config telereddit.services
-rmprefix =
-    telereddit.
