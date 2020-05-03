@@ -13,7 +13,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
 
     - name: Setup git-crypt
       run: |
@@ -54,15 +54,12 @@ jobs:
 
     - name: Generate project dependency graph
       run: |
-        ls docs
-        rm docs/dependency-graph.svg
-        pydeps -vvv -o docs/dependency-graph.svg telereddit
+        pydeps --verbose -o docs/dependency-graph.svg telereddit
 
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
       run: |
-        git pull
-        git add .
-        git status
-        git diff-index --quiet HEAD || git commit -m "Commit from Github Actions: docs workflow changes"
+        git config --global user.name 'Fabio Sangregorio'
+        git config --global user.email 'fabio.sangregorio@gmail.com'
+        git commit -m "Commit from Github Actions: docs workflow changes"
         git push
