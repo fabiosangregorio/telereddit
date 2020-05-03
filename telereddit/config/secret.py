@@ -1,6 +1,22 @@
 class Secret:
+    """ """
+
     # copy-constructor utility
     def set_attr(self, key, value=None):
+        """
+
+        Parameters
+        ----------
+        key :
+            
+        value :
+            (Default value = None)
+
+        Returns
+        -------
+
+        
+        """
         if value is not None:
             self[key] = value
         elif self.from_secret and self.from_secret[key]:

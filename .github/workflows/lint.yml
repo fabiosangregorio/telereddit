@@ -1,4 +1,4 @@
-name: Lint
+name: lint
 
 on:
   push:
@@ -6,8 +6,6 @@ on:
     - master
   pull_request:
     types: [opened, synchronize, repoened, edited]
-    branches:
-    - master
   
 jobs:
   lint:

@@ -5,29 +5,84 @@ from telereddit.models.exceptions import MediaRetrievalError
 
 
 class Service(ABC):
+    """ """
+
     has_external_request = True
     is_authenticated = False
     access_token = None
 
     @classmethod
     def preprocess(cls, url, json):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        json :
+            
+
+        Returns
+        -------
+
+        
+        """
         return url
 
     @classmethod
     def get(cls, url):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+
+        Returns
+        -------
+
+        
+        """
         return requests.get(url, stream=True)
 
     @classmethod
     @abstractmethod
     def postprocess(cls, response):
+        """
+
+        Parameters
+        ----------
+        response :
+            
+
+        Returns
+        -------
+
+        
+        """
         pass
 
     @classmethod
     def authenticate(cls):
+        """ """
         pass
 
     @classmethod
     def get_media(cls, url, json):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        json :
+            
+
+        Returns
+        -------
+
+        
+        """
         processed_url = cls.preprocess(url, json)
 
         response = cls.get(processed_url)

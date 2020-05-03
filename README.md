@@ -1,12 +1,14 @@
 <p align="center"><a href="https://telegram.me/tele_reddit_bot"><img height="200" width="200"
-      src="https://i.imgur.com/DRoF3F9.png" alt="telereddit" /></a></p>
+      src="https://www.github.com/fabiosangregorio/telereddit/docs/images/logo.png" alt="telereddit" /></a></p>
 <h1 align="center">Telereddit</h1>
 
 <p align="center">
-  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3ATest"><img
-      src="https://github.com/fabiosangregorio/telereddit/workflows/Test/badge.svg" alt="Test status"></a>
-  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3ALint"><img
-      src="https://github.com/fabiosangregorio/telereddit/workflows/Lint/badge.svg" alt="Lint status"></a>
+  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Adocs"><img
+      src="https://github.com/fabiosangregorio/telereddit/workflows/docs/badge.svg" alt="Docs status"></a>
+  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Atest"><img
+      src="https://github.com/fabiosangregorio/telereddit/workflows/test/badge.svg" alt="Test status"></a>
+  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Alint"><img
+      src="https://github.com/fabiosangregorio/telereddit/workflows/lint/badge.svg" alt="Lint status"></a>
   <a href="https://codecov.io/gh/fabiosangregorio/telereddit">
     <img src="https://codecov.io/gh/fabiosangregorio/telereddit/branch/master/graph/badge.svg" />
   </a>
@@ -20,7 +22,7 @@
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"
       alt="Code style: black"></a>
 </p>
-
+ 
 Add this bot on Telegram: [telegram.me](https://telegram.me/tele_reddit_bot)!
 
 Telereddit is a Telegram bot which lets you easily see shared Reddit posts previews directly in the group chat. This bot will also automatically send a random post from a subreddit when you name it.
@@ -44,6 +46,10 @@ Telereddit is a Telegram bot which lets you easily see shared Reddit posts previ
 </p>
 
 Get it on [telegram.me](https://telegram.me/tele_reddit_bot)!
+
+## Installation
+TODO
+transfer commit hooks from .githooks to .git/hooks
 
 ## Bugs and feature requests
 If you want to report a bug or would like a feature to be added, feel free to open an issue.
