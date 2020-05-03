@@ -7,6 +7,7 @@ from telereddit.content_type import ContentType
 
 class TestServices(unittest.TestCase):
     """ """
+
     @parameterized.expand(
         [
             # youtube link (attribution link)

@@ -1,5 +1,5 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-import os 
+import os
 import importlib
 import logging
 

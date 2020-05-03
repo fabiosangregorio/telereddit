@@ -6,6 +6,7 @@ import telereddit.helpers as helpers
 
 class Youtube(Service):
     """ """
+
     access_token = None
     is_authenticated = False
     has_external_request = False

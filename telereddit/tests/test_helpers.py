@@ -6,6 +6,7 @@ import telereddit.helpers as helpers
 
 class TestHelpers(unittest.TestCase):
     """ """
+
     @parameterized.expand(
         [
             # subreddit in a text

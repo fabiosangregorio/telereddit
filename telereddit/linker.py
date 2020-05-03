@@ -21,6 +21,7 @@ from telereddit.models.exceptions import (
 
 class Linker:
     """ """
+
     @classmethod
     def set_bot(cls, bot):
         """

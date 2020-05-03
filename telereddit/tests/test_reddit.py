@@ -14,6 +14,7 @@ from telereddit.content_type import ContentType
 
 class TestReddit(unittest.TestCase):
     """ """
+
     @patch("telereddit.reddit.requests.get")
     def test_get_json_404(self, mock_get):
         """

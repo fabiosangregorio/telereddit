@@ -11,6 +11,7 @@ from telereddit.content_type import ContentType
 
 class Imgur(Service):
     """ """
+
     @classmethod
     def preprocess(cls, url, json):
         """

@@ -6,6 +6,7 @@ from telereddit.models.exceptions import MediaRetrievalError
 
 class Service(ABC):
     """ """
+
     has_external_request = True
     is_authenticated = False
     access_token = None

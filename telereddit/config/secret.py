@@ -1,5 +1,6 @@
 class Secret:
     """ """
+
     # copy-constructor utility
     def set_attr(self, key, value=None):
         """

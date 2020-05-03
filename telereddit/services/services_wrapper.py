@@ -10,6 +10,7 @@ from telereddit.services.generic_service import Generic
 
 class ServicesWrapper:
     """ """
+
     gfycat = Gfycat()
     vreddit = Vreddit()
     imgur = Imgur()

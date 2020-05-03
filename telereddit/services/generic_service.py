@@ -5,6 +5,7 @@ from telereddit.content_type import ContentType
 
 class Generic(Service):
     """ """
+
     @classmethod
     def postprocess(cls, response):
         """

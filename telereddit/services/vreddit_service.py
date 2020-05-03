@@ -8,6 +8,7 @@ from telereddit.content_type import ContentType
 
 class Vreddit(Service):
     """ """
+
     @classmethod
     def preprocess(cls, url, json):
         """

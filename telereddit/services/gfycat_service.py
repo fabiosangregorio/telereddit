@@ -13,6 +13,7 @@ from telereddit.models.exceptions import AuthenticationError
 
 class Gfycat(Service):
     """ """
+
     is_authenticated = True
 
     def __init__(self):
