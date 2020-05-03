@@ -27,7 +27,9 @@ jobs:
         /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "${{ secrets.GPG_KEY_PASS }}" "${{ secrets.GPG_KEY_GRIP }}"
 
     - name: Setup Graphviz environment
-      uses: kamiazya/setup-graphviz@v1
+      # uses: kamiazya/setup-graphviz@v1
+      run: |
+        sudo apt-get install graphviz
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
