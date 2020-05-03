@@ -13,7 +13,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
 
     - name: Setup git-crypt
       run: |
@@ -61,7 +61,7 @@ jobs:
       run: |
         git config --global user.name 'Fabio Sangregorio'
         git config --global user.email 'fabio.sangregorio@gmail.com'
-        git commit -am "Commit from Github Actions: docs workflow changes"
+        git commit -m "Commit from Github Actions: docs workflow changes" -a
 
     - name: Push changes
       uses: ad-m/github-push-action@master
