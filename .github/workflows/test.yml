@@ -28,7 +28,7 @@ jobs:
 
     - name: Ensure git-crypt files are locked
       run: |
-        grep -qsPa "\x00GITCRYPT"  $(git ls-tree -r master --name-only)
+        grep -qsPa "\x00GITCRYPT"  $(git crypt status | grep -v '^not' | awk '{print $2}')
 
     - name: Unlock git-crypt files
       run: |
