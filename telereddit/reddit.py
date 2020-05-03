@@ -15,6 +15,18 @@ from telereddit.services.services_wrapper import ServicesWrapper
 
 
 def _get_json(post_url):
+    """
+
+    Parameters
+    ----------
+    post_url :
+        
+
+    Returns
+    -------
+
+    
+    """
     try:
         response = requests.get(
             f"{post_url}.json",
@@ -40,6 +52,18 @@ def _get_json(post_url):
 
 
 def get_post(post_url):
+    """
+
+    Parameters
+    ----------
+    post_url :
+        
+
+    Returns
+    -------
+
+    
+    """
     json = _get_json(post_url)
 
     try:

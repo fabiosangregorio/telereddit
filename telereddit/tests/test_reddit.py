@@ -13,8 +13,22 @@ from telereddit.content_type import ContentType
 
 
 class TestReddit(unittest.TestCase):
+    """ """
+
     @patch("telereddit.reddit.requests.get")
     def test_get_json_404(self, mock_get):
+        """
+
+        Parameters
+        ----------
+        mock_get :
+            
+
+        Returns
+        -------
+
+        
+        """
         mock_get.return_value.ok = False
         mock_get.return_value.json = lambda: {
             "message": "Not Found",
@@ -29,6 +43,18 @@ class TestReddit(unittest.TestCase):
 
     @patch("telereddit.reddit.requests.get")
     def test_get_json_private(self, mock_get):
+        """
+
+        Parameters
+        ----------
+        mock_get :
+            
+
+        Returns
+        -------
+
+        
+        """
         mock_get.return_value.ok = False
         mock_get.return_value.json = lambda: {
             "reason": "private",
@@ -44,6 +70,18 @@ class TestReddit(unittest.TestCase):
 
     @patch("telereddit.reddit.requests.get")
     def test_get_json_valid(self, mock_get):
+        """
+
+        Parameters
+        ----------
+        mock_get :
+            
+
+        Returns
+        -------
+
+        
+        """
         with open(
             pathlib.Path(__file__).parent
             / "json/r-funny-my_weather_app_nailed_it_today.json"

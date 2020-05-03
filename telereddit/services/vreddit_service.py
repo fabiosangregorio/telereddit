@@ -7,8 +7,24 @@ from telereddit.content_type import ContentType
 
 
 class Vreddit(Service):
+    """ """
+
     @classmethod
     def preprocess(cls, url, json):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        json :
+            
+
+        Returns
+        -------
+
+        
+        """
         xpost = helpers.get(json, "crosspost_parent_list")
         if xpost is not None and len(xpost) > 0:
             # crossposts have media = null and have the fallback url in the
@@ -28,6 +44,18 @@ class Vreddit(Service):
 
     @classmethod
     def postprocess(cls, response):
+        """
+
+        Parameters
+        ----------
+        response :
+            
+
+        Returns
+        -------
+
+        
+        """
         media = Media(response.url, ContentType.GIF)
         if "Content-length" in response.headers:
             media.size = int(response.headers["Content-length"])

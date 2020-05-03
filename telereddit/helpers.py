@@ -5,21 +5,53 @@ from telereddit.config.config import MAX_TITLE_LENGTH
 
 
 def get_random_post_url(subreddit):
+    """
+
+    Parameters
+    ----------
+    subreddit :
+        
+
+    Returns
+    -------
+
+    
+    """
     return f"https://www.reddit.com/{subreddit}/random"
 
 
 def get_subreddit_names(text):
-    """
-    Returns a list of the (prefixed) subreddit names present in the given text.
+    """Returns a list of the (prefixed) subreddit names present in the given text.
+
+    Parameters
+    ----------
+    text :
+        
+
+    Returns
+    -------
+
+    
     """
     regex = r"\br/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)\b"
     return re.findall(regex, text, re.MULTILINE)
 
 
 def get_subreddit_name(text, reverse=False):
-    """
-    Returns the first (or last if reverse=True) (prefixed) subreddit name if
+    """Returns the first (or last if reverse=True) (prefixed) subreddit name if
     present in the given text, None otherwise.
+
+    Parameters
+    ----------
+    text :
+        
+    reverse :
+        (Default value = False)
+
+    Returns
+    -------
+
+    
     """
     subs = get_subreddit_names(text)
     if len(subs):
@@ -29,17 +61,37 @@ def get_subreddit_name(text, reverse=False):
 
 
 def escape_markdown(text):
-    """
-    Returns the given text with escaped common markdown characters.
+    """Returns the given text with escaped common markdown characters.
     See: https://core.telegram.org/bots/api#Markdown-style
+
+    Parameters
+    ----------
+    text :
+        
+
+    Returns
+    -------
+
+    
     """
     # Reddit escaping: \\_ \\* \\[ \\] ( ) \\~ \\` &gt; # + - = | { } . !
     return text.replace("*", "\\*").replace("_", "\\_")
 
 
 def truncate_text(text, length=MAX_TITLE_LENGTH):
-    """
-    Returns the given text, truncated at `length` characters, plus ellipsis.
+    """Returns the given text, truncated at `length` characters, plus ellipsis.
+
+    Parameters
+    ----------
+    text :
+        
+    length :
+        (Default value = MAX_TITLE_LENGTH)
+
+    Returns
+    -------
+
+    
     """
     if length < 0:
         return text
@@ -47,15 +99,33 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
 
 
 def polish_text(text):
-    """
-    Returns the given text without newline characters.
+    """Returns the given text without newline characters.
+
+    Parameters
+    ----------
+    text :
+        
+
+    Returns
+    -------
+
+    
     """
     return text.replace("\n", " ")
 
 
 def get_urls_from_text(text):
-    """
-    Returns a list of the urls present in the given text.
+    """Returns a list of the urls present in the given text.
+
+    Parameters
+    ----------
+    text :
+        
+
+    Returns
+    -------
+
+    
     """
     polished = polish_text(text)
     urls = list()
@@ -79,16 +149,42 @@ def get_urls_from_text(text):
 
 
 def get(obj, attr, default=None):
-    """
-    Returns the value `attr` if it is not None, default otherwise.
+    """Returns the value `attr` if it is not None, default otherwise.
+
+    Parameters
+    ----------
+    obj :
+        
+    attr :
+        
+    default :
+        (Default value = None)
+
+    Returns
+    -------
+
+    
     """
     return obj[attr] if attr in obj and obj[attr] is not None else default
 
 
 def chained_get(obj, attrs, default=None):
-    """
-    Travels the nested object based on `attrs` and returns the value of the
+    """Travels the nested object based on `attrs` and returns the value of the
     last attr if not None, default otherwise.
+
+    Parameters
+    ----------
+    obj :
+        
+    attrs :
+        
+    default :
+        (Default value = None)
+
+    Returns
+    -------
+
+    
     """
     for attr in attrs:
         obj = get(obj, attr, default)

@@ -18,7 +18,24 @@ from telereddit.config.config import secret
 
 
 def on_chat_message(update: Update, context: CallbackContext):
-    """Handles a single update message."""
+    """Handles a single update message.
+
+    Parameters
+    ----------
+    update : Update :
+        
+    context : CallbackContext :
+        
+    update: Update :
+        
+    context: CallbackContext :
+        
+
+    Returns
+    -------
+
+    
+    """
     msg = update.message
     if not msg.text:
         return
@@ -36,7 +53,24 @@ def on_chat_message(update: Update, context: CallbackContext):
 
 
 def on_callback_query(update: Update, context: CallbackContext):
-    """Handles all the several types of callback queries."""
+    """Handles all the several types of callback queries.
+
+    Parameters
+    ----------
+    update : Update :
+        
+    context : CallbackContext :
+        
+    update: Update :
+        
+    context: CallbackContext :
+        
+
+    Returns
+    -------
+
+    
+    """
     query_data = update.callback_query.data
     message = update.effective_message
     message_id = message.message_id
@@ -55,6 +89,7 @@ def on_callback_query(update: Update, context: CallbackContext):
 
 
 def main():
+    """ """
     if config.SENTRY_ENABLED:
         sentry_sdk.init(secret.SENTRY_TOKEN, environment=config.ENV)
 

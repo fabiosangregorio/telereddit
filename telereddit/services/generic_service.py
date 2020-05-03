@@ -4,8 +4,22 @@ from telereddit.content_type import ContentType
 
 
 class Generic(Service):
+    """ """
+
     @classmethod
     def postprocess(cls, response):
+        """
+
+        Parameters
+        ----------
+        response :
+            
+
+        Returns
+        -------
+
+        
+        """
         file_size = None
         media_type = ContentType.PHOTO
 

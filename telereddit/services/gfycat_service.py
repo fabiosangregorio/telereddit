@@ -12,6 +12,8 @@ from telereddit.models.exceptions import AuthenticationError
 
 
 class Gfycat(Service):
+    """ """
+
     is_authenticated = True
 
     def __init__(self):
@@ -19,17 +21,55 @@ class Gfycat(Service):
 
     @classmethod
     def preprocess(cls, url, json):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+        json :
+            
+
+        Returns
+        -------
+
+        
+        """
         gfyid = urlparse(url).path.partition("-")[0]
         return f"https://api.gfycat.com/v1/gfycats/{gfyid}"
 
     @classmethod
     def get(cls, url):
+        """
+
+        Parameters
+        ----------
+        url :
+            
+
+        Returns
+        -------
+
+        
+        """
         return requests.get(
             url, headers={"Authorization": f"Bearer {cls.access_token}"}
         )
 
     @classmethod
     def postprocess(cls, response):
+        """
+
+        Parameters
+        ----------
+        response :
+            
+
+        Returns
+        -------
+
+        
+        """
         gfy_item = json.loads(response.content)["gfyItem"]
         media = Media(
             gfy_item["webmUrl"].replace(".webm", ".mp4"),
@@ -46,6 +86,7 @@ class Gfycat(Service):
 
     @classmethod
     def authenticate(cls):
+        """ """
         response = requests.post(
             "https://api.gfycat.com/v1/oauth/token",
             data=json.dumps(

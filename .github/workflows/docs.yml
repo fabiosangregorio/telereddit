@@ -1,4 +1,4 @@
-name: test
+name: docs
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, repoened, edited]
 
 jobs:
-  test:
+  docs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -24,13 +24,9 @@ jobs:
         gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
         /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "${{ secrets.GPG_KEY_PASS }}" "${{ secrets.GPG_KEY_GRIP }}"
 
-    - name: Ensure git-crypt files are locked
+    - name: Setup Graphviz environment
       run: |
-        grep -qsPa "\x00GITCRYPT"  $(git crypt status | grep -v '^not' | awk '{print $2}')
-
-    - name: Unlock git-crypt files
-      run: |
-        git-crypt unlock
+        sudo apt-get install graphviz
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
@@ -46,21 +42,21 @@ jobs:
           ${{ runner.os }}-pip-
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install -r requirements.txt
+        pip install pydeps
 
-    - name: Run tests and generate report
-      run: | 
-        pip install coverage
-        coverage run -m unittest
-      env:
-        TELEREDDIT_MACHINE: 'GITHUB'
+    - name: Unlock git-crypt files
+      run: |
+        git-crypt unlock
 
-    - name: Upload reports to codecov.io
-      uses: codecov/codecov-action@v1
+    - name: Generate project dependency graph
+      run: |
+        pydeps --verbose -o docs/dependency-graph.svg telereddit
 
-    - name: Upload reports to Code Climate
-      uses: paambaati/codeclimate-action@v2.6.0
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v4
       with:
-        coverageCommand: coverage xml
+        message: "Commit from Github Actions: docs workflow changes"
       env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
