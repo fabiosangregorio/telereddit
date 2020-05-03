@@ -61,8 +61,7 @@ jobs:
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
       run: |
-        git config --global user.name 'Fabio Sangregorio'
-        git config --global user.email 'fabio.sangregorio@gmail.com'
         git add .
+        git status
         git diff-index --quiet HEAD || git commit -m "Commit from Github Actions: docs workflow changes"
         git push
