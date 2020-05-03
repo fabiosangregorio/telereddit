@@ -6,8 +6,6 @@ on:
     - master
   pull_request:
     types: [opened, synchronize, repoened, edited]
-    branches:
-    - master
 
 jobs:
   docs:
