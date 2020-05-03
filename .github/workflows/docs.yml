@@ -54,8 +54,7 @@ jobs:
 
     - name: Generate project dependency graph
       run: |
-        cat setup.cfg
-        pydeps --config setup.cfg telereddit -o docs/dependency-graph.svg
+        pydeps --config setup.cfg --verbose -o docs/dependency-graph.svg telereddit
 
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
