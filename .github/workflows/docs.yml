@@ -54,12 +54,7 @@ jobs:
 
     - name: Generate project dependency graph
       run: |
-        pydeps --max-bacon 2 -o docs/dependency-graph.svg telereddit
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: dep-graph
-        path: docs/dependency-graph.svg
+        python -m pydeps --max-bacon 2 -o docs/dependency-graph.svg telereddit
 
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
