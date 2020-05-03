@@ -1,5 +1,5 @@
 <p align="center"><a href="https://telegram.me/tele_reddit_bot"><img height="200" width="200"
-      src="https://i.imgur.com/DRoF3F9.png" alt="telereddit" /></a></p>
+      src="https://www.github.com/fabiosangregorio/telereddit/docs/images/logo.png" alt="telereddit" /></a></p>
 <h1 align="center">Telereddit</h1>
 
 <p align="center">
