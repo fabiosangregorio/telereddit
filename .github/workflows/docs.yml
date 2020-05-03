@@ -63,6 +63,6 @@ jobs:
       run: |
         git config --global user.name 'Fabio Sangregorio'
         git config --global user.email 'fabio.sangregorio@gmail.com'
-        git add docs/dependency-graph.svg
+        git add .
         git diff-index --quiet HEAD || git commit -m "Commit from Github Actions: docs workflow changes"
         git push
