@@ -54,7 +54,7 @@ jobs:
 
     - name: Generate project dependency graph
       run: |
-        pydeps -o docs/dependency-graph.svg telereddit
+        pydeps --max-bacon 2 -o docs/dependency-graph.svg telereddit
 
     # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
