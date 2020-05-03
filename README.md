@@ -3,6 +3,8 @@
 <h1 align="center">Telereddit</h1>
 
 <p align="center">
+  <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Adocs"><img
+      src="https://github.com/fabiosangregorio/telereddit/workflows/docs/badge.svg" alt="Docs status"></a>
   <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Atest"><img
       src="https://github.com/fabiosangregorio/telereddit/workflows/test/badge.svg" alt="Test status"></a>
   <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Alint"><img
