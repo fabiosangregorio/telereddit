@@ -39,6 +39,7 @@ jobs:
 
         gpg-connect-agent reloadagent /bye
         gpg --version
+        ls ~/.gnupg
         /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "$GPG_KEY_PASS" "$GPG_KEY_GRIP"
         git-crypt unlock
 
