@@ -63,7 +63,7 @@ jobs:
         git config --global user.email 'fabio.sangregorio@gmail.com'
         git commit -am "Commit from Github Actions: docs workflow changes"
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} 
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }} 
