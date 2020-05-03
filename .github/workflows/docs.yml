@@ -45,6 +45,7 @@ jobs:
       run: |
         pip install -r requirements.txt
         pip install pydeps
+        pip install pdoc3
 
     - name: Unlock git-crypt files
       run: |
@@ -52,7 +53,14 @@ jobs:
 
     - name: Generate project dependency graph
       run: |
-        pydeps --verbose -o docs/dependency-graph.svg telereddit
+        pydeps --verbose -o docs/images/dependency-graph.svg telereddit
+
+    - name: Generate documentation
+      run: |
+        rm -rf docs/telereddit
+        pdoc --html --output-dir="docs/" --template-dir="docs/templates" --force .
+      env:
+        TELEREDDIT_MACHINE: GITHUB
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v4
@@ -60,3 +68,10 @@ jobs:
         message: "Commit from Github Actions: docs workflow changes"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Deploy docs to Gtihub Pages
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: docs/telereddit
