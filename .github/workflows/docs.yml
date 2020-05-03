@@ -56,14 +56,9 @@ jobs:
       run: |
         pydeps --verbose -o docs/dependency-graph.svg telereddit
 
-    # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
     - name: Commit changes
-      run: |
-        git config --global user.name 'Fabio Sangregorio'
-        git config --global user.email 'fabio.sangregorio@gmail.com'
-        git commit -m "Commit from Github Actions: docs workflow changes" -a
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+      uses: EndBug/add-and-commit@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }} 
+        message: "Commit from Github Actions: docs workflow changes"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
