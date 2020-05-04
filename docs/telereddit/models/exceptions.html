@@ -20,123 +20,6 @@
 <h1 class="title">Module <code>telereddit.models.exceptions</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import sentry_sdk as sentry
-import traceback
-
-import telereddit.config.config as config
-
-
-class TeleredditError(Exception):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=False):
-        super().__init__(msg)
-        if config.SENTRY_ENABLED:
-            if data is not None:
-                with sentry.configure_scope() as scope:
-                    for key, value in data.items():
-                        scope.set_extra(key, value)
-            if capture:
-                sentry.capture_exception()
-        traceback.print_exc()
-        print(&#34;\nException type:&#34;, self.__class__.__name__)
-        print(&#34;Exception message: &#34;, self)
-        print(&#34;Exception data: &#34;, data)
-
-
-class AuthenticationError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;Authentication failed&#34;, data, capture)
-
-
-class SubredditError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=False):
-        super().__init__(msg, data, capture)
-
-
-class PostError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=True):
-        super().__init__(msg, data, capture)
-
-
-class MediaError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=True):
-        super().__init__(msg, data, capture)
-
-
-class RequestError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;I can&#39;t find that subreddit.&#34;, data, capture)
-
-
-class SubredditPrivateError(SubredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=False):
-        super().__init__(&#34;This subreddit is private.&#34;, data, capture)
-
-
-class SubredditDoesntExistError(SubredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=False):
-        super().__init__(&#34;This subreddit doesn&#39;t exist.&#34;, data, capture)
-
-
-class PostRetrievalError(PostError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;The retrieval of the post failed.&#34;, data, capture)
-
-
-class PostSendError(PostError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(
-            &#34;There has been an error in sending the post.&#34;, data, capture
-        )
-
-
-class PostEqualsMessageError(PostError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=False):
-        super().__init__(
-            &#34;The retrieved post is equal to the already sent message.&#34;,
-            data,
-            capture,
-        )
-
-
-class MediaTooBigError(MediaError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;Media is too big to be sent.&#34;, data, capture)
-
-
-class MediaRetrievalError(MediaError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;Error in getting the media&#34;, data, capture)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -153,16 +36,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class AuthenticationError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;Authentication failed&#34;, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
@@ -176,16 +49,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class MediaError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=True):
-        super().__init__(msg, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
@@ -204,16 +67,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class MediaRetrievalError(MediaError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;Error in getting the media&#34;, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.MediaError" href="#telereddit.models.exceptions.MediaError">MediaError</a></li>
@@ -228,16 +81,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class MediaTooBigError(MediaError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;Media is too big to be sent.&#34;, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.MediaError" href="#telereddit.models.exceptions.MediaError">MediaError</a></li>
@@ -252,20 +95,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class PostEqualsMessageError(PostError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=False):
-        super().__init__(
-            &#34;The retrieved post is equal to the already sent message.&#34;,
-            data,
-            capture,
-        )</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></li>
@@ -280,16 +109,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class PostError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=True):
-        super().__init__(msg, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
@@ -309,16 +128,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class PostRetrievalError(PostError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;The retrieval of the post failed.&#34;, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></li>
@@ -333,18 +142,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class PostSendError(PostError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(
-            &#34;There has been an error in sending the post.&#34;, data, capture
-        )</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></li>
@@ -359,16 +156,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class RequestError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=True):
-        super().__init__(&#34;I can&#39;t find that subreddit.&#34;, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
@@ -382,16 +169,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class SubredditDoesntExistError(SubredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=False):
-        super().__init__(&#34;This subreddit doesn&#39;t exist.&#34;, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.SubredditError" href="#telereddit.models.exceptions.SubredditError">SubredditError</a></li>
@@ -406,16 +183,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class SubredditError(TeleredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=False):
-        super().__init__(msg, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
@@ -434,16 +201,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class SubredditPrivateError(SubredditError):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, data=None, capture=False):
-        super().__init__(&#34;This subreddit is private.&#34;, data, capture)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.models.exceptions.SubredditError" href="#telereddit.models.exceptions.SubredditError">SubredditError</a></li>
@@ -458,27 +215,6 @@ class MediaRetrievalError(MediaError):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TeleredditError(Exception):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, msg, data=None, capture=False):
-        super().__init__(msg)
-        if config.SENTRY_ENABLED:
-            if data is not None:
-                with sentry.configure_scope() as scope:
-                    for key, value in data.items():
-                        scope.set_extra(key, value)
-            if capture:
-                sentry.capture_exception()
-        traceback.print_exc()
-        print(&#34;\nException type:&#34;, self.__class__.__name__)
-        print(&#34;Exception message: &#34;, self)
-        print(&#34;Exception data: &#34;, data)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>builtins.Exception</li>

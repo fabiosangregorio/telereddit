@@ -20,64 +20,6 @@
 <h1 class="title">Module <code>telereddit.services.services_wrapper</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import logging
-from urllib.parse import urlparse
-
-from telereddit.services.gfycat_service import Gfycat
-from telereddit.services.vreddit_service import Vreddit
-from telereddit.services.imgur_service import Imgur
-from telereddit.services.youtube_service import Youtube
-from telereddit.services.generic_service import Generic
-
-
-class ServicesWrapper:
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    gfycat = Gfycat()
-    vreddit = Vreddit()
-    imgur = Imgur()
-    youtube = Youtube()
-    generic = Generic()
-
-    @classmethod
-    def get_media(cls, url, json={}):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            (Default value = {})
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        parsed_url = urlparse(url)
-        base_url = parsed_url.netloc
-
-        if &#34;gfycat.com&#34; in base_url:
-            media = cls.gfycat.get_media(url, json)
-        elif &#34;v.redd.it&#34; in base_url:
-            media = cls.vreddit.get_media(url, json)
-        elif &#34;imgur.com&#34; in base_url:
-            media = cls.imgur.get_media(url, json)
-        elif &#34;youtube.com&#34; in base_url or &#34;youtu.be&#34; in base_url:
-            media = cls.youtube.get_media(url, json)
-        else:
-            logging.warning(
-                f&#34;services_wrapper: no suitable service found. base_url: {base_url}&#34;
-            )
-            media = cls.generic.get_media(url, json)
-
-        return media</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -93,54 +35,6 @@ class ServicesWrapper:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class ServicesWrapper:
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    gfycat = Gfycat()
-    vreddit = Vreddit()
-    imgur = Imgur()
-    youtube = Youtube()
-    generic = Generic()
-
-    @classmethod
-    def get_media(cls, url, json={}):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            (Default value = {})
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        parsed_url = urlparse(url)
-        base_url = parsed_url.netloc
-
-        if &#34;gfycat.com&#34; in base_url:
-            media = cls.gfycat.get_media(url, json)
-        elif &#34;v.redd.it&#34; in base_url:
-            media = cls.vreddit.get_media(url, json)
-        elif &#34;imgur.com&#34; in base_url:
-            media = cls.imgur.get_media(url, json)
-        elif &#34;youtube.com&#34; in base_url or &#34;youtu.be&#34; in base_url:
-            media = cls.youtube.get_media(url, json)
-        else:
-            logging.warning(
-                f&#34;services_wrapper: no suitable service found. base_url: {base_url}&#34;
-            )
-            media = cls.generic.get_media(url, json)
-
-        return media</code></pre>
-</details>
 <h3>Class variables</h3>
 <dl>
 <dt id="telereddit.services.services_wrapper.ServicesWrapper.generic"><code class="name">var <span class="ident">generic</span></code></dt>
@@ -175,45 +69,6 @@ class ServicesWrapper:
 <p>json :
 (Default value = {})</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def get_media(cls, url, json={}):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    url :
-        
-    json :
-        (Default value = {})
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    parsed_url = urlparse(url)
-    base_url = parsed_url.netloc
-
-    if &#34;gfycat.com&#34; in base_url:
-        media = cls.gfycat.get_media(url, json)
-    elif &#34;v.redd.it&#34; in base_url:
-        media = cls.vreddit.get_media(url, json)
-    elif &#34;imgur.com&#34; in base_url:
-        media = cls.imgur.get_media(url, json)
-    elif &#34;youtube.com&#34; in base_url or &#34;youtu.be&#34; in base_url:
-        media = cls.youtube.get_media(url, json)
-    else:
-        logging.warning(
-            f&#34;services_wrapper: no suitable service found. base_url: {base_url}&#34;
-        )
-        media = cls.generic.get_media(url, json)
-
-    return media</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

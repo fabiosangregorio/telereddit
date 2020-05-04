@@ -20,214 +20,6 @@
 <h1 class="title">Module <code>telereddit.tests.test_services</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import unittest
-from parameterized import parameterized, param
-
-from telereddit.services.services_wrapper import ServicesWrapper
-from telereddit.content_type import ContentType
-
-
-class TestServices(unittest.TestCase):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @parameterized.expand(
-        [
-            # youtube link (attribution link)
-            param(
-                url=&#34;https://www.youtube.com/attribution_link?a=o3Cq80oOnoc&amp;u=%2Fwatch%3Fv%3D3OSc_psp4k0%26feature%3Dshare&#34;,
-                json={
-                    &#34;media&#34;: {
-                        &#34;oembed&#34;: {
-                            &#34;url&#34;: &#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;
-                        }
-                    }
-                },
-                expected_url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-            ),
-            # youtube link (youtube.com)
-            param(
-                url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-                json={&#34;media&#34;: {&#34;oembed&#34;: {}}},
-                expected_url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-            ),
-            # youtube link (youtube.com)
-            param(
-                url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-                json={
-                    &#34;media&#34;: {
-                        &#34;oembed&#34;: {
-                            &#34;url&#34;: &#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;
-                        }
-                    }
-                },
-                expected_url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-            ),
-        ]
-    )
-    def test_youtube(self, url, json, expected_url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-        expected_url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url, json)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, ContentType.YOUTUBE)
-
-    @parameterized.expand(
-        [
-            # imgur gif
-            param(
-                url=&#34;https://i.imgur.com/2WNMUqO.gifv&#34;,
-                expected_url=&#34;https://i.imgur.com/2WNMUqO.mp4&#34;,
-                expected_type=ContentType.VIDEO,
-            )
-        ]
-    )
-    def test_imgur(self, url, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)
-
-    @parameterized.expand(
-        [
-            # gfycat gif
-            param(
-                url=&#34;https://gfycat.com/HeartfeltHollowIberianchiffchaff&#34;,
-                expected_url=&#34;https://giant.gfycat.com/HeartfeltHollowIberianchiffchaff.mp4&#34;,
-                expected_type=ContentType.VIDEO,
-            )
-        ]
-    )
-    def test_gfycat(self, url, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)
-
-    @parameterized.expand(
-        [
-            # v.redd.it video
-            param(
-                url=&#34;https://v.redd.it/4phan5t9wq031&#34;,
-                json={
-                    &#34;media&#34;: {
-                        &#34;reddit_video&#34;: {
-                            &#34;fallback_url&#34;: &#34;https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback&#34;
-                        }
-                    }
-                },
-                expected_url=&#34;https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback&#34;,
-                expected_type=ContentType.GIF,
-            )
-        ]
-    )
-    def test_vreddit(self, url, json, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url, json)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)
-
-    @parameterized.expand(
-        [
-            # i.redd.it image
-            param(
-                url=&#34;https://i.redd.it/72tqh40xqr031.jpg&#34;,
-                expected_url=&#34;https://i.redd.it/72tqh40xqr031.jpg&#34;,
-                expected_type=ContentType.PHOTO,
-            ),
-            # i.redd.it gif
-            param(
-                url=&#34;https://i.redd.it/ao5s72l50r031.gif&#34;,
-                expected_url=&#34;https://i.redd.it/ao5s72l50r031.gif&#34;,
-                expected_type=ContentType.GIF,
-            ),
-        ]
-    )
-    def test_generic(self, url, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -246,207 +38,6 @@ class TestServices(unittest.TestCase):
 <div class="desc"><p>Create an instance of the class that will use the named test
 method when executed. Raises a ValueError if the instance does
 not have a method with the specified name.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestServices(unittest.TestCase):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @parameterized.expand(
-        [
-            # youtube link (attribution link)
-            param(
-                url=&#34;https://www.youtube.com/attribution_link?a=o3Cq80oOnoc&amp;u=%2Fwatch%3Fv%3D3OSc_psp4k0%26feature%3Dshare&#34;,
-                json={
-                    &#34;media&#34;: {
-                        &#34;oembed&#34;: {
-                            &#34;url&#34;: &#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;
-                        }
-                    }
-                },
-                expected_url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-            ),
-            # youtube link (youtube.com)
-            param(
-                url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-                json={&#34;media&#34;: {&#34;oembed&#34;: {}}},
-                expected_url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-            ),
-            # youtube link (youtube.com)
-            param(
-                url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-                json={
-                    &#34;media&#34;: {
-                        &#34;oembed&#34;: {
-                            &#34;url&#34;: &#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;
-                        }
-                    }
-                },
-                expected_url=&#34;https://www.youtube.com/watch?v=DJxchZ7qAzE&#34;,
-            ),
-        ]
-    )
-    def test_youtube(self, url, json, expected_url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-        expected_url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url, json)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, ContentType.YOUTUBE)
-
-    @parameterized.expand(
-        [
-            # imgur gif
-            param(
-                url=&#34;https://i.imgur.com/2WNMUqO.gifv&#34;,
-                expected_url=&#34;https://i.imgur.com/2WNMUqO.mp4&#34;,
-                expected_type=ContentType.VIDEO,
-            )
-        ]
-    )
-    def test_imgur(self, url, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)
-
-    @parameterized.expand(
-        [
-            # gfycat gif
-            param(
-                url=&#34;https://gfycat.com/HeartfeltHollowIberianchiffchaff&#34;,
-                expected_url=&#34;https://giant.gfycat.com/HeartfeltHollowIberianchiffchaff.mp4&#34;,
-                expected_type=ContentType.VIDEO,
-            )
-        ]
-    )
-    def test_gfycat(self, url, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)
-
-    @parameterized.expand(
-        [
-            # v.redd.it video
-            param(
-                url=&#34;https://v.redd.it/4phan5t9wq031&#34;,
-                json={
-                    &#34;media&#34;: {
-                        &#34;reddit_video&#34;: {
-                            &#34;fallback_url&#34;: &#34;https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback&#34;
-                        }
-                    }
-                },
-                expected_url=&#34;https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback&#34;,
-                expected_type=ContentType.GIF,
-            )
-        ]
-    )
-    def test_vreddit(self, url, json, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url, json)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)
-
-    @parameterized.expand(
-        [
-            # i.redd.it image
-            param(
-                url=&#34;https://i.redd.it/72tqh40xqr031.jpg&#34;,
-                expected_url=&#34;https://i.redd.it/72tqh40xqr031.jpg&#34;,
-                expected_type=ContentType.PHOTO,
-            ),
-            # i.redd.it gif
-            param(
-                url=&#34;https://i.redd.it/ao5s72l50r031.gif&#34;,
-                expected_url=&#34;https://i.redd.it/ao5s72l50r031.gif&#34;,
-                expected_type=ContentType.GIF,
-            ),
-        ]
-    )
-    def test_generic(self, url, expected_url, expected_type):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        expected_url :
-            
-        expected_type :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = ServicesWrapper.get_media(url)
-        self.assertEqual(media.url, expected_url)
-        self.assertEqual(media.type, expected_type)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>unittest.case.TestCase</li>
@@ -485,14 +76,6 @@ not have a method with the specified name.</p></div>
 <p>expected_url :</p>
 <p>expected_type :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_services.TestServices.test_generic_1"><code class="name flex">
 <span>def <span class="ident">test_generic_1</span></span>(<span>*a)</span>
@@ -503,14 +86,6 @@ def standalone_func(*a):
 <p>expected_url :</p>
 <p>expected_type :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_services.TestServices.test_gfycat_0"><code class="name flex">
 <span>def <span class="ident">test_gfycat_0</span></span>(<span>*a)</span>
@@ -521,14 +96,6 @@ def standalone_func(*a):
 <p>expected_url :</p>
 <p>expected_type :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_services.TestServices.test_imgur_0"><code class="name flex">
 <span>def <span class="ident">test_imgur_0</span></span>(<span>*a)</span>
@@ -539,14 +106,6 @@ def standalone_func(*a):
 <p>expected_url :</p>
 <p>expected_type :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_services.TestServices.test_vreddit_0"><code class="name flex">
 <span>def <span class="ident">test_vreddit_0</span></span>(<span>*a)</span>
@@ -558,14 +117,6 @@ def standalone_func(*a):
 <p>expected_url :</p>
 <p>expected_type :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_services.TestServices.test_youtube_0"><code class="name flex">
 <span>def <span class="ident">test_youtube_0</span></span>(<span>*a)</span>
@@ -576,14 +127,6 @@ def standalone_func(*a):
 <p>json :</p>
 <p>expected_url :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_services.TestServices.test_youtube_1"><code class="name flex">
 <span>def <span class="ident">test_youtube_1</span></span>(<span>*a)</span>
@@ -594,14 +137,6 @@ def standalone_func(*a):
 <p>json :</p>
 <p>expected_url :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_services.TestServices.test_youtube_2"><code class="name flex">
 <span>def <span class="ident">test_youtube_2</span></span>(<span>*a)</span>
@@ -612,14 +147,6 @@ def standalone_func(*a):
 <p>json :</p>
 <p>expected_url :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 </dl>
 </dd>
