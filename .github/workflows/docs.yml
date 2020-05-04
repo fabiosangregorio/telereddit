@@ -58,7 +58,7 @@ jobs:
     - name: Generate documentation
       run: |
         rm -rf docs/telereddit
-        pdoc --html --output-dir="docs/" --template-dir="docs/templates" --force .
+        pdoc --html --output-dir="docs/" --template-dir="docs/templates" --config show_source_code=False --force .
       env:
         TELEREDDIT_MACHINE: GITHUB
 
