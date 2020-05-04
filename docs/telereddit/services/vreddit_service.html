@@ -20,73 +20,6 @@
 <h1 class="title">Module <code>telereddit.services.vreddit_service</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import requests
-
-from telereddit.services.service import Service
-import telereddit.helpers as helpers
-from telereddit.models.media import Media
-from telereddit.content_type import ContentType
-
-
-class Vreddit(Service):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @classmethod
-    def preprocess(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        xpost = helpers.get(json, &#34;crosspost_parent_list&#34;)
-        if xpost is not None and len(xpost) &gt; 0:
-            # crossposts have media = null and have the fallback url in the
-            # crosspost source
-            fallback_url = helpers.chained_get(
-                xpost[0], [&#34;secure_media&#34;, &#34;reddit_video&#34;, &#34;fallback_url&#34;]
-            )
-        else:
-            fallback_url = helpers.chained_get(
-                json, [&#34;media&#34;, &#34;reddit_video&#34;, &#34;fallback_url&#34;]
-            )
-
-        processed_url = fallback_url if fallback_url else f&#34;{url}/DASH_1_2_M&#34;
-        if requests.head(processed_url).status_code &gt;= 300:
-            processed_url = f&#34;{url}/DASH_1080&#34;
-        return processed_url
-
-    @classmethod
-    def postprocess(cls, response):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = Media(response.url, ContentType.GIF)
-        if &#34;Content-length&#34; in response.headers:
-            media.size = int(response.headers[&#34;Content-length&#34;])
-        return media</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -102,65 +35,6 @@ class Vreddit(Service):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Vreddit(Service):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @classmethod
-    def preprocess(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        xpost = helpers.get(json, &#34;crosspost_parent_list&#34;)
-        if xpost is not None and len(xpost) &gt; 0:
-            # crossposts have media = null and have the fallback url in the
-            # crosspost source
-            fallback_url = helpers.chained_get(
-                xpost[0], [&#34;secure_media&#34;, &#34;reddit_video&#34;, &#34;fallback_url&#34;]
-            )
-        else:
-            fallback_url = helpers.chained_get(
-                json, [&#34;media&#34;, &#34;reddit_video&#34;, &#34;fallback_url&#34;]
-            )
-
-        processed_url = fallback_url if fallback_url else f&#34;{url}/DASH_1_2_M&#34;
-        if requests.head(processed_url).status_code &gt;= 300:
-            processed_url = f&#34;{url}/DASH_1080&#34;
-        return processed_url
-
-    @classmethod
-    def postprocess(cls, response):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        media = Media(response.url, ContentType.GIF)
-        if &#34;Content-length&#34; in response.headers:
-            media.size = int(response.headers[&#34;Content-length&#34;])
-        return media</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></li>

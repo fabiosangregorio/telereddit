@@ -20,245 +20,6 @@
 <h1 class="title">Module <code>telereddit.tests.test_helpers</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import unittest
-from parameterized import parameterized, param
-
-import telereddit.helpers as helpers
-
-
-class TestHelpers(unittest.TestCase):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @parameterized.expand(
-        [
-            # subreddit in a text
-            param(
-                text=(
-                    &#34;This is a text containing r/valid_subreddit_names and &#34;
-                    &#34;r/invalid_subreddit_names (too long).\nr/start_of_line and &#34;
-                    &#34;/r/CaseSensitive should work, but r/spec!ial characters &#34;
-                    &#34;r/shouldnotwork. r/numb3rs are r/permitted, r/_underscores too if &#34;
-                    &#34;they&#39;re not r/leading. /r/subreddit should also work. Also, urls &#34;
-                    &#34;http://containing.com/a_leading_r/shouldnotwork.&#34;
-                ),
-                expected=[
-                    &#34;r/valid_subreddit_names&#34;,
-                    &#34;r/start_of_line&#34;,
-                    &#34;r/CaseSensitive&#34;,
-                    &#34;r/shouldnotwork&#34;,
-                    &#34;r/numb3rs&#34;,
-                    &#34;r/permitted&#34;,
-                    &#34;r/leading&#34;,
-                    &#34;r/subreddit&#34;,
-                ],
-            ),
-            # subreddit in a link
-            param(
-                text=&#34;https://www.reddit.com/r/comics/comments/bia7qy/guess_i_love_dark_humor_oc&#34;,
-                expected=[&#34;r/comics&#34;],
-                not_expected=[&#34;/r/comics&#34;],
-            ),
-        ]
-    )
-    def test_get_subreddit_names(self, text, expected, not_expected=None):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-        not_expected :
-            (Default value = None)
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.get_subreddit_names(text), expected)
-        self.assertNotEqual(helpers.get_subreddit_names(text), not_expected)
-
-    @parameterized.expand(
-        [
-            param(
-                text=&#34;r/subreddit_one and r/subreddit_two&#34;,
-                reverse=False,
-                expected=&#34;r/subreddit_one&#34;,
-            ),
-            param(
-                text=&#34;r/subreddit_one and r/subreddit_two&#34;,
-                reverse=True,
-                expected=&#34;r/subreddit_two&#34;,
-            ),
-            param(
-                text=&#34;r/subreddit_one&#34;,
-                reverse=False,
-                expected=&#34;r/subreddit_one&#34;,
-            ),
-            param(
-                text=&#34;r/subreddit_one&#34;, reverse=True, expected=&#34;r/subreddit_one&#34;
-            ),
-        ]
-    )
-    def test_get_subreddit_name(self, text, reverse, expected):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        reverse :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.get_subreddit_name(text, reverse), expected)
-
-    @parameterized.expand(
-        [
-            param(text=&#34;truncate me&#34;, length=7, expected=&#34;truncat...&#34;),
-            param(text=&#34;truncate me&#34;, length=11, expected=&#34;truncate me&#34;),
-            param(text=&#34;truncate me&#34;, length=0, expected=&#34;...&#34;),
-            param(text=&#34;truncate me&#34;, length=-1, expected=&#34;truncate me&#34;),
-            param(text=&#34;&#34;, length=10, expected=&#34;&#34;),
-        ]
-    )
-    def test_truncate_text(self, text, length, expected):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        length :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.truncate_text(text, length), expected)
-
-    @parameterized.expand(
-        [
-            param(text=&#34;&#34;, expected=&#34;&#34;),
-            param(text=&#34;no newlines&#34;, expected=&#34;no newlines&#34;),
-            param(text=&#34;with\nnewlines&#34;, expected=&#34;with newlines&#34;),
-            param(
-                text=&#34;with \\n escaped newlines&#34;,
-                expected=&#34;with n escaped newlines&#34;,
-            ),
-        ]
-    )
-    def polish_text(self, text, expected):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.polish_text(text), expected)
-
-    @parameterized.expand(
-        [
-            param(
-                text=&#34;https://redd.it/bqdlxe https://redd.it/bqekoq https://reddit.app.link/coCUmdItLX https://google.com&#34;,
-                expected=[
-                    &#34;https://www.reddit.com/comments/bqdlxe&#34;,
-                    &#34;https://www.reddit.com/comments/bqekoq&#34;,
-                    &#34;https://www.reddit.com/r/tumblr/comments/c42tf6/woah&#34;,
-                ],
-            )
-        ]
-    )
-    def test_get_urls_from_text(self, text, expected, not_expected=None):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-        not_expected :
-            (Default value = None)
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertListEqual(helpers.get_urls_from_text(text), expected)
-
-    def test_get(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        obj = {
-            &#34;with_value&#34;: &#34;ok&#34;,
-            &#34;with_true&#34;: True,
-            &#34;with_false&#34;: False,
-            &#34;with_obj&#34;: {&#34;level_2&#34;: &#34;ok&#34;},
-            &#34;with_empty_obj&#34;: {},
-            &#34;with_none&#34;: None,
-        }
-
-        self.assertEqual(helpers.get(obj, &#34;with_value&#34;), &#34;ok&#34;)
-        self.assertEqual(helpers.get(obj, &#34;with_true&#34;), True)
-        self.assertEqual(helpers.get(obj, &#34;with_false&#34;), False)
-        self.assertEqual(helpers.get(obj, &#34;with_obj&#34;), {&#34;level_2&#34;: &#34;ok&#34;})
-        self.assertEqual(helpers.get(obj, &#34;with_empty_obj&#34;), {})
-        self.assertEqual(helpers.get(obj, &#34;with_none&#34;), None)
-        self.assertEqual(helpers.get(obj, &#34;with_none&#34;, {}), {})
-        self.assertEqual(helpers.get(obj, &#34;not_in_obj&#34;), None)
-
-    def test_chained_get(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        obj = {
-            &#34;l1&#34;: {
-                &#34;l2_with_value&#34;: &#34;ok&#34;,
-                &#34;l2_with_none&#34;: None,
-                &#34;l2&#34;: {&#34;l3_with_value&#34;: &#34;ok&#34;},
-            }
-        }
-
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2_with_value&#34;]), &#34;ok&#34;
-        )
-        self.assertEqual(helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2_with_none&#34;]), None)
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2&#34;]), {&#34;l3_with_value&#34;: &#34;ok&#34;}
-        )
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2&#34;, &#34;l3_with_value&#34;]), &#34;ok&#34;
-        )
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l3&#34;, &#34;l3_with_value&#34;]), None
-        )
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l3&#34;, &#34;l3_with_value&#34;], {}), {}
-        )</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -277,239 +38,6 @@ class TestHelpers(unittest.TestCase):
 <div class="desc"><p>Create an instance of the class that will use the named test
 method when executed. Raises a ValueError if the instance does
 not have a method with the specified name.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestHelpers(unittest.TestCase):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @parameterized.expand(
-        [
-            # subreddit in a text
-            param(
-                text=(
-                    &#34;This is a text containing r/valid_subreddit_names and &#34;
-                    &#34;r/invalid_subreddit_names (too long).\nr/start_of_line and &#34;
-                    &#34;/r/CaseSensitive should work, but r/spec!ial characters &#34;
-                    &#34;r/shouldnotwork. r/numb3rs are r/permitted, r/_underscores too if &#34;
-                    &#34;they&#39;re not r/leading. /r/subreddit should also work. Also, urls &#34;
-                    &#34;http://containing.com/a_leading_r/shouldnotwork.&#34;
-                ),
-                expected=[
-                    &#34;r/valid_subreddit_names&#34;,
-                    &#34;r/start_of_line&#34;,
-                    &#34;r/CaseSensitive&#34;,
-                    &#34;r/shouldnotwork&#34;,
-                    &#34;r/numb3rs&#34;,
-                    &#34;r/permitted&#34;,
-                    &#34;r/leading&#34;,
-                    &#34;r/subreddit&#34;,
-                ],
-            ),
-            # subreddit in a link
-            param(
-                text=&#34;https://www.reddit.com/r/comics/comments/bia7qy/guess_i_love_dark_humor_oc&#34;,
-                expected=[&#34;r/comics&#34;],
-                not_expected=[&#34;/r/comics&#34;],
-            ),
-        ]
-    )
-    def test_get_subreddit_names(self, text, expected, not_expected=None):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-        not_expected :
-            (Default value = None)
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.get_subreddit_names(text), expected)
-        self.assertNotEqual(helpers.get_subreddit_names(text), not_expected)
-
-    @parameterized.expand(
-        [
-            param(
-                text=&#34;r/subreddit_one and r/subreddit_two&#34;,
-                reverse=False,
-                expected=&#34;r/subreddit_one&#34;,
-            ),
-            param(
-                text=&#34;r/subreddit_one and r/subreddit_two&#34;,
-                reverse=True,
-                expected=&#34;r/subreddit_two&#34;,
-            ),
-            param(
-                text=&#34;r/subreddit_one&#34;,
-                reverse=False,
-                expected=&#34;r/subreddit_one&#34;,
-            ),
-            param(
-                text=&#34;r/subreddit_one&#34;, reverse=True, expected=&#34;r/subreddit_one&#34;
-            ),
-        ]
-    )
-    def test_get_subreddit_name(self, text, reverse, expected):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        reverse :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.get_subreddit_name(text, reverse), expected)
-
-    @parameterized.expand(
-        [
-            param(text=&#34;truncate me&#34;, length=7, expected=&#34;truncat...&#34;),
-            param(text=&#34;truncate me&#34;, length=11, expected=&#34;truncate me&#34;),
-            param(text=&#34;truncate me&#34;, length=0, expected=&#34;...&#34;),
-            param(text=&#34;truncate me&#34;, length=-1, expected=&#34;truncate me&#34;),
-            param(text=&#34;&#34;, length=10, expected=&#34;&#34;),
-        ]
-    )
-    def test_truncate_text(self, text, length, expected):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        length :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.truncate_text(text, length), expected)
-
-    @parameterized.expand(
-        [
-            param(text=&#34;&#34;, expected=&#34;&#34;),
-            param(text=&#34;no newlines&#34;, expected=&#34;no newlines&#34;),
-            param(text=&#34;with\nnewlines&#34;, expected=&#34;with newlines&#34;),
-            param(
-                text=&#34;with \\n escaped newlines&#34;,
-                expected=&#34;with n escaped newlines&#34;,
-            ),
-        ]
-    )
-    def polish_text(self, text, expected):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertEqual(helpers.polish_text(text), expected)
-
-    @parameterized.expand(
-        [
-            param(
-                text=&#34;https://redd.it/bqdlxe https://redd.it/bqekoq https://reddit.app.link/coCUmdItLX https://google.com&#34;,
-                expected=[
-                    &#34;https://www.reddit.com/comments/bqdlxe&#34;,
-                    &#34;https://www.reddit.com/comments/bqekoq&#34;,
-                    &#34;https://www.reddit.com/r/tumblr/comments/c42tf6/woah&#34;,
-                ],
-            )
-        ]
-    )
-    def test_get_urls_from_text(self, text, expected, not_expected=None):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-        not_expected :
-            (Default value = None)
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        self.assertListEqual(helpers.get_urls_from_text(text), expected)
-
-    def test_get(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        obj = {
-            &#34;with_value&#34;: &#34;ok&#34;,
-            &#34;with_true&#34;: True,
-            &#34;with_false&#34;: False,
-            &#34;with_obj&#34;: {&#34;level_2&#34;: &#34;ok&#34;},
-            &#34;with_empty_obj&#34;: {},
-            &#34;with_none&#34;: None,
-        }
-
-        self.assertEqual(helpers.get(obj, &#34;with_value&#34;), &#34;ok&#34;)
-        self.assertEqual(helpers.get(obj, &#34;with_true&#34;), True)
-        self.assertEqual(helpers.get(obj, &#34;with_false&#34;), False)
-        self.assertEqual(helpers.get(obj, &#34;with_obj&#34;), {&#34;level_2&#34;: &#34;ok&#34;})
-        self.assertEqual(helpers.get(obj, &#34;with_empty_obj&#34;), {})
-        self.assertEqual(helpers.get(obj, &#34;with_none&#34;), None)
-        self.assertEqual(helpers.get(obj, &#34;with_none&#34;, {}), {})
-        self.assertEqual(helpers.get(obj, &#34;not_in_obj&#34;), None)
-
-    def test_chained_get(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        obj = {
-            &#34;l1&#34;: {
-                &#34;l2_with_value&#34;: &#34;ok&#34;,
-                &#34;l2_with_none&#34;: None,
-                &#34;l2&#34;: {&#34;l3_with_value&#34;: &#34;ok&#34;},
-            }
-        }
-
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2_with_value&#34;]), &#34;ok&#34;
-        )
-        self.assertEqual(helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2_with_none&#34;]), None)
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2&#34;]), {&#34;l3_with_value&#34;: &#34;ok&#34;}
-        )
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2&#34;, &#34;l3_with_value&#34;]), &#34;ok&#34;
-        )
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l3&#34;, &#34;l3_with_value&#34;]), None
-        )
-        self.assertEqual(
-            helpers.chained_get(obj, [&#34;l1&#34;, &#34;l3&#34;, &#34;l3_with_value&#34;], {}), {}
-        )</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>unittest.case.TestCase</li>
@@ -547,14 +75,6 @@ not have a method with the specified name.</p></div>
 <p>text :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.polish_text_1"><code class="name flex">
 <span>def <span class="ident">polish_text_1</span></span>(<span>*a)</span>
@@ -564,14 +84,6 @@ def standalone_func(*a):
 <p>text :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.polish_text_2"><code class="name flex">
 <span>def <span class="ident">polish_text_2</span></span>(<span>*a)</span>
@@ -581,14 +93,6 @@ def standalone_func(*a):
 <p>text :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.polish_text_3"><code class="name flex">
 <span>def <span class="ident">polish_text_3</span></span>(<span>*a)</span>
@@ -598,81 +102,18 @@ def standalone_func(*a):
 <p>text :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_chained_get"><code class="name flex">
 <span>def <span class="ident">test_chained_get</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def test_chained_get(self):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-    obj = {
-        &#34;l1&#34;: {
-            &#34;l2_with_value&#34;: &#34;ok&#34;,
-            &#34;l2_with_none&#34;: None,
-            &#34;l2&#34;: {&#34;l3_with_value&#34;: &#34;ok&#34;},
-        }
-    }
-
-    self.assertEqual(
-        helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2_with_value&#34;]), &#34;ok&#34;
-    )
-    self.assertEqual(helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2_with_none&#34;]), None)
-    self.assertEqual(
-        helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2&#34;]), {&#34;l3_with_value&#34;: &#34;ok&#34;}
-    )
-    self.assertEqual(
-        helpers.chained_get(obj, [&#34;l1&#34;, &#34;l2&#34;, &#34;l3_with_value&#34;]), &#34;ok&#34;
-    )
-    self.assertEqual(
-        helpers.chained_get(obj, [&#34;l1&#34;, &#34;l3&#34;, &#34;l3_with_value&#34;]), None
-    )
-    self.assertEqual(
-        helpers.chained_get(obj, [&#34;l1&#34;, &#34;l3&#34;, &#34;l3_with_value&#34;], {}), {}
-    )</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get"><code class="name flex">
 <span>def <span class="ident">test_get</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def test_get(self):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-    obj = {
-        &#34;with_value&#34;: &#34;ok&#34;,
-        &#34;with_true&#34;: True,
-        &#34;with_false&#34;: False,
-        &#34;with_obj&#34;: {&#34;level_2&#34;: &#34;ok&#34;},
-        &#34;with_empty_obj&#34;: {},
-        &#34;with_none&#34;: None,
-    }
-
-    self.assertEqual(helpers.get(obj, &#34;with_value&#34;), &#34;ok&#34;)
-    self.assertEqual(helpers.get(obj, &#34;with_true&#34;), True)
-    self.assertEqual(helpers.get(obj, &#34;with_false&#34;), False)
-    self.assertEqual(helpers.get(obj, &#34;with_obj&#34;), {&#34;level_2&#34;: &#34;ok&#34;})
-    self.assertEqual(helpers.get(obj, &#34;with_empty_obj&#34;), {})
-    self.assertEqual(helpers.get(obj, &#34;with_none&#34;), None)
-    self.assertEqual(helpers.get(obj, &#34;with_none&#34;, {}), {})
-    self.assertEqual(helpers.get(obj, &#34;not_in_obj&#34;), None)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_0"><code class="name flex">
 <span>def <span class="ident">test_get_subreddit_name_0</span></span>(<span>*a)</span>
@@ -683,14 +124,6 @@ def standalone_func(*a):
 <p>reverse :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_1"><code class="name flex">
 <span>def <span class="ident">test_get_subreddit_name_1</span></span>(<span>*a)</span>
@@ -701,14 +134,6 @@ def standalone_func(*a):
 <p>reverse :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_2"><code class="name flex">
 <span>def <span class="ident">test_get_subreddit_name_2</span></span>(<span>*a)</span>
@@ -719,14 +144,6 @@ def standalone_func(*a):
 <p>reverse :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_3"><code class="name flex">
 <span>def <span class="ident">test_get_subreddit_name_3</span></span>(<span>*a)</span>
@@ -737,14 +154,6 @@ def standalone_func(*a):
 <p>reverse :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_0"><code class="name flex">
 <span>def <span class="ident">test_get_subreddit_names_0</span></span>(<span>*a)</span>
@@ -756,14 +165,6 @@ def standalone_func(*a):
 <p>not_expected :
 (Default value = None)</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_1"><code class="name flex">
 <span>def <span class="ident">test_get_subreddit_names_1</span></span>(<span>*a)</span>
@@ -775,14 +176,6 @@ def standalone_func(*a):
 <p>not_expected :
 (Default value = None)</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text_0"><code class="name flex">
 <span>def <span class="ident">test_get_urls_from_text_0</span></span>(<span>*a)</span>
@@ -794,14 +187,6 @@ def standalone_func(*a):
 <p>not_expected :
 (Default value = None)</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_0"><code class="name flex">
 <span>def <span class="ident">test_truncate_text_0</span></span>(<span>*a)</span>
@@ -812,14 +197,6 @@ def standalone_func(*a):
 <p>length :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_1"><code class="name flex">
 <span>def <span class="ident">test_truncate_text_1</span></span>(<span>*a)</span>
@@ -830,14 +207,6 @@ def standalone_func(*a):
 <p>length :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_2"><code class="name flex">
 <span>def <span class="ident">test_truncate_text_2</span></span>(<span>*a)</span>
@@ -848,14 +217,6 @@ def standalone_func(*a):
 <p>length :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_3"><code class="name flex">
 <span>def <span class="ident">test_truncate_text_3</span></span>(<span>*a)</span>
@@ -866,14 +227,6 @@ def standalone_func(*a):
 <p>length :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_4"><code class="name flex">
 <span>def <span class="ident">test_truncate_text_4</span></span>(<span>*a)</span>
@@ -884,14 +237,6 @@ def standalone_func(*a):
 <p>length :</p>
 <p>expected :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@wraps(func)
-def standalone_func(*a):
-    return func(*(a + p.args), **p.kwargs)</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

@@ -20,52 +20,6 @@
 <h1 class="title">Module <code>telereddit.config.config</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-import os
-import importlib
-import logging
-
-
-_delete_btn = InlineKeyboardButton(text=&#34;✕&#34;, callback_data=&#34;delete&#34;)
-_edit_btn = InlineKeyboardButton(text=&#34;↻&#34;, callback_data=&#34;edit&#34;)
-_edit_failed_btn = InlineKeyboardButton(text=&#34;Retry ↻&#34;, callback_data=&#34;edit&#34;)
-_more_btn = InlineKeyboardButton(text=&#34;＋&#34;, callback_data=&#34;more&#34;)
-
-# Dynamic environment secret configuration
-_env_key = os.environ.get(&#34;TELEREDDIT_MACHINE&#34;)
-if _env_key is not None:
-    ENV = _env_key.lower()
-    secret = importlib.import_module(
-        f&#34;telereddit.config.secret_{_env_key.lower()}&#34;
-    ).secret_config
-else:
-    logging.warn(
-        &#39;No &#34;TELEREDDIT_MACHINE&#34; environment variable found. Using generic secret.&#39;
-    )
-    ENV = &#34;generic&#34;
-    secret = importlib.import_module(
-        &#34;telereddit.config.secret_generic&#34;
-    ).secret_config
-
-REDDIT_DOMAINS = [&#34;reddit.com&#34;, &#34;redd.it&#34;, &#34;reddit.app.link&#34;]
-MAX_POST_LENGTH = 500
-MAX_TITLE_LENGTH = 200
-MAX_TRIES = 4
-SENTRY_ENABLED = (
-    secret.SENTRY_TOKEN is not None and len(secret.SENTRY_TOKEN) &gt; 0
-)
-
-EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _edit_btn, _more_btn]])
-EDIT_FAILED_KEYBOARD = InlineKeyboardMarkup(
-    [[_delete_btn, _edit_failed_btn, _more_btn]]
-)
-NO_EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _more_btn]])
-DELETE_KEYBOARD = InlineKeyboardMarkup([[_delete_btn]])</code></pre>
-</details>
 </section>
 <section>
 </section>

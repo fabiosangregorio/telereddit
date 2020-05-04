@@ -20,138 +20,6 @@
 <h1 class="title">Module <code>telereddit.tests.test_reddit</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import unittest
-from unittest.mock import patch
-import telereddit.reddit as reddit
-import json
-import pathlib
-
-from telereddit.models.exceptions import (
-    SubredditDoesntExistError,
-    SubredditPrivateError,
-)
-
-from telereddit.content_type import ContentType
-
-
-class TestReddit(unittest.TestCase):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @patch(&#34;telereddit.reddit.requests.get&#34;)
-    def test_get_json_404(self, mock_get):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        mock_get :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        mock_get.return_value.ok = False
-        mock_get.return_value.json = lambda: {
-            &#34;message&#34;: &#34;Not Found&#34;,
-            &#34;error&#34;: 404,
-        }
-        mock_get.return_value.status_code = 404
-        self.assertRaises(
-            SubredditDoesntExistError,
-            reddit._get_json,
-            &#34;https://reddit.com/r/n_o_t_a_n_a_m_e_i_h_ox_p_e/random&#34;,
-        )
-
-    @patch(&#34;telereddit.reddit.requests.get&#34;)
-    def test_get_json_private(self, mock_get):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        mock_get :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        mock_get.return_value.ok = False
-        mock_get.return_value.json = lambda: {
-            &#34;reason&#34;: &#34;private&#34;,
-            &#34;message&#34;: &#34;Forbidden&#34;,
-            &#34;error&#34;: 403,
-        }
-        mock_get.return_value.status_code = 403
-        self.assertRaises(
-            SubredditPrivateError,
-            reddit._get_json,
-            &#34;https://reddit.com/r/n_o_t_a_n_a_m_e_i_h_ox_p_e/random&#34;,
-        )
-
-    @patch(&#34;telereddit.reddit.requests.get&#34;)
-    def test_get_json_valid(self, mock_get):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        mock_get :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        with open(
-            pathlib.Path(__file__).parent
-            / &#34;json/r-funny-my_weather_app_nailed_it_today.json&#34;
-        ) as f:
-            mock_json = json.load(f)
-        mock_get.return_value.ok = True
-        mock_get.return_value.json = lambda: mock_json
-        mock_get.return_value.status_code = 200
-
-        json_data = reddit._get_json(
-            &#34;https://www.reddit.com/r/funny/comments/fxuefa/my_weather_app_nailed_it_today.json&#34;
-        )
-        self.assertEqual(json_data, mock_json[0])
-
-    # def test_get_post(self):
-    #     # text post
-    #     post, status, err_msg = reddit.get_post(&#39;r/showerthoughts&#39;)
-    #     self.assertEqual(status, &#39;success&#39;)
-    #     self.assertIsNone(err_msg)
-    #     self.assertEqual(post.subreddit.lower(), &#39;r/showerthoughts&#39;)
-    #     self.assertIsNotNone(post.title)
-    #     self.assertIn(&#39;https://www.reddit.com/r/showerthoughts&#39;, post.get_msg().lower())
-    #     self.assertEqual(post.get_type(), ContentType.TEXT)
-
-    #     # photo post
-    #     post, status, err_msg = reddit.get_post(&#39;r/pics&#39;)
-    #     self.assertEqual(status, &#39;success&#39;)
-    #     self.assertIsNone(err_msg)
-    #     self.assertEqual(post.subreddit.lower(), &#39;r/pics&#39;)
-    #     self.assertIsNotNone(post.title)
-    #     self.assertIn(&#39;https://www.reddit.com/r/pics&#39;, post.get_msg().lower())
-    #     self.assertIsNotNone(post.media.url)
-    #     self.assertEqual(post.get_type(), ContentType.PHOTO)
-
-    #     # crosspost
-    #     post, status, err_msg = reddit.get_post(post_url=&#39;https://www.reddit.com/r/bicycling/comments/aevkgj/finally_know_how_to_crosspost/&#39;)
-    #     self.assertEqual(status, &#39;success&#39;)
-    #     self.assertIsNone(err_msg)
-    #     self.assertEqual(post.subreddit.lower(), &#39;r/bicycling&#39;)
-    #     self.assertIsNotNone(post.title)
-    #     self.assertIn(&#39;https://www.reddit.com/r/bicycling&#39;, post.get_msg().lower())
-    #     self.assertIsNotNone(post.media.url)
-    #     self.assertEqual(post.get_type(), ContentType.PHOTO)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -170,94 +38,6 @@ class TestReddit(unittest.TestCase):
 <div class="desc"><p>Create an instance of the class that will use the named test
 method when executed. Raises a ValueError if the instance does
 not have a method with the specified name.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestReddit(unittest.TestCase):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    @patch(&#34;telereddit.reddit.requests.get&#34;)
-    def test_get_json_404(self, mock_get):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        mock_get :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        mock_get.return_value.ok = False
-        mock_get.return_value.json = lambda: {
-            &#34;message&#34;: &#34;Not Found&#34;,
-            &#34;error&#34;: 404,
-        }
-        mock_get.return_value.status_code = 404
-        self.assertRaises(
-            SubredditDoesntExistError,
-            reddit._get_json,
-            &#34;https://reddit.com/r/n_o_t_a_n_a_m_e_i_h_ox_p_e/random&#34;,
-        )
-
-    @patch(&#34;telereddit.reddit.requests.get&#34;)
-    def test_get_json_private(self, mock_get):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        mock_get :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        mock_get.return_value.ok = False
-        mock_get.return_value.json = lambda: {
-            &#34;reason&#34;: &#34;private&#34;,
-            &#34;message&#34;: &#34;Forbidden&#34;,
-            &#34;error&#34;: 403,
-        }
-        mock_get.return_value.status_code = 403
-        self.assertRaises(
-            SubredditPrivateError,
-            reddit._get_json,
-            &#34;https://reddit.com/r/n_o_t_a_n_a_m_e_i_h_ox_p_e/random&#34;,
-        )
-
-    @patch(&#34;telereddit.reddit.requests.get&#34;)
-    def test_get_json_valid(self, mock_get):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        mock_get :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        with open(
-            pathlib.Path(__file__).parent
-            / &#34;json/r-funny-my_weather_app_nailed_it_today.json&#34;
-        ) as f:
-            mock_json = json.load(f)
-        mock_get.return_value.ok = True
-        mock_get.return_value.json = lambda: mock_json
-        mock_get.return_value.status_code = 200
-
-        json_data = reddit._get_json(
-            &#34;https://www.reddit.com/r/funny/comments/fxuefa/my_weather_app_nailed_it_today.json&#34;
-        )
-        self.assertEqual(json_data, mock_json[0])</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>unittest.case.TestCase</li>
@@ -271,36 +51,6 @@ not have a method with the specified name.</p></div>
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>mock_get :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@patch(&#34;telereddit.reddit.requests.get&#34;)
-def test_get_json_404(self, mock_get):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    mock_get :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    mock_get.return_value.ok = False
-    mock_get.return_value.json = lambda: {
-        &#34;message&#34;: &#34;Not Found&#34;,
-        &#34;error&#34;: 404,
-    }
-    mock_get.return_value.status_code = 404
-    self.assertRaises(
-        SubredditDoesntExistError,
-        reddit._get_json,
-        &#34;https://reddit.com/r/n_o_t_a_n_a_m_e_i_h_ox_p_e/random&#34;,
-    )</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_reddit.TestReddit.test_get_json_private"><code class="name flex">
 <span>def <span class="ident">test_get_json_private</span></span>(<span>self, mock_get)</span>
@@ -309,37 +59,6 @@ def test_get_json_404(self, mock_get):
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>mock_get :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@patch(&#34;telereddit.reddit.requests.get&#34;)
-def test_get_json_private(self, mock_get):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    mock_get :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    mock_get.return_value.ok = False
-    mock_get.return_value.json = lambda: {
-        &#34;reason&#34;: &#34;private&#34;,
-        &#34;message&#34;: &#34;Forbidden&#34;,
-        &#34;error&#34;: 403,
-    }
-    mock_get.return_value.status_code = 403
-    self.assertRaises(
-        SubredditPrivateError,
-        reddit._get_json,
-        &#34;https://reddit.com/r/n_o_t_a_n_a_m_e_i_h_ox_p_e/random&#34;,
-    )</code></pre>
-</details>
 </dd>
 <dt id="telereddit.tests.test_reddit.TestReddit.test_get_json_valid"><code class="name flex">
 <span>def <span class="ident">test_get_json_valid</span></span>(<span>self, mock_get)</span>
@@ -348,38 +67,6 @@ def test_get_json_private(self, mock_get):
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>mock_get :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@patch(&#34;telereddit.reddit.requests.get&#34;)
-def test_get_json_valid(self, mock_get):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    mock_get :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    with open(
-        pathlib.Path(__file__).parent
-        / &#34;json/r-funny-my_weather_app_nailed_it_today.json&#34;
-    ) as f:
-        mock_json = json.load(f)
-    mock_get.return_value.ok = True
-    mock_get.return_value.json = lambda: mock_json
-    mock_get.return_value.status_code = 200
-
-    json_data = reddit._get_json(
-        &#34;https://www.reddit.com/r/funny/comments/fxuefa/my_weather_app_nailed_it_today.json&#34;
-    )
-    self.assertEqual(json_data, mock_json[0])</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

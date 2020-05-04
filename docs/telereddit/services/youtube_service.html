@@ -20,74 +20,6 @@
 <h1 class="title">Module <code>telereddit.services.youtube_service</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from telereddit.services.service import Service
-from telereddit.models.media import Media
-from telereddit.content_type import ContentType
-import telereddit.helpers as helpers
-
-
-class Youtube(Service):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    access_token = None
-    is_authenticated = False
-    has_external_request = False
-
-    @classmethod
-    def preprocess(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        oembed_url = helpers.chained_get(json, [&#34;media&#34;, &#34;oembed&#34;, &#34;url&#34;])
-        return oembed_url if oembed_url else url
-
-    @classmethod
-    def get(cls, url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return url
-
-    @classmethod
-    def postprocess(cls, url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return Media(url, ContentType.YOUTUBE)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -103,68 +35,6 @@ class Youtube(Service):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Youtube(Service):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    access_token = None
-    is_authenticated = False
-    has_external_request = False
-
-    @classmethod
-    def preprocess(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        oembed_url = helpers.chained_get(json, [&#34;media&#34;, &#34;oembed&#34;, &#34;url&#34;])
-        return oembed_url if oembed_url else url
-
-    @classmethod
-    def get(cls, url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return url
-
-    @classmethod
-    def postprocess(cls, url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return Media(url, ContentType.YOUTUBE)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></li>
@@ -194,26 +64,6 @@ class Youtube(Service):
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>url :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def postprocess(cls, url):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    url :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return Media(url, ContentType.YOUTUBE)</code></pre>
-</details>
 </dd>
 </dl>
 <h3>Inherited members</h3>

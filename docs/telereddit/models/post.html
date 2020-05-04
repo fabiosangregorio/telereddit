@@ -20,36 +20,6 @@
 <h1 class="title">Module <code>telereddit.models.post</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from telereddit.content_type import ContentType
-
-
-class Post:
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, subreddit, permalink, title, text, media=None):
-        self.subreddit = subreddit
-        self.permalink = permalink
-        self.title = title
-        self.text = text
-        self.media = media
-
-    def get_msg(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        subreddit_url = f&#34;https://www.reddit.com/{self.subreddit}&#34;
-        footer = (
-            f&#34;[Link to post](https://reddit.com{self.permalink}) | &#34;
-            f&#34;[{self.subreddit}]({subreddit_url})&#34;
-        )
-        return f&#34; *{self.title}*\n{self.text}\n\n{footer}&#34;
-
-    def get_type(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        return self.media.type if self.media else ContentType.TEXT</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -66,33 +36,6 @@ class Post:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Post:
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    def __init__(self, subreddit, permalink, title, text, media=None):
-        self.subreddit = subreddit
-        self.permalink = permalink
-        self.title = title
-        self.text = text
-        self.media = media
-
-    def get_msg(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        subreddit_url = f&#34;https://www.reddit.com/{self.subreddit}&#34;
-        footer = (
-            f&#34;[Link to post](https://reddit.com{self.permalink}) | &#34;
-            f&#34;[{self.subreddit}]({subreddit_url})&#34;
-        )
-        return f&#34; *{self.title}*\n{self.text}\n\n{footer}&#34;
-
-    def get_type(self):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        return self.media.type if self.media else ContentType.TEXT</code></pre>
-</details>
 <h3>Methods</h3>
 <dl>
 <dt id="telereddit.models.post.Post.get_msg"><code class="name flex">
@@ -100,33 +43,12 @@ class Post:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_msg(self):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-    subreddit_url = f&#34;https://www.reddit.com/{self.subreddit}&#34;
-    footer = (
-        f&#34;[Link to post](https://reddit.com{self.permalink}) | &#34;
-        f&#34;[{self.subreddit}]({subreddit_url})&#34;
-    )
-    return f&#34; *{self.title}*\n{self.text}\n\n{footer}&#34;</code></pre>
-</details>
 </dd>
 <dt id="telereddit.models.post.Post.get_type"><code class="name flex">
 <span>def <span class="ident">get_type</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_type(self):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-    return self.media.type if self.media else ContentType.TEXT</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

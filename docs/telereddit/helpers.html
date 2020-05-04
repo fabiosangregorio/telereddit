@@ -20,204 +20,6 @@
 <h1 class="title">Module <code>telereddit.helpers</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import re
-import requests
-
-from telereddit.config.config import MAX_TITLE_LENGTH
-
-
-def get_random_post_url(subreddit):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    subreddit :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return f&#34;https://www.reddit.com/{subreddit}/random&#34;
-
-
-def get_subreddit_names(text):
-    &#34;&#34;&#34;Returns a list of the (prefixed) subreddit names present in the given text.
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    regex = r&#34;\br/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)\b&#34;
-    return re.findall(regex, text, re.MULTILINE)
-
-
-def get_subreddit_name(text, reverse=False):
-    &#34;&#34;&#34;Returns the first (or last if reverse=True) (prefixed) subreddit name if
-    present in the given text, None otherwise.
-
-    Parameters
-    ----------
-    text :
-        
-    reverse :
-        (Default value = False)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    subs = get_subreddit_names(text)
-    if len(subs):
-        return subs[-1] if reverse else subs[0]
-    else:
-        return None
-
-
-def escape_markdown(text):
-    &#34;&#34;&#34;Returns the given text with escaped common markdown characters.
-    See: https://core.telegram.org/bots/api#Markdown-style
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    # Reddit escaping: \\_ \\* \\[ \\] ( ) \\~ \\` &amp;gt; # + - = | { } . !
-    return text.replace(&#34;*&#34;, &#34;\\*&#34;).replace(&#34;_&#34;, &#34;\\_&#34;)
-
-
-def truncate_text(text, length=MAX_TITLE_LENGTH):
-    &#34;&#34;&#34;Returns the given text, truncated at `length` characters, plus ellipsis.
-
-    Parameters
-    ----------
-    text :
-        
-    length :
-        (Default value = MAX_TITLE_LENGTH)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    if length &lt; 0:
-        return text
-    return text[:length] + (text[length:] and &#34;...&#34;)
-
-
-def polish_text(text):
-    &#34;&#34;&#34;Returns the given text without newline characters.
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return text.replace(&#34;\n&#34;, &#34; &#34;)
-
-
-def get_urls_from_text(text):
-    &#34;&#34;&#34;Returns a list of the urls present in the given text.
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    polished = polish_text(text)
-    urls = list()
-    for w in polished.split(&#34; &#34;):
-        w_lower = w.lower()
-        if &#34;reddit.com&#34; in w_lower:
-            urls.append(w.partition(&#34;/?&#34;)[0])
-        if &#34;redd.it&#34; in w_lower:
-            urls.append(
-                f&#39;https://www.reddit.com/comments/{w.partition(&#34;redd.it/&#34;)[2]}&#39;
-            )
-        if &#34;reddit.app.link&#34; in w_lower:
-            try:
-                r = requests.get(w, headers={&#34;User-agent&#34;: &#34;telereddit_bot&#34;})
-                start = r.text.find(&#34;https://&#34;)
-                url = r.text[start : r.text.find(&#39;&#34;&#39;, start)]
-                urls.append(url.partition(&#34;/?&#34;)[0])
-            except Exception:
-                urls.append(&#34;None&#34;)
-    return urls
-
-
-def get(obj, attr, default=None):
-    &#34;&#34;&#34;Returns the value `attr` if it is not None, default otherwise.
-
-    Parameters
-    ----------
-    obj :
-        
-    attr :
-        
-    default :
-        (Default value = None)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return obj[attr] if attr in obj and obj[attr] is not None else default
-
-
-def chained_get(obj, attrs, default=None):
-    &#34;&#34;&#34;Travels the nested object based on `attrs` and returns the value of the
-    last attr if not None, default otherwise.
-
-    Parameters
-    ----------
-    obj :
-        
-    attrs :
-        
-    default :
-        (Default value = None)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    for attr in attrs:
-        obj = get(obj, attr, default)
-        if obj == default:
-            break
-    return obj</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -238,34 +40,6 @@ last attr if not None, default otherwise.</p>
 <p>default :
 (Default value = None)</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def chained_get(obj, attrs, default=None):
-    &#34;&#34;&#34;Travels the nested object based on `attrs` and returns the value of the
-    last attr if not None, default otherwise.
-
-    Parameters
-    ----------
-    obj :
-        
-    attrs :
-        
-    default :
-        (Default value = None)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    for attr in attrs:
-        obj = get(obj, attr, default)
-        if obj == default:
-            break
-    return obj</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.escape_markdown"><code class="name flex">
 <span>def <span class="ident">escape_markdown</span></span>(<span>text)</span>
@@ -276,27 +50,6 @@ See: <a href="https://core.telegram.org/bots/api#Markdown-style">https://core.te
 <h2 id="parameters">Parameters</h2>
 <p>text :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def escape_markdown(text):
-    &#34;&#34;&#34;Returns the given text with escaped common markdown characters.
-    See: https://core.telegram.org/bots/api#Markdown-style
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    # Reddit escaping: \\_ \\* \\[ \\] ( ) \\~ \\` &amp;gt; # + - = | { } . !
-    return text.replace(&#34;*&#34;, &#34;\\*&#34;).replace(&#34;_&#34;, &#34;\\_&#34;)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>obj, attr, default=None)</span>
@@ -309,29 +62,6 @@ See: <a href="https://core.telegram.org/bots/api#Markdown-style">https://core.te
 <p>default :
 (Default value = None)</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get(obj, attr, default=None):
-    &#34;&#34;&#34;Returns the value `attr` if it is not None, default otherwise.
-
-    Parameters
-    ----------
-    obj :
-        
-    attr :
-        
-    default :
-        (Default value = None)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return obj[attr] if attr in obj and obj[attr] is not None else default</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.get_random_post_url"><code class="name flex">
 <span>def <span class="ident">get_random_post_url</span></span>(<span>subreddit)</span>
@@ -340,25 +70,6 @@ See: <a href="https://core.telegram.org/bots/api#Markdown-style">https://core.te
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>subreddit :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_random_post_url(subreddit):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    subreddit :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return f&#34;https://www.reddit.com/{subreddit}/random&#34;</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.get_subreddit_name"><code class="name flex">
 <span>def <span class="ident">get_subreddit_name</span></span>(<span>text, reverse=False)</span>
@@ -371,32 +82,6 @@ present in the given text, None otherwise.</p>
 <p>reverse :
 (Default value = False)</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_subreddit_name(text, reverse=False):
-    &#34;&#34;&#34;Returns the first (or last if reverse=True) (prefixed) subreddit name if
-    present in the given text, None otherwise.
-
-    Parameters
-    ----------
-    text :
-        
-    reverse :
-        (Default value = False)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    subs = get_subreddit_names(text)
-    if len(subs):
-        return subs[-1] if reverse else subs[0]
-    else:
-        return None</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.get_subreddit_names"><code class="name flex">
 <span>def <span class="ident">get_subreddit_names</span></span>(<span>text)</span>
@@ -406,26 +91,6 @@ present in the given text, None otherwise.</p>
 <h2 id="parameters">Parameters</h2>
 <p>text :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_subreddit_names(text):
-    &#34;&#34;&#34;Returns a list of the (prefixed) subreddit names present in the given text.
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    regex = r&#34;\br/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)\b&#34;
-    return re.findall(regex, text, re.MULTILINE)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.get_urls_from_text"><code class="name flex">
 <span>def <span class="ident">get_urls_from_text</span></span>(<span>text)</span>
@@ -435,43 +100,6 @@ present in the given text, None otherwise.</p>
 <h2 id="parameters">Parameters</h2>
 <p>text :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_urls_from_text(text):
-    &#34;&#34;&#34;Returns a list of the urls present in the given text.
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    polished = polish_text(text)
-    urls = list()
-    for w in polished.split(&#34; &#34;):
-        w_lower = w.lower()
-        if &#34;reddit.com&#34; in w_lower:
-            urls.append(w.partition(&#34;/?&#34;)[0])
-        if &#34;redd.it&#34; in w_lower:
-            urls.append(
-                f&#39;https://www.reddit.com/comments/{w.partition(&#34;redd.it/&#34;)[2]}&#39;
-            )
-        if &#34;reddit.app.link&#34; in w_lower:
-            try:
-                r = requests.get(w, headers={&#34;User-agent&#34;: &#34;telereddit_bot&#34;})
-                start = r.text.find(&#34;https://&#34;)
-                url = r.text[start : r.text.find(&#39;&#34;&#39;, start)]
-                urls.append(url.partition(&#34;/?&#34;)[0])
-            except Exception:
-                urls.append(&#34;None&#34;)
-    return urls</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.polish_text"><code class="name flex">
 <span>def <span class="ident">polish_text</span></span>(<span>text)</span>
@@ -481,25 +109,6 @@ present in the given text, None otherwise.</p>
 <h2 id="parameters">Parameters</h2>
 <p>text :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def polish_text(text):
-    &#34;&#34;&#34;Returns the given text without newline characters.
-
-    Parameters
-    ----------
-    text :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return text.replace(&#34;\n&#34;, &#34; &#34;)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.helpers.truncate_text"><code class="name flex">
 <span>def <span class="ident">truncate_text</span></span>(<span>text, length=200)</span>
@@ -511,29 +120,6 @@ present in the given text, None otherwise.</p>
 <p>length :
 (Default value = MAX_TITLE_LENGTH)</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def truncate_text(text, length=MAX_TITLE_LENGTH):
-    &#34;&#34;&#34;Returns the given text, truncated at `length` characters, plus ellipsis.
-
-    Parameters
-    ----------
-    text :
-        
-    length :
-        (Default value = MAX_TITLE_LENGTH)
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    if length &lt; 0:
-        return text
-    return text[:length] + (text[length:] and &#34;...&#34;)</code></pre>
-</details>
 </dd>
 </dl>
 </section>

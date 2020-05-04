@@ -20,112 +20,6 @@
 <h1 class="title">Module <code>telereddit.services.service</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from abc import ABC, abstractmethod
-import requests
-
-from telereddit.models.exceptions import MediaRetrievalError
-
-
-class Service(ABC):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    has_external_request = True
-    is_authenticated = False
-    access_token = None
-
-    @classmethod
-    def preprocess(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return url
-
-    @classmethod
-    def get(cls, url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return requests.get(url, stream=True)
-
-    @classmethod
-    @abstractmethod
-    def postprocess(cls, response):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        pass
-
-    @classmethod
-    def authenticate(cls):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        pass
-
-    @classmethod
-    def get_media(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        processed_url = cls.preprocess(url, json)
-
-        response = cls.get(processed_url)
-        if cls.has_external_request:
-            if cls.is_authenticated and response.status_code == 401:
-                cls.authenticate()
-                response = cls.get(processed_url)
-            if response.status_code &gt;= 300:
-                raise MediaRetrievalError(
-                    {
-                        &#34;service&#34;: cls.__name__,
-                        &#34;reddit_media_url&#34;: url,
-                        &#34;processed_media_url&#34;: processed_url,
-                    }
-                )
-        return cls.postprocess(response)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -141,106 +35,6 @@ class Service(ABC):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Service(ABC):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-
-    has_external_request = True
-    is_authenticated = False
-    access_token = None
-
-    @classmethod
-    def preprocess(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return url
-
-    @classmethod
-    def get(cls, url):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        return requests.get(url, stream=True)
-
-    @classmethod
-    @abstractmethod
-    def postprocess(cls, response):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        pass
-
-    @classmethod
-    def authenticate(cls):
-        &#34;&#34;&#34; &#34;&#34;&#34;
-        pass
-
-    @classmethod
-    def get_media(cls, url, json):
-        &#34;&#34;&#34;
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        &#34;&#34;&#34;
-        processed_url = cls.preprocess(url, json)
-
-        response = cls.get(processed_url)
-        if cls.has_external_request:
-            if cls.is_authenticated and response.status_code == 401:
-                cls.authenticate()
-                response = cls.get(processed_url)
-            if response.status_code &gt;= 300:
-                raise MediaRetrievalError(
-                    {
-                        &#34;service&#34;: cls.__name__,
-                        &#34;reddit_media_url&#34;: url,
-                        &#34;processed_media_url&#34;: processed_url,
-                    }
-                )
-        return cls.postprocess(response)</code></pre>
-</details>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>abc.ABC</li>
@@ -275,15 +69,6 @@ class Service(ABC):
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def authenticate(cls):
-    &#34;&#34;&#34; &#34;&#34;&#34;
-    pass</code></pre>
-</details>
 </dd>
 <dt id="telereddit.services.service.Service.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>url)</span>
@@ -292,26 +77,6 @@ def authenticate(cls):
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>url :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def get(cls, url):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    url :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return requests.get(url, stream=True)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.services.service.Service.get_media"><code class="name flex">
 <span>def <span class="ident">get_media</span></span>(<span>url, json)</span>
@@ -321,43 +86,6 @@ def get(cls, url):
 <p>url :</p>
 <p>json :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def get_media(cls, url, json):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    url :
-        
-    json :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    processed_url = cls.preprocess(url, json)
-
-    response = cls.get(processed_url)
-    if cls.has_external_request:
-        if cls.is_authenticated and response.status_code == 401:
-            cls.authenticate()
-            response = cls.get(processed_url)
-        if response.status_code &gt;= 300:
-            raise MediaRetrievalError(
-                {
-                    &#34;service&#34;: cls.__name__,
-                    &#34;reddit_media_url&#34;: url,
-                    &#34;processed_media_url&#34;: processed_url,
-                }
-            )
-    return cls.postprocess(response)</code></pre>
-</details>
 </dd>
 <dt id="telereddit.services.service.Service.postprocess"><code class="name flex">
 <span>def <span class="ident">postprocess</span></span>(<span>response)</span>
@@ -366,27 +94,6 @@ def get_media(cls, url, json):
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>response :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-@abstractmethod
-def postprocess(cls, response):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    response :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    pass</code></pre>
-</details>
 </dd>
 <dt id="telereddit.services.service.Service.preprocess"><code class="name flex">
 <span>def <span class="ident">preprocess</span></span>(<span>url, json)</span>
@@ -396,28 +103,6 @@ def postprocess(cls, response):
 <p>url :</p>
 <p>json :</p>
 <h2 id="returns">Returns</h2></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def preprocess(cls, url, json):
-    &#34;&#34;&#34;
-
-    Parameters
-    ----------
-    url :
-        
-    json :
-        
-
-    Returns
-    -------
-
-    
-    &#34;&#34;&#34;
-    return url</code></pre>
-</details>
 </dd>
 </dl>
 </dd>
