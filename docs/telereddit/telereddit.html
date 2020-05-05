@@ -38,13 +38,10 @@
 <span>def <span class="ident">on_callback_query</span></span>(<span>update: telegram.update.Update, context: telegram.ext.callbackcontext.CallbackContext)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Handles all the several types of callback queries.</p>
+<div class="desc"><p>Handles all the several types of callback queries (actions initiated from
+a keyboard).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
-<dd>&nbsp;</dd>
 <dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
 <dd>&nbsp;</dd>
 <dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
@@ -56,19 +53,15 @@
 <span>def <span class="ident">on_chat_message</span></span>(<span>update: telegram.update.Update, context: telegram.ext.callbackcontext.CallbackContext)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Handles a single update message.</p>
+<div class="desc"><p>Entrypoint of the bot's logic. Handles a single update message.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
+<dt><strong><code>update</code></strong> :&ensp;<code>Update : the Update object provided by python-telegram-bot</code></dt>
 <dd>&nbsp;</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
+<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext : the Context object provided by</code></dt>
 <dd>&nbsp;</dd>
 </dl>
-<h2 id="returns">Returns</h2></div>
+<p>python-telegram-bot</p></div>
 </dd>
 </dl>
 </section>

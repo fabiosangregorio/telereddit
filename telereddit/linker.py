@@ -10,7 +10,7 @@ from telereddit.config.config import (
 import telereddit.reddit as reddit
 import telereddit.helpers as helpers
 from telereddit.models.media import ContentType
-from telereddit.models.exceptions import (
+from telereddit.exceptions import (
     SubredditError,
     TeleredditError,
     MediaTooBigError,
@@ -20,21 +20,30 @@ from telereddit.models.exceptions import (
 
 
 class Linker:
-    """ """
+    """
+    Gets instanciated at every telereddit request (new message, messsage callback, etc.)
+
+    Attributes
+    ----------
+    bot : Bot
+        python-telegram-bot's Bot instance: it is initialized by set
+    chat_id : Int
+
+    args : dict
+    """
 
     @classmethod
     def set_bot(cls, bot):
         """
+        Sets the python-telegram-bot's Bot instance for the Linker object.
+        This should be set only once, at the package startup.
+
+        .. note:: This needs to be set before starting the bot loop.
 
         Parameters
         ----------
-        bot :
-            
-
-        Returns
-        -------
-
-        
+        bot : Bot
+            The bot instance provided by python-telegram-bot
         """
         cls.bot = bot
 

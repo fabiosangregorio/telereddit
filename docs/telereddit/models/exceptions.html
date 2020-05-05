@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>telereddit.models.exceptions API documentation</title>
+<title>telereddit.exceptions API documentation</title>
 <meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>telereddit.models.exceptions</code></h1>
+<h1 class="title">Module <code>telereddit.exceptions</code></h1>
 </header>
 <section id="section-intro">
 </section>
@@ -30,7 +30,7 @@
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="telereddit.models.exceptions.AuthenticationError"><code class="flex name class">
+<dt id="telereddit.exceptions.AuthenticationError"><code class="flex name class">
 <span>class <span class="ident">AuthenticationError</span></span>
 <span>(</span><span>data=None, capture=True)</span>
 </code></dt>
@@ -38,12 +38,12 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.MediaError"><code class="flex name class">
+<dt id="telereddit.exceptions.MediaError"><code class="flex name class">
 <span>class <span class="ident">MediaError</span></span>
 <span>(</span><span>msg, data=None, capture=True)</span>
 </code></dt>
@@ -51,17 +51,17 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.MediaRetrievalError" href="#telereddit.models.exceptions.MediaRetrievalError">MediaRetrievalError</a></li>
-<li><a title="telereddit.models.exceptions.MediaTooBigError" href="#telereddit.models.exceptions.MediaTooBigError">MediaTooBigError</a></li>
+<li><a title="telereddit.exceptions.MediaRetrievalError" href="#telereddit.exceptions.MediaRetrievalError">MediaRetrievalError</a></li>
+<li><a title="telereddit.exceptions.MediaTooBigError" href="#telereddit.exceptions.MediaTooBigError">MediaTooBigError</a></li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.MediaRetrievalError"><code class="flex name class">
+<dt id="telereddit.exceptions.MediaRetrievalError"><code class="flex name class">
 <span>class <span class="ident">MediaRetrievalError</span></span>
 <span>(</span><span>data=None, capture=True)</span>
 </code></dt>
@@ -69,13 +69,13 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.MediaError" href="#telereddit.models.exceptions.MediaError">MediaError</a></li>
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.MediaError" href="#telereddit.exceptions.MediaError">MediaError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.MediaTooBigError"><code class="flex name class">
+<dt id="telereddit.exceptions.MediaTooBigError"><code class="flex name class">
 <span>class <span class="ident">MediaTooBigError</span></span>
 <span>(</span><span>data=None, capture=True)</span>
 </code></dt>
@@ -83,13 +83,13 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.MediaError" href="#telereddit.models.exceptions.MediaError">MediaError</a></li>
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.MediaError" href="#telereddit.exceptions.MediaError">MediaError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.PostEqualsMessageError"><code class="flex name class">
+<dt id="telereddit.exceptions.PostEqualsMessageError"><code class="flex name class">
 <span>class <span class="ident">PostEqualsMessageError</span></span>
 <span>(</span><span>data=None, capture=False)</span>
 </code></dt>
@@ -97,13 +97,13 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></li>
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.PostError"><code class="flex name class">
+<dt id="telereddit.exceptions.PostError"><code class="flex name class">
 <span>class <span class="ident">PostError</span></span>
 <span>(</span><span>msg, data=None, capture=True)</span>
 </code></dt>
@@ -111,18 +111,18 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.PostEqualsMessageError" href="#telereddit.models.exceptions.PostEqualsMessageError">PostEqualsMessageError</a></li>
-<li><a title="telereddit.models.exceptions.PostRetrievalError" href="#telereddit.models.exceptions.PostRetrievalError">PostRetrievalError</a></li>
-<li><a title="telereddit.models.exceptions.PostSendError" href="#telereddit.models.exceptions.PostSendError">PostSendError</a></li>
+<li><a title="telereddit.exceptions.PostEqualsMessageError" href="#telereddit.exceptions.PostEqualsMessageError">PostEqualsMessageError</a></li>
+<li><a title="telereddit.exceptions.PostRetrievalError" href="#telereddit.exceptions.PostRetrievalError">PostRetrievalError</a></li>
+<li><a title="telereddit.exceptions.PostSendError" href="#telereddit.exceptions.PostSendError">PostSendError</a></li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.PostRetrievalError"><code class="flex name class">
+<dt id="telereddit.exceptions.PostRetrievalError"><code class="flex name class">
 <span>class <span class="ident">PostRetrievalError</span></span>
 <span>(</span><span>data=None, capture=True)</span>
 </code></dt>
@@ -130,13 +130,13 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></li>
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.PostSendError"><code class="flex name class">
+<dt id="telereddit.exceptions.PostSendError"><code class="flex name class">
 <span>class <span class="ident">PostSendError</span></span>
 <span>(</span><span>data=None, capture=True)</span>
 </code></dt>
@@ -144,26 +144,26 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></li>
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.RequestError"><code class="flex name class">
-<span>class <span class="ident">RequestError</span></span>
+<dt id="telereddit.exceptions.PostRequestError"><code class="flex name class">
+<span>class <span class="ident">PostRequestError</span></span>
 <span>(</span><span>data=None, capture=True)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.SubredditDoesntExistError"><code class="flex name class">
+<dt id="telereddit.exceptions.SubredditDoesntExistError"><code class="flex name class">
 <span>class <span class="ident">SubredditDoesntExistError</span></span>
 <span>(</span><span>data=None, capture=False)</span>
 </code></dt>
@@ -171,13 +171,13 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.SubredditError" href="#telereddit.models.exceptions.SubredditError">SubredditError</a></li>
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.SubredditError"><code class="flex name class">
+<dt id="telereddit.exceptions.SubredditError"><code class="flex name class">
 <span>class <span class="ident">SubredditError</span></span>
 <span>(</span><span>msg, data=None, capture=False)</span>
 </code></dt>
@@ -185,17 +185,17 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.SubredditDoesntExistError" href="#telereddit.models.exceptions.SubredditDoesntExistError">SubredditDoesntExistError</a></li>
-<li><a title="telereddit.models.exceptions.SubredditPrivateError" href="#telereddit.models.exceptions.SubredditPrivateError">SubredditPrivateError</a></li>
+<li><a title="telereddit.exceptions.SubredditDoesntExistError" href="#telereddit.exceptions.SubredditDoesntExistError">SubredditDoesntExistError</a></li>
+<li><a title="telereddit.exceptions.SubredditPrivateError" href="#telereddit.exceptions.SubredditPrivateError">SubredditPrivateError</a></li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.SubredditPrivateError"><code class="flex name class">
+<dt id="telereddit.exceptions.SubredditPrivateError"><code class="flex name class">
 <span>class <span class="ident">SubredditPrivateError</span></span>
 <span>(</span><span>data=None, capture=False)</span>
 </code></dt>
@@ -203,13 +203,13 @@
 <div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.SubredditError" href="#telereddit.models.exceptions.SubredditError">SubredditError</a></li>
-<li><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></li>
+<li><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></li>
+<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
 <li>builtins.Exception</li>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.models.exceptions.TeleredditError"><code class="flex name class">
+<dt id="telereddit.exceptions.TeleredditError"><code class="flex name class">
 <span>class <span class="ident">TeleredditError</span></span>
 <span>(</span><span>msg, data=None, capture=False)</span>
 </code></dt>
@@ -222,11 +222,11 @@
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="telereddit.models.exceptions.AuthenticationError" href="#telereddit.models.exceptions.AuthenticationError">AuthenticationError</a></li>
-<li><a title="telereddit.models.exceptions.MediaError" href="#telereddit.models.exceptions.MediaError">MediaError</a></li>
-<li><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></li>
-<li><a title="telereddit.models.exceptions.RequestError" href="#telereddit.models.exceptions.RequestError">RequestError</a></li>
-<li><a title="telereddit.models.exceptions.SubredditError" href="#telereddit.models.exceptions.SubredditError">SubredditError</a></li>
+<li><a title="telereddit.exceptions.AuthenticationError" href="#telereddit.exceptions.AuthenticationError">AuthenticationError</a></li>
+<li><a title="telereddit.exceptions.MediaError" href="#telereddit.exceptions.MediaError">MediaError</a></li>
+<li><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></li>
+<li><a title="telereddit.exceptions.PostRequestError" href="#telereddit.exceptions.PostRequestError">PostRequestError</a></li>
+<li><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></li>
 </ul>
 </dd>
 </dl>
@@ -248,43 +248,43 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="telereddit.models.exceptions.AuthenticationError" href="#telereddit.models.exceptions.AuthenticationError">AuthenticationError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.AuthenticationError" href="#telereddit.exceptions.AuthenticationError">AuthenticationError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.MediaError" href="#telereddit.models.exceptions.MediaError">MediaError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.MediaError" href="#telereddit.exceptions.MediaError">MediaError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.MediaRetrievalError" href="#telereddit.models.exceptions.MediaRetrievalError">MediaRetrievalError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.MediaRetrievalError" href="#telereddit.exceptions.MediaRetrievalError">MediaRetrievalError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.MediaTooBigError" href="#telereddit.models.exceptions.MediaTooBigError">MediaTooBigError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.MediaTooBigError" href="#telereddit.exceptions.MediaTooBigError">MediaTooBigError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.PostEqualsMessageError" href="#telereddit.models.exceptions.PostEqualsMessageError">PostEqualsMessageError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.PostEqualsMessageError" href="#telereddit.exceptions.PostEqualsMessageError">PostEqualsMessageError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.PostError" href="#telereddit.models.exceptions.PostError">PostError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.PostRetrievalError" href="#telereddit.models.exceptions.PostRetrievalError">PostRetrievalError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.PostRetrievalError" href="#telereddit.exceptions.PostRetrievalError">PostRetrievalError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.PostSendError" href="#telereddit.models.exceptions.PostSendError">PostSendError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.PostSendError" href="#telereddit.exceptions.PostSendError">PostSendError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.RequestError" href="#telereddit.models.exceptions.RequestError">RequestError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.PostRequestError" href="#telereddit.exceptions.PostRequestError">PostRequestError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.SubredditDoesntExistError" href="#telereddit.models.exceptions.SubredditDoesntExistError">SubredditDoesntExistError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.SubredditDoesntExistError" href="#telereddit.exceptions.SubredditDoesntExistError">SubredditDoesntExistError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.SubredditError" href="#telereddit.models.exceptions.SubredditError">SubredditError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.SubredditPrivateError" href="#telereddit.models.exceptions.SubredditPrivateError">SubredditPrivateError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.SubredditPrivateError" href="#telereddit.exceptions.SubredditPrivateError">SubredditPrivateError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.models.exceptions.TeleredditError" href="#telereddit.models.exceptions.TeleredditError">TeleredditError</a></code></h4>
+<h4><code><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></code></h4>
 </li>
 </ul>
 </li>

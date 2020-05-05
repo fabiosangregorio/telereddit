@@ -6,7 +6,7 @@ import requests
 from telereddit.config.config import secret
 from telereddit.services.service import Service
 from telereddit.models.media import Media
-from telereddit.content_type import ContentType
+from telereddit.models.content_type import ContentType
 
 
 class Imgur(Service):

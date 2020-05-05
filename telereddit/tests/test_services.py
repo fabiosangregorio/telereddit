@@ -2,7 +2,7 @@ import unittest
 from parameterized import parameterized, param
 
 from telereddit.services.services_wrapper import ServicesWrapper
-from telereddit.content_type import ContentType
+from telereddit.models.content_type import ContentType
 
 
 class TestServices(unittest.TestCase):

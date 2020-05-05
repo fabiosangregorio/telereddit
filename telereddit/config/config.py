@@ -1,3 +1,11 @@
+"""
+Project-wide configuration variables.
+
+.. note::
+    This configuration architecture is ugly and might be changed in the Future
+    for a leaner one.
+"""
+
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 import os
 import importlib

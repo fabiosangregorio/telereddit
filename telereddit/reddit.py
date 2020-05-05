@@ -4,9 +4,9 @@ import random
 import telereddit.helpers as helpers
 from telereddit.config.config import secret
 from telereddit.models.post import Post
-from telereddit.content_type import ContentType
-from telereddit.models.exceptions import (
-    RequestError,
+from telereddit.models.content_type import ContentType
+from telereddit.exceptions import (
+    PostRequestError,
     SubredditPrivateError,
     SubredditDoesntExistError,
     PostRetrievalError,
@@ -36,7 +36,7 @@ def _get_json(post_url):
         # some subreddits have the json data wrapped in brackets, some do not
         json = json if isinstance(json, dict) else json[0]
     except Exception:
-        raise RequestError({"post_url": post_url})
+        raise PostRequestError({"post_url": post_url})
 
     if json.get("reason") == "private":
         raise SubredditPrivateError()

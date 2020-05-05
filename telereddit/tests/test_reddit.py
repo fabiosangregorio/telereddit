@@ -4,12 +4,12 @@ import telereddit.reddit as reddit
 import json
 import pathlib
 
-from telereddit.models.exceptions import (
+from telereddit.exceptions import (
     SubredditDoesntExistError,
     SubredditPrivateError,
 )
 
-from telereddit.content_type import ContentType
+from telereddit.models.content_type import ContentType
 
 
 class TestReddit(unittest.TestCase):

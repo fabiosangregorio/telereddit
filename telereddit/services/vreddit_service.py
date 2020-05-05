@@ -3,7 +3,7 @@ import requests
 from telereddit.services.service import Service
 import telereddit.helpers as helpers
 from telereddit.models.media import Media
-from telereddit.content_type import ContentType
+from telereddit.models.content_type import ContentType
 
 
 class Vreddit(Service):

@@ -1,4 +1,4 @@
-from telereddit.content_type import ContentType
+from telereddit.models.content_type import ContentType
 
 
 class Post:
