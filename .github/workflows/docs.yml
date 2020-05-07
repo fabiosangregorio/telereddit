@@ -1,11 +1,12 @@
 name: docs
 
-on:
-  push:
-    branches:
-    - master
-  pull_request:
-    types: [opened, synchronize, repoened, edited]
+on: [push]
+# on:
+#   push:
+#     branches:
+#     - master
+#   pull_request:
+#     types: [opened, synchronize, repoened, edited]
 
 jobs:
   docs:
