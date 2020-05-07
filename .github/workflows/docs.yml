@@ -47,6 +47,7 @@ jobs:
         pip install -r requirements.txt
         pip install pydeps
         pip install pdoc3
+        pip install docstr-coverage
 
     - name: Unlock git-crypt files
       run: |
