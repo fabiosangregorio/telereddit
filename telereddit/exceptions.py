@@ -1,3 +1,10 @@
+"""
+Catched exceptions of the software.
+
+The application follows the try/catch pattern to return errors in the program
+flow between two functions.
+"""
+
 import sentry_sdk as sentry
 import traceback
 
@@ -7,9 +14,6 @@ import telereddit.config.config as config
 class TeleredditError(Exception):
     """
     Base class for all catched exceptions.
-
-    The application follows the try/catch pattern to return errors in the
-    program flow between two functions.
 
     Parameters
     ----------

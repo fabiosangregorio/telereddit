@@ -5,8 +5,6 @@ import telereddit.helpers as helpers
 
 
 class TestHelpers(unittest.TestCase):
-    """ """
-
     @parameterized.expand(
         [
             # subreddit in a text
@@ -39,22 +37,6 @@ class TestHelpers(unittest.TestCase):
         ]
     )
     def test_get_subreddit_names(self, text, expected, not_expected=None):
-        """
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-        not_expected :
-            (Default value = None)
-
-        Returns
-        -------
-
-        
-        """
         self.assertEqual(helpers.get_subreddit_names(text), expected)
         self.assertNotEqual(helpers.get_subreddit_names(text), not_expected)
 
@@ -81,22 +63,6 @@ class TestHelpers(unittest.TestCase):
         ]
     )
     def test_get_subreddit_name(self, text, reverse, expected):
-        """
-
-        Parameters
-        ----------
-        text :
-            
-        reverse :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        """
         self.assertEqual(helpers.get_subreddit_name(text, reverse), expected)
 
     @parameterized.expand(
@@ -109,22 +75,6 @@ class TestHelpers(unittest.TestCase):
         ]
     )
     def test_truncate_text(self, text, length, expected):
-        """
-
-        Parameters
-        ----------
-        text :
-            
-        length :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        """
         self.assertEqual(helpers.truncate_text(text, length), expected)
 
     @parameterized.expand(
@@ -139,20 +89,6 @@ class TestHelpers(unittest.TestCase):
         ]
     )
     def polish_text(self, text, expected):
-        """
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-
-        Returns
-        -------
-
-        
-        """
         self.assertEqual(helpers.polish_text(text), expected)
 
     @parameterized.expand(
@@ -168,26 +104,9 @@ class TestHelpers(unittest.TestCase):
         ]
     )
     def test_get_urls_from_text(self, text, expected, not_expected=None):
-        """
-
-        Parameters
-        ----------
-        text :
-            
-        expected :
-            
-        not_expected :
-            (Default value = None)
-
-        Returns
-        -------
-
-        
-        """
         self.assertListEqual(helpers.get_urls_from_text(text), expected)
 
     def test_get(self):
-        """ """
         obj = {
             "with_value": "ok",
             "with_true": True,
@@ -207,7 +126,6 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(helpers.get(obj, "not_in_obj"), None)
 
     def test_chained_get(self):
-        """ """
         obj = {
             "l1": {
                 "l2_with_value": "ok",
