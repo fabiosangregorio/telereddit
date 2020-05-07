@@ -71,7 +71,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: doc-coverage
-        path: doc-coverage.txt
+        path: ~/doc-coverage.txt
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v4
