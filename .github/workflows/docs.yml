@@ -66,7 +66,7 @@ jobs:
 
     - name: Run documentation coverage
       run: |
-        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit > doc-coverage.txt
+        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ~/doc-coverage.txt
 
     - uses: actions/upload-artifact@v2
       with:
