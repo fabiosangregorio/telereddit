@@ -46,17 +46,39 @@
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.services.youtube_service.Youtube.has_external_request"><code class="name">var <span class="ident">has_external_request</span></code></dt>
+<dt id="telereddit.services.youtube_service.Youtube.is_authenticated"><code class="name">var <span class="ident">is_authenticated</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.services.youtube_service.Youtube.is_authenticated"><code class="name">var <span class="ident">is_authenticated</span></code></dt>
+<dt id="telereddit.services.youtube_service.Youtube.has_external_request"><code class="name">var <span class="ident">has_external_request</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 </dl>
 <h3>Static methods</h3>
 <dl>
+<dt id="telereddit.services.youtube_service.Youtube.preprocess"><code class="name flex">
+<span>def <span class="ident">preprocess</span></span>(<span>url, json)</span>
+</code></dt>
+<dd>
+<p class="inheritance">
+<em>Inherited from:</em>
+<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.preprocess" href="service.html#telereddit.services.service.Service.preprocess">preprocess</a></code>
+</p>
+<div class="desc inherited"><p>Parameters</p>
+<p>url : …</p></div>
+</dd>
+<dt id="telereddit.services.youtube_service.Youtube.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>url)</span>
+</code></dt>
+<dd>
+<p class="inheritance">
+<em>Inherited from:</em>
+<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.get" href="service.html#telereddit.services.service.Service.get">get</a></code>
+</p>
+<div class="desc inherited"><p>Parameters</p>
+<p>url : …</p></div>
+</dd>
 <dt id="telereddit.services.youtube_service.Youtube.postprocess"><code class="name flex">
 <span>def <span class="ident">postprocess</span></span>(<span>url)</span>
 </code></dt>
@@ -65,23 +87,24 @@
 <p>url :</p>
 <h2 id="returns">Returns</h2></div>
 </dd>
+<dt id="telereddit.services.youtube_service.Youtube.get_media"><code class="name flex">
+<span>def <span class="ident">get_media</span></span>(<span>url, json)</span>
+</code></dt>
+<dd>
+<p class="inheritance">
+<em>Inherited from:</em>
+<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.get_media" href="service.html#telereddit.services.service.Service.get_media">get_media</a></code>
+</p>
+<div class="desc inherited"><p>Parameters</p>
+<p>url : …</p></div>
+</dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></b></code>:
-<ul class="hlist">
-<li><code><a title="telereddit.services.service.Service.get" href="service.html#telereddit.services.service.Service.get">get</a></code></li>
-<li><code><a title="telereddit.services.service.Service.get_media" href="service.html#telereddit.services.service.Service.get_media">get_media</a></code></li>
-<li><code><a title="telereddit.services.service.Service.preprocess" href="service.html#telereddit.services.service.Service.preprocess">preprocess</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 </dl>
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
@@ -98,10 +121,13 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li>
 <h4><code><a title="telereddit.services.youtube_service.Youtube" href="#telereddit.services.youtube_service.Youtube">Youtube</a></code></h4>
 <ul class="">
-<li><code><a title="telereddit.services.youtube_service.Youtube.access_token" href="#telereddit.services.youtube_service.Youtube.access_token">access_token</a></code></li>
-<li><code><a title="telereddit.services.youtube_service.Youtube.has_external_request" href="#telereddit.services.youtube_service.Youtube.has_external_request">has_external_request</a></code></li>
-<li><code><a title="telereddit.services.youtube_service.Youtube.is_authenticated" href="#telereddit.services.youtube_service.Youtube.is_authenticated">is_authenticated</a></code></li>
+<li><code><a title="telereddit.services.youtube_service.Youtube.preprocess" href="#telereddit.services.youtube_service.Youtube.preprocess">preprocess</a></code></li>
+<li><code><a title="telereddit.services.youtube_service.Youtube.get" href="#telereddit.services.youtube_service.Youtube.get">get</a></code></li>
 <li><code><a title="telereddit.services.youtube_service.Youtube.postprocess" href="#telereddit.services.youtube_service.Youtube.postprocess">postprocess</a></code></li>
+<li><code><a title="telereddit.services.youtube_service.Youtube.get_media" href="service.html#telereddit.services.youtube_service.Youtube.get_media">get_media</a></code></li>
+<li><code><a title="telereddit.services.youtube_service.Youtube.access_token" href="#telereddit.services.youtube_service.Youtube.access_token">access_token</a></code></li>
+<li><code><a title="telereddit.services.youtube_service.Youtube.is_authenticated" href="#telereddit.services.youtube_service.Youtube.is_authenticated">is_authenticated</a></code></li>
+<li><code><a title="telereddit.services.youtube_service.Youtube.has_external_request" href="#telereddit.services.youtube_service.Youtube.has_external_request">has_external_request</a></code></li>
 </ul>
 </li>
 </ul>

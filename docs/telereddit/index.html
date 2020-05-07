@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="&lt;p align=&#34;center&#34;&gt;&lt;a href=&#34;https://telegram.me/tele_reddit_bot&#34;&gt;&lt;img height=&#34;200&#34; width=&#34;200&#34;
+…" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,17 +21,62 @@
 <h1 class="title">Package <code>telereddit</code></h1>
 </header>
 <section id="section-intro">
+<p align="center"><a href="https://telegram.me/tele_reddit_bot"><img height="200" width="200"
+src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a></p>
+<h1 align="center">Telereddit</h1>
+<p align="center">
+<a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Adocs"><img
+src="https://github.com/fabiosangregorio/telereddit/workflows/docs/badge.svg" alt="Docs status"></a>
+<a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Atest"><img
+src="https://github.com/fabiosangregorio/telereddit/workflows/test/badge.svg" alt="Test status"></a>
+<a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Alint"><img
+src="https://github.com/fabiosangregorio/telereddit/workflows/lint/badge.svg" alt="Lint status"></a>
+<a href="https://codecov.io/gh/fabiosangregorio/telereddit">
+<img src="https://codecov.io/gh/fabiosangregorio/telereddit/branch/master/graph/badge.svg" />
+</a>
+<a
+href="https://www.codacy.com/app/fabio.sangregorio/telereddit?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fabiosangregorio/telereddit&amp;utm_campaign=Badge_Grade"><img
+src="https://api.codacy.com/project/badge/Grade/76515a362977419b91de831466e1bf9a" alt="Codacy Badge"></a>
+<a href="https://codeclimate.com/github/fabiosangregorio/telereddit/maintainability"><img
+src="https://api.codeclimate.com/v1/badges/bef15455da0878eae539/maintainability" alt="Maintainability"></a>
+<a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg"
+alt="License: GPL v3"></a>
+<a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"
+alt="Code style: black"></a>
+</p>
+<p>Add this bot on Telegram: <a href="https://telegram.me/tele_reddit_bot">telegram.me</a>!</p>
+<p>Telereddit is a Telegram bot which lets you easily see shared Reddit posts previews directly in the group chat. This bot will also automatically send a random post from a subreddit when you name it.</p>
+<h2 id="like-the-project">Like the project?</h2>
+<p><a href="https://www.buymeacoffee.com/fabiosang" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" width="150"></a></p>
+<h2 id="features">Features</h2>
+<h3 id="post-sharing">Post sharing</h3>
+<p align="center">
+<img src="https://media.giphy.com/media/Q7GO3X5BUdNCMZeDU9/giphy.gif" alt="Post sharing" />
+</p>
+<h3 id="random-post-from-a-subreddit">Random post from a subreddit</h3>
+<p align="center">
+<img src="https://media.giphy.com/media/ViIfu7Zue9Ig5vo0O5/giphy.gif" alt="Random post from a subreddit" />
+</p>
+<p>Get it on <a href="https://telegram.me/tele_reddit_bot">telegram.me</a>!</p>
+<h2 id="installation">Installation</h2>
+<p>TODO
+transfer commit hooks from .githooks to .git/hooks</p>
+<h2 id="bugs-and-feature-requests">Bugs and feature requests</h2>
+<p>If you want to report a bug or would like a feature to be added, feel free to open an issue.</p>
+<h2 id="license">License</h2>
+<p><strong><a href="https://www.gnu.org/licenses/gpl-3.0">GPL v3</a></strong> - Copyright 2020 © <a href="http://fabio.sangregorio.dev"
+target="_blank">fabio.sangregorio.dev</a>.</p>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
 <dt><code class="name"><a title="telereddit.config" href="config/index.html">telereddit.config</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Project-wide configuration module …</p></div>
 </dd>
-<dt><code class="name"><a title="telereddit.models.content_type" href="content_type.html">telereddit.models.content_type</a></code></dt>
+<dt><code class="name"><a title="telereddit.exceptions" href="exceptions.html">telereddit.exceptions</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Catched exceptions of the software …</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.helpers" href="helpers.html">telereddit.helpers</a></code></dt>
 <dd>
@@ -42,7 +88,7 @@
 </dd>
 <dt><code class="name"><a title="telereddit.models" href="models/index.html">telereddit.models</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Models used by the software to represent Reddit entities.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.reddit" href="reddit.html">telereddit.reddit</a></code></dt>
 <dd>
@@ -54,7 +100,8 @@
 </dd>
 <dt><code class="name"><a title="telereddit.telereddit" href="telereddit.html">telereddit.telereddit</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Entrypoint module: it handles configuration, setup and starting of
+the bot, as well as receive messages and dispatch actions to the other modules.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.tests" href="tests/index.html">telereddit.tests</a></code></dt>
 <dd>
@@ -70,17 +117,27 @@
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#like-the-project">Like the project?</a></li>
+<li><a href="#features">Features</a><ul>
+<li><a href="#post-sharing">Post sharing</a></li>
+<li><a href="#random-post-from-a-subreddit">Random post from a subreddit</a></li>
+</ul>
+</li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#bugs-and-feature-requests">Bugs and feature requests</a></li>
+<li><a href="#license">License</a></li>
+</ul>
 </div>
 <ul id="index">
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="telereddit.config" href="config/index.html">telereddit.config</a></code></li>
-<li><code><a title="telereddit.models.content_type" href="content_type.html">telereddit.models.content_type</a></code></li>
+<li><code><a title="telereddit.exceptions" href="exceptions.html">telereddit.exceptions</a></code></li>
 <li><code><a title="telereddit.helpers" href="helpers.html">telereddit.helpers</a></code></li>
 <li><code><a title="telereddit.linker" href="linker.html">telereddit.linker</a></code></li>
 <li><code><a title="telereddit.models" href="models/index.html">telereddit.models</a></code></li>

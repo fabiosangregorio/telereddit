@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.config API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Project-wide configuration module …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,33 +20,42 @@
 <h1 class="title">Module <code>telereddit.config</code></h1>
 </header>
 <section id="section-intro">
+<p>Project-wide configuration module.</p>
+<h2 id="summary">Summary</h2>
+<p>The configuration of the application is done at program startup by
+<code><a title="telereddit.config.config" href="config.html">telereddit.config.config</a></code>.</p>
+<p>All the API keys, identity keys and tokens are configured in the <code>secret_*.py</code>
+files. These modules are dinamically loaded when loading the configuration,
+based on the <code>TELEREDDIT_MACHINE</code> environment variable.</p>
+<p><code><a title="telereddit.config.secret_dev" href="secret_dev.html">telereddit.config.secret_dev</a></code>, <code><a title="telereddit.config.secret_prod" href="secret_prod.html">telereddit.config.secret_prod</a></code> and <code><a title="telereddit.config.secret_github" href="secret_github.html">telereddit.config.secret_github</a></code> are crypted using the GPG
+standard via git-crypt.</p>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
 <dt><code class="name"><a title="telereddit.config.config" href="config.html">telereddit.config.config</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Project-wide configuration variables …</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.config.secret" href="secret.html">telereddit.config.secret</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Base class for secret configurations.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.config.secret_dev" href="secret_dev.html">telereddit.config.secret_dev</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Secret for development environment …</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.config.secret_generic" href="secret_generic.html">telereddit.config.secret_generic</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Secret for generic environment …</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.config.secret_github" href="secret_github.html">telereddit.config.secret_github</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Secret for Github Workflows environment …</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.config.secret_prod" href="secret_prod.html">telereddit.config.secret_prod</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Secret for production environment …</p></div>
 </dd>
 </dl>
 </section>
@@ -58,11 +67,13 @@
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#summary">Summary</a></li>
+</ul>
 </div>
 <ul id="index">
 <li><h3>Super-module</h3>

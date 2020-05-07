@@ -35,7 +35,32 @@
 <span>(</span><span>methodName='runTest')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create an instance of the class that will use the named test
+<div class="desc"><p>A class whose instances are single test cases.</p>
+<p>By default, the test code itself should be placed in a method named
+'runTest'.</p>
+<p>If the fixture may be used for many test cases, create as
+many test methods as are needed. When instantiating such a TestCase
+subclass, specify in the constructor arguments the name of the test method
+that the instance is to execute.</p>
+<p>Test authors should subclass TestCase for their own tests. Construction
+and deconstruction of the test's environment ('fixture') can be
+implemented by overriding the 'setUp' and 'tearDown' methods respectively.</p>
+<p>If it is necessary to override the <strong>init</strong> method, the base class
+<strong>init</strong> method must always be called. It is important that subclasses
+should not change the signature of their <strong>init</strong> method, since instances
+of the classes are instantiated automatically by parts of the framework
+in order to be run.</p>
+<p>When subclassing TestCase, you can set these attributes:
+* failureException: determines which exception will be raised when
+the instance's assertion methods fail; test methods raising this
+exception will be deemed to have 'failed' rather than 'errored'.
+* longMessage: determines whether long messages (including repr of
+objects used in assert methods) will be printed on failure in <em>addition</em>
+to any explicit message passed.
+* maxDiff: sets the maximum length of a diff in failure messages
+by assert methods using difflib. It is looked up as an instance
+attribute so can be configured by individual tests if required.</p>
+<p>Create an instance of the class that will use the named test
 method when executed. Raises a ValueError if the instance does
 not have a method with the specified name.</p></div>
 <h3>Ancestors</h3>
@@ -44,7 +69,7 @@ not have a method with the specified name.</p></div>
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="telereddit.tests.test_helpers.TestHelpers.polish_text"><code class="name">var <span class="ident">polish_text</span></code></dt>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names"><code class="name">var <span class="ident">test_get_subreddit_names</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -52,7 +77,11 @@ not have a method with the specified name.</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names"><code class="name">var <span class="ident">test_get_subreddit_names</span></code></dt>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text"><code class="name">var <span class="ident">test_truncate_text</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.polish_text"><code class="name">var <span class="ident">polish_text</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -60,51 +89,101 @@ not have a method with the specified name.</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text"><code class="name">var <span class="ident">test_truncate_text</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 </dl>
 <h3>Methods</h3>
 <dl>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_0"><code class="name flex">
+<span>def <span class="ident">test_get_subreddit_names_0</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_1"><code class="name flex">
+<span>def <span class="ident">test_get_subreddit_names_1</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_0"><code class="name flex">
+<span>def <span class="ident">test_get_subreddit_name_0</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_1"><code class="name flex">
+<span>def <span class="ident">test_get_subreddit_name_1</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_2"><code class="name flex">
+<span>def <span class="ident">test_get_subreddit_name_2</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_3"><code class="name flex">
+<span>def <span class="ident">test_get_subreddit_name_3</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_0"><code class="name flex">
+<span>def <span class="ident">test_truncate_text_0</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_1"><code class="name flex">
+<span>def <span class="ident">test_truncate_text_1</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_2"><code class="name flex">
+<span>def <span class="ident">test_truncate_text_2</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_3"><code class="name flex">
+<span>def <span class="ident">test_truncate_text_3</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_4"><code class="name flex">
+<span>def <span class="ident">test_truncate_text_4</span></span>(<span>*a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.polish_text_0"><code class="name flex">
 <span>def <span class="ident">polish_text_0</span></span>(<span>*a)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-text">Parameters [with **None={'expected': '', 'text': ''}]</h2>
-<p>text :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"></div>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.polish_text_1"><code class="name flex">
 <span>def <span class="ident">polish_text_1</span></span>(<span>*a)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-no-newlines-text-no-newlines">Parameters [with **None={'expected': 'no newlines', 'text': 'no newlines'}]</h2>
-<p>text :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"></div>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.polish_text_2"><code class="name flex">
 <span>def <span class="ident">polish_text_2</span></span>(<span>*a)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-with-newlines-text-withnnewlines">Parameters [with **None={'expected': 'with newlines', 'text': 'with\nnewlines'}]</h2>
-<p>text :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"></div>
 </dd>
 <dt id="telereddit.tests.test_helpers.TestHelpers.polish_text_3"><code class="name flex">
 <span>def <span class="ident">polish_text_3</span></span>(<span>*a)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-with-n-escaped-newt-with-n-escaped-newlines">Parameters [with **None={'expected': 'with n escaped new&hellip;t': 'with \n escaped newlines'}]</h2>
-<p>text :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"></div>
 </dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_chained_get"><code class="name flex">
-<span>def <span class="ident">test_chained_get</span></span>(<span>self)</span>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text_0"><code class="name flex">
+<span>def <span class="ident">test_get_urls_from_text_0</span></span>(<span>*a)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -115,128 +194,11 @@ not have a method with the specified name.</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_0"><code class="name flex">
-<span>def <span class="ident">test_get_subreddit_name_0</span></span>(<span>*a)</span>
+<dt id="telereddit.tests.test_helpers.TestHelpers.test_chained_get"><code class="name flex">
+<span>def <span class="ident">test_chained_get</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-rsubreddit_one-reddit_one-and-rsubreddit_two">Parameters [with **None={'expected': 'r/subreddit_one', &hellip;reddit_one and r/subreddit_two'}]</h2>
-<p>text :</p>
-<p>reverse :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_1"><code class="name flex">
-<span>def <span class="ident">test_get_subreddit_name_1</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-rsubreddit_two-reddit_one-and-rsubreddit_two">Parameters [with **None={'expected': 'r/subreddit_two', &hellip;reddit_one and r/subreddit_two'}]</h2>
-<p>text :</p>
-<p>reverse :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_2"><code class="name flex">
-<span>def <span class="ident">test_get_subreddit_name_2</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-rsubreddit_one-alse-text-rsubreddit_one">Parameters [with **None={'expected': 'r/subreddit_one', &hellip;alse, 'text': 'r/subreddit_one'}]</h2>
-<p>text :</p>
-<p>reverse :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_3"><code class="name flex">
-<span>def <span class="ident">test_get_subreddit_name_3</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-rsubreddit_one-true-text-rsubreddit_one">Parameters [with **None={'expected': 'r/subreddit_one', &hellip;True, 'text': 'r/subreddit_one'}]</h2>
-<p>text :</p>
-<p>reverse :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_0"><code class="name flex">
-<span>def <span class="ident">test_get_subreddit_names_0</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-textthis-is-a-text-containing-rvalcoma_leading_rshouldnotwork-noneexpected-rvalid_subredditd-rleading-rsubreddit">Parameters [with text="This is a text containing r/val....com/a_leading_r/shouldnotwork.", **None={'expected': ['r/valid_subreddit&hellip;d', 'r/leading', 'r/subreddit']}]</h2>
-<p>text :</p>
-<p>expected :</p>
-<p>not_expected :
-(Default value = None)</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_1"><code class="name flex">
-<span>def <span class="ident">test_get_subreddit_names_1</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-texthttpswwwredditcomrcomicsa7qyguess_i_love_dark_humor_oc-noneexpected-rcomics-not_expected-rcomics">Parameters [with text='https://www.reddit.com/r/comics&hellip;a7qy/guess_i_love_dark_humor_oc', **None={'expected': ['r/comics'], 'not_expected': ['/r/comics']}]</h2>
-<p>text :</p>
-<p>expected :</p>
-<p>not_expected :
-(Default value = None)</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text_0"><code class="name flex">
-<span>def <span class="ident">test_get_urls_from_text_0</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-texthttpsredditbqdlxe-httpskcocumditlx-httpsgooglecom-noneexpected-httpswwwreddirtumblrcommentsc42tf6woah">Parameters [with text='https://redd.it/bqdlxe <a href="https://...k/coCUmdItLX">https://...k/coCUmdItLX</a> <a href="https://google.com',">https://google.com',</a> **None={'expected': ['https://www.reddi&hellip;r/tumblr/comments/c42tf6/woah']}]</h2>
-<p>text :</p>
-<p>expected :</p>
-<p>not_expected :
-(Default value = None)</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_0"><code class="name flex">
-<span>def <span class="ident">test_truncate_text_0</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-truncat-length-7-text-truncate-me">Parameters [with **None={'expected': 'truncat&hellip;', 'length': 7, 'text': 'truncate me'}]</h2>
-<p>text :</p>
-<p>length :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_1"><code class="name flex">
-<span>def <span class="ident">test_truncate_text_1</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-truncate-me-length-11-text-truncate-me">Parameters [with **None={'expected': 'truncate me', 'length': 11, 'text': 'truncate me'}]</h2>
-<p>text :</p>
-<p>length :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_2"><code class="name flex">
-<span>def <span class="ident">test_truncate_text_2</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-length-0-text-truncate-me">Parameters [with **None={'expected': '&hellip;', 'length': 0, 'text': 'truncate me'}]</h2>
-<p>text :</p>
-<p>length :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_3"><code class="name flex">
-<span>def <span class="ident">test_truncate_text_3</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-truncate-me-length-1-text-truncate-me">Parameters [with **None={'expected': 'truncate me', 'length': -1, 'text': 'truncate me'}]</h2>
-<p>text :</p>
-<p>length :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_4"><code class="name flex">
-<span>def <span class="ident">test_truncate_text_4</span></span>(<span>*a)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters-with-noneexpected-length-10-text">Parameters [with **None={'expected': '', 'length': 10, 'text': ''}]</h2>
-<p>text :</p>
-<p>length :</p>
-<p>expected :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -244,7 +206,7 @@ not have a method with the specified name.</p></div>
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
@@ -261,29 +223,29 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li>
 <h4><code><a title="telereddit.tests.test_helpers.TestHelpers" href="#telereddit.tests.test_helpers.TestHelpers">TestHelpers</a></code></h4>
 <ul class="">
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text" href="#telereddit.tests.test_helpers.TestHelpers.polish_text">polish_text</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_0" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_0">polish_text_0</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_1" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_1">polish_text_1</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_2" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_2">polish_text_2</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_3" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_3">polish_text_3</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_chained_get" href="#telereddit.tests.test_helpers.TestHelpers.test_chained_get">test_chained_get</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get" href="#telereddit.tests.test_helpers.TestHelpers.test_get">test_get</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name">test_get_subreddit_name</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_0" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_0">test_get_subreddit_names_0</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_1" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_1">test_get_subreddit_names_1</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_0" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_0">test_get_subreddit_name_0</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_1" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_1">test_get_subreddit_name_1</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_2" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_2">test_get_subreddit_name_2</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_3" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name_3">test_get_subreddit_name_3</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names">test_get_subreddit_names</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_0" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_0">test_get_subreddit_names_0</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_1" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names_1">test_get_subreddit_names_1</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text" href="#telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text">test_get_urls_from_text</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text_0" href="#telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text_0">test_get_urls_from_text_0</a></code></li>
-<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_truncate_text" href="#telereddit.tests.test_helpers.TestHelpers.test_truncate_text">test_truncate_text</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_0" href="#telereddit.tests.test_helpers.TestHelpers.test_truncate_text_0">test_truncate_text_0</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_1" href="#telereddit.tests.test_helpers.TestHelpers.test_truncate_text_1">test_truncate_text_1</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_2" href="#telereddit.tests.test_helpers.TestHelpers.test_truncate_text_2">test_truncate_text_2</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_3" href="#telereddit.tests.test_helpers.TestHelpers.test_truncate_text_3">test_truncate_text_3</a></code></li>
 <li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_truncate_text_4" href="#telereddit.tests.test_helpers.TestHelpers.test_truncate_text_4">test_truncate_text_4</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_0" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_0">polish_text_0</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_1" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_1">polish_text_1</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_2" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_2">polish_text_2</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text_3" href="#telereddit.tests.test_helpers.TestHelpers.polish_text_3">polish_text_3</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text_0" href="#telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text_0">test_get_urls_from_text_0</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get" href="#telereddit.tests.test_helpers.TestHelpers.test_get">test_get</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_chained_get" href="#telereddit.tests.test_helpers.TestHelpers.test_chained_get">test_chained_get</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_names">test_get_subreddit_names</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name" href="#telereddit.tests.test_helpers.TestHelpers.test_get_subreddit_name">test_get_subreddit_name</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_truncate_text" href="#telereddit.tests.test_helpers.TestHelpers.test_truncate_text">test_truncate_text</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.polish_text" href="#telereddit.tests.test_helpers.TestHelpers.polish_text">polish_text</a></code></li>
+<li><code><a title="telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text" href="#telereddit.tests.test_helpers.TestHelpers.test_get_urls_from_text">test_get_urls_from_text</a></code></li>
 </ul>
 </li>
 </ul>
