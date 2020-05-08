@@ -1,11 +1,12 @@
 name: test
 
-on:
-  push:
-    branches:
-    - master
-  pull_request:
-    types: [opened, synchronize, repoened, edited]
+on: [push]
+# on:
+#   push:
+#     branches:
+#     - master
+#   pull_request:
+#     types: [opened, synchronize, repoened, edited]
 
 jobs:
   test:
@@ -13,24 +14,31 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    - name: Setup git-crypt
-      run: |
-        sudo apt-get install ca-certificates bash curl git g++ gnupg make openssh-client openssl
-        curl -L https://github.com/AGWA/git-crypt/archive/debian/$VERSION.tar.gz | tar zxv -C /var/tmp
-        cd /var/tmp/git-crypt-debian && sudo make && sudo make install PREFIX=/usr/local
-        echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > "$HOME"/git-crypt-key.asc
-        gpg --batch --import "$HOME"/git-crypt-key.asc
-        gpgconf --kill gpg-agent
-        gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
-        /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "${{ secrets.GPG_KEY_PASS }}" "${{ secrets.GPG_KEY_GRIP }}"
+    # - name: Setup git-crypt
+    #   run: |
+    #     sudo apt-get install ca-certificates bash curl git g++ gnupg make openssh-client openssl
+    #     curl -L https://github.com/AGWA/git-crypt/archive/debian/$VERSION.tar.gz | tar zxv -C /var/tmp
+    #     cd /var/tmp/git-crypt-debian && sudo make && sudo make install PREFIX=/usr/local
+    #     echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > "$HOME"/git-crypt-key.asc
+    #     gpg --batch --import "$HOME"/git-crypt-key.asc
+    #     gpgconf --kill gpg-agent
+    #     gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
+    #     /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "${{ secrets.GPG_KEY_PASS }}" "${{ secrets.GPG_KEY_GRIP }}"
 
     - name: Ensure git-crypt files are locked
       run: |
         grep -qsPa "\x00GITCRYPT"  $(git crypt status | grep -v '^not' | awk '{print $2}')
 
+    # - name: Unlock git-crypt files
+    #   run: |
+    #     git-crypt unlock
+
     - name: Unlock git-crypt files
-      run: |
-        git-crypt unlock
+      uses: zemuldo/git-crypt-unlock@no-docker
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
