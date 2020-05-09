@@ -1,25 +1,14 @@
+"""Service for when a suitable specific service is not found."""
 from telereddit.services.service import Service
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
 
 
 class Generic(Service):
-    """ """
+    """Service for when a suitable specific service is not found."""
 
     @classmethod
     def postprocess(cls, response):
-        """
-
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
-        """
         file_size = None
         media_type = ContentType.PHOTO
 

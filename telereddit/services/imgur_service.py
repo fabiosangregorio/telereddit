@@ -1,5 +1,5 @@
+"""Service for Imgur images and videos."""
 import json
-
 from urllib.parse import urlparse
 import requests
 
@@ -10,24 +10,10 @@ from telereddit.models.content_type import ContentType
 
 
 class Imgur(Service):
-    """ """
+    """Service for Imgur images and videos."""
 
     @classmethod
     def preprocess(cls, url, json):
-        """
-
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
-        """
         url = urlparse(url).path.replace("/", "")
         if "." in url:
             media_hash = url.rpartition(".")[0]
@@ -37,18 +23,6 @@ class Imgur(Service):
 
     @classmethod
     def get(cls, url):
-        """
-
-        Parameters
-        ----------
-        url :
-            
-
-        Returns
-        -------
-
-        
-        """
         return requests.get(
             url,
             headers={"Authorization": f"Client-ID {secret.IMGUR_CLIENT_ID}"},
@@ -56,18 +30,6 @@ class Imgur(Service):
 
     @classmethod
     def postprocess(cls, response):
-        """
-
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
-        """
         data = json.loads(response.content)["data"]
         media = None
         if "image/jpeg" in data["type"] or "image/png" in data["type"]:
