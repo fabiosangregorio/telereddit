@@ -1,3 +1,5 @@
+"""Module for Post class."""
+
 from telereddit.models.content_type import ContentType
 
 

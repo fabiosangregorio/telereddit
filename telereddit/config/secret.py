@@ -34,9 +34,11 @@ class Secret:
             self[key] = None
 
     def __getitem__(self, key):
+        """Wrapper for the getattr method."""
         return getattr(self, key)
 
     def __setitem__(self, key, value):
+        """Wrapper for the setattr method."""
         setattr(self, key, value)
 
     def __init__(

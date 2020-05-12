@@ -1,3 +1,5 @@
+"""Linker class which handles all telereddit requests."""
+
 from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument
 
 from telereddit.config.config import (

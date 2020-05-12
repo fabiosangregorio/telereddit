@@ -1,3 +1,5 @@
+"""Module for Media class."""
+
 from telereddit.models.content_type import ContentType
 
 

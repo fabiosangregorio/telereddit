@@ -12,6 +12,11 @@ class Vreddit(Service):
 
     @classmethod
     def preprocess(cls, url, json):
+        """
+        Override of `telereddit.services.service.Service.preprocess` method.
+
+        Tries to get the right media url from the reddit json.
+        """
         xpost = helpers.get(json, "crosspost_parent_list")
         if xpost is not None and len(xpost) > 0:
             # crossposts have media = null and have the fallback url in the
@@ -31,6 +36,11 @@ class Vreddit(Service):
 
     @classmethod
     def postprocess(cls, response):
+        """
+        Override of `telereddit.services.service.Service.postprocess` method.
+
+        Constructs the media object.
+        """
         media = Media(response.url, ContentType.GIF)
         if "Content-length" in response.headers:
             media.size = int(response.headers["Content-length"])

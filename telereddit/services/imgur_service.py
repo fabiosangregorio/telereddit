@@ -14,6 +14,12 @@ class Imgur(Service):
 
     @classmethod
     def preprocess(cls, url, json):
+        """
+        Override of `telereddit.services.service.Service.preprocess` method.
+
+        Gets the media hash from the url and creates the accepted provider media
+        url.
+        """
         url = urlparse(url).path.replace("/", "")
         if "." in url:
             media_hash = url.rpartition(".")[0]
@@ -23,6 +29,11 @@ class Imgur(Service):
 
     @classmethod
     def get(cls, url):
+        """
+        Override of `telereddit.services.service.Service.get` method.
+
+        Makes an API call with the client ID as authorization.
+        """
         return requests.get(
             url,
             headers={"Authorization": f"Client-ID {secret.IMGUR_CLIENT_ID}"},
@@ -30,6 +41,11 @@ class Imgur(Service):
 
     @classmethod
     def postprocess(cls, response):
+        """
+        Override of `telereddit.services.service.Service.postprocess` method.
+
+        Creates the right media object based on the size of provider's media.
+        """
         data = json.loads(response.content)["data"]
         media = None
         if "image/jpeg" in data["type"] or "image/png" in data["type"]:

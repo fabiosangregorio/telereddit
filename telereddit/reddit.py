@@ -1,3 +1,8 @@
+"""
+Reddit API interface module. Contains all the functions to call Reddit APIs,
+retrieve the desired information and build telereddit objects.
+"""
+
 import requests
 import random
 

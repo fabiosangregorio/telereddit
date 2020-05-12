@@ -1,3 +1,5 @@
+"""Module for ContentType class."""
+
 from enum import Enum
 
 

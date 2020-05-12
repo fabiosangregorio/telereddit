@@ -1,3 +1,5 @@
+"""Miscellaneous helpers for the whole application."""
+
 import re
 import requests
 
