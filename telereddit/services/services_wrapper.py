@@ -1,3 +1,5 @@
+"""Entrypoint of the whole services pattern."""
+
 import logging
 from urllib.parse import urlparse
 
@@ -9,7 +11,12 @@ from telereddit.services.generic_service import Generic
 
 
 class ServicesWrapper:
-    """ """
+    """
+    Entrypoint of the whole services pattern. It represents a Facade which hides
+    the complexity of the media retrieval across various services and providers.
+
+    An instance for each service class is set at class initialization.
+    """
 
     gfycat = Gfycat()
     vreddit = Vreddit()
@@ -20,18 +27,23 @@ class ServicesWrapper:
     @classmethod
     def get_media(cls, url, json={}):
         """
+        Main function which, given the url from the Reddit json, returns the
+        corresponding media url from the right service.
 
         Parameters
         ----------
-        url :
-            
-        json :
+        url : str
+            Url from Reddit API json.
+        json : json
             (Default value = {})
+
+            Reddit data json containing media fallback urls.
 
         Returns
         -------
+        `telereddit.models.media.Media`
+            The media object corresponding to the media post url.
 
-        
         """
         parsed_url = urlparse(url)
         base_url = parsed_url.netloc

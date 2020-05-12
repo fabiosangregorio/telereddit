@@ -1,11 +1,11 @@
 name: docs
 
-on:
-  push:
-    branches:
-    - master
-  pull_request:
-    types: [opened, synchronize, repoened, edited]
+on: [push]
+  # push:
+  #   branches:
+  #   - master
+  # pull_request:
+  #   types: [opened, synchronize, repoened, edited]
 
 jobs:
   docs:
@@ -37,12 +37,8 @@ jobs:
         pip install pdoc3
         pip install docstr-coverage
 
-    # - name: Unlock git-crypt files
-    #   run: |
-    #     git-crypt unlock
-
     - name: Unlock git-crypt files
-      uses: zemuldo/git-crypt-unlock@no-docker
+      uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
       env: 
         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
@@ -61,12 +57,13 @@ jobs:
 
     - name: Run documentation coverage
       run: |
-        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ~/doc-coverage.txt
+        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ~/docstr-coverage.txt
+        python .github/workflows/scripts/docs.py
 
     - uses: actions/upload-artifact@v2
       with:
         name: doc-coverage
-        path: ~/doc-coverage.txt
+        path: ~/docstr-coverage.txt
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v4

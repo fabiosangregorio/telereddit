@@ -17,8 +17,7 @@
       src="https://api.codacy.com/project/badge/Grade/76515a362977419b91de831466e1bf9a" alt="Codacy Badge"></a>
   <a href="https://codeclimate.com/github/fabiosangregorio/telereddit/maintainability"><img
       src="https://api.codeclimate.com/v1/badges/bef15455da0878eae539/maintainability" alt="Maintainability"></a>
-  <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg"
-      alt="License: GPL v3"></a>
+  <img class="docs-coverage" src="https://img.shields.io/badge/docs%20coverage-70%25-yellowgreen" alt="Docs coverage">
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"
       alt="Code style: black"></a>
 </p>

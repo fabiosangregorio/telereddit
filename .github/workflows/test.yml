@@ -18,7 +18,7 @@ jobs:
         grep -qsPa "\x00GITCRYPT"  $(git crypt status | grep -v '^not' | awk '{print $2}')
 
     - name: Unlock git-crypt files
-      uses: zemuldo/git-crypt-unlock@no-docker
+      uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
       env: 
         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
