@@ -57,7 +57,7 @@ jobs:
 
     - name: Run documentation coverage
       run: |
-        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ~/docstr-coverage.txt
+        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ./docstr-coverage.txt
         python .github/workflows/scripts/docs.py
 
     - uses: actions/upload-artifact@v2
