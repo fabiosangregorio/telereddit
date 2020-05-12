@@ -17,7 +17,7 @@
       src="https://api.codacy.com/project/badge/Grade/76515a362977419b91de831466e1bf9a" alt="Codacy Badge"></a>
   <a href="https://codeclimate.com/github/fabiosangregorio/telereddit/maintainability"><img
       src="https://api.codeclimate.com/v1/badges/bef15455da0878eae539/maintainability" alt="Maintainability"></a>
-  <img class="docs-coverage" src="https://img.shields.io/badge/docs%20coverage-78%25-yellowgreen" alt="Docs coverage">
+  <img class="docs-coverage" src="https://img.shields.io/badge/docs%20coverage-100%25-brightgreen" alt="Docs coverage">
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"
       alt="Code style: black"></a>
 </p>

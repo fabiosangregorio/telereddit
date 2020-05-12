@@ -77,34 +77,23 @@ otherwise …</p></div>
 <span>def <span class="ident">preprocess</span></span>(<span>url, json)</span>
 </code></dt>
 <dd>
-<p class="inheritance">
-<em>Inherited from:</em>
-<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.preprocess" href="service.html#telereddit.services.service.Service.preprocess">preprocess</a></code>
-</p>
-<div class="desc inherited"><p>Preprocess the media URL coming from Reddit json to match the service
-provider API URL structure, from which to get the media information …</p></div>
+<div class="desc"><p>Override of <code><a title="telereddit.services.service.Service.preprocess" href="service.html#telereddit.services.service.Service.preprocess">Service.preprocess()</a></code> method.</p>
+<p>Gets the media hash from the url and creates the accepted provider media
+url.</p></div>
 </dd>
 <dt id="telereddit.services.imgur_service.Imgur.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>url)</span>
 </code></dt>
 <dd>
-<p class="inheritance">
-<em>Inherited from:</em>
-<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.get" href="service.html#telereddit.services.service.Service.get">get</a></code>
-</p>
-<div class="desc inherited"><p>Gets the media information, usually through an http request to the
-service provider API …</p></div>
+<div class="desc"><p>Override of <code><a title="telereddit.services.service.Service.get" href="service.html#telereddit.services.service.Service.get">Service.get()</a></code> method.</p>
+<p>Makes an API call with the client ID as authorization.</p></div>
 </dd>
 <dt id="telereddit.services.imgur_service.Imgur.postprocess"><code class="name flex">
 <span>def <span class="ident">postprocess</span></span>(<span>response)</span>
 </code></dt>
 <dd>
-<p class="inheritance">
-<em>Inherited from:</em>
-<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.postprocess" href="service.html#telereddit.services.service.Service.postprocess">postprocess</a></code>
-</p>
-<div class="desc inherited"><p>From the service provider API response creates the
-<code><a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></code> object …</p></div>
+<div class="desc"><p>Override of <code><a title="telereddit.services.service.Service.postprocess" href="service.html#telereddit.services.service.Service.postprocess">Service.postprocess()</a></code> method.</p>
+<p>Creates the right media object based on the size of provider's media.</p></div>
 </dd>
 <dt id="telereddit.services.imgur_service.Imgur.authenticate"><code class="name flex">
 <span>def <span class="ident">authenticate</span></span>(<span>)</span>

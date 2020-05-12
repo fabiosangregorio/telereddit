@@ -1,0 +1,528 @@
+telereddit/__main__.py:1 at module level:
+        D200: One-line docstring should fit on one line with quotes (found 3)
+telereddit/__main__.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/reddit.py:1 at module level:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/reddit.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/reddit.py:1 at module level:
+        D400: First line should end with a period (not ',')
+telereddit/reddit.py:1 at module level:
+        D415: First line should end with a period, question mark, or exclamation point (not ',')
+telereddit/reddit.py:23 in private function `_get_json`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/reddit.py:23 in private function `_get_json`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/reddit.py:23 in private function `_get_json`:
+        D400: First line should end with a period (not 's')
+telereddit/reddit.py:23 in private function `_get_json`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/reddit.py:23 in private function `_get_json`:
+        D417: Missing argument descriptions in the docstring (argument(s) post_url are missing descriptions in '_get_json' docstring)
+telereddit/reddit.py:23 in private function `_get_json`:
+        D414: Section has no content ('Returns')
+telereddit/reddit.py:60 in public function `get_post`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/reddit.py:60 in public function `get_post`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/reddit.py:60 in public function `get_post`:
+        D400: First line should end with a period (not 's')
+telereddit/reddit.py:60 in public function `get_post`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/reddit.py:60 in public function `get_post`:
+        D417: Missing argument descriptions in the docstring (argument(s) post_url are missing descriptions in 'get_post' docstring)
+telereddit/reddit.py:60 in public function `get_post`:
+        D414: Section has no content ('Returns')
+telereddit/exceptions.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:15 in public class `TeleredditError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:15 in public class `TeleredditError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:15 in public class `TeleredditError`:
+        D413: Missing blank line after last section ('Notes')
+telereddit/exceptions.py:55 in public class `AuthenticationError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:62 in public class `SubredditError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:62 in public class `SubredditError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:77 in public class `PostError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:77 in public class `PostError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:91 in public class `MediaError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:91 in public class `MediaError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:106 in public class `SubredditPrivateError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:113 in public class `SubredditDoesntExistError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:120 in public class `PostRequestError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:120 in public class `PostRequestError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:131 in public class `PostRetrievalError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:131 in public class `PostRetrievalError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:143 in public class `PostSendError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:143 in public class `PostSendError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:157 in public class `PostEqualsMessageError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:157 in public class `PostEqualsMessageError`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/exceptions.py:157 in public class `PostEqualsMessageError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:157 in public class `PostEqualsMessageError`:
+        D400: First line should end with a period (not 't')
+telereddit/exceptions.py:157 in public class `PostEqualsMessageError`:
+        D415: First line should end with a period, question mark, or exclamation point (not 't')
+telereddit/exceptions.py:177 in public class `MediaTooBigError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/exceptions.py:177 in public class `MediaTooBigError`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/exceptions.py:190 in public class `MediaRetrievalError`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/helpers.py:10 in public function `get_random_post_url`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:10 in public function `get_random_post_url`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:10 in public function `get_random_post_url`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:27 in public function `get_subreddit_names`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/helpers.py:27 in public function `get_subreddit_names`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:27 in public function `get_subreddit_names`:
+        D400: First line should end with a period (not 'n')
+telereddit/helpers.py:27 in public function `get_subreddit_names`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'n')
+telereddit/helpers.py:27 in public function `get_subreddit_names`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:27 in public function `get_subreddit_names`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:50 in public function `get_subreddit_name`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/helpers.py:50 in public function `get_subreddit_name`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:50 in public function `get_subreddit_name`:
+        D400: First line should end with a period (not 'e')
+telereddit/helpers.py:50 in public function `get_subreddit_name`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'e')
+telereddit/helpers.py:50 in public function `get_subreddit_name`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:50 in public function `get_subreddit_name`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:77 in public function `escape_markdown`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:77 in public function `escape_markdown`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:77 in public function `escape_markdown`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:98 in public function `truncate_text`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/helpers.py:98 in public function `truncate_text`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:98 in public function `truncate_text`:
+        D400: First line should end with a period (not 's')
+telereddit/helpers.py:98 in public function `truncate_text`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/helpers.py:98 in public function `truncate_text`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:98 in public function `truncate_text`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:124 in public function `polish_text`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:124 in public function `polish_text`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:124 in public function `polish_text`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:141 in public function `get_urls_from_text`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:141 in public function `get_urls_from_text`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:141 in public function `get_urls_from_text`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:176 in public function `get`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:176 in public function `get`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/helpers.py:176 in public function `get`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/helpers.py:203 in public function `chained_get`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/helpers.py:203 in public function `chained_get`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/helpers.py:203 in public function `chained_get`:
+        D400: First line should end with a period (not 'f')
+telereddit/helpers.py:203 in public function `chained_get`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'f')
+telereddit/helpers.py:203 in public function `chained_get`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/linker.py:25 in public class `Linker`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/linker.py:25 in public class `Linker`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/linker.py:25 in public class `Linker`:
+        D400: First line should end with a period (not ')')
+telereddit/linker.py:25 in public class `Linker`:
+        D415: First line should end with a period, question mark, or exclamation point (not ')')
+telereddit/linker.py:25 in public class `Linker`:
+        D413: Missing blank line after last section ('Attributes')
+telereddit/linker.py:39 in public method `set_bot`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/linker.py:39 in public method `set_bot`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/linker.py:39 in public method `set_bot`:
+        D401: First line should be in imperative mood (perhaps 'Set', not 'Sets')
+telereddit/linker.py:39 in public method `set_bot`:
+        D413: Missing blank line after last section ('Parameters')
+telereddit/linker.py:62 in public method `get_args`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/linker.py:62 in public method `get_args`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/linker.py:62 in public method `get_args`:
+        D400: First line should end with a period (not 's')
+telereddit/linker.py:62 in public method `get_args`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/linker.py:62 in public method `get_args`:
+        D414: Section has no content ('Returns')
+telereddit/linker.py:79 in public method `send_random_post`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/linker.py:79 in public method `send_random_post`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/linker.py:79 in public method `send_random_post`:
+        D400: First line should end with a period (not 's')
+telereddit/linker.py:79 in public method `send_random_post`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/linker.py:79 in public method `send_random_post`:
+        D417: Missing argument descriptions in the docstring (argument(s) subreddit are missing descriptions in 'send_random_post' docstring)
+telereddit/linker.py:79 in public method `send_random_post`:
+        D414: Section has no content ('Returns')
+telereddit/linker.py:101 in public method `send_post_from_url`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/linker.py:101 in public method `send_post_from_url`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/linker.py:101 in public method `send_post_from_url`:
+        D400: First line should end with a period (not 's')
+telereddit/linker.py:101 in public method `send_post_from_url`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/linker.py:101 in public method `send_post_from_url`:
+        D417: Missing argument descriptions in the docstring (argument(s) post_url are missing descriptions in 'send_post_from_url' docstring)
+telereddit/linker.py:101 in public method `send_post_from_url`:
+        D414: Section has no content ('Returns')
+telereddit/linker.py:119 in public method `send_post`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/linker.py:119 in public method `send_post`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/linker.py:119 in public method `send_post`:
+        D400: First line should end with a period (not 's')
+telereddit/linker.py:119 in public method `send_post`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/linker.py:119 in public method `send_post`:
+        D417: Missing argument descriptions in the docstring (argument(s) post_url are missing descriptions in 'send_post' docstring)
+telereddit/linker.py:119 in public method `send_post`:
+        D414: Section has no content ('Returns')
+telereddit/linker.py:168 in public method `edit_result`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/linker.py:168 in public method `edit_result`:
+        D213: Multi-line docstring summary should start at the second line
+telereddit/linker.py:168 in public method `edit_result`:
+        D400: First line should end with a period (not 'e')
+telereddit/linker.py:168 in public method `edit_result`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'e')
+telereddit/linker.py:168 in public method `edit_result`:
+        D417: Missing argument descriptions in the docstring (argument(s) message are missing descriptions in 'edit_result' docstring)
+telereddit/linker.py:168 in public method `edit_result`:
+        D414: Section has no content ('Returns')
+telereddit/linker.py:197 in public method `edit_random_post`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/linker.py:197 in public method `edit_random_post`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/linker.py:197 in public method `edit_random_post`:
+        D400: First line should end with a period (not 's')
+telereddit/linker.py:197 in public method `edit_random_post`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/linker.py:197 in public method `edit_random_post`:
+        D417: Missing argument descriptions in the docstring (argument(s) message, subreddit are missing descriptions in 'edit_random_post' docstring)
+telereddit/linker.py:197 in public method `edit_random_post`:
+        D414: Section has no content ('Returns')
+telereddit/linker.py:251 in private method `_send_exception_message`:
+        D213: Multi-line docstring summary should start at the second line
+telereddit/linker.py:251 in private method `_send_exception_message`:
+        D401: First line should be in imperative mood (perhaps 'Handle', not 'Handles')
+telereddit/linker.py:251 in private method `_send_exception_message`:
+        D417: Missing argument descriptions in the docstring (argument(s) e are missing descriptions in '_send_exception_message' docstring)
+telereddit/linker.py:251 in private method `_send_exception_message`:
+        D414: Section has no content ('Returns')
+telereddit/__init__.py:1 at module level:
+        D200: One-line docstring should fit on one line with quotes (found 3)
+telereddit/__init__.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/__init__.py:1 at module level:
+        D400: First line should end with a period (not 'd')
+telereddit/__init__.py:1 at module level:
+        D415: First line should end with a period, question mark, or exclamation point (not 'd')
+telereddit/telereddit.py:3 at module level:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/telereddit.py:3 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/telereddit.py:3 at module level:
+        D400: First line should end with a period (not 'f')
+telereddit/telereddit.py:3 at module level:
+        D415: First line should end with a period, question mark, or exclamation point (not 'f')
+telereddit/telereddit.py:27 in public function `on_chat_message`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/telereddit.py:27 in public function `on_chat_message`:
+        D413: Missing blank line after last section ('Parameters')
+telereddit/telereddit.py:54 in public function `on_callback_query`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/telereddit.py:54 in public function `on_callback_query`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/telereddit.py:54 in public function `on_callback_query`:
+        D400: First line should end with a period (not 'm')
+telereddit/telereddit.py:54 in public function `on_callback_query`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'm')
+telereddit/telereddit.py:54 in public function `on_callback_query`:
+        D401: First line should be in imperative mood (perhaps 'Handle', not 'Handles')
+telereddit/telereddit.py:54 in public function `on_callback_query`:
+        D413: Missing blank line after last section ('Parameters')
+telereddit/config/secret_prod.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret_generic.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret_github.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/__init__.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/config.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret_dev.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret.py:1 at module level:
+        D200: One-line docstring should fit on one line with quotes (found 3)
+telereddit/config/secret.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret.py:7 in public class `Secret`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/config/secret.py:7 in public class `Secret`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/config/secret.py:7 in public class `Secret`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret.py:7 in public class `Secret`:
+        D400: First line should end with a period (not 'y')
+telereddit/config/secret.py:7 in public class `Secret`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'y')
+telereddit/config/secret.py:19 in public method `set_attr`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret.py:19 in public method `set_attr`:
+        D413: Missing blank line after last section ('Parameters')
+telereddit/config/secret.py:37 in public method `__getitem__`:
+        D401: First line should be in imperative mood; try rephrasing (found 'Wrapper')
+telereddit/config/secret.py:41 in public method `__setitem__`:
+        D401: First line should be in imperative mood; try rephrasing (found 'Wrapper')
+telereddit/config/secret.py:54 in public method `__init__`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/config/secret.py:54 in public method `__init__`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/config/secret.py:54 in public method `__init__`:
+        D400: First line should end with a period (not 's')
+telereddit/config/secret.py:54 in public method `__init__`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/services/services_wrapper.py:14 in public class `ServicesWrapper`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/services/services_wrapper.py:14 in public class `ServicesWrapper`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/services_wrapper.py:14 in public class `ServicesWrapper`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/services_wrapper.py:14 in public class `ServicesWrapper`:
+        D400: First line should end with a period (not 's')
+telereddit/services/services_wrapper.py:14 in public class `ServicesWrapper`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/services/services_wrapper.py:29 in public method `get_media`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/services_wrapper.py:29 in public method `get_media`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/services_wrapper.py:29 in public method `get_media`:
+        D400: First line should end with a period (not 'e')
+telereddit/services/services_wrapper.py:29 in public method `get_media`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'e')
+telereddit/services/services_wrapper.py:29 in public method `get_media`:
+        D401: First line should be in imperative mood; try rephrasing (found 'Main')
+telereddit/services/youtube_service.py:9 in public class `Youtube`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/services/youtube_service.py:9 in public class `Youtube`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/youtube_service.py:9 in public class `Youtube`:
+        D413: Missing blank line after last section ('Notes')
+telereddit/services/youtube_service.py:24 in public method `preprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/youtube_service.py:34 in public method `get`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/youtube_service.py:43 in public method `postprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/gfycat_service.py:16 in public class `Gfycat`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/services/gfycat_service.py:16 in public class `Gfycat`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/gfycat_service.py:16 in public class `Gfycat`:
+        D413: Missing blank line after last section ('Notes')
+telereddit/services/gfycat_service.py:31 in public method `preprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/gfycat_service.py:41 in public method `get`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/gfycat_service.py:52 in public method `postprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/gfycat_service.py:74 in public method `authenticate`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/generic_service.py:8 in public class `Generic`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/services/generic_service.py:12 in public method `postprocess`:
+        D200: One-line docstring should fit on one line with quotes (found 3)
+telereddit/services/generic_service.py:12 in public method `postprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/service.py:9 in public class `Service`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/services/service.py:9 in public class `Service`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/service.py:9 in public class `Service`:
+        D413: Missing blank line after last section ('Notes')
+telereddit/services/service.py:60 in public method `preprocess`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/service.py:60 in public method `preprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/service.py:60 in public method `preprocess`:
+        D400: First line should end with a period (not 'e')
+telereddit/services/service.py:60 in public method `preprocess`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'e')
+telereddit/services/service.py:60 in public method `preprocess`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/services/service.py:81 in public method `get`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/service.py:81 in public method `get`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/service.py:81 in public method `get`:
+        D400: First line should end with a period (not 'e')
+telereddit/services/service.py:81 in public method `get`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'e')
+telereddit/services/service.py:81 in public method `get`:
+        D401: First line should be in imperative mood (perhaps 'Get', not 'Gets')
+telereddit/services/service.py:81 in public method `get`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/services/service.py:105 in public method `postprocess`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/service.py:105 in public method `postprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/service.py:105 in public method `postprocess`:
+        D400: First line should end with a period (not 'e')
+telereddit/services/service.py:105 in public method `postprocess`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'e')
+telereddit/services/service.py:105 in public method `postprocess`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/services/service.py:128 in public method `authenticate`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/service.py:128 in public method `authenticate`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/service.py:128 in public method `authenticate`:
+        D400: First line should end with a period (not 'e')
+telereddit/services/service.py:128 in public method `authenticate`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'e')
+telereddit/services/service.py:128 in public method `authenticate`:
+        D401: First line should be in imperative mood (perhaps 'Authenticate', not 'Authenticates')
+telereddit/services/service.py:136 in public method `get_media`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/service.py:136 in public method `get_media`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/service.py:136 in public method `get_media`:
+        D400: First line should end with a period (not 'a')
+telereddit/services/service.py:136 in public method `get_media`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'a')
+telereddit/services/service.py:136 in public method `get_media`:
+        D413: Missing blank line after last section ('Returns')
+telereddit/services/__init__.py:1 at module level:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/services/__init__.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/__init__.py:1 at module level:
+        D400: First line should end with a period (not 'l')
+telereddit/services/__init__.py:1 at module level:
+        D415: First line should end with a period, question mark, or exclamation point (not 'l')
+telereddit/services/vreddit_service.py:11 in public class `Vreddit`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/services/vreddit_service.py:15 in public method `preprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/vreddit_service.py:39 in public method `postprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/imgur_service.py:13 in public class `Imgur`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/services/imgur_service.py:17 in public method `preprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/imgur_service.py:32 in public method `get`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/services/imgur_service.py:44 in public method `postprocess`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/post.py:7 in public class `Post`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/models/post.py:10 in public method `__init__`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/models/post.py:10 in public method `__init__`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/post.py:10 in public method `__init__`:
+        D400: First line should end with a period (not 's')
+telereddit/models/post.py:10 in public method `__init__`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/models/post.py:34 in public method `get_msg`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/models/post.py:34 in public method `get_msg`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/post.py:34 in public method `get_msg`:
+        D400: First line should end with a period (not 'n')
+telereddit/models/post.py:34 in public method `get_msg`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'n')
+telereddit/models/post.py:34 in public method `get_msg`:
+        D401: First line should be in imperative mood (perhaps 'Get', not 'Gets')
+telereddit/models/post.py:47 in public method `get_type`:
+        D200: One-line docstring should fit on one line with quotes (found 3)
+telereddit/models/post.py:47 in public method `get_type`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/post.py:47 in public method `get_type`:
+        D401: First line should be in imperative mood (perhaps 'Return', not 'Returns')
+telereddit/models/media.py:7 in public class `Media`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/models/media.py:7 in public class `Media`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/models/media.py:7 in public class `Media`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/media.py:7 in public class `Media`:
+        D400: First line should end with a period (not 'f')
+telereddit/models/media.py:7 in public class `Media`:
+        D415: First line should end with a period, question mark, or exclamation point (not 'f')
+telereddit/models/media.py:13 in public method `__init__`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/models/media.py:13 in public method `__init__`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/media.py:13 in public method `__init__`:
+        D400: First line should end with a period (not 's')
+telereddit/models/media.py:13 in public method `__init__`:
+        D415: First line should end with a period, question mark, or exclamation point (not 's')
+telereddit/models/__init__.py:1 at module level:
+        D200: One-line docstring should fit on one line with quotes (found 3)
+telereddit/models/__init__.py:1 at module level:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/content_type.py:7 in public class `ContentType`:
+        D203: 1 blank line required before class docstring (found 0)
+telereddit/models/content_type.py:7 in public class `ContentType`:
+        D205: 1 blank line required between summary line and description (found 0)
+telereddit/models/content_type.py:7 in public class `ContentType`:
+        D212: Multi-line docstring summary should start at the first line
+telereddit/models/content_type.py:7 in public class `ContentType`:
+        D400: First line should end with a period (not 't')
+telereddit/models/content_type.py:7 in public class `ContentType`:
+        D415: First line should end with a period, question mark, or exclamation point (not 't')
+telereddit/tests/__init__.py:1 at module level:
+        D104: Missing docstring in public package
