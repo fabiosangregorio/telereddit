@@ -1,7 +1,7 @@
 import re
 from urllib.parse import quote
 
-with open("./docstr-coverage.txt", "r") as f:
+with open("./documentation-reports/docstr-coverage.txt", "r") as f:
     last_line = f.read().splitlines()[-1]
 
 percentage = int(float(re.search("\\d+(?:\\.\\d+)?", last_line).group()))
