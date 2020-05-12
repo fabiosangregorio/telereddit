@@ -35,20 +35,39 @@
 <span>(</span><span>subreddit, permalink, title, text, media=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Represents a Reddit post.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>subreddit</code></strong> :&ensp;<code>str</code></dt>
+<dd>Subreddit within which the post was created (or crossposted).</dd>
+<dt><strong><code>permalink</code></strong> :&ensp;<code>str</code></dt>
+<dd>Reddit permalink of the post.</dd>
+<dt><strong><code>title</code></strong> :&ensp;<code>str</code></dt>
+<dd>Title of the post.</dd>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>Description of the post.</dd>
+<dt><strong><code>media</code></strong> :&ensp;<code><a title="telereddit.models.media.Media" href="media.html#telereddit.models.media.Media">Media</a></code></dt>
+<dd>
+<p>(Default value = None)</p>
+<p>Media associated with the post (if present), None otherwise. This
+determines the post type.</p>
+</dd>
+</dl></div>
 <h3>Methods</h3>
 <dl>
 <dt id="telereddit.models.post.Post.get_msg"><code class="name flex">
 <span>def <span class="ident">get_msg</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Gets the full message of the post. This includes post title, description
+and footer. The footer consists of a link to the subreddit and a link to
+the post.</p></div>
 </dd>
 <dt id="telereddit.models.post.Post.get_type"><code class="name flex">
 <span>def <span class="ident">get_type</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Returns the post type: this is determined by the media type, if present.</p></div>
 </dd>
 </dl>
 </dd>

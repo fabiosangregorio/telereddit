@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.services.gfycat_service API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Service for Gfycat GIFs." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,6 +20,7 @@
 <h1 class="title">Module <code>telereddit.services.gfycat_service</code></h1>
 </header>
 <section id="section-intro">
+<p>Service for Gfycat GIFs.</p>
 </section>
 <section>
 </section>
@@ -34,7 +35,9 @@
 <span>class <span class="ident">Gfycat</span></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Service for Gfycat GIFs.</p>
+<h2 id="notes">Notes</h2>
+<p>This is an authenticated OAuth service.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></li>
@@ -44,11 +47,30 @@
 <dl>
 <dt id="telereddit.services.gfycat_service.Gfycat.is_authenticated"><code class="name">var <span class="ident">is_authenticated</span></code></dt>
 <dd>
-<div class="desc"></div>
+<p class="inheritance">
+<em>Inherited from:</em>
+<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.is_authenticated" href="service.html#telereddit.services.service.Service.is_authenticated">is_authenticated</a></code>
+</p>
+<div class="desc inherited"><p>True if the external request needs to be authenticated (i.e. with an
+Authorization header), False otherwise …</p></div>
 </dd>
 <dt id="telereddit.services.gfycat_service.Gfycat.access_token"><code class="name">var <span class="ident">access_token</span></code></dt>
 <dd>
-<div class="desc"></div>
+<p class="inheritance">
+<em>Inherited from:</em>
+<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.access_token" href="service.html#telereddit.services.service.Service.access_token">access_token</a></code>
+</p>
+<div class="desc inherited"><p>Contains the access token for the OAuth authentication if present, None
+otherwise …</p></div>
+</dd>
+<dt id="telereddit.services.gfycat_service.Gfycat.has_external_request"><code class="name">var <span class="ident">has_external_request</span></code></dt>
+<dd>
+<p class="inheritance">
+<em>Inherited from:</em>
+<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.has_external_request" href="service.html#telereddit.services.service.Service.has_external_request">has_external_request</a></code>
+</p>
+<div class="desc inherited"><p>True if the service needs to reach out to an external http endpoint, False
+otherwise.</p></div>
 </dd>
 </dl>
 <h3>Static methods</h3>
@@ -61,8 +83,8 @@
 <em>Inherited from:</em>
 <code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.preprocess" href="service.html#telereddit.services.service.Service.preprocess">preprocess</a></code>
 </p>
-<div class="desc inherited"><p>Parameters</p>
-<p>url : …</p></div>
+<div class="desc inherited"><p>Preprocess the media URL coming from Reddit json to match the service
+provider API URL structure, from which to get the media information …</p></div>
 </dd>
 <dt id="telereddit.services.gfycat_service.Gfycat.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>url)</span>
@@ -72,8 +94,8 @@
 <em>Inherited from:</em>
 <code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.get" href="service.html#telereddit.services.service.Service.get">get</a></code>
 </p>
-<div class="desc inherited"><p>Parameters</p>
-<p>url : …</p></div>
+<div class="desc inherited"><p>Gets the media information, usually through an http request to the
+service provider API …</p></div>
 </dd>
 <dt id="telereddit.services.gfycat_service.Gfycat.postprocess"><code class="name flex">
 <span>def <span class="ident">postprocess</span></span>(<span>response)</span>
@@ -83,14 +105,19 @@
 <em>Inherited from:</em>
 <code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.postprocess" href="service.html#telereddit.services.service.Service.postprocess">postprocess</a></code>
 </p>
-<div class="desc inherited"><p>Parameters</p>
-<p>response : …</p></div>
+<div class="desc inherited"><p>From the service provider API response creates the
+<code><a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></code> object …</p></div>
 </dd>
 <dt id="telereddit.services.gfycat_service.Gfycat.authenticate"><code class="name flex">
 <span>def <span class="ident">authenticate</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<p class="inheritance">
+<em>Inherited from:</em>
+<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.authenticate" href="service.html#telereddit.services.service.Service.authenticate">authenticate</a></code>
+</p>
+<div class="desc inherited"><p>Authenticates the service on the service provider API and updates the
+<code>access_code</code> variable with the newly refreshed valid access token.</p></div>
 </dd>
 <dt id="telereddit.services.gfycat_service.Gfycat.get_media"><code class="name flex">
 <span>def <span class="ident">get_media</span></span>(<span>url, json)</span>
@@ -100,8 +127,9 @@
 <em>Inherited from:</em>
 <code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>.<code><a title="telereddit.services.service.Service.get_media" href="service.html#telereddit.services.service.Service.get_media">get_media</a></code>
 </p>
-<div class="desc inherited"><p>Parameters</p>
-<p>url : …</p></div>
+<div class="desc inherited"><p>Entrypoint of the class. Takes care of the common logic of media
+information retrieval, which consists in executing the following
+steps (in order): …</p></div>
 </dd>
 </dl>
 </dd>
@@ -125,7 +153,7 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <ul>
 <li>
 <h4><code><a title="telereddit.services.gfycat_service.Gfycat" href="#telereddit.services.gfycat_service.Gfycat">Gfycat</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="telereddit.services.gfycat_service.Gfycat.preprocess" href="#telereddit.services.gfycat_service.Gfycat.preprocess">preprocess</a></code></li>
 <li><code><a title="telereddit.services.gfycat_service.Gfycat.get" href="#telereddit.services.gfycat_service.Gfycat.get">get</a></code></li>
 <li><code><a title="telereddit.services.gfycat_service.Gfycat.postprocess" href="#telereddit.services.gfycat_service.Gfycat.postprocess">postprocess</a></code></li>
@@ -133,6 +161,7 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li><code><a title="telereddit.services.gfycat_service.Gfycat.get_media" href="service.html#telereddit.services.gfycat_service.Gfycat.get_media">get_media</a></code></li>
 <li><code><a title="telereddit.services.gfycat_service.Gfycat.is_authenticated" href="#telereddit.services.gfycat_service.Gfycat.is_authenticated">is_authenticated</a></code></li>
 <li><code><a title="telereddit.services.gfycat_service.Gfycat.access_token" href="#telereddit.services.gfycat_service.Gfycat.access_token">access_token</a></code></li>
+<li><code><a title="telereddit.services.gfycat_service.Gfycat.has_external_request" href="service.html#telereddit.services.gfycat_service.Gfycat.has_external_request">has_external_request</a></code></li>
 </ul>
 </li>
 </ul>
