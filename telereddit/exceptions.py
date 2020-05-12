@@ -34,6 +34,7 @@ class TeleredditError(Exception):
     Notes
     -----
     All children exceptions have the same parameters.
+    
     """
 
     def __init__(self, msg, data=None, capture=False):
