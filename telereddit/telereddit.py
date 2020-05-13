@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 """
-Entrypoint module: it handles configuration, setup and starting of
- the bot, as well as receive messages and dispatch actions to the other modules.
+Entrypoint module.
+
+Handles configuration, setup and starting of the bot, as well as receive
+messages and dispatch actions to the other modules.
 """
 
 import sentry_sdk
@@ -33,6 +35,7 @@ def on_chat_message(update: Update, context: CallbackContext):
         The Update object provided by python-telegram-bot
     context : CallbackContext
         The Context object provided by python-telegram-bot
+
     """
     msg = update.message
     if not msg.text:
@@ -52,8 +55,9 @@ def on_chat_message(update: Update, context: CallbackContext):
 
 def on_callback_query(update: Update, context: CallbackContext):
     """
-    Handles all the several types of callback queries (actions initiated from
-     a keyboard).
+    Handle all the several types of callback queries.
+    
+    (actions initiated from a keyboard).
 
     Parameters
     ----------
@@ -61,6 +65,7 @@ def on_callback_query(update: Update, context: CallbackContext):
         The Update object provided by python-telegram-bot
     context : CallbackContext
         The Context object provided by python-telegram-bot
+
     """
     query_data = update.callback_query.data
     message = update.effective_message

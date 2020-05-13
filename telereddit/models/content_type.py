@@ -4,9 +4,6 @@ from enum import Enum
 
 
 class ContentType(Enum):
-    """
-    Enumerable to represent different `telereddit.models.post.Post` content
-    types.
-    """
+    """Enumerable to represent different `telereddit.models.post.Post` types."""
 
     TEXT, PHOTO, VIDEO, GIF, YOUTUBE, *_ = range(20)

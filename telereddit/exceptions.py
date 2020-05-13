@@ -34,7 +34,7 @@ class TeleredditError(Exception):
     Notes
     -----
     All children exceptions have the same parameters.
-    
+
     """
 
     def __init__(self, msg, data=None, capture=False):
@@ -156,8 +156,7 @@ class PostSendError(PostError):
 
 class PostEqualsMessageError(PostError):
     """
-    Raised when the post in the Telegram message is the same as the post
-    retrieved.
+    Raised when the post in the Telegram message is the same as the retrieved.
 
     Capture
     -------

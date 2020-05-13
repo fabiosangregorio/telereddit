@@ -9,9 +9,7 @@ class Generic(Service):
 
     @classmethod
     def postprocess(cls, response):
-        """
-        Override of `telereddit.services.service.Service.postprocess` method.
-        """
+        """Override of `telereddit.services.service.Service.postprocess` method."""
         file_size = None
         media_type = ContentType.PHOTO
 

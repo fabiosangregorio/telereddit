@@ -23,21 +23,27 @@ from telereddit.exceptions import (
 
 class Linker:
     """
-    Gets instanciated at every telereddit request (new message, messsage callback, etc.)
+    Handle a single telereddit request.
+
+    Gets instanciated at every telereddit request. (new message, messsage
+    callback, etc.)
 
     Attributes
     ----------
     bot : Bot
-        python-telegram-bot's Bot instance: it is initialized by set
+        python-telegram-bot's Bot instance: initialized by `set_bot()`.
     chat_id : Int
-
+        Telegram's chat id to which to send the message.
     args : dict
+        Args to construct the Telegram message.
+
     """
 
     @classmethod
     def set_bot(cls, bot):
         """
-        Sets the python-telegram-bot's Bot instance for the Linker object.
+        Set the python-telegram-bot's Bot instance for the Linker object.
+
         This should be set only once, at the package startup.
 
         .. note:: This needs to be set before starting the bot loop.
@@ -46,6 +52,7 @@ class Linker:
         ----------
         bot : Bot
             The bot instance provided by python-telegram-bot
+
         """
         cls.bot = bot
 
@@ -60,15 +67,19 @@ class Linker:
 
     def get_args(self, override_dict={}):
         """
+        Get the args parameters potentially overriding some of them.
 
         Parameters
         ----------
-        override_dict :
+        override_dict : dict
             (Default value = {})
+
+            Args to override, with key as argument key and value as override
+            value.
 
         Returns
         -------
-
+        `args`
         
         """
         args = self.args.copy()
@@ -77,15 +88,16 @@ class Linker:
 
     def send_random_post(self, subreddit):
         """
+        Send a random post to the chat from the given subreddit.
+
+        Potentially catch Telereddit exceptions.
 
         Parameters
         ----------
-        subreddit :
-            
+        subreddit : str
+            Valid subreddit name.
 
-        Returns
-        -------
-
+            .. note:: This should be a r/ prefixed subreddit name.
         
         """
         for _ in range(MAX_TRIES):
@@ -99,16 +111,15 @@ class Linker:
 
     def send_post_from_url(self, post_url):
         """
+        Try to send the reddit post relative to post_url to the chat.
+
+        Potentially catch Telereddit exceptions.
 
         Parameters
         ----------
-        post_url :
-            
+        post_url : str
+            Reddit share link of the post.
 
-        Returns
-        -------
-
-        
         """
         try:
             self.send_post(post_url, from_url=True)
@@ -117,17 +128,20 @@ class Linker:
 
     def send_post(self, post_url, from_url=False):
         """
+        Send the reddit post relative to post_url to the chat.
+
+        This is the core functionality of Linker.
 
         Parameters
         ----------
-        post_url :
+        post_url : str
+            Reddit share link of the post.
             
-        from_url :
+        from_url : Boolean
             (Default value = False)
 
-        Returns
-        -------
-
+            Indicates whether the post url has been received from the chat or
+            from the random post.
         
         """
         post = reddit.get_post(post_url)
@@ -165,17 +179,16 @@ class Linker:
             )
 
     def edit_result(self, message):
-        """Edits the given message with a new post from that subreddit, and edits the
-        keyboard markup to give the user the ability to edit or confirm the message.
+        """
+        Edit the given message with a new post from that subreddit.
+        
+        Edit the keyboard markup to give the user the ability to edit or confirm
+        the message.
 
         Parameters
         ----------
-        message :
-            
-
-        Returns
-        -------
-
+        message : Message
+            python-telegram-bot's instance of the Telegram message.
         
         """
         subreddit = helpers.get_subreddit_name(
@@ -195,18 +208,16 @@ class Linker:
 
     def edit_random_post(self, message, subreddit):
         """
+        Edit the current Telegram message with another random Reddit post.
 
         Parameters
         ----------
-        message :
+        message : Message
+            python-telegram-bot's instance of the Telegram message.
             
-        subreddit :
-            
+        subreddit : str
+            Subreddit from which to retrieve the random post.
 
-        Returns
-        -------
-
-        
         """
         msg_is_text = message.caption is None
         post = reddit.get_post(helpers.get_random_post_url(subreddit))
@@ -248,19 +259,17 @@ class Linker:
             )
 
     def _send_exception_message(self, e, keyboard=True):
-        """Handles the errors created in post retrieval and sending.
+        """
+        Send the exception text as a Telegram message to notify the user.
 
         Parameters
         ----------
-        e :
-            
-        keyboard :
+        e : Exception
+            Error to send as a message.
+        keyboard : Boolean
             (Default value = True)
+            Whether to add the delete button as a keyboard to the message.
 
-        Returns
-        -------
-
-        
         """
         args = dict(chat_id=self.chat_id, text=str(e), parse_mode="Markdown")
         if keyboard:

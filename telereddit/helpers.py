@@ -8,7 +8,7 @@ from telereddit.config.config import MAX_TITLE_LENGTH
 
 def get_random_post_url(subreddit):
     """
-    Returns the "random post" url relative to the Reddit API.
+    Return the "random post" url relative to the Reddit API.
 
     Parameters
     ----------
@@ -19,14 +19,16 @@ def get_random_post_url(subreddit):
     -------
     str
         A new string representing the url, including the base url of reddit.
+
     """
     return f"https://www.reddit.com/{subreddit}/random"
 
 
 def get_subreddit_names(text):
     """
-    Returns a list of the ("r/" prefixed) subreddit names present in the given
-    text, searched using the official subreddit name validation
+    Return a list of the ("r/" prefixed) subreddit names present in the text.
+
+    Subreddits are searched using the official subreddit name validation.
 
     .. seealso::
         Subreddit name validation regex:
@@ -41,6 +43,7 @@ def get_subreddit_names(text):
     -------
     array
         Array of valid subreddit names present in the given text ("r/" prefixed).
+
     """
     regex = r"\br/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)\b"
     return re.findall(regex, text, re.MULTILINE)
@@ -48,8 +51,7 @@ def get_subreddit_names(text):
 
 def get_subreddit_name(text, reverse=False):
     """
-    Returns the first (or last if reverse=True) ("r/" prefixed) subreddit name
-    in the given text.
+    Return the first (or last) ("r/" prefixed) subreddit name in the given text.
 
     Parameters
     ----------
@@ -65,6 +67,7 @@ def get_subreddit_name(text, reverse=False):
     -------
     str or None
         The subreddit name if present in the text, None otherwise.
+
     """
     subs = get_subreddit_names(text)
     if len(subs):
@@ -75,7 +78,7 @@ def get_subreddit_name(text, reverse=False):
 
 def escape_markdown(text):
     """
-    Returns the given text with escaped common markdown characters.
+    Return the given text with escaped common markdown characters.
 
     .. seealso::
         Official Telegram supported Markdown documentation:
@@ -90,14 +93,14 @@ def escape_markdown(text):
     -------
     str
         New string containing the escaped text.
+
     """
     return text.replace("*", "\\*").replace("_", "\\_")
 
 
 def truncate_text(text, length=MAX_TITLE_LENGTH):
     """
-    Returns the given text, truncated at `length` characters, plus
-    ellipsis ("...").
+    Return the given text, truncated at `length` characters, plus ellipsis.
 
     Parameters
     ----------
@@ -114,6 +117,7 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
     -------
     str
         New string containing the truncated text, plus ellipsis.
+
     """
     if length < 0:
         return text
@@ -122,7 +126,7 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
 
 def polish_text(text):
     """
-    Returns the given text without newline characters.
+    Return the given text without newline characters.
 
     Parameters
     ----------
@@ -133,13 +137,14 @@ def polish_text(text):
     -------
     str
         New string containing the polished text.
+
     """
     return text.replace("\n", " ")
 
 
 def get_urls_from_text(text):
     """
-    Returns a list of the reddit urls present in the given text.
+    Return a list of the reddit urls present in the given text.
 
     Parameters
     ----------
@@ -150,6 +155,7 @@ def get_urls_from_text(text):
     -------
     array
         Array containing all the reddit links extracted from the text.
+
     """
     polished = polish_text(text)
     urls = list()
@@ -174,7 +180,7 @@ def get_urls_from_text(text):
 
 def get(obj, attr, default=None):
     """
-    Returns the value of `attr` if it exists and is not None, default otherwise.
+    Return the value of `attr` if it exists and is not None, default otherwise.
 
     Useful when you don't want to have a `KeyError` raised if the attribute is
     missing in the object.
@@ -195,13 +201,16 @@ def get(obj, attr, default=None):
     -------
     any
         The attribute or `default`.
+
     """
     return obj[attr] if attr in obj and obj[attr] is not None else default
 
 
 def chained_get(obj, attrs, default=None):
     """
-    Travels the nested object based on `attrs` array and returns the value of
+    Get for nested objects.
+
+    Travel the nested object based on `attrs` array and return the value of
     the last attr if not None, default otherwise.
 
     Useful when you don't want to have a `KeyError` raised if an attribute of
@@ -224,6 +233,7 @@ def chained_get(obj, attrs, default=None):
     any
         The attribute corresponding to the right-most key in `attrs`, if it
         exists and is not None, `default` otherwise.
+
     """
     for attr in attrs:
         obj = get(obj, attr, default)

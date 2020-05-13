@@ -1,3 +1,1 @@
-"""
-Models used by the software to represent Reddit entities.
-"""
+"""Models used by the software to represent Reddit entities."""

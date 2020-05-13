@@ -1,6 +1,5 @@
 """
-Services are used by the application to retrieve media contents from external
-sources.
+Services are used to retrieve media contents from external sources.
 
 Summary
 -------

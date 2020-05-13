@@ -31,6 +31,7 @@ class Service(ABC):
     Authenticated services need to present an `__init__` method in which the
     specific service authentication method is called, in order to authenticate
     for the first time on the Service creation.
+
     """
 
     has_external_request = True
@@ -58,8 +59,10 @@ class Service(ABC):
     @classmethod
     def preprocess(cls, url, json):
         """
-        Preprocess the media URL coming from Reddit json to match the service
-        provider API URL structure, from which to get the media information.
+        Preprocess the media URL coming from Reddit json.
+        
+        Returned url should match the service provider API URL structure, from
+        which to get the media information.
 
         Parameters
         ----------
@@ -73,14 +76,16 @@ class Service(ABC):
         -------
         str
             Preprocessed url related to the service provider API.
+
         """
         return url
 
     @classmethod
     def get(cls, url):
         """
-        Gets the media information, usually through an http request to the
-        service provider API.
+        Get the media information.
+        
+        This is usually through an http request to the service provider API.
 
         .. note::
             In case the request needs to be authenticated, this method assumes a
@@ -96,6 +101,7 @@ class Service(ABC):
         -------
         `requests.models.Response`
             Response from the service provider API.
+
         """
         return requests.get(url, stream=True)
 
@@ -103,8 +109,7 @@ class Service(ABC):
     @abstractmethod
     def postprocess(cls, response):
         """
-        From the service provider API response creates the
-        `telereddit.models.media.Media` object.
+        From the service provider API response create the media object.
 
         .. warning::
             This is the only abstract method of the class. Thus it needs to be
@@ -120,23 +125,27 @@ class Service(ABC):
         -------
         `telereddit.models.media.Media`
             Media object related to the media retrieval process.
+
         """
         pass
 
     @classmethod
     def authenticate(cls):
         """
-        Authenticates the service on the service provider API and updates the
-        `access_code` variable with the newly refreshed valid access token.
+        Authenticate the service on the service provider API.
+        
+        Update the `access_code` variable with the newly refreshed valid access
+        token.
         """
         pass
 
     @classmethod
     def get_media(cls, url, json):
         """
-        Entrypoint of the class. Takes care of the common logic of media
-        information retrieval, which consists in executing the following
-        steps (in order):
+        Entrypoint of the class.
+        
+        Takes care of the common logic of media information retrieval, which
+        consists in executing the following steps (in order):
 
         * `Service.preprocess()`
         * `Service.get()`
@@ -161,6 +170,7 @@ class Service(ABC):
         -------
         `telereddit.models.media.Media`
             The media object accessible from the application.
+
         """
         processed_url = cls.preprocess(url, json)
 

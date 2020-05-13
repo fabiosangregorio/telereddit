@@ -12,8 +12,10 @@ from telereddit.services.generic_service import Generic
 
 class ServicesWrapper:
     """
-    Entrypoint of the whole services pattern. It represents a Facade which hides
-    the complexity of the media retrieval across various services and providers.
+    Entrypoint of the whole services pattern.
+
+    It represents a Facade which hides the complexity of the media retrieval
+    across various services and providers.
 
     An instance for each service class is set at class initialization.
     """
@@ -27,8 +29,9 @@ class ServicesWrapper:
     @classmethod
     def get_media(cls, url, json={}):
         """
-        Main function which, given the url from the Reddit json, returns the
-        corresponding media url from the right service.
+        Given the url from the Reddit json, return the corresponding media obj.
+
+        Main function with the responsibility to choose the right service.
 
         Parameters
         ----------

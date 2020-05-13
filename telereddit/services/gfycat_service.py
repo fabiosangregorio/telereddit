@@ -19,6 +19,7 @@ class Gfycat(Service):
     Notes
     -----
     This is an authenticated OAuth service.
+    
     """
 
     is_authenticated = True

@@ -1,6 +1,8 @@
 """
-Reddit API interface module. Contains all the functions to call Reddit APIs,
-retrieve the desired information and build telereddit objects.
+Reddit API interface module.
+
+Contains all the functions to call Reddit APIs, retrieve the desired information
+and build telereddit objects.
 """
 
 import requests
@@ -21,15 +23,17 @@ from telereddit.services.services_wrapper import ServicesWrapper
 
 def _get_json(post_url):
     """
+    Get post json from Reddit API and handle all request/json errors.
 
     Parameters
     ----------
-    post_url :
-        
+    post_url : str
+        post url to fetch from the Reddit API.
 
     Returns
     -------
-
+    json
+        Json containing the post data.
     
     """
     try:
@@ -58,15 +62,17 @@ def _get_json(post_url):
 
 def get_post(post_url):
     """
+    Get the post from the Reddit API and construct the Post object.
 
     Parameters
     ----------
-    post_url :
-        
+    post_url : str
+        post url to fetch from the Reddit API.
 
     Returns
     -------
-
+    `telereddit.models.post.Post`
+        Post object containing all the retrieved post information.
     
     """
     json = _get_json(post_url)
