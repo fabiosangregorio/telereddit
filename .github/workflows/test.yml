@@ -40,6 +40,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install coverage
+        pip install coveralls
         pip install -r requirements.txt
 
     - name: Run tests and generate report
@@ -50,6 +51,12 @@ jobs:
 
     - name: Upload reports to codecov.io
       uses: codecov/codecov-action@v1
+
+    - name: Upload reports to Coveralls
+      env: 
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: |
+        coveralls
 
     - name: Upload reports to Code Climate
       uses: paambaati/codeclimate-action@v2.6.0
