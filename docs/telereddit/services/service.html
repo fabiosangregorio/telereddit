@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.services.service API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Abstract Base static Class for every service." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,6 +20,7 @@
 <h1 class="title">Module <code>telereddit.services.service</code></h1>
 </header>
 <section id="section-intro">
+<p>Abstract Base static Class for every service.</p>
 </section>
 <section>
 </section>
@@ -34,7 +35,25 @@
 <span>class <span class="ident">Service</span></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Abstract Base static Class for every service class.</p>
+<h2 id="summary">Summary</h2>
+<p>This class contains all the common logic to the media retrieval process in
+all child services.</p>
+<p>This consists of the <code>get_media()</code> method, which executes the following
+steps (in order):</p>
+<ul>
+<li>URL preprocessing</li>
+<li>Media information get</li>
+<li>re-authentication if necessary</li>
+<li>URL postprocessing and Media object creation</li>
+</ul>
+<p>All the implementation logic is delegated to the child classes, since every
+service provider has custom logic, although the base class offers some basic
+implementation, which can be easily overwritten.</p>
+<h2 id="notes">Notes</h2>
+<p>Authenticated services need to present an <code>__init__</code> method in which the
+specific service authentication method is called, in order to authenticate
+for the first time on the Service creation.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>abc.ABC</li>
@@ -49,60 +68,134 @@
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="telereddit.services.service.Service.access_token"><code class="name">var <span class="ident">access_token</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 <dt id="telereddit.services.service.Service.has_external_request"><code class="name">var <span class="ident">has_external_request</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>True if the service needs to reach out to an external http endpoint, False
+otherwise.</p></div>
 </dd>
 <dt id="telereddit.services.service.Service.is_authenticated"><code class="name">var <span class="ident">is_authenticated</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>True if the external request needs to be authenticated (i.e. with an
+Authorization header), False otherwise.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is taken into account only if <code>has_external_request</code> is set to True</p>
+</div></div>
+</dd>
+<dt id="telereddit.services.service.Service.access_token"><code class="name">var <span class="ident">access_token</span></code></dt>
+<dd>
+<div class="desc"><p>Contains the access token for the OAuth authentication if present, None
+otherwise.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is taken into account only if <code>is_authenticated</code> is set to True</p>
+</div></div>
 </dd>
 </dl>
 <h3>Static methods</h3>
 <dl>
-<dt id="telereddit.services.service.Service.authenticate"><code class="name flex">
-<span>def <span class="ident">authenticate</span></span>(<span>)</span>
+<dt id="telereddit.services.service.Service.preprocess"><code class="name flex">
+<span>def <span class="ident">preprocess</span></span>(<span>url, json)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Preprocess the media URL coming from Reddit json to match the service
+provider API URL structure, from which to get the media information.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Reddit media URL to preprocess.</dd>
+<dt><strong><code>json</code></strong> :&ensp;<code>json</code></dt>
+<dd>Json from the Reddit API which contains the post data. Used to get
+fallback media urls for specific services.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>Preprocessed url related to the service provider API.</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.services.service.Service.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>url)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>url :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.services.service.Service.get_media"><code class="name flex">
-<span>def <span class="ident">get_media</span></span>(<span>url, json)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>url :</p>
-<p>json :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Gets the media information, usually through an http request to the
+service provider API.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the request needs to be authenticated, this method assumes a
+valid access token is stored in <code>access_token</code>.</p>
+</div>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>URL related to the specific service provider API, on which an http
+request can be fired to get the media information.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code>requests.models.Response</code>
+Response from the service provider API.</p></div>
 </dd>
 <dt id="telereddit.services.service.Service.postprocess"><code class="name flex">
 <span>def <span class="ident">postprocess</span></span>(<span>response)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>response :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>From the service provider API response creates the
+<code><a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></code> object.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is the only abstract method of the class. Thus it needs to be
+implemented in each child class. This is due to the intrinsic
+inexistence of a common pattern on which to create the media object.</p>
+</div>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>response</code></strong> :&ensp;<code>requests.models.Response</code></dt>
+<dd>Response from the service provider API.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></code>
+Media object related to the media retrieval process.</p></div>
 </dd>
-<dt id="telereddit.services.service.Service.preprocess"><code class="name flex">
-<span>def <span class="ident">preprocess</span></span>(<span>url, json)</span>
+<dt id="telereddit.services.service.Service.authenticate"><code class="name flex">
+<span>def <span class="ident">authenticate</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>url :</p>
-<p>json :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Authenticates the service on the service provider API and updates the
+<code>access_code</code> variable with the newly refreshed valid access token.</p></div>
+</dd>
+<dt id="telereddit.services.service.Service.get_media"><code class="name flex">
+<span>def <span class="ident">get_media</span></span>(<span>url, json)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Entrypoint of the class. Takes care of the common logic of media
+information retrieval, which consists in executing the following
+steps (in order):</p>
+<ul>
+<li><code><a title="telereddit.services.service.Service.preprocess" href="#telereddit.services.service.Service.preprocess">Service.preprocess()</a></code></li>
+<li><code><a title="telereddit.services.service.Service.get" href="#telereddit.services.service.Service.get">Service.get()</a></code></li>
+<li>
+<p><code>Sercice.authenticate()</code> if the access token is not valid.</p>
+<p>(and then again <code><a title="telereddit.services.service.Service.get" href="#telereddit.services.service.Service.get">Service.get()</a></code>)</p>
+</li>
+<li>
+<p><code><a title="telereddit.services.service.Service.preprocess" href="#telereddit.services.service.Service.preprocess">Service.preprocess()</a></code></p>
+</li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>This method <strong>should not</strong> be overwritten by child classes.</p>
+</div>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Media URL from the Reddit API json.</dd>
+<dt><strong><code>json</code></strong> :&ensp;<code>json</code></dt>
+<dd>Json from the Reddit API which contains the post data. Used to get
+fallback media urls for specific services.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></code>
+The media object accessible from the application.</p></div>
 </dd>
 </dl>
 </dd>
@@ -110,7 +203,7 @@
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
@@ -127,14 +220,14 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li>
 <h4><code><a title="telereddit.services.service.Service" href="#telereddit.services.service.Service">Service</a></code></h4>
 <ul class="">
-<li><code><a title="telereddit.services.service.Service.access_token" href="#telereddit.services.service.Service.access_token">access_token</a></code></li>
-<li><code><a title="telereddit.services.service.Service.authenticate" href="#telereddit.services.service.Service.authenticate">authenticate</a></code></li>
+<li><code><a title="telereddit.services.service.Service.preprocess" href="#telereddit.services.service.Service.preprocess">preprocess</a></code></li>
 <li><code><a title="telereddit.services.service.Service.get" href="#telereddit.services.service.Service.get">get</a></code></li>
+<li><code><a title="telereddit.services.service.Service.postprocess" href="#telereddit.services.service.Service.postprocess">postprocess</a></code></li>
+<li><code><a title="telereddit.services.service.Service.authenticate" href="#telereddit.services.service.Service.authenticate">authenticate</a></code></li>
 <li><code><a title="telereddit.services.service.Service.get_media" href="#telereddit.services.service.Service.get_media">get_media</a></code></li>
 <li><code><a title="telereddit.services.service.Service.has_external_request" href="#telereddit.services.service.Service.has_external_request">has_external_request</a></code></li>
 <li><code><a title="telereddit.services.service.Service.is_authenticated" href="#telereddit.services.service.Service.is_authenticated">is_authenticated</a></code></li>
-<li><code><a title="telereddit.services.service.Service.postprocess" href="#telereddit.services.service.Service.postprocess">postprocess</a></code></li>
-<li><code><a title="telereddit.services.service.Service.preprocess" href="#telereddit.services.service.Service.preprocess">preprocess</a></code></li>
+<li><code><a title="telereddit.services.service.Service.access_token" href="#telereddit.services.service.Service.access_token">access_token</a></code></li>
 </ul>
 </li>
 </ul>

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.helpers API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Miscellaneous helpers for the whole application." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,6 +20,7 @@
 <h1 class="title">Module <code>telereddit.helpers</code></h1>
 </header>
 <section id="section-intro">
+<p>Miscellaneous helpers for the whole application.</p>
 </section>
 <section>
 </section>
@@ -28,78 +29,109 @@
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="telereddit.helpers.chained_get"><code class="name flex">
-<span>def <span class="ident">chained_get</span></span>(<span>obj, attrs, default=None)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Travels the nested object based on <code>attrs</code> and returns the value of the
-last attr if not None, default otherwise.</p>
-<h2 id="parameters">Parameters</h2>
-<p>obj :</p>
-<p>attrs :</p>
-<p>default :
-(Default value = None)</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.helpers.escape_markdown"><code class="name flex">
-<span>def <span class="ident">escape_markdown</span></span>(<span>text)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Returns the given text with escaped common markdown characters.
-See: <a href="https://core.telegram.org/bots/api#Markdown-style">https://core.telegram.org/bots/api#Markdown-style</a></p>
-<h2 id="parameters">Parameters</h2>
-<p>text :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.helpers.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>obj, attr, default=None)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Returns the value <code>attr</code> if it is not None, default otherwise.</p>
-<h2 id="parameters">Parameters</h2>
-<p>obj :</p>
-<p>attr :</p>
-<p>default :
-(Default value = None)</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
 <dt id="telereddit.helpers.get_random_post_url"><code class="name flex">
 <span>def <span class="ident">get_random_post_url</span></span>(<span>subreddit)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>subreddit :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.helpers.get_subreddit_name"><code class="name flex">
-<span>def <span class="ident">get_subreddit_name</span></span>(<span>text, reverse=False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Returns the first (or last if reverse=True) (prefixed) subreddit name if
-present in the given text, None otherwise.</p>
+<div class="desc"><p>Returns the "random post" url relative to the Reddit API.</p>
 <h2 id="parameters">Parameters</h2>
-<p>text :</p>
-<p>reverse :
-(Default value = False)</p>
-<h2 id="returns">Returns</h2></div>
+<dl>
+<dt><strong><code>subreddit</code></strong> :&ensp;<code>str</code></dt>
+<dd>Subreddit for which to get the url.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>A new string representing the url, including the base url of reddit.</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.helpers.get_subreddit_names"><code class="name flex">
 <span>def <span class="ident">get_subreddit_names</span></span>(<span>text)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a list of the (prefixed) subreddit names present in the given text.</p>
+<div class="desc"><p>Returns a list of the ("r/" prefixed) subreddit names present in the given
+text, searched using the official subreddit name validation</p>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>Subreddit name validation regex:
+<a href="https://github.com/reddit-archive/reddit/blob/master/r2/r2/models/subreddit.py#L114">https://github.com/reddit-archive/reddit/blob/master/r2/r2/models/subreddit.py#L114</a></p>
+</div>
 <h2 id="parameters">Parameters</h2>
-<p>text :</p>
-<h2 id="returns">Returns</h2></div>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>String of text in which to search for subreddit names.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>array</code></dt>
+<dd>Array of valid subreddit names present in the given text ("r/" prefixed).</dd>
+</dl></div>
 </dd>
-<dt id="telereddit.helpers.get_urls_from_text"><code class="name flex">
-<span>def <span class="ident">get_urls_from_text</span></span>(<span>text)</span>
+<dt id="telereddit.helpers.get_subreddit_name"><code class="name flex">
+<span>def <span class="ident">get_subreddit_name</span></span>(<span>text, reverse=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a list of the urls present in the given text.</p>
+<div class="desc"><p>Returns the first (or last if reverse=True) ("r/" prefixed) subreddit name
+in the given text.</p>
 <h2 id="parameters">Parameters</h2>
-<p>text :</p>
-<h2 id="returns">Returns</h2></div>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>String of text in which to search for the subreddit name.</dd>
+<dt><strong><code>reverse</code></strong> :&ensp;<code>Boolean</code></dt>
+<dd>
+<p>(Default value = False)</p>
+<p>Whether to return the first or last match in the string.</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code> or <code>None</code></dt>
+<dd>The subreddit name if present in the text, None otherwise.</dd>
+</dl></div>
+</dd>
+<dt id="telereddit.helpers.escape_markdown"><code class="name flex">
+<span>def <span class="ident">escape_markdown</span></span>(<span>text)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the given text with escaped common markdown characters.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>Official Telegram supported Markdown documentation:
+<a href="https://core.telegram.org/bots/api#Markdown-style">https://core.telegram.org/bots/api#Markdown-style</a></p>
+</div>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unescaped text to escape.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>New string containing the escaped text.</dd>
+</dl></div>
+</dd>
+<dt id="telereddit.helpers.truncate_text"><code class="name flex">
+<span>def <span class="ident">truncate_text</span></span>(<span>text, length=200)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the given text, truncated at <code>length</code> characters, plus
+ellipsis ("&hellip;").</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>String to truncate.</dd>
+<dt><strong><code>length</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<p>(Default value = MAX_TITLE_LENGTH)</p>
+<p>Length to which to truncate the text, not including three characters of
+ellipsis.</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>New string containing the truncated text, plus ellipsis.</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.helpers.polish_text"><code class="name flex">
 <span>def <span class="ident">polish_text</span></span>(<span>text)</span>
@@ -107,19 +139,85 @@ present in the given text, None otherwise.</p>
 <dd>
 <div class="desc"><p>Returns the given text without newline characters.</p>
 <h2 id="parameters">Parameters</h2>
-<p>text :</p>
-<h2 id="returns">Returns</h2></div>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>Text to polish</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>New string containing the polished text.</dd>
+</dl></div>
 </dd>
-<dt id="telereddit.helpers.truncate_text"><code class="name flex">
-<span>def <span class="ident">truncate_text</span></span>(<span>text, length=200)</span>
+<dt id="telereddit.helpers.get_urls_from_text"><code class="name flex">
+<span>def <span class="ident">get_urls_from_text</span></span>(<span>text)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the given text, truncated at <code>length</code> characters, plus ellipsis.</p>
+<div class="desc"><p>Returns a list of the reddit urls present in the given text.</p>
 <h2 id="parameters">Parameters</h2>
-<p>text :</p>
-<p>length :
-(Default value = MAX_TITLE_LENGTH)</p>
-<h2 id="returns">Returns</h2></div>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>Text to search for urls.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>array</code></dt>
+<dd>Array containing all the reddit links extracted from the text.</dd>
+</dl></div>
+</dd>
+<dt id="telereddit.helpers.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>obj, attr, default=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the value of <code>attr</code> if it exists and is not None, default otherwise.</p>
+<p>Useful when you don't want to have a <code>KeyError</code> raised if the attribute is
+missing in the object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object for which to return the attribute.</dd>
+<dt><strong><code>attr</code></strong> :&ensp;<code>str</code></dt>
+<dd>The key of the attribute to return.</dd>
+<dt><strong><code>default</code></strong> :&ensp;<code>any</code></dt>
+<dd>
+<p>(Default value = None)</p>
+<p>What to return if <code>obj</code> doesn't have the <code>attr</code> attribute, or if it is
+None.</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>any</code></dt>
+<dd>The attribute or <code>default</code>.</dd>
+</dl></div>
+</dd>
+<dt id="telereddit.helpers.chained_get"><code class="name flex">
+<span>def <span class="ident">chained_get</span></span>(<span>obj, attrs, default=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Travels the nested object based on <code>attrs</code> array and returns the value of
+the last attr if not None, default otherwise.</p>
+<p>Useful when you don't want to have a <code>KeyError</code> raised if an attribute of
+the chain is missing in the object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object for which to return the attribute.</dd>
+<dt><strong><code>attrs</code></strong> :&ensp;<code>array</code></dt>
+<dd>Array of keys to search for recursively.</dd>
+<dt><strong><code>default</code></strong> :&ensp;<code>any</code></dt>
+<dd>
+<p>(Default value = None)</p>
+<p>What to return if <code>obj</code> doesn't have any of the <code>attrs</code> attributes, or
+if they are None.</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>any</code></dt>
+<dd>The attribute corresponding to the right-most key in <code>attrs</code>, if it
+exists and is not None, <code>default</code> otherwise.</dd>
+</dl></div>
 </dd>
 </dl>
 </section>
@@ -127,7 +225,7 @@ present in the given text, None otherwise.</p>
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
@@ -141,15 +239,15 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="two-column">
-<li><code><a title="telereddit.helpers.chained_get" href="#telereddit.helpers.chained_get">chained_get</a></code></li>
-<li><code><a title="telereddit.helpers.escape_markdown" href="#telereddit.helpers.escape_markdown">escape_markdown</a></code></li>
-<li><code><a title="telereddit.helpers.get" href="#telereddit.helpers.get">get</a></code></li>
 <li><code><a title="telereddit.helpers.get_random_post_url" href="#telereddit.helpers.get_random_post_url">get_random_post_url</a></code></li>
-<li><code><a title="telereddit.helpers.get_subreddit_name" href="#telereddit.helpers.get_subreddit_name">get_subreddit_name</a></code></li>
 <li><code><a title="telereddit.helpers.get_subreddit_names" href="#telereddit.helpers.get_subreddit_names">get_subreddit_names</a></code></li>
-<li><code><a title="telereddit.helpers.get_urls_from_text" href="#telereddit.helpers.get_urls_from_text">get_urls_from_text</a></code></li>
-<li><code><a title="telereddit.helpers.polish_text" href="#telereddit.helpers.polish_text">polish_text</a></code></li>
+<li><code><a title="telereddit.helpers.get_subreddit_name" href="#telereddit.helpers.get_subreddit_name">get_subreddit_name</a></code></li>
+<li><code><a title="telereddit.helpers.escape_markdown" href="#telereddit.helpers.escape_markdown">escape_markdown</a></code></li>
 <li><code><a title="telereddit.helpers.truncate_text" href="#telereddit.helpers.truncate_text">truncate_text</a></code></li>
+<li><code><a title="telereddit.helpers.polish_text" href="#telereddit.helpers.polish_text">polish_text</a></code></li>
+<li><code><a title="telereddit.helpers.get_urls_from_text" href="#telereddit.helpers.get_urls_from_text">get_urls_from_text</a></code></li>
+<li><code><a title="telereddit.helpers.get" href="#telereddit.helpers.get">get</a></code></li>
+<li><code><a title="telereddit.helpers.chained_get" href="#telereddit.helpers.chained_get">chained_get</a></code></li>
 </ul>
 </li>
 </ul>

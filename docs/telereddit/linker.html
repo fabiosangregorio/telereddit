@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.linker API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Linker class which handles all telereddit requests." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,6 +20,7 @@
 <h1 class="title">Module <code>telereddit.linker</code></h1>
 </header>
 <section id="section-intro">
+<p>Linker class which handles all telereddit requests.</p>
 </section>
 <section>
 </section>
@@ -35,39 +36,36 @@
 <span>(</span><span>chat_id)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Gets instanciated at every telereddit request (new message, messsage callback, etc.)</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>bot</code></strong> :&ensp;<code>Bot</code></dt>
+<dd>python-telegram-bot's Bot instance: it is initialized by set</dd>
+<dt><strong><code>chat_id</code></strong> :&ensp;<code>Int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>args</code></strong> :&ensp;<code>dict</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="telereddit.linker.Linker.set_bot"><code class="name flex">
 <span>def <span class="ident">set_bot</span></span>(<span>bot)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>bot :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Sets the python-telegram-bot's Bot instance for the Linker object.
+This should be set only once, at the package startup.</p>
+<div class="admonition note">
+<p class="admonition-title">Note:&ensp;This needs to be set before starting the bot loop.</p>
+</div>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>bot</code></strong> :&ensp;<code>Bot</code></dt>
+<dd>The bot instance provided by python-telegram-bot</dd>
+</dl></div>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="telereddit.linker.Linker.edit_random_post"><code class="name flex">
-<span>def <span class="ident">edit_random_post</span></span>(<span>self, message, subreddit)</span>
-</code></dt>
-<dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>message :</p>
-<p>subreddit :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
-<dt id="telereddit.linker.Linker.edit_result"><code class="name flex">
-<span>def <span class="ident">edit_result</span></span>(<span>self, message)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Edits the given message with a new post from that subreddit, and edits the
-keyboard markup to give the user the ability to edit or confirm the message.</p>
-<h2 id="parameters">Parameters</h2>
-<p>message :</p>
-<h2 id="returns">Returns</h2></div>
-</dd>
 <dt id="telereddit.linker.Linker.get_args"><code class="name flex">
 <span>def <span class="ident">get_args</span></span>(<span>self, override_dict={})</span>
 </code></dt>
@@ -75,6 +73,22 @@ keyboard markup to give the user the ability to edit or confirm the message.</p>
 <div class="desc"><h2 id="parameters">Parameters</h2>
 <p>override_dict :
 (Default value = {})</p>
+<h2 id="returns">Returns</h2></div>
+</dd>
+<dt id="telereddit.linker.Linker.send_random_post"><code class="name flex">
+<span>def <span class="ident">send_random_post</span></span>(<span>self, subreddit)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="parameters">Parameters</h2>
+<p>subreddit :</p>
+<h2 id="returns">Returns</h2></div>
+</dd>
+<dt id="telereddit.linker.Linker.send_post_from_url"><code class="name flex">
+<span>def <span class="ident">send_post_from_url</span></span>(<span>self, post_url)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="parameters">Parameters</h2>
+<p>post_url :</p>
 <h2 id="returns">Returns</h2></div>
 </dd>
 <dt id="telereddit.linker.Linker.send_post"><code class="name flex">
@@ -87,19 +101,22 @@ keyboard markup to give the user the ability to edit or confirm the message.</p>
 (Default value = False)</p>
 <h2 id="returns">Returns</h2></div>
 </dd>
-<dt id="telereddit.linker.Linker.send_post_from_url"><code class="name flex">
-<span>def <span class="ident">send_post_from_url</span></span>(<span>self, post_url)</span>
+<dt id="telereddit.linker.Linker.edit_result"><code class="name flex">
+<span>def <span class="ident">edit_result</span></span>(<span>self, message)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>post_url :</p>
+<div class="desc"><p>Edits the given message with a new post from that subreddit, and edits the
+keyboard markup to give the user the ability to edit or confirm the message.</p>
+<h2 id="parameters">Parameters</h2>
+<p>message :</p>
 <h2 id="returns">Returns</h2></div>
 </dd>
-<dt id="telereddit.linker.Linker.send_random_post"><code class="name flex">
-<span>def <span class="ident">send_random_post</span></span>(<span>self, subreddit)</span>
+<dt id="telereddit.linker.Linker.edit_random_post"><code class="name flex">
+<span>def <span class="ident">edit_random_post</span></span>(<span>self, message, subreddit)</span>
 </code></dt>
 <dd>
 <div class="desc"><h2 id="parameters">Parameters</h2>
+<p>message :</p>
 <p>subreddit :</p>
 <h2 id="returns">Returns</h2></div>
 </dd>
@@ -109,7 +126,7 @@ keyboard markup to give the user the ability to edit or confirm the message.</p>
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
@@ -126,13 +143,13 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li>
 <h4><code><a title="telereddit.linker.Linker" href="#telereddit.linker.Linker">Linker</a></code></h4>
 <ul class="two-column">
-<li><code><a title="telereddit.linker.Linker.edit_random_post" href="#telereddit.linker.Linker.edit_random_post">edit_random_post</a></code></li>
-<li><code><a title="telereddit.linker.Linker.edit_result" href="#telereddit.linker.Linker.edit_result">edit_result</a></code></li>
-<li><code><a title="telereddit.linker.Linker.get_args" href="#telereddit.linker.Linker.get_args">get_args</a></code></li>
-<li><code><a title="telereddit.linker.Linker.send_post" href="#telereddit.linker.Linker.send_post">send_post</a></code></li>
-<li><code><a title="telereddit.linker.Linker.send_post_from_url" href="#telereddit.linker.Linker.send_post_from_url">send_post_from_url</a></code></li>
-<li><code><a title="telereddit.linker.Linker.send_random_post" href="#telereddit.linker.Linker.send_random_post">send_random_post</a></code></li>
 <li><code><a title="telereddit.linker.Linker.set_bot" href="#telereddit.linker.Linker.set_bot">set_bot</a></code></li>
+<li><code><a title="telereddit.linker.Linker.get_args" href="#telereddit.linker.Linker.get_args">get_args</a></code></li>
+<li><code><a title="telereddit.linker.Linker.send_random_post" href="#telereddit.linker.Linker.send_random_post">send_random_post</a></code></li>
+<li><code><a title="telereddit.linker.Linker.send_post_from_url" href="#telereddit.linker.Linker.send_post_from_url">send_post_from_url</a></code></li>
+<li><code><a title="telereddit.linker.Linker.send_post" href="#telereddit.linker.Linker.send_post">send_post</a></code></li>
+<li><code><a title="telereddit.linker.Linker.edit_result" href="#telereddit.linker.Linker.edit_result">edit_result</a></code></li>
+<li><code><a title="telereddit.linker.Linker.edit_random_post" href="#telereddit.linker.Linker.edit_random_post">edit_random_post</a></code></li>
 </ul>
 </li>
 </ul>

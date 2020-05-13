@@ -13,17 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    - name: Setup git-crypt
-      run: |
-        sudo apt-get install ca-certificates bash curl git g++ gnupg make openssh-client openssl
-        curl -L https://github.com/AGWA/git-crypt/archive/debian/$VERSION.tar.gz | tar zxv -C /var/tmp
-        cd /var/tmp/git-crypt-debian && sudo make && sudo make install PREFIX=/usr/local
-        echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > "$HOME"/git-crypt-key.asc
-        gpg --batch --import "$HOME"/git-crypt-key.asc
-        gpgconf --kill gpg-agent
-        gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
-        /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "${{ secrets.GPG_KEY_PASS }}" "${{ secrets.GPG_KEY_GRIP }}"
-
     - name: Setup Graphviz environment
       run: |
         sudo apt-get install graphviz
@@ -37,19 +26,29 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.cache/pip # This path is specific to Ubuntu
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('./requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Cache CI dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip # This path is specific to Ubuntu
+        key: ${{ runner.os }}-pip-${{ hashFiles('./.github/workflows/requirements/docs.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install pydeps
-        pip install pdoc3
+        pip install -r ./.github/workflows/requirements/docs.txt
 
     - name: Unlock git-crypt files
-      run: |
-        git-crypt unlock
+      uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
     - name: Generate project dependency graph
       run: |
@@ -61,6 +60,19 @@ jobs:
         pdoc --html --output-dir="docs/" --template-dir="docs/templates" --config show_source_code=False --force .
       env:
         TELEREDDIT_MACHINE: GITHUB
+
+    - name: Run documentation coverage
+      run: |
+        mkdir documentation-reports
+        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ./documentation-reports/docstr-coverage.txt
+        (pydocstyle telereddit 2>&1 | tee ./documentation-reports/pydocstyle-coverage.txt; exit ${PIPESTATUS[0]})
+        python .github/workflows/scripts/docs.py
+
+    - name: Upload documentation reports as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: documentation-reports
+        path: ./documentation-reports/
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v4

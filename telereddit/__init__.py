@@ -1,0 +1,2 @@
+# noqa
+""".. include:: ../README.md"""

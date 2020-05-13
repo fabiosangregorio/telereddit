@@ -1,12 +1,19 @@
+"""
+Reddit API interface module.
+
+Contains all the functions to call Reddit APIs, retrieve the desired information
+and build telereddit objects.
+"""
+
 import requests
 import random
 
 import telereddit.helpers as helpers
 from telereddit.config.config import secret
 from telereddit.models.post import Post
-from telereddit.content_type import ContentType
-from telereddit.models.exceptions import (
-    RequestError,
+from telereddit.models.content_type import ContentType
+from telereddit.exceptions import (
+    PostRequestError,
     SubredditPrivateError,
     SubredditDoesntExistError,
     PostRetrievalError,
@@ -16,15 +23,17 @@ from telereddit.services.services_wrapper import ServicesWrapper
 
 def _get_json(post_url):
     """
+    Get post json from Reddit API and handle all request/json errors.
 
     Parameters
     ----------
-    post_url :
-        
+    post_url : str
+        post url to fetch from the Reddit API.
 
     Returns
     -------
-
+    json
+        Json containing the post data.
     
     """
     try:
@@ -36,7 +45,7 @@ def _get_json(post_url):
         # some subreddits have the json data wrapped in brackets, some do not
         json = json if isinstance(json, dict) else json[0]
     except Exception:
-        raise RequestError({"post_url": post_url})
+        raise PostRequestError({"post_url": post_url})
 
     if json.get("reason") == "private":
         raise SubredditPrivateError()
@@ -53,15 +62,17 @@ def _get_json(post_url):
 
 def get_post(post_url):
     """
+    Get the post from the Reddit API and construct the Post object.
 
     Parameters
     ----------
-    post_url :
-        
+    post_url : str
+        post url to fetch from the Reddit API.
 
     Returns
     -------
-
+    `telereddit.models.post.Post`
+        Post object containing all the retrieved post information.
     
     """
     json = _get_json(post_url)

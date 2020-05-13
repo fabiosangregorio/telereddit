@@ -9,16 +9,13 @@
       src="https://github.com/fabiosangregorio/telereddit/workflows/test/badge.svg" alt="Test status"></a>
   <a href="https://github.com/fabiosangregorio/telereddit/actions?query=workflow%3Alint"><img
       src="https://github.com/fabiosangregorio/telereddit/workflows/lint/badge.svg" alt="Lint status"></a>
-  <a href="https://codecov.io/gh/fabiosangregorio/telereddit">
-    <img src="https://codecov.io/gh/fabiosangregorio/telereddit/branch/master/graph/badge.svg" />
-  </a>
+  <a href='https://coveralls.io/github/fabiosangregorio/telereddit?branch=master'><img src='https://coveralls.io/repos/github/fabiosangregorio/telereddit/badge.svg?branch=master' alt='Coverage Status' /></a>
   <a
     href="https://www.codacy.com/app/fabio.sangregorio/telereddit?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fabiosangregorio/telereddit&amp;utm_campaign=Badge_Grade"><img
       src="https://api.codacy.com/project/badge/Grade/76515a362977419b91de831466e1bf9a" alt="Codacy Badge"></a>
   <a href="https://codeclimate.com/github/fabiosangregorio/telereddit/maintainability"><img
       src="https://api.codeclimate.com/v1/badges/bef15455da0878eae539/maintainability" alt="Maintainability"></a>
-  <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg"
-      alt="License: GPL v3"></a>
+  <img class="docs-coverage" src="https://img.shields.io/badge/docs%20coverage-100%25-brightgreen" alt="Docs coverage">
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"
       alt="Code style: black"></a>
 </p>

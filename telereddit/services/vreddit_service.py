@@ -1,29 +1,21 @@
+"""Service for v.redd.it GIFs."""
 import requests
 
 from telereddit.services.service import Service
 import telereddit.helpers as helpers
 from telereddit.models.media import Media
-from telereddit.content_type import ContentType
+from telereddit.models.content_type import ContentType
 
 
 class Vreddit(Service):
-    """ """
+    """Service for v.redd.it GIFs."""
 
     @classmethod
     def preprocess(cls, url, json):
         """
+        Override of `telereddit.services.service.Service.preprocess` method.
 
-        Parameters
-        ----------
-        url :
-            
-        json :
-            
-
-        Returns
-        -------
-
-        
+        Tries to get the right media url from the reddit json.
         """
         xpost = helpers.get(json, "crosspost_parent_list")
         if xpost is not None and len(xpost) > 0:
@@ -45,16 +37,9 @@ class Vreddit(Service):
     @classmethod
     def postprocess(cls, response):
         """
+        Override of `telereddit.services.service.Service.postprocess` method.
 
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
+        Constructs the media object.
         """
         media = Media(response.url, ContentType.GIF)
         if "Content-length" in response.headers:

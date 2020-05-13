@@ -1,25 +1,15 @@
+"""Service for when a suitable specific service is not found."""
 from telereddit.services.service import Service
 from telereddit.models.media import Media
-from telereddit.content_type import ContentType
+from telereddit.models.content_type import ContentType
 
 
 class Generic(Service):
-    """ """
+    """Service for when a suitable specific service is not found."""
 
     @classmethod
     def postprocess(cls, response):
-        """
-
-        Parameters
-        ----------
-        response :
-            
-
-        Returns
-        -------
-
-        
-        """
+        """Override of `telereddit.services.service.Service.postprocess` method."""
         file_size = None
         media_type = ContentType.PHOTO
 

@@ -11,26 +11,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-
-    - name: Setup git-crypt
-      run: |
-        sudo apt-get install ca-certificates bash curl git g++ gnupg make openssh-client openssl
-        curl -L https://github.com/AGWA/git-crypt/archive/debian/$VERSION.tar.gz | tar zxv -C /var/tmp
-        cd /var/tmp/git-crypt-debian && sudo make && sudo make install PREFIX=/usr/local
-        echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > "$HOME"/git-crypt-key.asc
-        gpg --batch --import "$HOME"/git-crypt-key.asc
-        gpgconf --kill gpg-agent
-        gpg-agent --daemon --allow-preset-passphrase --max-cache-ttl 3153600000
-        /usr/lib/gnupg2/gpg-preset-passphrase --preset --passphrase "${{ secrets.GPG_KEY_PASS }}" "${{ secrets.GPG_KEY_GRIP }}"
+    - uses: actions/checkout@master 
 
     - name: Ensure git-crypt files are locked
       run: |
         grep -qsPa "\x00GITCRYPT"  $(git crypt status | grep -v '^not' | awk '{print $2}')
 
     - name: Unlock git-crypt files
-      run: |
-        git-crypt unlock
+      uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
@@ -45,18 +37,30 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pip-
 
+    - name: Cache CI dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip # This path is specific to Ubuntu
+        key: ${{ runner.os }}-pip-${{ hashFiles('./.github/workflows/requirements/test.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install -r requirements.txt
+        pip install -r ./.github/workflows/requirements/test.txt
 
     - name: Run tests and generate report
       run: | 
-        pip install coverage
         coverage run -m unittest
       env:
         TELEREDDIT_MACHINE: 'GITHUB'
 
-    - name: Upload reports to codecov.io
-      uses: codecov/codecov-action@v1
+    - name: Upload reports to Coveralls
+      env: 
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: |
+        coveralls
 
     - name: Upload reports to Code Climate
       uses: paambaati/codeclimate-action@v2.6.0

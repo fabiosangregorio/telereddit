@@ -1,3 +1,5 @@
+"""Miscellaneous helpers for the whole application."""
+
 import re
 import requests
 
@@ -6,52 +8,66 @@ from telereddit.config.config import MAX_TITLE_LENGTH
 
 def get_random_post_url(subreddit):
     """
+    Return the "random post" url relative to the Reddit API.
 
     Parameters
     ----------
-    subreddit :
-        
+    subreddit : str
+        Subreddit for which to get the url.
 
     Returns
     -------
+    str
+        A new string representing the url, including the base url of reddit.
 
-    
     """
     return f"https://www.reddit.com/{subreddit}/random"
 
 
 def get_subreddit_names(text):
-    """Returns a list of the (prefixed) subreddit names present in the given text.
+    """
+    Return a list of the ("r/" prefixed) subreddit names present in the text.
+
+    Subreddits are searched using the official subreddit name validation.
+
+    .. seealso::
+        Subreddit name validation regex:
+        https://github.com/reddit-archive/reddit/blob/master/r2/r2/models/subreddit.py#L114
 
     Parameters
     ----------
-    text :
-        
+    text : str
+        String of text in which to search for subreddit names.
 
     Returns
     -------
+    array
+        Array of valid subreddit names present in the given text ("r/" prefixed).
 
-    
     """
     regex = r"\br/[A-Za-z0-9][A-Za-z0-9_]{2,20}(?=\s|\W |$|\W$|/)\b"
     return re.findall(regex, text, re.MULTILINE)
 
 
 def get_subreddit_name(text, reverse=False):
-    """Returns the first (or last if reverse=True) (prefixed) subreddit name if
-    present in the given text, None otherwise.
+    """
+    Return the first (or last) ("r/" prefixed) subreddit name in the given text.
 
     Parameters
     ----------
-    text :
-        
-    reverse :
+    text : str
+        String of text in which to search for the subreddit name.
+
+    reverse : Boolean
         (Default value = False)
+
+        Whether to return the first or last match in the string.
 
     Returns
     -------
+    str or None
+        The subreddit name if present in the text, None otherwise.
 
-    
     """
     subs = get_subreddit_names(text)
     if len(subs):
@@ -61,37 +77,47 @@ def get_subreddit_name(text, reverse=False):
 
 
 def escape_markdown(text):
-    """Returns the given text with escaped common markdown characters.
-    See: https://core.telegram.org/bots/api#Markdown-style
+    """
+    Return the given text with escaped common markdown characters.
+
+    .. seealso::
+        Official Telegram supported Markdown documentation:
+        https://core.telegram.org/bots/api#Markdown-style
 
     Parameters
     ----------
-    text :
-        
+    text : str
+        Unescaped text to escape.
 
     Returns
     -------
+    str
+        New string containing the escaped text.
 
-    
     """
-    # Reddit escaping: \\_ \\* \\[ \\] ( ) \\~ \\` &gt; # + - = | { } . !
     return text.replace("*", "\\*").replace("_", "\\_")
 
 
 def truncate_text(text, length=MAX_TITLE_LENGTH):
-    """Returns the given text, truncated at `length` characters, plus ellipsis.
+    """
+    Return the given text, truncated at `length` characters, plus ellipsis.
 
     Parameters
     ----------
-    text :
-        
-    length :
+    text : str
+        String to truncate.
+
+    length : int
         (Default value = MAX_TITLE_LENGTH)
+
+        Length to which to truncate the text, not including three characters of
+        ellipsis.
 
     Returns
     -------
+    str
+        New string containing the truncated text, plus ellipsis.
 
-    
     """
     if length < 0:
         return text
@@ -99,33 +125,37 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
 
 
 def polish_text(text):
-    """Returns the given text without newline characters.
+    """
+    Return the given text without newline characters.
 
     Parameters
     ----------
-    text :
-        
+    text : str
+        Text to polish
 
     Returns
     -------
+    str
+        New string containing the polished text.
 
-    
     """
     return text.replace("\n", " ")
 
 
 def get_urls_from_text(text):
-    """Returns a list of the urls present in the given text.
+    """
+    Return a list of the reddit urls present in the given text.
 
     Parameters
     ----------
-    text :
-        
+    text : str
+        Text to search for urls.
 
     Returns
     -------
+    array
+        Array containing all the reddit links extracted from the text.
 
-    
     """
     polished = polish_text(text)
     urls = list()
@@ -149,42 +179,61 @@ def get_urls_from_text(text):
 
 
 def get(obj, attr, default=None):
-    """Returns the value `attr` if it is not None, default otherwise.
+    """
+    Return the value of `attr` if it exists and is not None, default otherwise.
+
+    Useful when you don't want to have a `KeyError` raised if the attribute is
+    missing in the object.
 
     Parameters
     ----------
-    obj :
-        
-    attr :
-        
-    default :
+    obj : object
+        The object for which to return the attribute.
+    attr : str
+        The key of the attribute to return.
+    default : any
         (Default value = None)
+
+        What to return if `obj` doesn't have the `attr` attribute, or if it is
+        None.
 
     Returns
     -------
+    any
+        The attribute or `default`.
 
-    
     """
     return obj[attr] if attr in obj and obj[attr] is not None else default
 
 
 def chained_get(obj, attrs, default=None):
-    """Travels the nested object based on `attrs` and returns the value of the
-    last attr if not None, default otherwise.
+    """
+    Get for nested objects.
+
+    Travel the nested object based on `attrs` array and return the value of
+    the last attr if not None, default otherwise.
+
+    Useful when you don't want to have a `KeyError` raised if an attribute of
+    the chain is missing in the object.
 
     Parameters
     ----------
-    obj :
-        
-    attrs :
-        
-    default :
+    obj : object
+        The object for which to return the attribute.
+    attrs : array
+        Array of keys to search for recursively.
+    default : any
         (Default value = None)
+
+        What to return if `obj` doesn't have any of the `attrs` attributes, or
+        if they are None.
 
     Returns
     -------
+    any
+        The attribute corresponding to the right-most key in `attrs`, if it
+        exists and is not None, `default` otherwise.
 
-    
     """
     for attr in attrs:
         obj = get(obj, attr, default)

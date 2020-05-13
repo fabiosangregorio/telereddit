@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.services API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Services are used by the application to retrieve media contents from external
+sources …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,37 +21,47 @@
 <h1 class="title">Module <code>telereddit.services</code></h1>
 </header>
 <section id="section-intro">
+<p>Services are used by the application to retrieve media contents from external
+sources.</p>
+<h2 id="summary">Summary</h2>
+<p>This module is comprised of a main entrypoint
+(<code><a title="telereddit.services.services_wrapper.ServicesWrapper" href="services_wrapper.html#telereddit.services.services_wrapper.ServicesWrapper">ServicesWrapper</a></code>) which is a facade for the services logic, a
+base abstract class for all services (<code><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></code>), which determines the
+common logic of all services, and a class for each service provider, which
+implements in practice the steps to retrieve the media information.</p>
+<p>A <code><a title="telereddit.services.generic_service.Generic" href="generic_service.html#telereddit.services.generic_service.Generic">Generic</a></code> service class is also present, which will be used if
+no handler for a specific service is found.</p>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
 <dt><code class="name"><a title="telereddit.services.generic_service" href="generic_service.html">telereddit.services.generic_service</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Service for when a suitable specific service is not found.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.services.gfycat_service" href="gfycat_service.html">telereddit.services.gfycat_service</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Service for Gfycat GIFs.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.services.imgur_service" href="imgur_service.html">telereddit.services.imgur_service</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Service for Imgur images and videos.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.services.service" href="service.html">telereddit.services.service</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Abstract Base static Class for every service.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.services.services_wrapper" href="services_wrapper.html">telereddit.services.services_wrapper</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Entrypoint of the whole services pattern.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.services.vreddit_service" href="vreddit_service.html">telereddit.services.vreddit_service</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Service for v.redd.it GIFs.</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.services.youtube_service" href="youtube_service.html">telereddit.services.youtube_service</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Service for Youtube URLs.</p></div>
 </dd>
 </dl>
 </section>
@@ -62,11 +73,13 @@
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#summary">Summary</a></li>
+</ul>
 </div>
 <ul id="index">
 <li><h3>Super-module</h3>

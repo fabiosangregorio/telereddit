@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.telereddit API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Entrypoint module: it handles configuration, setup and starting of
+the bot, as well as receive messages and dispatch actions to the other modules." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,6 +21,8 @@
 <h1 class="title">Module <code>telereddit.telereddit</code></h1>
 </header>
 <section id="section-intro">
+<p>Entrypoint module: it handles configuration, setup and starting of
+the bot, as well as receive messages and dispatch actions to the other modules.</p>
 </section>
 <section>
 </section>
@@ -28,47 +31,38 @@
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="telereddit.telereddit.main"><code class="name flex">
-<span>def <span class="ident">main</span></span>(<span>)</span>
+<dt id="telereddit.telereddit.on_chat_message"><code class="name flex">
+<span>def <span class="ident">on_chat_message</span></span>(<span>update: telegram.update.Update, context: telegram.ext.callbackcontext.CallbackContext)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Entrypoint of the bot's logic. Handles a single update message.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>update</code></strong> :&ensp;<code>Update</code></dt>
+<dd>The Update object provided by python-telegram-bot</dd>
+<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext</code></dt>
+<dd>The Context object provided by python-telegram-bot</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.telereddit.on_callback_query"><code class="name flex">
 <span>def <span class="ident">on_callback_query</span></span>(<span>update: telegram.update.Update, context: telegram.ext.callbackcontext.CallbackContext)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Handles all the several types of callback queries.</p>
+<div class="desc"><p>Handles all the several types of callback queries (actions initiated from
+a keyboard).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 id="returns">Returns</h2></div>
+<dt><strong><code>update</code></strong> :&ensp;<code>Update</code></dt>
+<dd>The Update object provided by python-telegram-bot</dd>
+<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext</code></dt>
+<dd>The Context object provided by python-telegram-bot</dd>
+</dl></div>
 </dd>
-<dt id="telereddit.telereddit.on_chat_message"><code class="name flex">
-<span>def <span class="ident">on_chat_message</span></span>(<span>update: telegram.update.Update, context: telegram.ext.callbackcontext.CallbackContext)</span>
+<dt id="telereddit.telereddit.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Handles a single update message.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>update</code></strong> :&ensp;<code>Update :</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>context</code></strong> :&ensp;<code>CallbackContext :</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Entrypoint of telereddit. Handles configuration, setup and start of the bot.</p></div>
 </dd>
 </dl>
 </section>
@@ -76,7 +70,7 @@
 </section>
 </article>
 <nav id="sidebar">
-<a href="/"><img height="200" width="200"
+<a href="/telereddit"><img height="200" width="200"
 src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/images/logo.png" alt="telereddit" /></a>
 <h1>Index</h1>
 <div class="toc">
@@ -90,9 +84,9 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="telereddit.telereddit.main" href="#telereddit.telereddit.main">main</a></code></li>
-<li><code><a title="telereddit.telereddit.on_callback_query" href="#telereddit.telereddit.on_callback_query">on_callback_query</a></code></li>
 <li><code><a title="telereddit.telereddit.on_chat_message" href="#telereddit.telereddit.on_chat_message">on_chat_message</a></code></li>
+<li><code><a title="telereddit.telereddit.on_callback_query" href="#telereddit.telereddit.on_callback_query">on_callback_query</a></code></li>
+<li><code><a title="telereddit.telereddit.main" href="#telereddit.telereddit.main">main</a></code></li>
 </ul>
 </li>
 </ul>
