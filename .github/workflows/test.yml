@@ -37,20 +37,24 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pip-
 
+    - name: Cache CI dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip # This path is specific to Ubuntu
+        key: ${{ runner.os }}-pip-${{ hashFiles('./.github/workflows/requirements/test.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
-        pip install coverage
-        pip install coveralls
         pip install -r requirements.txt
+        pip install -r ./.github/workflows/requirements/test.txt
 
     - name: Run tests and generate report
       run: | 
         coverage run -m unittest
       env:
         TELEREDDIT_MACHINE: 'GITHUB'
-
-    - name: Upload reports to codecov.io
-      uses: codecov/codecov-action@v1
 
     - name: Upload reports to Coveralls
       env: 
