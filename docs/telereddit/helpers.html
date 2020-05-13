@@ -33,7 +33,7 @@
 <span>def <span class="ident">get_random_post_url</span></span>(<span>subreddit)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the "random post" url relative to the Reddit API.</p>
+<div class="desc"><p>Return the "random post" url relative to the Reddit API.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>subreddit</code></strong> :&ensp;<code>str</code></dt>
@@ -49,8 +49,8 @@
 <span>def <span class="ident">get_subreddit_names</span></span>(<span>text)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a list of the ("r/" prefixed) subreddit names present in the given
-text, searched using the official subreddit name validation</p>
+<div class="desc"><p>Return a list of the ("r/" prefixed) subreddit names present in the text.</p>
+<p>Subreddits are searched using the official subreddit name validation.</p>
 <div class="admonition seealso">
 <p class="admonition-title">Seealso</p>
 <p>Subreddit name validation regex:
@@ -71,8 +71,7 @@ text, searched using the official subreddit name validation</p>
 <span>def <span class="ident">get_subreddit_name</span></span>(<span>text, reverse=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the first (or last if reverse=True) ("r/" prefixed) subreddit name
-in the given text.</p>
+<div class="desc"><p>Return the first (or last) ("r/" prefixed) subreddit name in the given text.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
@@ -93,7 +92,7 @@ in the given text.</p>
 <span>def <span class="ident">escape_markdown</span></span>(<span>text)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the given text with escaped common markdown characters.</p>
+<div class="desc"><p>Return the given text with escaped common markdown characters.</p>
 <div class="admonition seealso">
 <p class="admonition-title">Seealso</p>
 <p>Official Telegram supported Markdown documentation:
@@ -114,8 +113,7 @@ in the given text.</p>
 <span>def <span class="ident">truncate_text</span></span>(<span>text, length=200)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the given text, truncated at <code>length</code> characters, plus
-ellipsis ("&hellip;").</p>
+<div class="desc"><p>Return the given text, truncated at <code>length</code> characters, plus ellipsis.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
@@ -137,7 +135,7 @@ ellipsis.</p>
 <span>def <span class="ident">polish_text</span></span>(<span>text)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the given text without newline characters.</p>
+<div class="desc"><p>Return the given text without newline characters.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
@@ -153,7 +151,7 @@ ellipsis.</p>
 <span>def <span class="ident">get_urls_from_text</span></span>(<span>text)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a list of the reddit urls present in the given text.</p>
+<div class="desc"><p>Return a list of the reddit urls present in the given text.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
@@ -169,7 +167,7 @@ ellipsis.</p>
 <span>def <span class="ident">get</span></span>(<span>obj, attr, default=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the value of <code>attr</code> if it exists and is not None, default otherwise.</p>
+<div class="desc"><p>Return the value of <code>attr</code> if it exists and is not None, default otherwise.</p>
 <p>Useful when you don't want to have a <code>KeyError</code> raised if the attribute is
 missing in the object.</p>
 <h2 id="parameters">Parameters</h2>
@@ -195,7 +193,8 @@ None.</p>
 <span>def <span class="ident">chained_get</span></span>(<span>obj, attrs, default=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Travels the nested object based on <code>attrs</code> array and returns the value of
+<div class="desc"><p>Get for nested objects.</p>
+<p>Travel the nested object based on <code>attrs</code> array and return the value of
 the last attr if not None, default otherwise.</p>
 <p>Useful when you don't want to have a <code>KeyError</code> raised if an attribute of
 the chain is missing in the object.</p>

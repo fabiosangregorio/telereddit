@@ -98,8 +98,9 @@ otherwise.</p>
 <span>def <span class="ident">preprocess</span></span>(<span>url, json)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Preprocess the media URL coming from Reddit json to match the service
-provider API URL structure, from which to get the media information.</p>
+<div class="desc"><p>Preprocess the media URL coming from Reddit json.</p>
+<p>Returned url should match the service provider API URL structure, from
+which to get the media information.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
@@ -118,8 +119,8 @@ fallback media urls for specific services.</dd>
 <span>def <span class="ident">get</span></span>(<span>url)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Gets the media information, usually through an http request to the
-service provider API.</p>
+<div class="desc"><p>Get the media information.</p>
+<p>This is usually through an http request to the service provider API.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In case the request needs to be authenticated, this method assumes a
@@ -139,8 +140,7 @@ Response from the service provider API.</p></div>
 <span>def <span class="ident">postprocess</span></span>(<span>response)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>From the service provider API response creates the
-<code><a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></code> object.</p>
+<div class="desc"><p>From the service provider API response create the media object.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is the only abstract method of the class. Thus it needs to be
@@ -160,16 +160,17 @@ Media object related to the media retrieval process.</p></div>
 <span>def <span class="ident">authenticate</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Authenticates the service on the service provider API and updates the
-<code>access_code</code> variable with the newly refreshed valid access token.</p></div>
+<div class="desc"><p>Authenticate the service on the service provider API.</p>
+<p>Update the <code>access_code</code> variable with the newly refreshed valid access
+token.</p></div>
 </dd>
 <dt id="telereddit.services.service.Service.get_media"><code class="name flex">
 <span>def <span class="ident">get_media</span></span>(<span>url, json)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Entrypoint of the class. Takes care of the common logic of media
-information retrieval, which consists in executing the following
-steps (in order):</p>
+<div class="desc"><p>Entrypoint of the class.</p>
+<p>Takes care of the common logic of media information retrieval, which
+consists in executing the following steps (in order):</p>
 <ul>
 <li><code><a title="telereddit.services.service.Service.preprocess" href="#telereddit.services.service.Service.preprocess">Service.preprocess()</a></code></li>
 <li><code><a title="telereddit.services.service.Service.get" href="#telereddit.services.service.Service.get">Service.get()</a></code></li>

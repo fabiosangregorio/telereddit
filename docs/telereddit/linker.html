@@ -36,15 +36,17 @@
 <span>(</span><span>chat_id)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Gets instanciated at every telereddit request (new message, messsage callback, etc.)</p>
+<div class="desc"><p>Handle a single telereddit request.</p>
+<p>Gets instanciated at every telereddit request. (new message, messsage
+callback, etc.)</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>bot</code></strong> :&ensp;<code>Bot</code></dt>
-<dd>python-telegram-bot's Bot instance: it is initialized by set</dd>
+<dd>python-telegram-bot's Bot instance: initialized by <code>set_bot()</code>.</dd>
 <dt><strong><code>chat_id</code></strong> :&ensp;<code>Int</code></dt>
-<dd>&nbsp;</dd>
+<dd>Telegram's chat id to which to send the message.</dd>
 <dt><strong><code>args</code></strong> :&ensp;<code>dict</code></dt>
-<dd>&nbsp;</dd>
+<dd>Args to construct the Telegram message.</dd>
 </dl></div>
 <h3>Static methods</h3>
 <dl>
@@ -52,8 +54,8 @@
 <span>def <span class="ident">set_bot</span></span>(<span>bot)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the python-telegram-bot's Bot instance for the Linker object.
-This should be set only once, at the package startup.</p>
+<div class="desc"><p>Set the python-telegram-bot's Bot instance for the Linker object.</p>
+<p>This should be set only once, at the package startup.</p>
 <div class="admonition note">
 <p class="admonition-title">Note:&ensp;This needs to be set before starting the bot loop.</p>
 </div>
@@ -70,55 +72,91 @@ This should be set only once, at the package startup.</p>
 <span>def <span class="ident">get_args</span></span>(<span>self, override_dict={})</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>override_dict :
-(Default value = {})</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Get the args parameters potentially overriding some of them.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>override_dict</code></strong> :&ensp;<code>dict</code></dt>
+<dd>
+<p>(Default value = {})</p>
+<p>Args to override, with key as argument key and value as override
+value.</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code>args</code></p></div>
 </dd>
 <dt id="telereddit.linker.Linker.send_random_post"><code class="name flex">
 <span>def <span class="ident">send_random_post</span></span>(<span>self, subreddit)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>subreddit :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Send a random post to the chat from the given subreddit.</p>
+<p>Potentially catch Telereddit exceptions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>subreddit</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<p>Valid subreddit name.</p>
+<div class="admonition note">
+<p class="admonition-title">Note:&ensp;This should be a r/ prefixed subreddit name.</p>
+</div>
+</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.send_post_from_url"><code class="name flex">
 <span>def <span class="ident">send_post_from_url</span></span>(<span>self, post_url)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>post_url :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Try to send the reddit post relative to post_url to the chat.</p>
+<p>Potentially catch Telereddit exceptions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>post_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Reddit share link of the post.</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.send_post"><code class="name flex">
 <span>def <span class="ident">send_post</span></span>(<span>self, post_url, from_url=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>post_url :</p>
-<p>from_url :
-(Default value = False)</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Send the reddit post relative to post_url to the chat.</p>
+<p>This is the core functionality of Linker.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>post_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Reddit share link of the post.</dd>
+<dt><strong><code>from_url</code></strong> :&ensp;<code>Boolean</code></dt>
+<dd>
+<p>(Default value = False)</p>
+<p>Indicates whether the post url has been received from the chat or
+from the random post.</p>
+</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.edit_result"><code class="name flex">
 <span>def <span class="ident">edit_result</span></span>(<span>self, message)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Edits the given message with a new post from that subreddit, and edits the
-keyboard markup to give the user the ability to edit or confirm the message.</p>
+<div class="desc"><p>Edit the given message with a new post from that subreddit.</p>
+<p>Edit the keyboard markup to give the user the ability to edit or confirm
+the message.</p>
 <h2 id="parameters">Parameters</h2>
-<p>message :</p>
-<h2 id="returns">Returns</h2></div>
+<dl>
+<dt><strong><code>message</code></strong> :&ensp;<code>Message</code></dt>
+<dd>python-telegram-bot's instance of the Telegram message.</dd>
+</dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.edit_random_post"><code class="name flex">
 <span>def <span class="ident">edit_random_post</span></span>(<span>self, message, subreddit)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>message :</p>
-<p>subreddit :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Edit the current Telegram message with another random Reddit post.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>message</code></strong> :&ensp;<code>Message</code></dt>
+<dd>python-telegram-bot's instance of the Telegram message.</dd>
+<dt><strong><code>subreddit</code></strong> :&ensp;<code>str</code></dt>
+<dd>Subreddit from which to retrieve the random post.</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>

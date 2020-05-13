@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
 <title>telereddit.reddit API documentation</title>
-<meta name="description" content="Reddit API interface module. Contains all the functions to call Reddit APIs,
-retrieve the desired information and build telereddit objects." />
+<meta name="description" content="Reddit API interface module …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -21,8 +20,9 @@ retrieve the desired information and build telereddit objects." />
 <h1 class="title">Module <code>telereddit.reddit</code></h1>
 </header>
 <section id="section-intro">
-<p>Reddit API interface module. Contains all the functions to call Reddit APIs,
-retrieve the desired information and build telereddit objects.</p>
+<p>Reddit API interface module.</p>
+<p>Contains all the functions to call Reddit APIs, retrieve the desired information
+and build telereddit objects.</p>
 </section>
 <section>
 </section>
@@ -35,9 +35,15 @@ retrieve the desired information and build telereddit objects.</p>
 <span>def <span class="ident">get_post</span></span>(<span>post_url)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="parameters">Parameters</h2>
-<p>post_url :</p>
-<h2 id="returns">Returns</h2></div>
+<div class="desc"><p>Get the post from the Reddit API and construct the Post object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>post_url</code></strong> :&ensp;<code>str</code></dt>
+<dd>post url to fetch from the Reddit API.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="telereddit.models.post.Post" href="models/post.html#telereddit.models.post.Post">Post</a></code>
+Post object containing all the retrieved post information.</p></div>
 </dd>
 </dl>
 </section>
