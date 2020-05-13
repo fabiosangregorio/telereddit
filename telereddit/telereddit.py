@@ -38,7 +38,7 @@ def on_chat_message(update: Update, context: CallbackContext):
 
     """
     msg = update.message
-    if not msg.text:
+    if not msg or not msg.text:
         return
 
     linker = Linker(msg.chat_id)
@@ -56,7 +56,7 @@ def on_chat_message(update: Update, context: CallbackContext):
 def on_callback_query(update: Update, context: CallbackContext):
     """
     Handle all the several types of callback queries.
-    
+
     (actions initiated from a keyboard).
 
     Parameters

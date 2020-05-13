@@ -2,6 +2,7 @@
 import json
 from urllib.parse import urlparse
 import requests
+import re
 
 from telereddit.config.config import secret
 from telereddit.services.service import Service
@@ -20,12 +21,12 @@ class Imgur(Service):
         Gets the media hash from the url and creates the accepted provider media
         url.
         """
-        url = urlparse(url).path.replace("/", "")
-        if "." in url:
-            media_hash = url.rpartition(".")[0]
-        else:
-            media_hash = url
-        return f"https://api.imgur.com/3/image/{media_hash}"
+        media_hash = urlparse(url).path.rpartition("/")[2]
+        r = re.compile(r"image|gallery").search(url)
+        api = r.group() if r else "image"
+        if "." in media_hash:
+            media_hash = media_hash.rpartition(".")[0]
+        return f"https://api.imgur.com/3/{api}/{media_hash}"
 
     @classmethod
     def get(cls, url):
@@ -48,6 +49,8 @@ class Imgur(Service):
         """
         data = json.loads(response.content)["data"]
         media = None
+        if "images" in data:
+            data = data["images"][0]
         if "image/jpeg" in data["type"] or "image/png" in data["type"]:
             media = Media(data["link"], ContentType.PHOTO, data["size"])
         elif "video" or "image/gif" in data["type"]:

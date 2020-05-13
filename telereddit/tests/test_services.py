@@ -1,8 +1,12 @@
 import unittest
 from parameterized import parameterized, param
+from unittest.mock import patch
 
 from telereddit.services.services_wrapper import ServicesWrapper
 from telereddit.models.content_type import ContentType
+from telereddit.services.gfycat_service import Gfycat
+
+from telereddit.exceptions import AuthenticationError, MediaRetrievalError
 
 
 class TestServices(unittest.TestCase):
@@ -52,7 +56,13 @@ class TestServices(unittest.TestCase):
                 url="https://i.imgur.com/2WNMUqO.gifv",
                 expected_url="https://i.imgur.com/2WNMUqO.mp4",
                 expected_type=ContentType.VIDEO,
-            )
+            ),
+            # imgur image
+            param(
+                url="https://imgur.com/gallery/YfsGJtb",
+                expected_url="https://i.imgur.com/wHx7Rd0.jpg",
+                expected_type=ContentType.PHOTO,
+            ),
         ]
     )
     def test_imgur(self, url, expected_url, expected_type):
@@ -67,7 +77,13 @@ class TestServices(unittest.TestCase):
                 url="https://gfycat.com/HeartfeltHollowIberianchiffchaff",
                 expected_url="https://giant.gfycat.com/HeartfeltHollowIberianchiffchaff.mp4",
                 expected_type=ContentType.VIDEO,
-            )
+            ),
+            # gfycat 35mb gif
+            param(
+                url="https://gfycat.com/agitateddimcarp",
+                expected_url="https://thumbs.gfycat.com/AgitatedDimCarp-size_restricted.gif",
+                expected_type=ContentType.GIF,
+            ),
         ]
     )
     def test_gfycat(self, url, expected_url, expected_type):
@@ -89,7 +105,24 @@ class TestServices(unittest.TestCase):
                 },
                 expected_url="https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback",
                 expected_type=ContentType.GIF,
-            )
+            ),
+            # crossspost v.redd.it gif
+            param(
+                url="https://v.redd.it/dvx5rzrnp8k41",
+                json={
+                    "crosspost_parent_list": [
+                        {
+                            "secure_media": {
+                                "reddit_video": {
+                                    "fallback_url": "https://v.redd.it/dvx5rzrnp8k41/DASH_720?source=fallback"
+                                }
+                            }
+                        }
+                    ]
+                },
+                expected_url="https://v.redd.it/dvx5rzrnp8k41/DASH_720?source=fallback",
+                expected_type=ContentType.GIF,
+            ),
         ]
     )
     def test_vreddit(self, url, json, expected_url, expected_type):
@@ -117,3 +150,20 @@ class TestServices(unittest.TestCase):
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, expected_type)
+
+    @patch("telereddit.services.gfycat_service.requests.post")
+    def test_gfycat_authentication_fail(self, mock_post):
+        mock_post.return_value.status_code = 401
+
+        with self.assertRaises(AuthenticationError):
+            Gfycat()
+
+    @patch("telereddit.services.gfycat_service.requests.get")
+    def test_gfycat_post_fail(self, mock_get):
+        mock_get.return_value.status_code = 401
+
+        gfycat = Gfycat()
+        with self.assertRaises(MediaRetrievalError):
+            gfycat.get_media(
+                "https://gfycat.com/dimpledsorrowfulalaskajingle", {}
+            )

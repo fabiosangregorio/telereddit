@@ -6,7 +6,7 @@ from telereddit.models.content_type import ContentType
 class Media:
     """
     Represents a media content in the application.
-    
+
     This can be any of `telereddit.models.content_type.ContentType`: photo,
     video, gif, etc.
 
@@ -21,11 +21,11 @@ class Media:
         `telereddit.linker.Linker` to determine what type of message to send
         to the chat.
 
-    size : int 
+    size : int
         Size (in bytes) of the media content. This can be none if it
         is unkwnown, but it is crucial because of Telegram file size
         limitations.
-        
+
     """
 
     def __init__(self, url, media_type: ContentType, size=None):

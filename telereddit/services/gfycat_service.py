@@ -19,7 +19,7 @@ class Gfycat(Service):
     Notes
     -----
     This is an authenticated OAuth service.
-    
+
     """
 
     is_authenticated = True
@@ -91,8 +91,8 @@ class Gfycat(Service):
             raise AuthenticationError(
                 {
                     "response_text": response.text,
-                    "client_id": secret.GFYCAT_CLIENT_ID,
-                    "client_secret": secret.GFYCAT_CLIENT_SECRET,
+                    # "client_id": secret.GFYCAT_CLIENT_ID,
+                    # "client_secret": secret.GFYCAT_CLIENT_SECRET,
                 }
             )
 

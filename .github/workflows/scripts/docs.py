@@ -17,7 +17,7 @@ elif percentage >= 40:
 else:
     color = "red"
 
-query = quote(f"docs coverage-{percentage}%-{color}")
+query = quote(f"docs-{percentage}%-{color}")
 url = f"https://img.shields.io/badge/{query}"
 print(url)
 

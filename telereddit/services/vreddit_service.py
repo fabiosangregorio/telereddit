@@ -16,6 +16,10 @@ class Vreddit(Service):
         Override of `telereddit.services.service.Service.preprocess` method.
 
         Tries to get the right media url from the reddit json.
+
+        Reddit APIs are known to be unreliable in positioning the information
+        needed, therefore we need to seach in the json for the correct piece of
+        information in every specific case.
         """
         xpost = helpers.get(json, "crosspost_parent_list")
         if xpost is not None and len(xpost) > 0:

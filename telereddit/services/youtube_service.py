@@ -13,7 +13,7 @@ class Youtube(Service):
     -----
     This service creates a `YOUTUBE` media, which will in the end create a text
     post.
-    
+
     """
 
     access_token = None

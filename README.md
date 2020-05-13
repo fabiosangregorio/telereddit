@@ -15,7 +15,7 @@
       src="https://api.codacy.com/project/badge/Grade/76515a362977419b91de831466e1bf9a" alt="Codacy Badge"></a>
   <a href="https://codeclimate.com/github/fabiosangregorio/telereddit/maintainability"><img
       src="https://api.codeclimate.com/v1/badges/bef15455da0878eae539/maintainability" alt="Maintainability"></a>
-  <img class="docs-coverage" src="https://img.shields.io/badge/docs%20coverage-100%25-brightgreen" alt="Docs coverage">
+  <img class="docs-coverage" src="https://img.shields.io/badge/docs-100%25-brightgreen" alt="Docs coverage">
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"
       alt="Code style: black"></a>
 </p>
@@ -45,8 +45,18 @@ Telereddit is a Telegram bot which lets you easily see shared Reddit posts previ
 Get it on [telegram.me](https://telegram.me/tele_reddit_bot)!
 
 ## Installation
-TODO
-transfer commit hooks from .githooks to .git/hooks
+
+1. Clone the repository
+1. Install requirements
+    ```bash
+    pip install -r requirements.txt
+    ```
+1. Set up Telegram token and API keys by filling out `./telereddit/config/secret_generic.py`
+1. Start the bot
+    ```bash
+    python -m telereddit
+    ```
+1. Enjoy
 
 ## Bugs and feature requests
 If you want to report a bug or would like a feature to be added, feel free to open an issue.
@@ -54,3 +64,4 @@ If you want to report a bug or would like a feature to be added, feel free to op
 ## License
 **[GPL v3](https://www.gnu.org/licenses/gpl-3.0)** - Copyright 2020 © <a href="http://fabio.sangregorio.dev"
   target="_blank">fabio.sangregorio.dev</a>.
+ 

@@ -60,7 +60,7 @@ class Service(ABC):
     def preprocess(cls, url, json):
         """
         Preprocess the media URL coming from Reddit json.
-        
+
         Returned url should match the service provider API URL structure, from
         which to get the media information.
 
@@ -84,7 +84,7 @@ class Service(ABC):
     def get(cls, url):
         """
         Get the media information.
-        
+
         This is usually through an http request to the service provider API.
 
         .. note::
@@ -127,13 +127,13 @@ class Service(ABC):
             Media object related to the media retrieval process.
 
         """
-        pass
+        raise NotImplementedError()
 
     @classmethod
     def authenticate(cls):
         """
         Authenticate the service on the service provider API.
-        
+
         Update the `access_code` variable with the newly refreshed valid access
         token.
         """
@@ -143,7 +143,7 @@ class Service(ABC):
     def get_media(cls, url, json):
         """
         Entrypoint of the class.
-        
+
         Takes care of the common logic of media information retrieval, which
         consists in executing the following steps (in order):
 

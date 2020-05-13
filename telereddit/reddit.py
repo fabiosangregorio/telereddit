@@ -17,6 +17,7 @@ from telereddit.exceptions import (
     SubredditPrivateError,
     SubredditDoesntExistError,
     PostRetrievalError,
+    TeleredditError,
 )
 from telereddit.services.services_wrapper import ServicesWrapper
 
@@ -34,7 +35,7 @@ def _get_json(post_url):
     -------
     json
         Json containing the post data.
-    
+
     """
     try:
         response = requests.get(
@@ -73,7 +74,7 @@ def get_post(post_url):
     -------
     `telereddit.models.post.Post`
         Post object containing all the retrieved post information.
-    
+
     """
     json = _get_json(post_url)
 
@@ -98,5 +99,7 @@ def get_post(post_url):
         post = Post(subreddit, permalink, post_title, post_text, media)
         return post
 
-    except Exception:
+    except Exception as e:
+        if issubclass(type(e), TeleredditError):
+            raise e
         raise PostRetrievalError({"post_url": post_url})

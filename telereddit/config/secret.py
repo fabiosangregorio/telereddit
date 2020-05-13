@@ -4,7 +4,7 @@
 class Secret:
     """
     Secret configuration class.
-    
+
     This contains all the necessary API keys for the software to run correctly.
 
     .. note::

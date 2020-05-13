@@ -8,6 +8,7 @@ from telereddit.config.config import (
     EDIT_FAILED_KEYBOARD,
     NO_EDIT_KEYBOARD,
     DELETE_KEYBOARD,
+    MAX_MEDIA_SIZE,
 )
 import telereddit.reddit as reddit
 import telereddit.helpers as helpers
@@ -80,7 +81,7 @@ class Linker:
         Returns
         -------
         `args`
-        
+
         """
         args = self.args.copy()
         args.update(override_dict)
@@ -98,7 +99,7 @@ class Linker:
             Valid subreddit name.
 
             .. note:: This should be a r/ prefixed subreddit name.
-        
+
         """
         for _ in range(MAX_TRIES):
             try:
@@ -136,16 +137,16 @@ class Linker:
         ----------
         post_url : str
             Reddit share link of the post.
-            
+
         from_url : Boolean
             (Default value = False)
 
             Indicates whether the post url has been received from the chat or
             from the random post.
-        
+
         """
         post = reddit.get_post(post_url)
-        if post.media and post.media.size and post.media.size > 20000000:
+        if post.media and post.media.size and post.media.size > MAX_MEDIA_SIZE:
             raise MediaTooBigError()
 
         args = self.get_args()
@@ -181,7 +182,7 @@ class Linker:
     def edit_result(self, message):
         """
         Edit the given message with a new post from that subreddit.
-        
+
         Edit the keyboard markup to give the user the ability to edit or confirm
         the message.
 
@@ -189,7 +190,7 @@ class Linker:
         ----------
         message : Message
             python-telegram-bot's instance of the Telegram message.
-        
+
         """
         subreddit = helpers.get_subreddit_name(
             (message.caption or message.text) + "\n", True
@@ -214,7 +215,7 @@ class Linker:
         ----------
         message : Message
             python-telegram-bot's instance of the Telegram message.
-            
+
         subreddit : str
             Subreddit from which to retrieve the random post.
 
