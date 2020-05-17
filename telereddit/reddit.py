@@ -34,7 +34,7 @@ def _get_json(post_url):
     -------
     json
         Json containing the post data.
-    
+
     """
     try:
         response = requests.get(
@@ -73,7 +73,7 @@ def get_post(post_url):
     -------
     `telereddit.models.post.Post`
         Post object containing all the retrieved post information.
-    
+
     """
     json = _get_json(post_url)
 
