@@ -47,9 +47,8 @@ class TeleredditError(Exception):
             if capture:
                 sentry.capture_exception()
         traceback.print_exc()
-        print("\nException type:", self.__class__.__name__)
-        print("Exception message: ", self)
-        print("Exception data: ", data)
+        print("\nException:", self.__class__.__name__)
+        print("Message: ", self, ", Data: ", data)
 
 
 class AuthenticationError(TeleredditError):

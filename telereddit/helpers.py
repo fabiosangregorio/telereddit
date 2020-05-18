@@ -169,12 +169,17 @@ def get_urls_from_text(text):
             )
         if "reddit.app.link" in w_lower:
             try:
-                r = requests.get(w, headers={"User-agent": "telereddit_bot"})
+                r = requests.get(
+                    w,
+                    headers={"User-agent": "telereddit_bot"},
+                    allow_redirects=False,
+                )
                 start = r.text.find("https://")
                 url = r.text[start : r.text.find('"', start)]
-                urls.append(url.partition("/?")[0])
+                if len(url) > 0:
+                    urls.append(url.partition("/?")[0])
             except Exception:
-                urls.append("None")
+                pass
     return urls
 
 
