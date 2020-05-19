@@ -89,7 +89,24 @@ class TestServices(unittest.TestCase):
                 },
                 expected_url="https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback",
                 expected_type=ContentType.GIF,
-            )
+            ),
+            # crossspost v.redd.it gif
+            param(
+                url="https://v.redd.it/dvx5rzrnp8k41",
+                json={
+                    "crosspost_parent_list": [
+                        {
+                            "secure_media": {
+                                "reddit_video": {
+                                    "fallback_url": "https://v.redd.it/dvx5rzrnp8k41/DASH_720?source=fallback"
+                                }
+                            }
+                        }
+                    ]
+                },
+                expected_url="https://v.redd.it/dvx5rzrnp8k41/DASH_720?source=fallback",
+                expected_type=ContentType.GIF,
+            ),
         ]
     )
     def test_vreddit(self, url, json, expected_url, expected_type):
