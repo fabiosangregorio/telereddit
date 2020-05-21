@@ -1,5 +1,4 @@
 import unittest
-from unittest.mock import patch
 from parameterized import parameterized, param
 
 from telereddit.models.post import Post

@@ -1,8 +1,12 @@
 import unittest
 from parameterized import parameterized, param
+from unittest.mock import patch
 
 from telereddit.services.services_wrapper import ServicesWrapper
 from telereddit.models.content_type import ContentType
+from telereddit.services.gfycat_service import Gfycat
+
+from telereddit.exceptions import AuthenticationError, MediaRetrievalError
 
 
 class TestServices(unittest.TestCase):
@@ -134,3 +138,20 @@ class TestServices(unittest.TestCase):
         media = ServicesWrapper.get_media(url)
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, expected_type)
+
+    @patch("telereddit.services.gfycat_service.requests.post")
+    def test_gfycat_authentication_fail(self, mock_post):
+        mock_post.return_value.status_code = 401
+
+        with self.assertRaises(AuthenticationError):
+            Gfycat()
+
+    @patch("telereddit.services.gfycat_service.requests.get")
+    def test_gfycat_post_fail(self, mock_get):
+        mock_get.return_value.status_code = 401
+
+        gfycat = Gfycat()
+        with self.assertRaises(MediaRetrievalError):
+            gfycat.get_media(
+                "https://gfycat.com/dimpledsorrowfulalaskajingle", {}
+            )

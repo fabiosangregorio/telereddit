@@ -6,7 +6,7 @@ from telereddit.models.content_type import ContentType
 class Post:
     """
     Represents a Reddit post.
-    
+
     Parameters
     ----------
     subreddit : str
@@ -22,7 +22,7 @@ class Post:
 
         Media associated with the post (if present), None otherwise. This
         determines the post type.
-        
+
     """
 
     def __init__(self, subreddit, permalink, title, text, media=None):
