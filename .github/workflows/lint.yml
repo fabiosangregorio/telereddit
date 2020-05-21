@@ -31,4 +31,7 @@ jobs:
         pip install -r ./.github/workflows/requirements/lint.txt
 
     - name: Check black code formatting
-      run: python -m black . --check
+      run: python -m black telereddit --check
+
+    - name: Check flake8 linting
+      run: python -m flake8 telereddit
