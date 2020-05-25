@@ -37,6 +37,8 @@ REDDIT_DOMAINS = ["reddit.com", "redd.it", "reddit.app.link"]
 MAX_POST_LENGTH = 500
 MAX_TITLE_LENGTH = 200
 MAX_TRIES = 4
+MAX_MEDIA_SIZE = 20000000
+
 SENTRY_ENABLED = (
     secret.SENTRY_TOKEN is not None and len(secret.SENTRY_TOKEN) > 0
 )

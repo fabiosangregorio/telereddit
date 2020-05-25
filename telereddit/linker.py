@@ -8,6 +8,7 @@ from telereddit.config.config import (
     EDIT_FAILED_KEYBOARD,
     NO_EDIT_KEYBOARD,
     DELETE_KEYBOARD,
+    MAX_MEDIA_SIZE,
 )
 import telereddit.reddit as reddit
 import telereddit.helpers as helpers
@@ -145,7 +146,7 @@ class Linker:
 
         """
         post = reddit.get_post(post_url)
-        if post.media and post.media.size and post.media.size > 20000000:
+        if post.media and post.media.size and post.media.size > MAX_MEDIA_SIZE:
             raise MediaTooBigError()
 
         args = self.get_args()

@@ -57,11 +57,11 @@ class TestServices(unittest.TestCase):
                 expected_url="https://i.imgur.com/2WNMUqO.mp4",
                 expected_type=ContentType.VIDEO,
             ),
-            # imgur gif without extension
+            # imgur image
             param(
-                url="https://i.imgur.com/2WNMUqO",
-                expected_url="https://i.imgur.com/2WNMUqO.mp4",
-                expected_type=ContentType.VIDEO,
+                url="https://imgur.com/gallery/YfsGJtb",
+                expected_url="https://i.imgur.com/wHx7Rd0.jpg",
+                expected_type=ContentType.PHOTO,
             ),
         ]
     )
