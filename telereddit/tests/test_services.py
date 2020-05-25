@@ -56,7 +56,13 @@ class TestServices(unittest.TestCase):
                 url="https://i.imgur.com/2WNMUqO.gifv",
                 expected_url="https://i.imgur.com/2WNMUqO.mp4",
                 expected_type=ContentType.VIDEO,
-            )
+            ),
+            # imgur gif without extension
+            param(
+                url="https://i.imgur.com/2WNMUqO",
+                expected_url="https://i.imgur.com/2WNMUqO.mp4",
+                expected_type=ContentType.VIDEO,
+            ),
         ]
     )
     def test_imgur(self, url, expected_url, expected_type):
@@ -71,7 +77,13 @@ class TestServices(unittest.TestCase):
                 url="https://gfycat.com/HeartfeltHollowIberianchiffchaff",
                 expected_url="https://giant.gfycat.com/HeartfeltHollowIberianchiffchaff.mp4",
                 expected_type=ContentType.VIDEO,
-            )
+            ),
+            # gfycat 35mb gif
+            param(
+                url="https://gfycat.com/agitateddimcarp",
+                expected_url="https://thumbs.gfycat.com/AgitatedDimCarp-size_restricted.gif",
+                expected_type=ContentType.GIF,
+            ),
         ]
     )
     def test_gfycat(self, url, expected_url, expected_type):
