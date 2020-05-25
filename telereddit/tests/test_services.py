@@ -151,6 +151,15 @@ class TestServices(unittest.TestCase):
         self.assertEqual(media.url, expected_url)
         self.assertEqual(media.type, expected_type)
 
+    @patch("telereddit.services.service.requests.get")
+    def test_generic_video(self, mock_get):
+        mock_get.return_value.url = "https://mock.video.url/filename.mp4"
+        mock_get.return_value.status_code = 200
+        mock_get.headers = None
+        media = ServicesWrapper.get_media("https://test.test.test")
+        self.assertIsNone(media.size)
+        self.assertEqual(media.type, ContentType.VIDEO)
+
     @patch("telereddit.services.gfycat_service.requests.post")
     def test_gfycat_authentication_fail(self, mock_post):
         mock_post.return_value.status_code = 401
