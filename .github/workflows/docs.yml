@@ -64,7 +64,7 @@ jobs:
     - name: Run documentation coverage
       run: |
         mkdir documentation-reports
-        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ./documentation-reports/docstr-coverage.txt
+        docstr-coverage telereddit --percentage-only --exclude=tests --skipinit 2>&1 | tee ./documentation-reports/docstr-coverage.txt
         (pydocstyle telereddit 2>&1 | tee ./documentation-reports/pydocstyle-coverage.txt; exit ${PIPESTATUS[0]})
         python .github/workflows/scripts/docs.py
 
