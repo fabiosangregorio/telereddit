@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+    - tvsw
   pull_request:
     types: [opened, synchronize, repoened, edited]
 
