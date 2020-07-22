@@ -1,12 +1,13 @@
 """Miscellaneous helpers for the whole application."""
 
+from typing import List, Optional
 import re
 import requests
 
 from telereddit.config.config import MAX_TITLE_LENGTH
 
 
-def get_random_post_url(subreddit):
+def get_random_post_url(subreddit: str) -> str:
     """
     Return the "random post" url relative to the Reddit API.
 
@@ -24,7 +25,7 @@ def get_random_post_url(subreddit):
     return f"https://www.reddit.com/{subreddit}/random"
 
 
-def get_subreddit_names(text):
+def get_subreddit_names(text: str) -> List[str]:
     """
     Return a list of the ("r/" prefixed) subreddit names present in the text.
 
@@ -49,7 +50,7 @@ def get_subreddit_names(text):
     return re.findall(regex, text, re.MULTILINE)
 
 
-def get_subreddit_name(text, reverse=False):
+def get_subreddit_name(text : str, reverse : bool = False) -> Optional[str]:
     """
     Return the first (or last) ("r/" prefixed) subreddit name in the given text.
 
@@ -76,7 +77,7 @@ def get_subreddit_name(text, reverse=False):
         return None
 
 
-def escape_markdown(text):
+def escape_markdown(text: str) -> str:
     """
     Return the given text with escaped common markdown characters.
 
@@ -98,7 +99,7 @@ def escape_markdown(text):
     return text.replace("*", "\\*").replace("_", "\\_")
 
 
-def truncate_text(text, length=MAX_TITLE_LENGTH):
+def truncate_text(text: str, length: int = MAX_TITLE_LENGTH) -> str:
     """
     Return the given text, truncated at `length` characters, plus ellipsis.
 
@@ -124,7 +125,7 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
     return text[:length] + (text[length:] and "...")
 
 
-def polish_text(text):
+def polish_text(text: str) -> str:
     """
     Return the given text without newline characters.
 
@@ -142,7 +143,7 @@ def polish_text(text):
     return text.replace("\n", " ")
 
 
-def get_urls_from_text(text):
+def get_urls_from_text(text: str) -> List[str]:
     """
     Return a list of the reddit urls present in the given text.
 
@@ -183,7 +184,7 @@ def get_urls_from_text(text):
     return urls
 
 
-def get(obj, attr, default=None):
+def get(obj: object, attr: str, default: any = None) -> Any:
     """
     Return the value of `attr` if it exists and is not None, default otherwise.
 
@@ -211,7 +212,7 @@ def get(obj, attr, default=None):
     return obj[attr] if attr in obj and obj[attr] is not None else default
 
 
-def chained_get(obj, attrs, default=None):
+def chained_get(obj: object, attrs: List[str], default: any = None) -> any:
     """
     Get for nested objects.
 
