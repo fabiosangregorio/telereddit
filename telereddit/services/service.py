@@ -1,7 +1,11 @@
 """Abstract Base static Class for every service."""
 from abc import ABC, abstractmethod
 import requests
+from requests import Response
 
+from typing import Optional, Any, Union
+
+from telereddit.models.media import Media
 from telereddit.exceptions import MediaRetrievalError
 
 
@@ -34,12 +38,12 @@ class Service(ABC):
 
     """
 
-    has_external_request = True
+    has_external_request: bool = True
     """
     True if the service needs to reach out to an external http endpoint, False
     otherwise.
     """
-    is_authenticated = False
+    is_authenticated: bool = False
     """
     True if the external request needs to be authenticated (i.e. with an
     Authorization header), False otherwise.
@@ -47,7 +51,7 @@ class Service(ABC):
     .. note::
         This is taken into account only if `has_external_request` is set to True
     """
-    access_token = None
+    access_token: Optional[str] = None
     """
     Contains the access token for the OAuth authentication if present, None
     otherwise.
@@ -57,7 +61,7 @@ class Service(ABC):
     """
 
     @classmethod
-    def preprocess(cls, url, json):
+    def preprocess(cls, url: str, json: Any) -> str:
         """
         Preprocess the media URL coming from Reddit json.
 
@@ -81,7 +85,7 @@ class Service(ABC):
         return url
 
     @classmethod
-    def get(cls, url):
+    def get(cls, url: str) -> Union[Response, str]:
         """
         Get the media information.
 
@@ -107,7 +111,7 @@ class Service(ABC):
 
     @classmethod
     @abstractmethod
-    def postprocess(cls, response):
+    def postprocess(cls, response: Union[Response, str]) -> Media:
         """
         From the service provider API response create the media object.
 
@@ -130,7 +134,7 @@ class Service(ABC):
         raise NotImplementedError()
 
     @classmethod
-    def authenticate(cls):
+    def authenticate(cls) -> None:
         """
         Authenticate the service on the service provider API.
 
@@ -140,7 +144,7 @@ class Service(ABC):
         pass
 
     @classmethod
-    def get_media(cls, url, json):
+    def get_media(cls, url: str, json: Any) -> Media:
         """
         Entrypoint of the class.
 
@@ -172,14 +176,14 @@ class Service(ABC):
             The media object accessible from the application.
 
         """
-        processed_url = cls.preprocess(url, json)
+        processed_url: str = cls.preprocess(url, json)
 
-        response = cls.get(processed_url)
+        response: Union[Response, str] = cls.get(processed_url)
         if cls.has_external_request:
-            if cls.is_authenticated and response.status_code == 401:
+            if cls.is_authenticated and response.status_code == 401:  # type: ignore
                 cls.authenticate()
                 response = cls.get(processed_url)
-            if response.status_code >= 300:
+            if response.status_code >= 300:  # type: ignore
                 raise MediaRetrievalError(
                     {
                         "service": cls.__name__,

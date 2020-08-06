@@ -1,8 +1,9 @@
 """Miscellaneous helpers for the whole application."""
 
-from typing import List, Optional
+from typing import List, Optional, Any
 import re
 import requests
+from requests import Response
 
 from telereddit.config.config import MAX_TITLE_LENGTH
 
@@ -50,7 +51,7 @@ def get_subreddit_names(text: str) -> List[str]:
     return re.findall(regex, text, re.MULTILINE)
 
 
-def get_subreddit_name(text : str, reverse : bool = False) -> Optional[str]:
+def get_subreddit_name(text: str, reverse: bool = False) -> Optional[str]:
     """
     Return the first (or last) ("r/" prefixed) subreddit name in the given text.
 
@@ -170,7 +171,7 @@ def get_urls_from_text(text: str) -> List[str]:
             )
         if "reddit.app.link" in w_lower:
             try:
-                r = requests.get(
+                r: Response = requests.get(
                     w,
                     headers={"User-agent": "telereddit_bot"},
                     allow_redirects=False,
@@ -184,7 +185,7 @@ def get_urls_from_text(text: str) -> List[str]:
     return urls
 
 
-def get(obj: object, attr: str, default: any = None) -> Any:
+def get(obj: Any, attr: str, default: Any = None) -> Any:
     """
     Return the value of `attr` if it exists and is not None, default otherwise.
 
@@ -212,7 +213,7 @@ def get(obj: object, attr: str, default: any = None) -> Any:
     return obj[attr] if attr in obj and obj[attr] is not None else default
 
 
-def chained_get(obj: object, attrs: List[str], default: any = None) -> any:
+def chained_get(obj: object, attrs: List[str], default: Any = None) -> Any:
     """
     Get for nested objects.
 

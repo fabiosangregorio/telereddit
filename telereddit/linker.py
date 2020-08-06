@@ -1,6 +1,8 @@
 """Linker class which handles all telereddit requests."""
 
-from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument
+from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument  # type: ignore
+from telegram.bot import Bot, Message  # type: ignore
+from typing import Optional
 
 from telereddit.config.config import (
     MAX_TRIES,
@@ -40,8 +42,10 @@ class Linker:
 
     """
 
+    bot: Bot = None
+
     @classmethod
-    def set_bot(cls, bot):
+    def set_bot(cls, bot: Bot) -> None:
         """
         Set the python-telegram-bot's Bot instance for the Linker object.
 
@@ -57,16 +61,16 @@ class Linker:
         """
         cls.bot = bot
 
-    def __init__(self, chat_id):
-        self.chat_id = chat_id
-        self.args = dict(
+    def __init__(self, chat_id: int) -> None:
+        self.chat_id: int = chat_id
+        self.args: dict = dict(
             chat_id=chat_id,
             parse_mode="Markdown",
             reply_markup=EDIT_KEYBOARD,
             disable_web_page_preview=True,
         )
 
-    def get_args(self, override_dict={}):
+    def get_args(self, override_dict: Optional[dict] = {}) -> dict:
         """
         Get the args parameters potentially overriding some of them.
 
@@ -84,10 +88,11 @@ class Linker:
 
         """
         args = self.args.copy()
-        args.update(override_dict)
+        if override_dict:
+            args.update(override_dict)
         return args
 
-    def send_random_post(self, subreddit):
+    def send_random_post(self, subreddit: str) -> None:
         """
         Send a random post to the chat from the given subreddit.
 
@@ -110,7 +115,7 @@ class Linker:
                     break
         return self._send_exception_message(err)
 
-    def send_post_from_url(self, post_url):
+    def send_post_from_url(self, post_url: str) -> None:
         """
         Try to send the reddit post relative to post_url to the chat.
 
@@ -127,7 +132,7 @@ class Linker:
         except TeleredditError as e:
             self._send_exception_message(e, keyboard=False)
 
-    def send_post(self, post_url, from_url=False):
+    def send_post(self, post_url: str, from_url: bool = False) -> None:
         """
         Send the reddit post relative to post_url to the chat.
 
@@ -179,7 +184,7 @@ class Linker:
                 {"post_url": post.permalink, "media_url": post.media.url}
             )
 
-    def edit_result(self, message):
+    def edit_result(self, message: Message) -> None:
         """
         Edit the given message with a new post from that subreddit.
 
@@ -207,7 +212,7 @@ class Linker:
             self.chat_id, message.message_id, reply_markup=EDIT_FAILED_KEYBOARD
         )
 
-    def edit_random_post(self, message, subreddit):
+    def edit_random_post(self, message: Message, subreddit: str) -> None:
         """
         Edit the current Telegram message with another random Reddit post.
 
@@ -259,7 +264,9 @@ class Linker:
                 {"post_url": post.permalink, "media_url": post.media.url}
             )
 
-    def _send_exception_message(self, e, keyboard=True):
+    def _send_exception_message(
+        self, e: Exception, keyboard: bool = True
+    ) -> None:
         """
         Send the exception text as a Telegram message to notify the user.
 

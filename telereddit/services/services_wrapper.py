@@ -2,12 +2,14 @@
 
 import logging
 from urllib.parse import urlparse
+from typing import Any
 
 from telereddit.services.gfycat_service import Gfycat
 from telereddit.services.vreddit_service import Vreddit
 from telereddit.services.imgur_service import Imgur
 from telereddit.services.youtube_service import Youtube
 from telereddit.services.generic_service import Generic
+from telereddit.models.media import Media
 
 
 class ServicesWrapper:
@@ -20,14 +22,14 @@ class ServicesWrapper:
     An instance for each service class is set at class initialization.
     """
 
-    gfycat = Gfycat()
-    vreddit = Vreddit()
-    imgur = Imgur()
-    youtube = Youtube()
-    generic = Generic()
+    gfycat: Gfycat = Gfycat()
+    vreddit: Vreddit = Vreddit()
+    imgur: Imgur = Imgur()
+    youtube: Youtube = Youtube()
+    generic: Generic = Generic()
 
     @classmethod
-    def get_media(cls, url, json={}):
+    def get_media(cls, url: str, json: Any = {}) -> Media:
         """
         Given the url from the Reddit json, return the corresponding media obj.
 
@@ -49,7 +51,8 @@ class ServicesWrapper:
 
         """
         parsed_url = urlparse(url)
-        base_url = parsed_url.netloc
+        base_url: str = parsed_url.netloc
+        media: Media
 
         if "gfycat.com" in base_url:
             media = cls.gfycat.get_media(url, json)

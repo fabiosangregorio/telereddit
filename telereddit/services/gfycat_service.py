@@ -5,11 +5,13 @@ import requests
 from urllib.parse import urlparse
 
 from telereddit.config.config import secret
+from requests import Response
 
 from telereddit.services.service import Service
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
 from telereddit.exceptions import AuthenticationError
+from typing import Any
 
 
 class Gfycat(Service):
@@ -22,23 +24,23 @@ class Gfycat(Service):
 
     """
 
-    is_authenticated = True
+    is_authenticated: bool = True
 
     def __init__(self):
         Gfycat.authenticate()
 
     @classmethod
-    def preprocess(cls, url, json):
+    def preprocess(cls, url: str, json: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 
         Extracts the gfycat Id from the url and constructs the provider url.
         """
-        gfyid = urlparse(url).path.partition("-")[0]
+        gfyid: str = urlparse(url).path.partition("-")[0]
         return f"https://api.gfycat.com/v1/gfycats/{gfyid}"
 
     @classmethod
-    def get(cls, url):
+    def get(cls, url: str) -> Response:
         """
         Override of `telereddit.services.service.Service.get` method.
 
@@ -49,15 +51,15 @@ class Gfycat(Service):
         )
 
     @classmethod
-    def postprocess(cls, response):
+    def postprocess(cls, response: Response) -> Media:
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 
         Returns the media url which respects the Telegram API file limits, if
         present.
         """
-        gfy_item = json.loads(response.content)["gfyItem"]
-        media = Media(
+        gfy_item: Any = json.loads(response.content)["gfyItem"]
+        media: Media = Media(
             gfy_item["webmUrl"].replace(".webm", ".mp4"),
             ContentType.VIDEO,
             gfy_item["webmSize"],
@@ -71,13 +73,13 @@ class Gfycat(Service):
         return media
 
     @classmethod
-    def authenticate(cls):
+    def authenticate(cls) -> None:
         """
         Override of `telereddit.services.service.Service.authenticate` method.
 
         Authenticates the service through OAuth.
         """
-        response = requests.post(
+        response: Response = requests.post(
             "https://api.gfycat.com/v1/oauth/token",
             data=json.dumps(
                 {

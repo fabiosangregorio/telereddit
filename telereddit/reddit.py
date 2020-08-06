@@ -8,6 +8,8 @@ and build telereddit objects.
 import requests
 import random
 
+from typing import Any
+
 import telereddit.helpers as helpers
 from telereddit.config.config import secret
 from telereddit.models.post import Post
@@ -22,7 +24,7 @@ from telereddit.exceptions import (
 from telereddit.services.services_wrapper import ServicesWrapper
 
 
-def _get_json(post_url):
+def _get_json(post_url: str) -> Any:
     """
     Get post json from Reddit API and handle all request/json errors.
 
@@ -61,7 +63,7 @@ def _get_json(post_url):
     return json
 
 
-def get_post(post_url):
+def get_post(post_url: str) -> Post:
     """
     Get the post from the Reddit API and construct the Post object.
 

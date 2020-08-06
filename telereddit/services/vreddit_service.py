@@ -1,17 +1,20 @@
 """Service for v.redd.it GIFs."""
 import requests
+from requests import Response
 
 from telereddit.services.service import Service
 import telereddit.helpers as helpers
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
 
+from typing import Any, Optional
+
 
 class Vreddit(Service):
     """Service for v.redd.it GIFs."""
 
     @classmethod
-    def preprocess(cls, url, json):
+    def preprocess(cls, url: str, json: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 
@@ -21,7 +24,8 @@ class Vreddit(Service):
         needed, therefore we need to seach in the json for the correct piece of
         information in every specific case.
         """
-        xpost = helpers.get(json, "crosspost_parent_list")
+        xpost: Optional[Any] = helpers.get(json, "crosspost_parent_list")
+        fallback_url: str
         if xpost is not None and len(xpost) > 0:
             # crossposts have media = null and have the fallback url in the
             # crosspost source
@@ -33,19 +37,19 @@ class Vreddit(Service):
                 json, ["media", "reddit_video", "fallback_url"]
             )
 
-        processed_url = fallback_url if fallback_url else f"{url}/DASH_1_2_M"
+        processed_url: str = fallback_url if fallback_url else f"{url}/DASH_1_2_M"
         if requests.head(processed_url).status_code >= 300:
             processed_url = f"{url}/DASH_1080"
         return processed_url
 
     @classmethod
-    def postprocess(cls, response):
+    def postprocess(cls, response: Response) -> Media:
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 
         Constructs the media object.
         """
-        media = Media(response.url, ContentType.GIF)
+        media: Media = Media(response.url, ContentType.GIF)
         if "Content-length" in response.headers:
             media.size = int(response.headers["Content-length"])
         return media

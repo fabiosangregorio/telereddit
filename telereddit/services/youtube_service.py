@@ -5,6 +5,9 @@ from telereddit.models.content_type import ContentType
 import telereddit.helpers as helpers
 
 
+from typing import Optional, Any, Union
+
+
 class Youtube(Service):
     """
     Service for Youtube URLs.
@@ -16,22 +19,22 @@ class Youtube(Service):
 
     """
 
-    access_token = None
-    is_authenticated = False
-    has_external_request = False
+    access_token: Optional[str] = None
+    is_authenticated: bool = False
+    has_external_request: bool = False
 
     @classmethod
-    def preprocess(cls, url, json):
+    def preprocess(cls, url: str, json: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 
-        Gets the youtube url from reddit json.
+        Gets the youtube url from reddit json. 
         """
-        oembed_url = helpers.chained_get(json, ["media", "oembed", "url"])
+        oembed_url: str = helpers.chained_get(json, ["media", "oembed", "url"])
         return oembed_url if oembed_url else url
 
     @classmethod
-    def get(cls, url):
+    def get(cls, url: str) -> str:
         """
         Override of `telereddit.services.service.Service.get` method.
 
@@ -40,7 +43,7 @@ class Youtube(Service):
         return url
 
     @classmethod
-    def postprocess(cls, url):
+    def postprocess(cls, url: str) -> Media:  # type: ignore
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 
