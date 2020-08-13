@@ -8,6 +8,7 @@ flow between two functions.
 import sentry_sdk as sentry
 import traceback
 from typing import Any
+import logging
 
 import telereddit.config.config as config
 
@@ -48,8 +49,9 @@ class TeleredditError(Exception):
             if capture:
                 sentry.capture_exception()
         traceback.print_exc()
-        print("\nException:", self.__class__.__name__)
-        print("Message: ", self, ", Data: ", data)
+        print(
+            f"\nEXCEPTION: {self.__class__.__name__}, MESSAGE: {self}, DATA: {data}"
+        )
 
 
 class AuthenticationError(TeleredditError):

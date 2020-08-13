@@ -1,5 +1,5 @@
 """Abstract Base static Class for every service."""
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 import requests
 from requests import Response
 import icontract
@@ -10,7 +10,7 @@ from telereddit.models.media import Media
 from telereddit.exceptions import MediaRetrievalError
 
 
-class Service(icontract.DBC):
+class Service(ABC):
     """
     Abstract Base static Class for every service class.
 
@@ -121,9 +121,7 @@ class Service(icontract.DBC):
     @icontract.require(
         lambda cls, response: response is not None, "response must not be None"
     )
-    @icontract.ensure(
-        lambda result: result is not None
-    )
+    @icontract.ensure(lambda result: result is not None)
     def postprocess(cls, response: Union[Response, str]) -> Media:
         """
         From the service provider API response create the media object.
@@ -160,9 +158,7 @@ class Service(icontract.DBC):
     @icontract.require(
         lambda cls, url, json: url is not None, "url must not be None"
     )
-    @icontract.ensure(
-        lambda result: result is not None
-    )
+    @icontract.ensure(lambda result: result is not None)
     def get_media(cls, url: str, json: Any) -> Media:
         """
         Entrypoint of the class.

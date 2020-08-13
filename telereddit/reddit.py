@@ -29,7 +29,7 @@ from telereddit.services.services_wrapper import ServicesWrapper
     lambda post_url: post_url is not None, "post_url must not be None"
 )
 @icontract.ensure(
-    lambda result: helpers.chained_get(result, ["data", "children", 0, "data"])
+    lambda result: helpers.chained_get(result, ["data", "children"])[0]["data"]
     is not None
 )
 def _get_json(post_url: str) -> Any:

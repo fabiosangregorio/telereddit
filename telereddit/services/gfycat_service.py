@@ -55,7 +55,7 @@ class Gfycat(Service):
         )
 
     @classmethod
-    def postprocess(cls, response: Response) -> Media:
+    def postprocess(cls, response: Response) -> Media:  # type: ignore
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 
@@ -77,8 +77,6 @@ class Gfycat(Service):
         return media
 
     @classmethod
-    @icontract.snapshot(lambda cls: cls.access_token, name="access_token")
-    @icontract.ensure(lambda OLD, cls: cls.access_token != OLD.access_token)
     def authenticate(cls) -> None:
         """
         Override of `telereddit.services.service.Service.authenticate` method.
@@ -96,12 +94,6 @@ class Gfycat(Service):
             ),
         )
         if response.status_code >= 300:
-            raise AuthenticationError(
-                {
-                    "response_text": response.text,
-                    # "client_id": secret.GFYCAT_CLIENT_ID,
-                    # "client_secret": secret.GFYCAT_CLIENT_SECRET,
-                }
-            )
+            raise AuthenticationError({"response_text": response.text})
 
         cls.access_token = json.loads(response.content)["access_token"]

@@ -30,6 +30,10 @@ class ServicesWrapper:
     generic: Generic = Generic()
 
     @classmethod
+    @icontract.require(
+        lambda cls, url, json: url is not None, "url must not be None"
+    )
+    @icontract.ensure(lambda result: result is not None)
     def get_media(cls, url: str, json: Any = {}) -> Media:
         """
         Given the url from the Reddit json, return the corresponding media obj.
@@ -51,8 +55,7 @@ class ServicesWrapper:
             The media object corresponding to the media post url.
 
         """
-        parsed_url = urlparse(url)
-        base_url: str = parsed_url.netloc
+        base_url: str = urlparse(url).netloc
         media: Media
 
         if "gfycat.com" in base_url:
@@ -64,7 +67,7 @@ class ServicesWrapper:
         elif "youtube.com" in base_url or "youtu.be" in base_url:
             media = cls.youtube.get_media(url, json)
         else:
-            logging.warning(
+            logging.info(
                 f"services_wrapper: no suitable service found. base_url: {base_url}"
             )
             media = cls.generic.get_media(url, json)

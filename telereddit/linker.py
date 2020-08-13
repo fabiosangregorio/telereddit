@@ -264,7 +264,7 @@ class Linker:
                     args["disable_web_page_preview"] = False
                 self.bot.editMessageText(post.get_msg(), **args)
             else:
-                media: Media
+                media: Optional[Media] = None
                 media_args = dict(
                     media=post.media.url,
                     caption=post.get_msg(),
