@@ -18,6 +18,7 @@ from telegram.ext import (
 )
 from telegram import Update, Message
 import logging
+import icontract
 
 from typing import List
 
@@ -27,6 +28,12 @@ import telereddit.config.config as config
 from telereddit.config.config import secret
 
 
+@icontract.require(
+    lambda update, context: update is not None, "update must not be None"
+)
+@icontract.require(
+    lambda update, context: context is not None, "context must not be None"
+)
 def on_chat_message(update: Update, context: CallbackContext) -> None:
     """
     Entrypoint of the bot's logic. Handles a single update message.
@@ -55,6 +62,12 @@ def on_chat_message(update: Update, context: CallbackContext) -> None:
             linker.send_random_post(subreddit)
 
 
+@icontract.require(
+    lambda update, context: update is not None, "update must not be None"
+)
+@icontract.require(
+    lambda update, context: context is not None, "context must not be None"
+)
 def on_callback_query(update: Update, context: CallbackContext) -> None:
     """
     Handle all the several types of callback queries.

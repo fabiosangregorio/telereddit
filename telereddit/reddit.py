@@ -7,6 +7,7 @@ and build telereddit objects.
 
 import requests
 import random
+import icontract
 
 from typing import Any
 
@@ -24,6 +25,13 @@ from telereddit.exceptions import (
 from telereddit.services.services_wrapper import ServicesWrapper
 
 
+@icontract.require(
+    lambda post_url: post_url is not None, "post_url must not be None"
+)
+@icontract.ensure(
+    lambda result: helpers.chained_get(result, ["data", "children", 0, "data"])
+    is not None
+)
 def _get_json(post_url: str) -> Any:
     """
     Get post json from Reddit API and handle all request/json errors.
@@ -63,6 +71,10 @@ def _get_json(post_url: str) -> Any:
     return json
 
 
+@icontract.require(
+    lambda post_url: post_url is not None, "post_url must not be None"
+)
+@icontract.ensure(lambda result: result is not None)
 def get_post(post_url: str) -> Post:
     """
     Get the post from the Reddit API and construct the Post object.
@@ -79,6 +91,7 @@ def get_post(post_url: str) -> Post:
 
     """
     json = _get_json(post_url)
+    assert json is not None
 
     try:
         idx = random.randint(0, len(json["data"]["children"]) - 1)
@@ -92,6 +105,7 @@ def get_post(post_url: str) -> Post:
         media = None
         if "/comments/" not in content_url:
             media = ServicesWrapper.get_media(content_url, data)
+            assert media is not None
             if media.type == ContentType.YOUTUBE:
                 post_text = (
                     f"{post_text}\n\n[Link to youtube video]({media.url})"

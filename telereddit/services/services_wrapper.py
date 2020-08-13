@@ -3,6 +3,7 @@
 import logging
 from urllib.parse import urlparse
 from typing import Any
+import icontract
 
 from telereddit.services.gfycat_service import Gfycat
 from telereddit.services.vreddit_service import Vreddit

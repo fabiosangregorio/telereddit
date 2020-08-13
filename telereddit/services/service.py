@@ -1,7 +1,8 @@
 """Abstract Base static Class for every service."""
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 import requests
 from requests import Response
+import icontract
 
 from typing import Optional, Any, Union
 
@@ -9,7 +10,7 @@ from telereddit.models.media import Media
 from telereddit.exceptions import MediaRetrievalError
 
 
-class Service(ABC):
+class Service(icontract.DBC):
     """
     Abstract Base static Class for every service class.
 
@@ -61,6 +62,10 @@ class Service(ABC):
     """
 
     @classmethod
+    @icontract.require(
+        lambda cls, url, json: url is not None, "url must not be None"
+    )
+    @icontract.ensure(lambda result: result is not None)
     def preprocess(cls, url: str, json: Any) -> str:
         """
         Preprocess the media URL coming from Reddit json.
@@ -85,6 +90,8 @@ class Service(ABC):
         return url
 
     @classmethod
+    @icontract.require(lambda cls, url: url is not None, "url must not be None")
+    @icontract.ensure(lambda result: result is not None)
     def get(cls, url: str) -> Union[Response, str]:
         """
         Get the media information.
@@ -111,6 +118,12 @@ class Service(ABC):
 
     @classmethod
     @abstractmethod
+    @icontract.require(
+        lambda cls, response: response is not None, "response must not be None"
+    )
+    @icontract.ensure(
+        lambda result: result is not None
+    )
     def postprocess(cls, response: Union[Response, str]) -> Media:
         """
         From the service provider API response create the media object.
@@ -144,6 +157,12 @@ class Service(ABC):
         pass
 
     @classmethod
+    @icontract.require(
+        lambda cls, url, json: url is not None, "url must not be None"
+    )
+    @icontract.ensure(
+        lambda result: result is not None
+    )
     def get_media(cls, url: str, json: Any) -> Media:
         """
         Entrypoint of the class.

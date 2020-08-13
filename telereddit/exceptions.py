@@ -7,7 +7,7 @@ flow between two functions.
 
 import sentry_sdk as sentry
 import traceback
-from typing import Optional, Any
+from typing import Any
 
 import telereddit.config.config as config
 
@@ -108,14 +108,14 @@ class MediaError(TeleredditError):
 class SubredditPrivateError(SubredditError):
     """Raised when the subreddit is private, and therefore cannot be fetched."""
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = False):
+    def __init__(self, data: Any = None, capture: bool = False):
         super().__init__("This subreddit is private.", data, capture)
 
 
 class SubredditDoesntExistError(SubredditError):
     """Raised when the subreddit does not exist."""
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = False):
+    def __init__(self, data: Any = None, capture: bool = False):
         super().__init__("This subreddit doesn't exist.", data, capture)
 
 
@@ -126,7 +126,7 @@ class PostRequestError(PostError):
     .. note:: Not to be confused with `PostRetrievalError`
     """
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = True):
+    def __init__(self, data: Any = None, capture: bool = True):
         super().__init__("I can't find that subreddit.", data, capture)
 
 
@@ -138,7 +138,7 @@ class PostRetrievalError(PostError):
     expected.
     """
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = True):
+    def __init__(self, data: Any = None, capture: bool = True):
         super().__init__("The retrieval of the post failed.", data, capture)
 
 
@@ -150,7 +150,7 @@ class PostSendError(PostError):
     APIs expect.
     """
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = True):
+    def __init__(self, data: Any = None, capture: bool = True):
         super().__init__(
             "There has been an error in sending the post.", data, capture
         )
@@ -167,7 +167,7 @@ class PostEqualsMessageError(PostError):
     captured from Sentry.
     """
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = False):
+    def __init__(self, data: Any = None, capture: bool = False):
         super().__init__(
             "The retrieved post is equal to the already sent message.",
             data,
@@ -184,12 +184,12 @@ class MediaTooBigError(MediaError):
         https://core.telegram.org/bots/api#sending-files
     """
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = True):
+    def __init__(self, data: Any = None, capture: bool = True):
         super().__init__("Media is too big to be sent.", data, capture)
 
 
 class MediaRetrievalError(MediaError):
     """Raised when there's an error in the media retrieval request."""
 
-    def __init__(self, msg: Any, data: Any = None, capture: bool = True):
+    def __init__(self, data: Any = None, capture: bool = True):
         super().__init__("Error in getting the media", data, capture)

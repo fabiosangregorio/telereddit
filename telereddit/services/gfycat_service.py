@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 from telereddit.config.config import secret
 from requests import Response
+import icontract
 
 from telereddit.services.service import Service
 from telereddit.models.media import Media
@@ -14,6 +15,9 @@ from telereddit.exceptions import AuthenticationError
 from typing import Any
 
 
+@icontract.invariant(
+    lambda self: self.is_authenticated is True and self.access_token is not None
+)
 class Gfycat(Service):
     """
     Service for Gfycat GIFs.
@@ -73,6 +77,8 @@ class Gfycat(Service):
         return media
 
     @classmethod
+    @icontract.snapshot(lambda cls: cls.access_token, name="access_token")
+    @icontract.ensure(lambda OLD, cls: cls.access_token != OLD.access_token)
     def authenticate(cls) -> None:
         """
         Override of `telereddit.services.service.Service.authenticate` method.
