@@ -2,3 +2,4 @@ coverage>=5.0.4
 coveralls>=2.0.0
 parameterized>=0.7.4
 pytest>=6.0.1
+icontract>=2.3.4
