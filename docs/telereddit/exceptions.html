@@ -37,7 +37,7 @@ flow between two functions.</p>
 <dl>
 <dt id="telereddit.exceptions.TeleredditError"><code class="flex name class">
 <span>class <span class="ident">TeleredditError</span></span>
-<span>(</span><span>msg, data=None, capture=False)</span>
+<span>(</span><span>msg: Any, data: Any = None, capture: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Base class for all catched exceptions.</p>
@@ -75,7 +75,7 @@ Sentry is configured.</dd>
 </dd>
 <dt id="telereddit.exceptions.AuthenticationError"><code class="flex name class">
 <span>class <span class="ident">AuthenticationError</span></span>
-<span>(</span><span>data=None, capture=True)</span>
+<span>(</span><span>data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when a service cannot authenticate to the API provider.</p></div>
@@ -88,7 +88,7 @@ Sentry is configured.</dd>
 </dd>
 <dt id="telereddit.exceptions.SubredditError"><code class="flex name class">
 <span>class <span class="ident">SubredditError</span></span>
-<span>(</span><span>msg, data=None, capture=False)</span>
+<span>(</span><span>msg: Any, data: Any = None, capture: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Base class for subreddit related exceptions.</p>
@@ -110,7 +110,7 @@ or not existing, and therfore <strong>should not</strong> be captured by Sentry.
 </dd>
 <dt id="telereddit.exceptions.PostError"><code class="flex name class">
 <span>class <span class="ident">PostError</span></span>
-<span>(</span><span>msg, data=None, capture=True)</span>
+<span>(</span><span>msg: Any, data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Base class for post related exceptions.</p>
@@ -133,7 +133,7 @@ or not existing, and therfore <strong>should not</strong> be captured by Sentry.
 </dd>
 <dt id="telereddit.exceptions.MediaError"><code class="flex name class">
 <span>class <span class="ident">MediaError</span></span>
-<span>(</span><span>msg, data=None, capture=True)</span>
+<span>(</span><span>msg: Any, data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Base class for media related exceptions.</p>
@@ -155,7 +155,7 @@ For this, unless specified otherwise, they <strong>should</strong> be captured b
 </dd>
 <dt id="telereddit.exceptions.SubredditPrivateError"><code class="flex name class">
 <span>class <span class="ident">SubredditPrivateError</span></span>
-<span>(</span><span>data=None, capture=False)</span>
+<span>(</span><span>data: Any = None, capture: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when the subreddit is private, and therefore cannot be fetched.</p></div>
@@ -169,7 +169,7 @@ For this, unless specified otherwise, they <strong>should</strong> be captured b
 </dd>
 <dt id="telereddit.exceptions.SubredditDoesntExistError"><code class="flex name class">
 <span>class <span class="ident">SubredditDoesntExistError</span></span>
-<span>(</span><span>data=None, capture=False)</span>
+<span>(</span><span>data: Any = None, capture: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when the subreddit does not exist.</p></div>
@@ -183,7 +183,7 @@ For this, unless specified otherwise, they <strong>should</strong> be captured b
 </dd>
 <dt id="telereddit.exceptions.PostRequestError"><code class="flex name class">
 <span>class <span class="ident">PostRequestError</span></span>
-<span>(</span><span>data=None, capture=True)</span>
+<span>(</span><span>data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when there's an error in the post request.</p>
@@ -200,7 +200,7 @@ For this, unless specified otherwise, they <strong>should</strong> be captured b
 </dd>
 <dt id="telereddit.exceptions.PostRetrievalError"><code class="flex name class">
 <span>class <span class="ident">PostRetrievalError</span></span>
-<span>(</span><span>data=None, capture=True)</span>
+<span>(</span><span>data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when there's an error in the post json.</p>
@@ -216,7 +216,7 @@ expected.</p></div>
 </dd>
 <dt id="telereddit.exceptions.PostSendError"><code class="flex name class">
 <span>class <span class="ident">PostSendError</span></span>
-<span>(</span><span>data=None, capture=True)</span>
+<span>(</span><span>data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when there's an error in sending the post to the Telegram chat.</p>
@@ -232,7 +232,7 @@ APIs expect.</p></div>
 </dd>
 <dt id="telereddit.exceptions.PostEqualsMessageError"><code class="flex name class">
 <span>class <span class="ident">PostEqualsMessageError</span></span>
-<span>(</span><span>data=None, capture=False)</span>
+<span>(</span><span>data: Any = None, capture: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when the post in the Telegram message is the same as the retrieved.</p>
@@ -250,7 +250,7 @@ captured from Sentry.</p></div>
 </dd>
 <dt id="telereddit.exceptions.MediaTooBigError"><code class="flex name class">
 <span>class <span class="ident">MediaTooBigError</span></span>
-<span>(</span><span>data=None, capture=True)</span>
+<span>(</span><span>data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when post media exceeds the max media size allowed by Telegram APIs.</p>
@@ -269,7 +269,7 @@ captured from Sentry.</p></div>
 </dd>
 <dt id="telereddit.exceptions.MediaRetrievalError"><code class="flex name class">
 <span>class <span class="ident">MediaRetrievalError</span></span>
-<span>(</span><span>data=None, capture=True)</span>
+<span>(</span><span>data: Any = None, capture: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raised when there's an error in the media retrieval request.</p></div>
