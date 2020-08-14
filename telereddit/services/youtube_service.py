@@ -5,7 +5,7 @@ from telereddit.models.content_type import ContentType
 import telereddit.helpers as helpers
 
 
-from typing import Optional, Any, Union
+from typing import Optional, Any
 
 
 class Youtube(Service):
@@ -28,7 +28,7 @@ class Youtube(Service):
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 
-        Gets the youtube url from reddit json. 
+        Gets the youtube url from reddit json.
         """
         oembed_url: str = helpers.chained_get(json, ["media", "oembed", "url"])
         return oembed_url if oembed_url else url

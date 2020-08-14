@@ -49,7 +49,7 @@ class TeleredditError(Exception):
             if capture:
                 sentry.capture_exception()
         traceback.print_exc()
-        print(
+        logging.exception(
             f"\nEXCEPTION: {self.__class__.__name__}, MESSAGE: {self}, DATA: {data}"
         )
 
