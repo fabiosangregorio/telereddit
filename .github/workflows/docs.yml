@@ -27,22 +27,14 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.cache/pip # This path is specific to Ubuntu
-        key: ${{ runner.os }}-pip-${{ hashFiles('./requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-
-    - name: Cache CI dependencies
-      uses: actions/cache@v1
-      with:
-        path: ~/.cache/pip # This path is specific to Ubuntu
-        key: ${{ runner.os }}-pip-${{ hashFiles('./.github/workflows/requirements/docs.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('./requirements/requirements.txt') }}-${{ hashFiles('**/docs.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
-        pip install -r ./.github/workflows/requirements/docs.txt
+        pip install -r ./requirements/requirements.txt
+        pip install -r ./requirements/docs.txt
 
     - name: Unlock git-crypt files
       uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
