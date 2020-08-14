@@ -53,7 +53,7 @@ jobs:
 
     - name: Generate project dependency graph
       run: |
-        pydeps --verbose -o docs/images/dependency-graph.svg telereddit
+        pydeps --verbose --config setup.cfg -o docs/images/dependency-graph.svg telereddit
 
     - name: Generate documentation
       run: |
@@ -62,10 +62,12 @@ jobs:
       env:
         TELEREDDIT_MACHINE: GITHUB
 
-    - name: Run documentation coverage
+    - name: Run docstr coverage
       run: |
         mkdir documentation-reports
         docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ./documentation-reports/docstr-coverage.txt
+    
+    - name: Run pydocstyle
         (pydocstyle telereddit 2>&1 | tee ./documentation-reports/pydocstyle-coverage.txt; exit ${PIPESTATUS[0]})
         python .github/workflows/scripts/docs.py
 
