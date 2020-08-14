@@ -136,7 +136,7 @@ class TestLinker(unittest.TestCase):
         mock_msg = Mock()
         mock_msg.text = ""
         mock_msg.caption = None
-        self.linker.edit_random_post(mock_msg, "")
+        self.linker.edit_random_post(mock_msg, "r/test")
 
     @patch("telereddit.reddit.get_post")
     def test_edit_random_post_invalid(self, mock_get_post):
@@ -146,7 +146,7 @@ class TestLinker(unittest.TestCase):
         mock_msg.text = None
         mock_msg.caption = ""
         with self.assertRaises(PostEqualsMessageError):
-            self.linker.edit_random_post(mock_msg, "")
+            self.linker.edit_random_post(mock_msg, "r/test")
 
     @patch("telereddit.reddit.get_post")
     def test_edit_random_post_youtube(self, mock_get_post):
@@ -156,7 +156,7 @@ class TestLinker(unittest.TestCase):
         mock_msg.text = ""
         mock_msg.caption = None
         mock_msg.caption_markdown = ""
-        self.linker.edit_random_post(mock_msg, "")
+        self.linker.edit_random_post(mock_msg, "r/test")
 
     @parameterized.expand(
         [[ContentType.PHOTO], [ContentType.GIF], [ContentType.VIDEO]]
@@ -169,18 +169,7 @@ class TestLinker(unittest.TestCase):
         mock_msg.text = None
         mock_msg.caption = ""
         mock_msg.caption_markdown = ""
-        self.linker.edit_random_post(mock_msg, "")
-
-    @patch("telereddit.reddit.get_post")
-    def test_edit_random_post_no_type(self, mock_get_post):
-        media = Media("", "")
-        mock_get_post.return_value = Post("", "", "", "", media)
-        mock_msg = Mock()
-        mock_msg.text = None
-        mock_msg.caption = ""
-        mock_msg.caption_markdown = ""
-        with self.assertRaises(TeleredditError):
-            self.linker.edit_random_post(mock_msg, "")
+        self.linker.edit_random_post(mock_msg, "r/test")
 
     @patch("telereddit.linker.Linker.bot.sendMessage")
     def test_send_exception_message(self, mock_send_message):

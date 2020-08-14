@@ -6,10 +6,11 @@ Project-wide configuration variables.
     for a leaner one.
 """
 
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton  # type: ignore
 import os
 import importlib
 import logging
+from typing import Any
 
 
 _delete_btn = InlineKeyboardButton(text="✕", callback_data="delete")
@@ -18,12 +19,13 @@ _edit_failed_btn = InlineKeyboardButton(text="Retry ↻", callback_data="edit")
 _more_btn = InlineKeyboardButton(text="＋", callback_data="more")
 
 # Dynamic environment secret configuration
+secret: Any = None
 _env_key = os.environ.get("TELEREDDIT_MACHINE")
 if _env_key is not None:
     ENV = _env_key.lower()
     secret = importlib.import_module(
         f"telereddit.config.secret_{_env_key.lower()}"
-    ).secret_config
+    ).secret_config  # type: ignore
 else:
     logging.warn(
         'No "TELEREDDIT_MACHINE" environment variable found. Using generic secret.'
@@ -31,7 +33,7 @@ else:
     ENV = "generic"
     secret = importlib.import_module(
         "telereddit.config.secret_generic"
-    ).secret_config
+    ).secret_config  # type: ignore
 
 REDDIT_DOMAINS = ["reddit.com", "redd.it", "reddit.app.link"]
 MAX_POST_LENGTH = 500
