@@ -26,6 +26,7 @@ from telereddit.exceptions import (
 
 
 @icontract.invariant(lambda self: self.bot is not None)
+@icontract.invariant(lambda self: self.chat_id is not None)
 class Linker:
     """
     Handle a single telereddit request.
@@ -72,6 +73,8 @@ class Linker:
             disable_web_page_preview=True,
         )
 
+    @icontract.snapshot(lambda self: self.args, name="args")
+    @icontract.ensure(lambda OLD, self, override_dict: OLD.args == self.args)
     def get_args(self, override_dict: Optional[dict] = {}) -> dict:
         """
         Get the args parameters potentially overriding some of them.

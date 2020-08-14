@@ -43,7 +43,7 @@ class Youtube(Service):
         return url
 
     @classmethod
-    def postprocess(cls, response: str) -> Media:  # type: ignore
+    def postprocess(cls, response) -> Media:
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 

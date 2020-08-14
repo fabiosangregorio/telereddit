@@ -1,5 +1,5 @@
 """Abstract Base static Class for every service."""
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 import requests
 from requests import Response
 import icontract
@@ -10,7 +10,7 @@ from telereddit.models.media import Media
 from telereddit.exceptions import MediaRetrievalError
 
 
-class Service(ABC):
+class Service(icontract.DBC):
     """
     Abstract Base static Class for every service class.
 
