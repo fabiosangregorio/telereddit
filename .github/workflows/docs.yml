@@ -27,7 +27,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.cache/pip # This path is specific to Ubuntu
-        key: ${{ runner.os }}-pip-${{ hashFiles('./requirements/requirements.txt') }}-${{ hashFiles('**/docs.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('./requirements/requirements.txt') }}-${{ hashFiles('**/docs.txt') }}-${{ hashFiles('**/test.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
@@ -35,6 +35,7 @@ jobs:
       run: |
         pip install -r ./requirements/requirements.txt
         pip install -r ./requirements/docs.txt
+        pip install -r ./requirements/test.txt
 
     - name: Unlock git-crypt files
       uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
