@@ -68,8 +68,8 @@ jobs:
         docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ./documentation-reports/docstr-coverage.txt
     
     - name: Run pydocstyle
+      run: |
         (pydocstyle telereddit 2>&1 | tee ./documentation-reports/pydocstyle-coverage.txt; exit ${PIPESTATUS[0]})
-        python .github/workflows/scripts/docs.py
 
     - name: Upload documentation reports as artifact
       uses: actions/upload-artifact@v2

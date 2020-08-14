@@ -53,7 +53,7 @@ jobs:
 
     - name: Run tests and generate report
       run: | 
-        coverage run -m unittest
+        coverage run -m pytest
       env:
         TELEREDDIT_MACHINE: 'GITHUB'
 
