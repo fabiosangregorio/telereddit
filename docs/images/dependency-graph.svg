@@ -17,13 +17,13 @@
 <polygon fill="none" stroke="black" points="2186,-417.919 2186,-574.558 2316,-574.558 2316,-417.919 2186,-417.919"/>
 <text text-anchor="middle" x="2251" y="-559.358" font-family="Times New Roman,serif" font-size="14.00">parameterized</text>
 </g>
-<g id="clust4" class="cluster"><title>cluster_sentrysdk</title><style>.edge>path:hover{stroke-width:8}</style>
-<polygon fill="none" stroke="black" points="82,-804.772 82,-879.772 174,-879.772 174,-804.772 82,-804.772"/>
-<text text-anchor="middle" x="128" y="-864.572" font-family="Times New Roman,serif" font-size="14.00">sentrysdk</text>
-</g>
 <g id="clust3" class="cluster"><title>cluster_requests</title><style>.edge>path:hover{stroke-width:8}</style>
 <polygon fill="none" stroke="black" points="1366,-721.772 1366,-796.772 1446,-796.772 1446,-721.772 1366,-721.772"/>
 <text text-anchor="middle" x="1406" y="-781.572" font-family="Times New Roman,serif" font-size="14.00">requests</text>
+</g>
+<g id="clust4" class="cluster"><title>cluster_sentrysdk</title><style>.edge>path:hover{stroke-width:8}</style>
+<polygon fill="none" stroke="black" points="82,-804.772 82,-879.772 174,-879.772 174,-804.772 82,-804.772"/>
+<text text-anchor="middle" x="128" y="-864.572" font-family="Times New Roman,serif" font-size="14.00">sentrysdk</text>
 </g>
 <!-- icontract -->
 <g id="node1" class="node"><title>icontract</title><style>.edge>path:hover{stroke-width:8}</style>
