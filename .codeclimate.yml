@@ -11,7 +11,6 @@ plugins:
     enabled: true
   pep8:
     enabled: true
-    max-line-length: 81
   apexmetrics:
     enabled: true
   bandit:
