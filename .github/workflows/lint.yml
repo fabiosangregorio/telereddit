@@ -19,7 +19,7 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Cache CI dependencies
+    - name: Cache dependencies
       uses: actions/cache@v1
       with:
         path: ~/.cache/pip # This path is specific to Ubuntu
@@ -30,6 +30,13 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r ./requirements/lint.txt
+
+    - name: Unlock git-crypt files
+      uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
     - name: Check black code formatting
       run: python -m black telereddit --check
