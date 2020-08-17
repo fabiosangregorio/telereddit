@@ -1,6 +1,5 @@
 """Service for v.redd.it GIFs."""
 import requests
-from requests import Response
 
 from telereddit.services.service import Service
 import telereddit.helpers as helpers

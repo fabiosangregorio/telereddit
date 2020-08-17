@@ -2,7 +2,6 @@
 from telereddit.services.service import Service
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
-from requests import Response
 from typing import Optional
 
 
