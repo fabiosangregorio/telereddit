@@ -1,6 +1,5 @@
 """Service for v.redd.it GIFs."""
 import requests
-from requests import Response
 
 from telereddit.services.service import Service
 import telereddit.helpers as helpers
@@ -43,7 +42,7 @@ class Vreddit(Service):
         return processed_url
 
     @classmethod
-    def postprocess(cls, response: Response) -> Media:
+    def postprocess(cls, response) -> Media:
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 

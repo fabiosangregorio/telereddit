@@ -9,14 +9,14 @@ messages and dispatch actions to the other modules.
 
 import sentry_sdk
 
-from telegram.ext import (
+from telegram.ext import (  # type: ignore
     Updater,
     CallbackContext,
     MessageHandler,
     CallbackQueryHandler,
     Filters,
 )
-from telegram import Update, Message
+from telegram import Update, Message  # type: ignore
 import logging
 import icontract
 

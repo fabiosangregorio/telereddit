@@ -101,9 +101,7 @@ class MediaError(TeleredditError):
     For this, unless specified otherwise, they **should** be captured by Sentry.
     """
 
-    def __init__(
-        self, msg: Any, data: Any = None, capture: bool = True,
-    ):
+    def __init__(self, msg: Any, data: Any = None, capture: bool = True):
         super().__init__(msg, data, capture)
 
 
@@ -165,8 +163,8 @@ class PostEqualsMessageError(PostError):
     Capture
     -------
     This error is useful when editing a Telegram message with a different post.
-    It is thus raised as a correct program flow, and therefore it **should not** be
-    captured from Sentry.
+    It is thus raised as a correct program flow, and therefore it **should not**
+    be captured from Sentry.
     """
 
     def __init__(self, data: Any = None, capture: bool = False):
