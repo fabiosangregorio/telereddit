@@ -43,23 +43,23 @@ across various services and providers.</p>
 <p>An instance for each service class is set at class initialization.</p></div>
 <h3>Class variables</h3>
 <dl>
-<dt id="telereddit.services.services_wrapper.ServicesWrapper.gfycat"><code class="name">var <span class="ident">gfycat</span></code></dt>
+<dt id="telereddit.services.services_wrapper.ServicesWrapper.gfycat"><code class="name">var <span class="ident">gfycat</span> : <a title="telereddit.services.gfycat_service.Gfycat" href="gfycat_service.html#telereddit.services.gfycat_service.Gfycat">Gfycat</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.services.services_wrapper.ServicesWrapper.vreddit"><code class="name">var <span class="ident">vreddit</span></code></dt>
+<dt id="telereddit.services.services_wrapper.ServicesWrapper.vreddit"><code class="name">var <span class="ident">vreddit</span> : <a title="telereddit.services.vreddit_service.Vreddit" href="vreddit_service.html#telereddit.services.vreddit_service.Vreddit">Vreddit</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.services.services_wrapper.ServicesWrapper.imgur"><code class="name">var <span class="ident">imgur</span></code></dt>
+<dt id="telereddit.services.services_wrapper.ServicesWrapper.imgur"><code class="name">var <span class="ident">imgur</span> : <a title="telereddit.services.imgur_service.Imgur" href="imgur_service.html#telereddit.services.imgur_service.Imgur">Imgur</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.services.services_wrapper.ServicesWrapper.youtube"><code class="name">var <span class="ident">youtube</span></code></dt>
+<dt id="telereddit.services.services_wrapper.ServicesWrapper.youtube"><code class="name">var <span class="ident">youtube</span> : <a title="telereddit.services.youtube_service.Youtube" href="youtube_service.html#telereddit.services.youtube_service.Youtube">Youtube</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="telereddit.services.services_wrapper.ServicesWrapper.generic"><code class="name">var <span class="ident">generic</span></code></dt>
+<dt id="telereddit.services.services_wrapper.ServicesWrapper.generic"><code class="name">var <span class="ident">generic</span> : <a title="telereddit.services.generic_service.Generic" href="generic_service.html#telereddit.services.generic_service.Generic">Generic</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -67,7 +67,7 @@ across various services and providers.</p>
 <h3>Static methods</h3>
 <dl>
 <dt id="telereddit.services.services_wrapper.ServicesWrapper.get_media"><code class="name flex">
-<span>def <span class="ident">get_media</span></span>(<span>url, json={})</span>
+<span>def <span class="ident">get_media</span></span>(<span>cls, url: str, json: Any = {}) ‑> <a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Given the url from the Reddit json, return the corresponding media obj.</p>

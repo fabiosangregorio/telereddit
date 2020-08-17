@@ -68,7 +68,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: documentation-reports
-        path: ./documentation-reports/
+        path: ./documentation-reports/docstr-coverage.txt
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v4
