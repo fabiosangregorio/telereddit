@@ -2,15 +2,16 @@ version: "2"
 checks:
   argument-count:
     config:
-      threshold: 5
+      threshold: 7
   method-complexity:
     config:
-      threshold: 7
+      threshold: 10
 plugins:
   duplication:
     enabled: true
   pep8:
     enabled: true
+    max-line-length: 80
   apexmetrics:
     enabled: true
   bandit:
@@ -20,17 +21,5 @@ plugins:
     config: 
       threshold: "C"
 exclude_patterns:
-  - "config/"
-  - "db/"
-  - "dist/"
-  - "features/"
-  - "**/node_modules/"
-  - "script/"
-  - "**/spec/"
-  - "**/test/"
   - "**/tests/"
-  - "Tests/"
-  - "**/vendor/"
-  - "**/*_test.go"
-  - "**/*.d.ts"
   - "**/secret_*.py"
