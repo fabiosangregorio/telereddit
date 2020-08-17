@@ -5,13 +5,13 @@ checks:
       threshold: 7
   method-complexity:
     config:
-      threshold: 10
+      threshold: 15
 plugins:
   duplication:
     enabled: true
   pep8:
     enabled: true
-    max-line-length: 80
+    max-line-length: 81
   apexmetrics:
     enabled: true
   bandit:
