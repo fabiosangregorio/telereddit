@@ -43,7 +43,7 @@ class Vreddit(Service):
         return processed_url
 
     @classmethod
-    def postprocess(cls, response: Response) -> Media:
+    def postprocess(cls, response) -> Media:
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 
