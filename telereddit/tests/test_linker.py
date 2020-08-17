@@ -19,6 +19,9 @@ class TestLinker(unittest.TestCase):
     Linker.set_bot(Mock())
     linker = Linker(0)
 
+    def test_bot_not_none(self):
+        self.assertIsNotNone(self.linker.bot)
+
     def test_get_args(self):
         args = self.linker.get_args()
         self.assertIn("chat_id", args)

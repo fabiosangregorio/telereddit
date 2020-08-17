@@ -70,6 +70,20 @@ class TestReddit(unittest.TestCase):
         )
         self.assertEqual(json_data, mock_json[0])
 
+    @patch("telereddit.reddit.requests.get")
+    def test_get_json_(self, mock_get):
+        mock_get.return_value.ok = True
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.history = [0]
+        mock_get.return_value.json = lambda: {
+            "data": {"children": [{"mock": True}]}
+        }
+        mock_get.return_value.url = "https://www.reddit.com/search.json"
+        with self.assertRaises(SubredditDoesntExistError):
+            reddit._get_json(
+                "https://www.reddit.com/r/funny/comments/fxuefa/my_weather_app_nailed_it_today.json"
+            )
+
     @parameterized.expand(
         [
             # text post

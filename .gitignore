@@ -68,3 +68,4 @@ __pycache__
 documentation-reports
 
 html
+.mutmut-cache
