@@ -44,10 +44,12 @@ jobs:
         GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
         GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
-    - name: Generate project dependency graph
+    - name: Generate project dependency graphs
       run: |
-        pydeps --verbose --noshow --config setup.cfg -o docs/images/dependency-graph.svg telereddit
-
+        pyreverse --ignore="tests" -o png -p telereddit telereddit
+        mv classes_telereddit.png docs/images/classes_telereddit.png
+        mv packages_telereddit.png docs/images/packages_telereddit.png
+        
     - name: Generate documentation
       run: |
         rm -rf docs/telereddit
