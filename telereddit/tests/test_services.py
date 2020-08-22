@@ -95,15 +95,15 @@ class TestServices(unittest.TestCase):
         [
             # v.redd.it video
             param(
-                url="https://v.redd.it/4phan5t9wq031",
+                url="https://v.redd.it/w3ywnv3l94a31",
                 json={
                     "media": {
                         "reddit_video": {
-                            "fallback_url": "https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback"
+                            "fallback_url": "https://v.redd.it/w3ywnv3l94a31/DASH_360?source=fallback"
                         }
                     }
                 },
-                expected_url="https://v.redd.it/4phan5t9wq031/DASH_1080?source=fallback",
+                expected_url="https://v.redd.it/w3ywnv3l94a31/DASH_360?source=fallback",
                 expected_type=ContentType.GIF,
             ),
             # crossspost v.redd.it gif
