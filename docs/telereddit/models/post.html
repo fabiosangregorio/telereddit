@@ -35,7 +35,7 @@
 <dl>
 <dt id="telereddit.models.post.Post"><code class="flex name class">
 <span>class <span class="ident">Post</span></span>
-<span>(</span><span>subreddit, permalink, title, text, media=None)</span>
+<span>(</span><span>subreddit: str, permalink: str, title: str, text: str, media: Union[<a title="telereddit.models.media.Media" href="media.html#telereddit.models.media.Media">Media</a>, NoneType] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Represents a Reddit post.</p>
@@ -59,7 +59,7 @@ determines the post type.</p>
 <h3>Methods</h3>
 <dl>
 <dt id="telereddit.models.post.Post.get_msg"><code class="name flex">
-<span>def <span class="ident">get_msg</span></span>(<span>self)</span>
+<span>def <span class="ident">get_msg</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get the full message of the post.</p>
@@ -67,7 +67,7 @@ determines the post type.</p>
 a link to the subreddit and a link to the post.</p></div>
 </dd>
 <dt id="telereddit.models.post.Post.get_type"><code class="name flex">
-<span>def <span class="ident">get_type</span></span>(<span>self)</span>
+<span>def <span class="ident">get_type</span></span>(<span>self) ‑> <a title="telereddit.models.content_type.ContentType" href="content_type.html#telereddit.models.content_type.ContentType">ContentType</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the post type: this is determined by the media type, if present.</p></div>
