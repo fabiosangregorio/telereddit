@@ -23,7 +23,6 @@ from telereddit.exceptions import (
     TeleredditError,
 )
 from telereddit.services.services_wrapper import ServicesWrapper
-from telereddit.models.media import Media
 
 
 @icontract.require(
