@@ -49,3 +49,6 @@ jobs:
     
     - name: Check mypy linting
       run: mypy telereddit
+
+    - name: Check icontract linting
+      run: pyicontract-lint --format verbose telereddit
