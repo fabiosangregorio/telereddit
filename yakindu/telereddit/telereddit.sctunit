@@ -1,0 +1,183 @@
+testclass telereddit for statechart telereddit {
+	
+	// ### TEST SEND LINK ### 
+	@Test
+	operation test_send_link() {
+		enter
+		raise user.choose_send_link
+		assert active(r.send_link.r.send_post)
+		assert api.status == api.NONE
+		raise api.response
+		assert active(r.send_link.r.wait_for_api_response)
+		raise api.response
+		assert active(r.send_link.r.wait_for_api_response)
+		api.status = api.OK
+		raise api.response
+		assert active(r.send_link.r.send_post)
+		raise api.response
+		assert active(r.waiting)
+		assert api.status == api.OK
+		exit
+	}
+	
+	@Test
+	operation test_send_link_error() {
+		enter
+		raise user.choose_send_link
+		assert active(r.send_link.r.send_post)
+		assert api.status == api.NONE
+		raise api.response
+		assert active(r.send_link.r.wait_for_api_response)
+		raise api.response
+		assert active(r.send_link.r.wait_for_api_response)
+		api.status = api.ERROR
+		raise api.response
+		assert active(r.send_link.r.send_post)
+		raise api.response
+		assert active(r.waiting)
+		assert api.status == api.ERROR
+		exit
+	}
+	// ################
+	
+	// ### TEST SEND SUBREDDIT ### 
+	@Test
+	operation test_send_subreddit() {
+		enter
+		raise user.choose_send_subreddit
+		assert active(r.send_subreddit.r.send_post)
+		assert api.status == api.NONE
+		assert api.tries == 0
+		raise api.response
+		assert active(r.send_subreddit.r.wait_for_api_response)
+		raise api.response
+		assert active(r.send_subreddit.r.wait_for_api_response)
+		api.status = api.ERROR
+		raise api.response
+		assert active(r.send_subreddit.r.send_post)
+		assert api.tries == 1
+		raise api.response
+		raise api.response
+		assert api.tries == 2
+		raise api.response
+		api.status = api.OK
+		raise api.response
+		assert active(r.send_subreddit.r.send_post)
+		raise api.response
+		assert active(r.waiting)
+		assert api.status == api.OK
+		exit
+	}
+	
+	@Test
+	operation test_send_subreddit_error() {
+		enter
+		raise user.choose_send_subreddit
+		assert active(r.send_subreddit.r.send_post)
+		assert api.status == api.NONE
+		assert api.tries == 0
+		raise api.response
+		assert active(r.send_subreddit.r.wait_for_api_response)
+		raise api.response
+		assert active(r.send_subreddit.r.wait_for_api_response)
+		api.status = api.ERROR
+		raise api.response
+		assert active(r.send_subreddit.r.send_post)
+		assert api.tries == 1
+		raise api.response
+		raise api.response
+		assert api.tries == 2
+		raise api.response
+		raise api.response
+		assert active(r.send_subreddit.r.send_post)
+		raise api.response
+		assert active(r.waiting)
+		assert api.status == api.ERROR
+		assert api.tries == 3
+		exit
+	}
+	// ################	
+	
+	// ### TEST DELETE POST ### 
+	@Test
+	operation text_delete_post() {
+		enter
+		raise user.choose_delete_post
+		assert active(r.delete_post)
+		assert api.status == api.OK
+		raise user.choose_delete_post
+		assert active(r.waiting)
+		assert api.status == api.OK
+		exit
+	}
+	// ################	
+	
+	// ### TEST MORE POSTS ### 
+	@Test
+	operation text_more_posts() {
+		enter
+		raise user.choose_more_posts
+		assert active(r.send_subreddit.r.send_post)
+		exit
+	}
+	// ################	
+		
+	// ### TEST EDIT POST ### 
+	@Test
+	operation text_edit_post() {
+		enter
+		raise user.choose_edit_post
+		assert active(r.edit_post.r.edit_post)
+		assert api.status == api.NONE
+		assert api.tries == 0
+		raise api.response
+		assert active(r.edit_post.r.wait_for_api_response)
+		raise api.response
+		assert active(r.edit_post.r.wait_for_api_response)
+		api.status = api.ERROR
+		raise api.response
+		assert active(r.edit_post.r.edit_post)
+		assert api.tries == 1
+		raise api.response
+		raise api.response
+		assert api.tries == 2
+		raise api.response
+		api.status = api.OK
+		raise api.response
+		assert active(r.edit_post.r.edit_post)
+		raise api.response
+		assert active(r.waiting)
+		assert api.status == api.OK
+		exit
+	}
+	
+	@Test
+	operation test_edit_post_error() {
+		enter
+		raise user.choose_edit_post
+		assert active(r.edit_post.r.edit_post)
+		assert api.status == api.NONE
+		assert api.tries == 0
+		raise api.response
+		assert active(r.edit_post.r.wait_for_api_response)
+		raise api.response
+		assert active(r.edit_post.r.wait_for_api_response)
+		api.status = api.ERROR
+		raise api.response
+		assert active(r.edit_post.r.edit_post)
+		assert api.tries == 1
+		raise api.response
+		raise api.response
+		assert api.tries == 2
+		raise api.response
+		raise api.response
+		assert active(r.edit_post.r.edit_post)
+		raise api.response
+		assert active(r.waiting)
+		assert api.status == api.ERROR
+		assert api.tries == 3
+		exit
+	}
+	// ################	
+	
+}

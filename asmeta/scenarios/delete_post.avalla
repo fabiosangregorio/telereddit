@@ -1,0 +1,12 @@
+scenario delete_post
+load ../telereddit2.asm
+check apiStatus = undef;
+check postId = undef;
+check status = WAITING;
+set chooseStatus := DELETE_POST;
+step
+check apiStatus = OK;
+check postId = 10;
+check status = DELETE_POST;
+check tries = 0;
+step

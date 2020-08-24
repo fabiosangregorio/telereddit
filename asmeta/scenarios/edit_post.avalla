@@ -1,0 +1,52 @@
+scenario edit_post
+load ../telereddit2.asm
+check apiStatus = undef;
+check postId = undef;
+check status = WAITING;
+set chooseStatus := EDIT_POST;
+step
+check apiStatus = OK;
+check postId = 10;
+check status = EDIT_POST;
+check tries = 0;
+set chooseStatus := EDIT_POST;
+set getPostId := 0;
+step
+check apiStatus = ERROR;
+check postId = 0;
+check status = EDIT_POST;
+check tries = 1;
+set chooseStatus := EDIT_POST;
+set getPostId := 0;
+step
+check apiStatus = ERROR;
+check postId = 0;
+check status = EDIT_POST;
+check tries = 2;
+set chooseStatus := EDIT_POST;
+set getPostId := 0;
+step
+check apiStatus = ERROR;
+check postId = 0;
+check status = WAITING;
+check tries = 3;
+set chooseStatus := EDIT_POST;
+set getPostId := 0;
+step
+check apiStatus = OK;
+check postId = 10;
+check status = EDIT_POST;
+check tries = 0;
+set chooseStatus := EDIT_POST;
+set getPostId := 1;
+step
+check apiStatus = OK;
+check postId = 1;
+check status = WAITING;
+check tries = 1;
+step
+
+// ** Coverage Info: **
+//
+// r_editPost
+// r_Main

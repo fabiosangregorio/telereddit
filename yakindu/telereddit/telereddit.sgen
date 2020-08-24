@@ -1,0 +1,11 @@
+GeneratorModel for yakindu::c {
+
+	statechart telereddit {
+
+		feature Outlet {
+			targetProject = "telereddit"
+			targetFolder = "src-gen"
+			libraryTargetFolder = "src"
+		}
+	}
+}

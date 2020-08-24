@@ -1,0 +1,18 @@
+<testsuite name="telereddit" time="">
+  <testcase name="test_send_link" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.test_send_link" time="">
+  </testcase>
+  <testcase name="test_send_link_error" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.test_send_link_error" time="">
+  </testcase>
+  <testcase name="test_send_subreddit" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.test_send_subreddit" time="">
+  </testcase>
+  <testcase name="test_send_subreddit_error" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.test_send_subreddit_error" time="">
+  </testcase>
+  <testcase name="text_delete_post" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.text_delete_post" time="">
+  </testcase>
+  <testcase name="text_more_posts" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.text_more_posts" time="">
+  </testcase>
+  <testcase name="text_edit_post" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.text_edit_post" time="">
+  </testcase>
+  <testcase name="test_edit_post_error" classname="platform:/resource/telereddit/telereddit.sctunit#telereddit.test_edit_post_error" time="">
+  </testcase>
+</testsuite>
