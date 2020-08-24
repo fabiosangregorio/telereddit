@@ -67,7 +67,7 @@ across various services and providers.</p>
 <h3>Static methods</h3>
 <dl>
 <dt id="telereddit.services.services_wrapper.ServicesWrapper.get_media"><code class="name flex">
-<span>def <span class="ident">get_media</span></span>(<span>cls, url: str, json: Any = {}) ‑> <a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></span>
+<span>def <span class="ident">get_media</span></span>(<span>cls, url: str, data: Any = None) ‑> <a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Given the url from the Reddit json, return the corresponding media obj.</p>
@@ -76,7 +76,7 @@ across various services and providers.</p>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
 <dd>Url from Reddit API json.</dd>
-<dt><strong><code>json</code></strong> :&ensp;<code>json</code></dt>
+<dt><strong><code>data</code></strong> :&ensp;<code>json</code></dt>
 <dd>
 <p>(Default value = {})</p>
 <p>Reddit data json containing media fallback urls.</p>

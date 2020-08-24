@@ -97,7 +97,7 @@ otherwise.</p>
 <h3>Static methods</h3>
 <dl>
 <dt id="telereddit.services.service.Service.preprocess"><code class="name flex">
-<span>def <span class="ident">preprocess</span></span>(<span>cls, url: str, json: Any) ‑> str</span>
+<span>def <span class="ident">preprocess</span></span>(<span>cls, url: str, data: Any) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Preprocess the media URL coming from Reddit json.</p>
@@ -107,7 +107,7 @@ which to get the media information.</p>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
 <dd>Reddit media URL to preprocess.</dd>
-<dt><strong><code>json</code></strong> :&ensp;<code>json</code></dt>
+<dt><strong><code>data</code></strong> :&ensp;<code>json</code></dt>
 <dd>Json from the Reddit API which contains the post data. Used to get
 fallback media urls for specific services.</dd>
 </dl>
@@ -167,7 +167,7 @@ Media object related to the media retrieval process.</p></div>
 token.</p></div>
 </dd>
 <dt id="telereddit.services.service.Service.get_media"><code class="name flex">
-<span>def <span class="ident">get_media</span></span>(<span>cls, url: str, json: Any) ‑> <a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></span>
+<span>def <span class="ident">get_media</span></span>(<span>cls, url: str, data: Any) ‑> <a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Entrypoint of the class.</p>
@@ -192,7 +192,7 @@ consists in executing the following steps (in order):</p>
 <dl>
 <dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
 <dd>Media URL from the Reddit API json.</dd>
-<dt><strong><code>json</code></strong> :&ensp;<code>json</code></dt>
+<dt><strong><code>data</code></strong> :&ensp;<code>json</code></dt>
 <dd>Json from the Reddit API which contains the post data. Used to get
 fallback media urls for specific services.</dd>
 </dl>
