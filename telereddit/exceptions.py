@@ -5,10 +5,10 @@ The application follows the try/catch pattern to return errors in the program
 flow between two functions.
 """
 
-import sentry_sdk as sentry
 import traceback
 from typing import Any
 import logging
+import sentry_sdk as sentry
 
 import telereddit.config.config as config
 
@@ -50,7 +50,10 @@ class TeleredditError(Exception):
                 sentry.capture_exception()
         traceback.print_exc()
         logging.exception(
-            f"\nEXCEPTION: {self.__class__.__name__}, MESSAGE: {self}, DATA: {data}"
+            "\nEXCEPTION: %s, MESSAGE: %s, DATA: %s",
+            self.__class__.__name__,
+            self,
+            data,
         )
 
 
@@ -71,9 +74,6 @@ class SubredditError(TeleredditError):
     and originate from a "correct" subreddit property, such as it being private
     or not existing, and therfore **should not** be captured by Sentry.
     """
-
-    def __init__(self, msg: Any, data: Any = None, capture: bool = False):
-        super().__init__(msg, data, capture)
 
 
 class PostError(TeleredditError):

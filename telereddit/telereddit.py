@@ -7,6 +7,9 @@ Handles configuration, setup and starting of the bot, as well as receive
 messages and dispatch actions to the other modules.
 """
 
+import logging
+from typing import List
+
 import sentry_sdk
 
 from telegram.ext import (  # type: ignore
@@ -17,10 +20,7 @@ from telegram.ext import (  # type: ignore
     Filters,
 )
 from telegram import Update, Message  # type: ignore
-import logging
 import icontract
-
-from typing import List
 
 from telereddit.linker import Linker
 import telereddit.helpers as helpers

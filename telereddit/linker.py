@@ -1,8 +1,8 @@
 """Linker class which handles all telereddit requests."""
 
+from typing import Optional
 from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument  # type: ignore
 from telegram.bot import Bot, Message  # type: ignore
-from typing import Optional
 import icontract
 
 from telereddit.config.config import (
@@ -75,7 +75,7 @@ class Linker:
 
     @icontract.snapshot(lambda self: self.args, name="args")
     @icontract.ensure(lambda OLD, self, override_dict: OLD.args == self.args)
-    def get_args(self, override_dict: Optional[dict] = {}) -> dict:
+    def get_args(self, override_dict: Optional[dict] = None) -> dict:
         """
         Get the args parameters potentially overriding some of them.
 
@@ -194,10 +194,10 @@ class Linker:
                     photo=post.media.url, caption=post.get_msg(), **args
                 )
 
-        except Exception:
+        except Exception as e:
             raise PostSendError(
                 {"post_url": post.permalink, "media_url": post.media.url}
-            )
+            ) from e
 
     @icontract.require(
         lambda message: message is not None, "message must not be None"
@@ -281,10 +281,10 @@ class Linker:
                     media = InputMediaPhoto(**media_args)
                 self.bot.editMessageMedia(media=media, **args)
             return
-        except Exception:
+        except Exception as e:
             raise PostSendError(
                 {"post_url": post.permalink, "media_url": post.media.url}
-            )
+            ) from e
 
     @icontract.require(lambda e: e is not None, "e must not be None")
     def _send_exception_message(

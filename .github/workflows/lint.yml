@@ -43,6 +43,9 @@ jobs:
 
     - name: Check flake8 linting
       run: python -m flake8 --config setup.cfg telereddit
+
+    - name: Check pylint linting
+      run: pylint telereddit
     
     - name: Check mypy linting
       run: mypy telereddit

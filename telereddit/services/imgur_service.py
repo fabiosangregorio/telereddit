@@ -1,9 +1,9 @@
 """Service for Imgur images and videos."""
+import re
+from typing import Any
 import json
 from urllib.parse import urlparse
 import requests
-import re
-from typing import Any
 from requests import Response
 
 from telereddit.config.config import secret
@@ -16,7 +16,7 @@ class Imgur(Service):
     """Service for Imgur images and videos."""
 
     @classmethod
-    def preprocess(cls, url: str, json: Any) -> str:
+    def preprocess(cls, url: str, data: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 

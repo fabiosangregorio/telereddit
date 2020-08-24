@@ -1,10 +1,10 @@
 """Abstract Base static Class for every service."""
 from abc import abstractmethod
+from typing import Optional, Any, Union
+
 import requests
 from requests import Response
 import icontract
-
-from typing import Optional, Any, Union
 
 from telereddit.models.media import Media
 from telereddit.exceptions import MediaRetrievalError
@@ -63,10 +63,10 @@ class Service(icontract.DBC):
 
     @classmethod
     @icontract.require(
-        lambda cls, url, json: url is not None, "url must not be None"
+        lambda cls, url, data: url is not None, "url must not be None"
     )
     @icontract.ensure(lambda result: result is not None)
-    def preprocess(cls, url: str, json: Any) -> str:
+    def preprocess(cls, url: str, data: Any) -> str:
         """
         Preprocess the media URL coming from Reddit json.
 
@@ -77,7 +77,7 @@ class Service(icontract.DBC):
         ----------
         url : str
             Reddit media URL to preprocess.
-        json : json
+        data : json
             Json from the Reddit API which contains the post data. Used to get
             fallback media urls for specific services.
 
@@ -152,14 +152,13 @@ class Service(icontract.DBC):
         Update the `access_code` variable with the newly refreshed valid access
         token.
         """
-        pass
 
     @classmethod
     @icontract.require(
-        lambda cls, url, json: url is not None, "url must not be None"
+        lambda cls, url, data: url is not None, "url must not be None"
     )
     @icontract.ensure(lambda result: result is not None)
-    def get_media(cls, url: str, json: Any) -> Media:
+    def get_media(cls, url: str, data: Any) -> Media:
         """
         Entrypoint of the class.
 
@@ -181,7 +180,7 @@ class Service(icontract.DBC):
         ----------
         url : str
             Media URL from the Reddit API json.
-        json : json
+        data : json
             Json from the Reddit API which contains the post data. Used to get
             fallback media urls for specific services.
 
@@ -191,7 +190,7 @@ class Service(icontract.DBC):
             The media object accessible from the application.
 
         """
-        processed_url: str = cls.preprocess(url, json)
+        processed_url: str = cls.preprocess(url, data)
 
         response: Union[Response, str] = cls.get(processed_url)
         if cls.has_external_request:

@@ -1,18 +1,19 @@
 """Service for Gfycat GIFs."""
-import json
+from typing import Any
 
-import requests
+import json
 from urllib.parse import urlparse
 
-from telereddit.config.config import secret
+import requests
+
 from requests import Response
 import icontract
 
+from telereddit.config.config import secret
 from telereddit.services.service import Service
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
 from telereddit.exceptions import AuthenticationError
-from typing import Any
 
 
 @icontract.invariant(
@@ -34,7 +35,7 @@ class Gfycat(Service):
         Gfycat.authenticate()
 
     @classmethod
-    def preprocess(cls, url: str, json: Any) -> str:
+    def preprocess(cls, url: str, data: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 

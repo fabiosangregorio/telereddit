@@ -1,8 +1,9 @@
 """Service for when a suitable specific service is not found."""
+from typing import Optional
+
 from telereddit.services.service import Service
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
-from typing import Optional
 
 
 class Generic(Service):

@@ -1,11 +1,10 @@
 """Service for Youtube URLs."""
+from typing import Optional, Any
+
 from telereddit.services.service import Service
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
 import telereddit.helpers as helpers
-
-
-from typing import Optional, Any
 
 
 class Youtube(Service):
@@ -24,13 +23,13 @@ class Youtube(Service):
     has_external_request: bool = False
 
     @classmethod
-    def preprocess(cls, url: str, json: Any) -> str:
+    def preprocess(cls, url: str, data: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 
         Gets the youtube url from reddit json.
         """
-        oembed_url: str = helpers.chained_get(json, ["media", "oembed", "url"])
+        oembed_url: str = helpers.chained_get(data, ["media", "oembed", "url"])
         return oembed_url if oembed_url else url
 
     @classmethod

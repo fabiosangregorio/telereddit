@@ -31,10 +31,10 @@ class ServicesWrapper:
 
     @classmethod
     @icontract.require(
-        lambda cls, url, json: url is not None, "url must not be None"
+        lambda cls, url, data: url is not None, "url must not be None"
     )
     @icontract.ensure(lambda result: result is not None)
-    def get_media(cls, url: str, json: Any = {}) -> Media:
+    def get_media(cls, url: str, data: Any = None) -> Media:
         """
         Given the url from the Reddit json, return the corresponding media obj.
 
@@ -44,7 +44,7 @@ class ServicesWrapper:
         ----------
         url : str
             Url from Reddit API json.
-        json : json
+        data : json
             (Default value = {})
 
             Reddit data json containing media fallback urls.
@@ -59,17 +59,18 @@ class ServicesWrapper:
         media: Media
 
         if "gfycat.com" in base_url:
-            media = cls.gfycat.get_media(url, json)
+            media = cls.gfycat.get_media(url, data)
         elif "v.redd.it" in base_url:
-            media = cls.vreddit.get_media(url, json)
+            media = cls.vreddit.get_media(url, data)
         elif "imgur.com" in base_url:
-            media = cls.imgur.get_media(url, json)
+            media = cls.imgur.get_media(url, data)
         elif "youtube.com" in base_url or "youtu.be" in base_url:
-            media = cls.youtube.get_media(url, json)
+            media = cls.youtube.get_media(url, data)
         else:
             logging.info(
-                f"services_wrapper: no suitable service found. base_url: {base_url}"
+                "services_wrapper: no suitable service found. base_url: %s",
+                base_url,
             )
-            media = cls.generic.get_media(url, json)
+            media = cls.generic.get_media(url, data)
 
         return media

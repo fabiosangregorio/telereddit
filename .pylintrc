@@ -1,0 +1,5 @@
+[MASTER]
+ignore=tests,secret_*.py
+
+[MESSAGES CONTROL]
+disable=C0103,R1710,R0913,R0903,W0613,R0801

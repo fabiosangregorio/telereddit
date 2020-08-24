@@ -4,6 +4,7 @@ from typing import List, Optional, Any
 import re
 import requests
 from requests import Response
+from requests.exceptions import RequestException
 import icontract
 
 from telereddit.config.config import MAX_TITLE_LENGTH
@@ -85,10 +86,9 @@ def get_subreddit_name(text: str, reverse: bool = False) -> Optional[str]:
 
     """
     subs = get_subreddit_names(text)
-    if len(subs):
+    if len(subs) > 0:
         return subs[-1] if reverse else subs[0]
-    else:
-        return None
+    return None
 
 
 @icontract.require(
@@ -187,26 +187,26 @@ def get_urls_from_text(text: str) -> List[str]:
     """
     polished = polish_text(text)
     urls = list()
-    for w in polished.split(" "):
-        w_lower = w.lower()
+    for word in polished.split(" "):
+        w_lower = word.lower()
         if "reddit.com" in w_lower:
-            urls.append(w.partition("/?")[0])
+            urls.append(word.partition("/?")[0])
         if "redd.it" in w_lower:
             urls.append(
-                f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}'
+                f'https://www.reddit.com/comments/{word.partition("redd.it/")[2]}'
             )
         if "reddit.app.link" in w_lower:
             try:
-                r: Response = requests.get(
-                    w,
+                resp: Response = requests.get(
+                    word,
                     headers={"User-agent": "telereddit_bot"},
                     allow_redirects=False,
                 )
-                start = r.text.find("https://")
-                url = r.text[start : r.text.find('"', start)]
+                start = resp.text.find("https://")
+                url = resp.text[start : resp.text.find('"', start)]
                 if len(url) > 0:
                     urls.append(url.partition("/?")[0])
-            except Exception:
+            except RequestException:
                 pass
     return urls
 

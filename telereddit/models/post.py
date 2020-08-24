@@ -1,9 +1,9 @@
 """Module for Post class."""
 
+from typing import Optional
+
 from telereddit.models.content_type import ContentType
 from telereddit.models.media import Media
-
-from typing import Optional
 
 
 class Post:

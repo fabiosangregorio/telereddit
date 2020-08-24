@@ -6,11 +6,12 @@ Project-wide configuration variables.
     for a leaner one.
 """
 
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton  # type: ignore
 import os
 import importlib
 import logging
 from typing import Any
+
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton  # type: ignore
 
 
 _delete_btn = InlineKeyboardButton(text="✕", callback_data="delete")
@@ -27,7 +28,7 @@ if _env_key is not None:
         f"telereddit.config.secret_{_env_key.lower()}"
     ).secret_config  # type: ignore
 else:
-    logging.warn(
+    logging.warning(
         'No "TELEREDDIT_MACHINE" environment variable found. Using generic secret.'
     )
     ENV = "generic"

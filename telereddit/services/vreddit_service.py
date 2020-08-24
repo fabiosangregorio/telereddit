@@ -1,4 +1,5 @@
 """Service for v.redd.it GIFs."""
+from typing import Any, Optional
 import requests
 
 from telereddit.services.service import Service
@@ -6,14 +7,12 @@ import telereddit.helpers as helpers
 from telereddit.models.media import Media
 from telereddit.models.content_type import ContentType
 
-from typing import Any, Optional
-
 
 class Vreddit(Service):
     """Service for v.redd.it GIFs."""
 
     @classmethod
-    def preprocess(cls, url: str, json: Any) -> str:
+    def preprocess(cls, url: str, data: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 
@@ -23,7 +22,7 @@ class Vreddit(Service):
         needed, therefore we need to seach in the json for the correct piece of
         information in every specific case.
         """
-        xpost: Optional[Any] = helpers.get(json, "crosspost_parent_list")
+        xpost: Optional[Any] = helpers.get(data, "crosspost_parent_list")
         fallback_url: str
         if xpost is not None and len(xpost) > 0:
             # crossposts have media = null and have the fallback url in the
@@ -33,7 +32,7 @@ class Vreddit(Service):
             )
         else:
             fallback_url = helpers.chained_get(
-                json, ["media", "reddit_video", "fallback_url"]
+                data, ["media", "reddit_video", "fallback_url"]
             )
 
         processed_url: str = fallback_url if fallback_url else f"{url}/DASH_1_2_M"

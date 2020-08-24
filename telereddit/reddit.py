@@ -5,11 +5,11 @@ Contains all the functions to call Reddit APIs, retrieve the desired information
 and build telereddit objects.
 """
 
-import requests
 import random
-import icontract
-
 from typing import Any
+
+import requests
+import icontract
 
 import telereddit.helpers as helpers
 from telereddit.config.config import secret
@@ -55,12 +55,12 @@ def _get_json(post_url: str) -> Any:
         json = response.json()
         # some subreddits have the json data wrapped in brackets, some do not
         json = json if isinstance(json, dict) else json[0]
-    except Exception:
-        raise PostRequestError({"post_url": post_url})
+    except Exception as e:
+        raise PostRequestError({"post_url": post_url}) from e
 
     if json.get("reason") == "private":
         raise SubredditPrivateError()
-    elif (
+    if (
         json.get("error") == 404
         or len(json["data"]["children"]) == 0
         or (len(response.history) > 0 and "search.json" in response.url)
@@ -118,4 +118,4 @@ def get_post(post_url: str) -> Post:
     except Exception as e:
         if issubclass(type(e), TeleredditError):
             raise e
-        raise PostRetrievalError({"post_url": post_url})
+        raise PostRetrievalError({"post_url": post_url}) from e
