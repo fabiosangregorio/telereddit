@@ -167,7 +167,9 @@ class TestReddit(unittest.TestCase):
     @patch("telereddit.reddit._get_json")
     @patch("telereddit.services.services_wrapper.ServicesWrapper.get_media")
     def test_get_post_exception(
-        self, mock_get_media, mock_get_json,
+        self,
+        mock_get_media,
+        mock_get_json,
     ):
         mock_get_json.return_value = {"data": {"children": []}}
         mock_get_media.return_value = Media("", ContentType.PHOTO)

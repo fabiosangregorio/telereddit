@@ -1,6 +1,7 @@
 """Module for Post class."""
 
 from telereddit.models.content_type import ContentType
+from telereddit.helpers import escape_markdown
 
 
 class Post:
@@ -26,7 +27,6 @@ class Post:
     """
 
     def __init__(self, subreddit, permalink, title, text, media=None):
-
         self.subreddit = subreddit
         self.permalink = permalink
         self.title = title
@@ -42,10 +42,14 @@ class Post:
         """
         subreddit_url = f"https://www.reddit.com/{self.subreddit}"
         footer = (
-            f"[Link to post](https://reddit.com{self.permalink}) | "
-            f"[{self.subreddit}]({subreddit_url})"
+            f"[Link to post](https://reddit.com{self.permalink}) \\| "
+            f"[{escape_markdown(self.subreddit)}]({subreddit_url})"
         )
-        return f" *{self.title}*\n{self.text}\n\n{footer}"
+        return (
+            f"*{escape_markdown(self.title)}*"
+            f"\n{escape_markdown(self.text)}"
+            f"\n\n{footer}"
+        )
 
     def get_type(self):
         """Return the post type: this is determined by the media type, if present."""

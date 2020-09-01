@@ -83,7 +83,7 @@ def get_post(post_url):
         data = json["data"]["children"][idx]["data"]
         subreddit = data["subreddit_name_prefixed"]
         permalink = data["permalink"]
-        post_title = helpers.escape_markdown(data["title"])
+        post_title = data["title"]
         post_text = helpers.truncate_text(data["selftext"])
         content_url = data["url"]
 
@@ -95,7 +95,6 @@ def get_post(post_url):
                     f"{post_text}\n\n[Link to youtube video]({media.url})"
                 )
 
-        post_text = helpers.escape_markdown(post_text)
         post = Post(subreddit, permalink, post_title, post_text, media)
         return post
 
