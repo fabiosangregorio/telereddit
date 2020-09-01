@@ -66,7 +66,10 @@ class TestHelpers(unittest.TestCase):
                 expected="r/subreddit_two",
                 reverse=True,
             ),
-            param(text="r/subreddit_one", expected="r/subreddit_one",),
+            param(
+                text="r/subreddit_one",
+                expected="r/subreddit_one",
+            ),
             param(
                 text="r/subreddit_one", reverse=True, expected="r/subreddit_one"
             ),
