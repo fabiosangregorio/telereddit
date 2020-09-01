@@ -1,7 +1,11 @@
 """Linker class which handles all telereddit requests."""
 
 from typing import Optional
-from telegram import InputMediaPhoto, InputMediaVideo, InputMediaDocument  # type: ignore
+from telegram import (  # type: ignore
+    InputMediaPhoto,
+    InputMediaVideo,
+    InputMediaDocument,
+)
 from telegram.bot import Bot, Message  # type: ignore
 import icontract
 

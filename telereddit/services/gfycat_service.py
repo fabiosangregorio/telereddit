@@ -70,7 +70,7 @@ class Gfycat(Service):
             gfy_item["webmSize"],
         )
         # Telegram does not support webm
-        # See: https://www.reddit.com/r/Telegram/comments/5wcqh8/sending_webms_as_videos/
+        # See: https://shorturl.at/dnyBM
         if media.size > 20000000:
             media.url = gfy_item["max5mbGif"]
             media.type = ContentType.GIF
