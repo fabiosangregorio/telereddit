@@ -4,6 +4,7 @@ import re
 import requests
 
 from telereddit.config.config import MAX_TITLE_LENGTH
+import telegram
 
 
 def get_random_post_url(subreddit):
@@ -95,7 +96,7 @@ def escape_markdown(text):
         New string containing the escaped text.
 
     """
-    return text.replace("*", "\\*").replace("_", "\\_")
+    return telegram.utils.helpers.escape_markdown(text, version=2)
 
 
 def truncate_text(text, length=MAX_TITLE_LENGTH):
