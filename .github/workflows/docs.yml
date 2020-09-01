@@ -50,10 +50,6 @@ jobs:
         GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
         GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
-    - name: Generate project dependency graph
-      run: |
-        pydeps --verbose -o docs/images/dependency-graph.svg telereddit
-
     - name: Generate documentation
       run: |
         rm -rf docs/telereddit
