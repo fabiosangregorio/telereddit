@@ -26,7 +26,6 @@ class Post:
     """
 
     def __init__(self, subreddit, permalink, title, text, media=None):
-
         self.subreddit = subreddit
         self.permalink = permalink
         self.title = title
