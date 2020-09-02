@@ -32,7 +32,7 @@
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="telereddit.helpers.get_random_post_url"><code class="name flex">
-<span>def <span class="ident">get_random_post_url</span></span>(<span>subreddit)</span>
+<span>def <span class="ident">get_random_post_url</span></span>(<span>subreddit: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the "random post" url relative to the Reddit API.</p>
@@ -48,7 +48,7 @@
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.get_subreddit_names"><code class="name flex">
-<span>def <span class="ident">get_subreddit_names</span></span>(<span>text)</span>
+<span>def <span class="ident">get_subreddit_names</span></span>(<span>text: str) ‑> List[str]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return a list of the ("r/" prefixed) subreddit names present in the text.</p>
@@ -70,7 +70,7 @@
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.get_subreddit_name"><code class="name flex">
-<span>def <span class="ident">get_subreddit_name</span></span>(<span>text, reverse=False)</span>
+<span>def <span class="ident">get_subreddit_name</span></span>(<span>text: str, reverse: bool = False) ‑> Union[str, NoneType]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the first (or last) ("r/" prefixed) subreddit name in the given text.</p>
@@ -91,7 +91,7 @@
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.escape_markdown"><code class="name flex">
-<span>def <span class="ident">escape_markdown</span></span>(<span>text)</span>
+<span>def <span class="ident">escape_markdown</span></span>(<span>text: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the given text with escaped common markdown characters.</p>
@@ -112,7 +112,7 @@
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.truncate_text"><code class="name flex">
-<span>def <span class="ident">truncate_text</span></span>(<span>text, length=200)</span>
+<span>def <span class="ident">truncate_text</span></span>(<span>text: str, length: int = 200) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the given text, truncated at <code>length</code> characters, plus ellipsis.</p>
@@ -134,7 +134,7 @@ ellipsis.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.polish_text"><code class="name flex">
-<span>def <span class="ident">polish_text</span></span>(<span>text)</span>
+<span>def <span class="ident">polish_text</span></span>(<span>text: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the given text without newline characters.</p>
@@ -150,7 +150,7 @@ ellipsis.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.get_urls_from_text"><code class="name flex">
-<span>def <span class="ident">get_urls_from_text</span></span>(<span>text)</span>
+<span>def <span class="ident">get_urls_from_text</span></span>(<span>text: str) ‑> List[str]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return a list of the reddit urls present in the given text.</p>
@@ -166,7 +166,7 @@ ellipsis.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>obj, attr, default=None)</span>
+<span>def <span class="ident">get</span></span>(<span>obj: Any, attr: str, default: Any = None) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the value of <code>attr</code> if it exists and is not None, default otherwise.</p>
@@ -192,7 +192,7 @@ None.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.helpers.chained_get"><code class="name flex">
-<span>def <span class="ident">chained_get</span></span>(<span>obj, attrs, default=None)</span>
+<span>def <span class="ident">chained_get</span></span>(<span>obj: object, attrs: List[str], default: Any = None) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get for nested objects.</p>
