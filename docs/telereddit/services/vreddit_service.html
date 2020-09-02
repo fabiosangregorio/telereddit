@@ -41,11 +41,11 @@
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="telereddit.services.service.Service" href="service.html#telereddit.services.service.Service">Service</a></li>
-<li>abc.ABC</li>
+<li>icontract._metaclass.DBC</li>
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="telereddit.services.vreddit_service.Vreddit.has_external_request"><code class="name">var <span class="ident">has_external_request</span></code></dt>
+<dt id="telereddit.services.vreddit_service.Vreddit.has_external_request"><code class="name">var <span class="ident">has_external_request</span> : bool</code></dt>
 <dd>
 <p class="inheritance">
 <em>Inherited from:</em>
@@ -54,7 +54,7 @@
 <div class="desc inherited"><p>True if the service needs to reach out to an external http endpoint, False
 otherwise.</p></div>
 </dd>
-<dt id="telereddit.services.vreddit_service.Vreddit.is_authenticated"><code class="name">var <span class="ident">is_authenticated</span></code></dt>
+<dt id="telereddit.services.vreddit_service.Vreddit.is_authenticated"><code class="name">var <span class="ident">is_authenticated</span> : bool</code></dt>
 <dd>
 <p class="inheritance">
 <em>Inherited from:</em>
@@ -63,7 +63,7 @@ otherwise.</p></div>
 <div class="desc inherited"><p>True if the external request needs to be authenticated (i.e. with an
 Authorization header), False otherwise …</p></div>
 </dd>
-<dt id="telereddit.services.vreddit_service.Vreddit.access_token"><code class="name">var <span class="ident">access_token</span></code></dt>
+<dt id="telereddit.services.vreddit_service.Vreddit.access_token"><code class="name">var <span class="ident">access_token</span> : Union[str, NoneType]</code></dt>
 <dd>
 <p class="inheritance">
 <em>Inherited from:</em>
@@ -76,7 +76,7 @@ otherwise …</p></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="telereddit.services.vreddit_service.Vreddit.preprocess"><code class="name flex">
-<span>def <span class="ident">preprocess</span></span>(<span>url, json)</span>
+<span>def <span class="ident">preprocess</span></span>(<span>cls, url: str, data: Any) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Override of <code><a title="telereddit.services.service.Service.preprocess" href="service.html#telereddit.services.service.Service.preprocess">Service.preprocess()</a></code> method.</p>
@@ -86,14 +86,14 @@ needed, therefore we need to seach in the json for the correct piece of
 information in every specific case.</p></div>
 </dd>
 <dt id="telereddit.services.vreddit_service.Vreddit.postprocess"><code class="name flex">
-<span>def <span class="ident">postprocess</span></span>(<span>response)</span>
+<span>def <span class="ident">postprocess</span></span>(<span>cls, response) ‑> <a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Override of <code><a title="telereddit.services.service.Service.postprocess" href="service.html#telereddit.services.service.Service.postprocess">Service.postprocess()</a></code> method.</p>
 <p>Constructs the media object.</p></div>
 </dd>
 <dt id="telereddit.services.vreddit_service.Vreddit.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>url)</span>
+<span>def <span class="ident">get</span></span>(<span>cls, url: str) ‑> Union[requests.models.Response, str]</span>
 </code></dt>
 <dd>
 <p class="inheritance">
@@ -103,7 +103,7 @@ information in every specific case.</p></div>
 <div class="desc inherited"><p>Get the media information …</p></div>
 </dd>
 <dt id="telereddit.services.vreddit_service.Vreddit.authenticate"><code class="name flex">
-<span>def <span class="ident">authenticate</span></span>(<span>)</span>
+<span>def <span class="ident">authenticate</span></span>(<span>) ‑> NoneType</span>
 </code></dt>
 <dd>
 <p class="inheritance">
@@ -113,7 +113,7 @@ information in every specific case.</p></div>
 <div class="desc inherited"><p>Authenticate the service on the service provider API …</p></div>
 </dd>
 <dt id="telereddit.services.vreddit_service.Vreddit.get_media"><code class="name flex">
-<span>def <span class="ident">get_media</span></span>(<span>url, json)</span>
+<span>def <span class="ident">get_media</span></span>(<span>cls, url: str, data: Any) ‑> <a title="telereddit.models.media.Media" href="../models/media.html#telereddit.models.media.Media">Media</a></span>
 </code></dt>
 <dd>
 <p class="inheritance">
@@ -150,9 +150,9 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li><code><a title="telereddit.services.vreddit_service.Vreddit.get" href="service.html#telereddit.services.vreddit_service.Vreddit.get">get</a></code></li>
 <li><code><a title="telereddit.services.vreddit_service.Vreddit.authenticate" href="service.html#telereddit.services.vreddit_service.Vreddit.authenticate">authenticate</a></code></li>
 <li><code><a title="telereddit.services.vreddit_service.Vreddit.get_media" href="service.html#telereddit.services.vreddit_service.Vreddit.get_media">get_media</a></code></li>
-<li><code><a title="telereddit.services.vreddit_service.Vreddit.has_external_request" href="service.html#telereddit.services.vreddit_service.Vreddit.has_external_request">has_external_request</a></code></li>
-<li><code><a title="telereddit.services.vreddit_service.Vreddit.is_authenticated" href="service.html#telereddit.services.vreddit_service.Vreddit.is_authenticated">is_authenticated</a></code></li>
-<li><code><a title="telereddit.services.vreddit_service.Vreddit.access_token" href="service.html#telereddit.services.vreddit_service.Vreddit.access_token">access_token</a></code></li>
+<li><code><a title="telereddit.services.vreddit_service.Vreddit.has_external_request" href="#telereddit.services.vreddit_service.Vreddit.has_external_request">has_external_request</a></code></li>
+<li><code><a title="telereddit.services.vreddit_service.Vreddit.is_authenticated" href="#telereddit.services.vreddit_service.Vreddit.is_authenticated">is_authenticated</a></code></li>
+<li><code><a title="telereddit.services.vreddit_service.Vreddit.access_token" href="#telereddit.services.vreddit_service.Vreddit.access_token">access_token</a></code></li>
 </ul>
 </li>
 </ul>

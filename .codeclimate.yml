@@ -2,10 +2,10 @@ version: "2"
 checks:
   argument-count:
     config:
-      threshold: 5
+      threshold: 7
   method-complexity:
     config:
-      threshold: 7
+      threshold: 15
 plugins:
   duplication:
     enabled: true
@@ -20,17 +20,5 @@ plugins:
     config: 
       threshold: "C"
 exclude_patterns:
-  - "config/"
-  - "db/"
-  - "dist/"
-  - "features/"
-  - "**/node_modules/"
-  - "script/"
-  - "**/spec/"
-  - "**/test/"
   - "**/tests/"
-  - "Tests/"
-  - "**/vendor/"
-  - "**/*_test.go"
-  - "**/*.d.ts"
   - "**/secret_*.py"

@@ -1,5 +1,6 @@
 """Module for Media class."""
 
+from typing import Optional
 from telereddit.models.content_type import ContentType
 
 
@@ -28,7 +29,9 @@ class Media:
 
     """
 
-    def __init__(self, url, media_type: ContentType, size=None):
+    def __init__(
+        self, url: str, media_type: ContentType, size: Optional[int] = None
+    ):
         self.url = url
         self.type = media_type
         self.size = size

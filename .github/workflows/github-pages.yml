@@ -1,21 +1,15 @@
-name: docs
+name: github-pages
 
 on:
   push:
     branches:
     - master
-  pull_request:
-    types: [opened, synchronize, repoened, edited]
 
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-
-    - name: Setup Graphviz environment
-      run: |
-        sudo apt-get install graphviz
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
@@ -43,12 +37,6 @@ jobs:
         GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
         GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
-    - name: Generate project dependency graphs
-      run: |
-        pyreverse --ignore="tests" -o png -p telereddit telereddit
-        mv classes_telereddit.png docs/images/classes_telereddit.png
-        mv packages_telereddit.png docs/images/packages_telereddit.png
-        
     - name: Generate documentation
       run: |
         rm -rf docs/telereddit
@@ -56,24 +44,9 @@ jobs:
       env:
         TELEREDDIT_MACHINE: GITHUB
 
-    - name: Run docstr coverage
-      run: |
-        mkdir documentation-reports
-        docstr-coverage telereddit --verbose=3 --exclude=tests --skipinit 2>&1 | tee ./documentation-reports/docstr-coverage.txt
-    
-    - name: Run pydocstyle
-      run: |
-        (pydocstyle telereddit 2>&1 | tee ./documentation-reports/pydocstyle-coverage.txt; exit ${PIPESTATUS[0]})
-
-    - name: Upload documentation reports as artifact
-      uses: actions/upload-artifact@v2
+    - name: Deploy docs to Github Pages
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        name: documentation-reports
-        path: ./documentation-reports/docstr-coverage.txt
-
-    - name: Commit changes
-      uses: EndBug/add-and-commit@v4
-      with:
-        message: "Commit from Github Actions: docs workflow changes"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: docs/telereddit

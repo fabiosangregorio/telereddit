@@ -7,17 +7,20 @@ Handles configuration, setup and starting of the bot, as well as receive
 messages and dispatch actions to the other modules.
 """
 
+import logging
+from typing import List
+
 import sentry_sdk
 
-from telegram.ext import (
+from telegram.ext import (  # type: ignore
     Updater,
     CallbackContext,
     MessageHandler,
     CallbackQueryHandler,
     Filters,
 )
-from telegram import Update
-import logging
+from telegram import Update, Message  # type: ignore
+import icontract
 
 from telereddit.linker import Linker
 import telereddit.helpers as helpers
@@ -25,7 +28,13 @@ import telereddit.config.config as config
 from telereddit.config.config import secret
 
 
-def on_chat_message(update: Update, context: CallbackContext):
+@icontract.require(
+    lambda update, context: update is not None, "update must not be None"
+)
+@icontract.require(
+    lambda update, context: context is not None, "context must not be None"
+)
+def on_chat_message(update: Update, context: CallbackContext) -> None:
     """
     Entrypoint of the bot's logic. Handles a single update message.
 
@@ -37,23 +46,29 @@ def on_chat_message(update: Update, context: CallbackContext):
         The Context object provided by python-telegram-bot
 
     """
-    msg = update.message
+    msg: Message = update.message
     if not msg or not msg.text:
         return
 
-    linker = Linker(msg.chat_id)
-    text = msg.text.lower()
+    linker: Linker = Linker(msg.chat_id)
+    text: str = msg.text.lower()
     if any(r in text for r in config.REDDIT_DOMAINS):
-        posts_url = helpers.get_urls_from_text(msg.text)
+        posts_url: List[str] = helpers.get_urls_from_text(msg.text)
         for url in posts_url:
             linker.send_post_from_url(url)
     elif "r/" in text:
-        subreddits = helpers.get_subreddit_names(text)
+        subreddits: List[str] = helpers.get_subreddit_names(text)
         for subreddit in subreddits:
             linker.send_random_post(subreddit)
 
 
-def on_callback_query(update: Update, context: CallbackContext):
+@icontract.require(
+    lambda update, context: update is not None, "update must not be None"
+)
+@icontract.require(
+    lambda update, context: context is not None, "context must not be None"
+)
+def on_callback_query(update: Update, context: CallbackContext) -> None:
     """
     Handle all the several types of callback queries.
 
@@ -75,7 +90,8 @@ def on_callback_query(update: Update, context: CallbackContext):
     linker = Linker(message.chat_id)
     if query_data == "more":
         subreddit = helpers.get_subreddit_name(text, reverse=True)
-        linker.send_random_post(subreddit)
+        if subreddit:
+            linker.send_random_post(subreddit)
     elif query_data == "edit":
         linker.edit_result(message)
     elif query_data == "delete":
@@ -84,7 +100,7 @@ def on_callback_query(update: Update, context: CallbackContext):
     context.bot.answerCallbackQuery(update.callback_query.id)
 
 
-def main():
+def main() -> None:
     """Entrypoint of telereddit. Handles configuration, setup and start of the bot."""
     if config.SENTRY_ENABLED:
         sentry_sdk.init(secret.SENTRY_TOKEN, environment=config.ENV)
