@@ -1,7 +1,10 @@
 """Module for Post class."""
 
+from typing import Optional
+
 from telereddit.models.content_type import ContentType
 from telereddit.helpers import escape_markdown
+from telereddit.models.media import Media
 
 
 class Post:
@@ -26,14 +29,22 @@ class Post:
 
     """
 
-    def __init__(self, subreddit, permalink, title, text, media=None):
+    def __init__(
+        self,
+        subreddit: str,
+        permalink: str,
+        title: str,
+        text: str,
+        media: Optional[Media] = None,
+    ):
+
         self.subreddit = subreddit
         self.permalink = permalink
         self.title = title
         self.text = text
         self.media = media
 
-    def get_msg(self):
+    def get_msg(self) -> str:
         """
         Get the full message of the post.
 
@@ -51,6 +62,6 @@ class Post:
             f"\n\n{footer}"
         )
 
-    def get_type(self):
+    def get_type(self) -> ContentType:
         """Return the post type: this is determined by the media type, if present."""
         return self.media.type if self.media else ContentType.TEXT

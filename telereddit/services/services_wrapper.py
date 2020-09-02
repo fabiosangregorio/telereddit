@@ -2,12 +2,15 @@
 
 import logging
 from urllib.parse import urlparse
+from typing import Any
+import icontract
 
 from telereddit.services.gfycat_service import Gfycat
 from telereddit.services.vreddit_service import Vreddit
 from telereddit.services.imgur_service import Imgur
 from telereddit.services.youtube_service import Youtube
 from telereddit.services.generic_service import Generic
+from telereddit.models.media import Media
 
 
 class ServicesWrapper:
@@ -20,14 +23,18 @@ class ServicesWrapper:
     An instance for each service class is set at class initialization.
     """
 
-    gfycat = Gfycat()
-    vreddit = Vreddit()
-    imgur = Imgur()
-    youtube = Youtube()
-    generic = Generic()
+    gfycat: Gfycat = Gfycat()
+    vreddit: Vreddit = Vreddit()
+    imgur: Imgur = Imgur()
+    youtube: Youtube = Youtube()
+    generic: Generic = Generic()
 
     @classmethod
-    def get_media(cls, url, json={}):
+    @icontract.require(
+        lambda cls, url, data: url is not None, "url must not be None"
+    )
+    @icontract.ensure(lambda result: result is not None)
+    def get_media(cls, url: str, data: Any = None) -> Media:
         """
         Given the url from the Reddit json, return the corresponding media obj.
 
@@ -37,7 +44,7 @@ class ServicesWrapper:
         ----------
         url : str
             Url from Reddit API json.
-        json : json
+        data : json
             (Default value = {})
 
             Reddit data json containing media fallback urls.
@@ -48,21 +55,22 @@ class ServicesWrapper:
             The media object corresponding to the media post url.
 
         """
-        parsed_url = urlparse(url)
-        base_url = parsed_url.netloc
+        base_url: str = urlparse(url).netloc
+        media: Media
 
         if "gfycat.com" in base_url:
-            media = cls.gfycat.get_media(url, json)
+            media = cls.gfycat.get_media(url, data)
         elif "v.redd.it" in base_url:
-            media = cls.vreddit.get_media(url, json)
+            media = cls.vreddit.get_media(url, data)
         elif "imgur.com" in base_url:
-            media = cls.imgur.get_media(url, json)
+            media = cls.imgur.get_media(url, data)
         elif "youtube.com" in base_url or "youtu.be" in base_url:
-            media = cls.youtube.get_media(url, json)
+            media = cls.youtube.get_media(url, data)
         else:
-            logging.warning(
-                f"services_wrapper: no suitable service found. base_url: {base_url}"
+            logging.info(
+                "services_wrapper: no suitable service found. base_url: %s",
+                base_url,
             )
-            media = cls.generic.get_media(url, json)
+            media = cls.generic.get_media(url, data)
 
         return media

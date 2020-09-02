@@ -60,6 +60,14 @@ Get it on [telegram.me](https://telegram.me/tele_reddit_bot)!
 
 ## Bugs and feature requests
 If you want to report a bug or would like a feature to be added, feel free to open an issue.
+
+
+## Versioning
+We follow Semantic Versioning. The version X.Y.Z indicates:
+
+* X is the major version (backward-incompatible),
+* Y is the minor version (backward-compatible), and
+* Z is the patch version (backward-compatible bug fix).
  
 ## License
 **[GPL v3](https://www.gnu.org/licenses/gpl-3.0)** - Copyright 2020 © <a href="http://fabio.sangregorio.dev"

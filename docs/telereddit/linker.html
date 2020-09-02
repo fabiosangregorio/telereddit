@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.1" />
+<meta name="generator" content="pdoc 0.8.4" />
 <title>telereddit.linker API documentation</title>
 <meta name="description" content="Linker class which handles all telereddit requests." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
 <style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
 <style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
@@ -35,7 +35,7 @@
 <dl>
 <dt id="telereddit.linker.Linker"><code class="flex name class">
 <span>class <span class="ident">Linker</span></span>
-<span>(</span><span>chat_id)</span>
+<span>(</span><span>chat_id: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Handle a single telereddit request.</p>
@@ -52,15 +52,67 @@ callback, etc.)</p>
 </dl></div>
 <h3>Class variables</h3>
 <dl>
-<dt id="telereddit.linker.Linker.bot"><code class="name">var <span class="ident">bot</span></code></dt>
+<dt id="telereddit.linker.Linker.bot"><code class="name">var <span class="ident">bot</span> : telegram.bot.Bot</code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Create a new <code>Mock</code> object. <code>Mock</code> takes several optional arguments
+that specify the behaviour of the Mock object:</p>
+<ul>
+<li><code>spec</code>: This can be either a list of strings or an existing object (a
+class or instance) that acts as the specification for the mock object. If
+you pass in an object then a list of strings is formed by calling dir on
+the object (excluding unsupported magic attributes and methods). Accessing
+any attribute not in this list will raise an <code>AttributeError</code>.</li>
+</ul>
+<p>If <code>spec</code> is an object (rather than a list of strings) then
+<code>mock.__class__</code> returns the class of the spec object. This allows mocks
+to pass <code>isinstance</code> tests.</p>
+<ul>
+<li>
+<p><code>spec_set</code>: A stricter variant of <code>spec</code>. If used, attempting to <em>set</em>
+or get an attribute on the mock that isn't on the object passed as
+<code>spec_set</code> will raise an <code>AttributeError</code>.</p>
+</li>
+<li>
+<p><code>side_effect</code>: A function to be called whenever the Mock is called. See
+the <code>side_effect</code> attribute. Useful for raising exceptions or
+dynamically changing return values. The function is called with the same
+arguments as the mock, and unless it returns <code>DEFAULT</code>, the return
+value of this function is used as the return value.</p>
+</li>
+</ul>
+<p>If <code>side_effect</code> is an iterable then each call to the mock will return
+the next value from the iterable. If any of the members of the iterable
+are exceptions they will be raised instead of returned.</p>
+<ul>
+<li>
+<p><code>return_value</code>: The value returned when the mock is called. By default
+this is a new Mock (created on first access). See the
+<code>return_value</code> attribute.</p>
+</li>
+<li>
+<p><code>wraps</code>: Item for the mock object to wrap. If <code>wraps</code> is not None then
+calling the Mock will pass the call through to the wrapped object
+(returning the real result). Attribute access on the mock will return a
+Mock object that wraps the corresponding attribute of the wrapped object
+(so attempting to access an attribute that doesn't exist will raise an
+<code>AttributeError</code>).</p>
+</li>
+</ul>
+<p>If the mock has an explicit <code>return_value</code> set then calls are not passed
+to the wrapped object and the <code>return_value</code> is returned instead.</p>
+<ul>
+<li><code>name</code>: If the mock has a name then it will be used in the repr of the
+mock. This can be useful for debugging. The name is propagated to child
+mocks.</li>
+</ul>
+<p>Mocks can also be called with arbitrary keyword arguments. These will be
+used to set attributes on the mock after it is created.</p></div>
 </dd>
 </dl>
 <h3>Static methods</h3>
 <dl>
 <dt id="telereddit.linker.Linker.set_bot"><code class="name flex">
-<span>def <span class="ident">set_bot</span></span>(<span>bot)</span>
+<span>def <span class="ident">set_bot</span></span>(<span>bot: telegram.bot.Bot) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Set the python-telegram-bot's Bot instance for the Linker object.</p>
@@ -78,7 +130,7 @@ callback, etc.)</p>
 <h3>Methods</h3>
 <dl>
 <dt id="telereddit.linker.Linker.get_args"><code class="name flex">
-<span>def <span class="ident">get_args</span></span>(<span>self, override_dict={})</span>
+<span>def <span class="ident">get_args</span></span>(<span>self, override_dict: Union[dict, NoneType] = None) ‑> dict</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Get the args parameters potentially overriding some of them.</p>
@@ -95,7 +147,7 @@ value.</p>
 <p><code>args</code></p></div>
 </dd>
 <dt id="telereddit.linker.Linker.send_random_post"><code class="name flex">
-<span>def <span class="ident">send_random_post</span></span>(<span>self, subreddit)</span>
+<span>def <span class="ident">send_random_post</span></span>(<span>self, subreddit: str) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Send a random post to the chat from the given subreddit.</p>
@@ -112,7 +164,7 @@ value.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.send_post_from_url"><code class="name flex">
-<span>def <span class="ident">send_post_from_url</span></span>(<span>self, post_url)</span>
+<span>def <span class="ident">send_post_from_url</span></span>(<span>self, post_url: str) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Try to send the reddit post relative to post_url to the chat.</p>
@@ -124,7 +176,7 @@ value.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.send_post"><code class="name flex">
-<span>def <span class="ident">send_post</span></span>(<span>self, post_url, from_url=False)</span>
+<span>def <span class="ident">send_post</span></span>(<span>self, post_url: str, from_url: bool = False) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Send the reddit post relative to post_url to the chat.</p>
@@ -142,7 +194,7 @@ from the random post.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.edit_result"><code class="name flex">
-<span>def <span class="ident">edit_result</span></span>(<span>self, message)</span>
+<span>def <span class="ident">edit_result</span></span>(<span>self, message: telegram.message.Message) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Edit the given message with a new post from that subreddit.</p>
@@ -155,7 +207,7 @@ the message.</p>
 </dl></div>
 </dd>
 <dt id="telereddit.linker.Linker.edit_random_post"><code class="name flex">
-<span>def <span class="ident">edit_random_post</span></span>(<span>self, message, subreddit)</span>
+<span>def <span class="ident">edit_random_post</span></span>(<span>self, message: telegram.message.Message, subreddit: str) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Edit the current Telegram message with another random Reddit post.</p>
@@ -206,7 +258,7 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.4</a>.</p>
 </footer>
 </body>
 </html>

@@ -1,13 +1,22 @@
 """Miscellaneous helpers for the whole application."""
 
+from typing import List, Optional, Any
 import re
 import requests
+from requests import Response
+from requests.exceptions import RequestException
+import icontract
 
 from telereddit.config.config import MAX_TITLE_LENGTH
 import telegram
 
 
-def get_random_post_url(subreddit):
+@icontract.require(
+    lambda subreddit: subreddit is not None and len(subreddit) > 0,
+    "subreddit must not be None",
+)
+@icontract.ensure(lambda result, subreddit: subreddit in result)
+def get_random_post_url(subreddit: str) -> str:
     """
     Return the "random post" url relative to the Reddit API.
 
@@ -25,7 +34,11 @@ def get_random_post_url(subreddit):
     return f"https://www.reddit.com/{subreddit}/random"
 
 
-def get_subreddit_names(text):
+@icontract.require(
+    lambda text: text is not None and len(text) > 0,
+    "text must not be None",
+)
+def get_subreddit_names(text: str) -> List[str]:
     """
     Return a list of the ("r/" prefixed) subreddit names present in the text.
 
@@ -50,7 +63,11 @@ def get_subreddit_names(text):
     return re.findall(regex, text, re.MULTILINE)
 
 
-def get_subreddit_name(text, reverse=False):
+@icontract.require(
+    lambda text, reverse: text is not None and len(text) > 0,
+    "text must not be None",
+)
+def get_subreddit_name(text: str, reverse: bool = False) -> Optional[str]:
     """
     Return the first (or last) ("r/" prefixed) subreddit name in the given text.
 
@@ -71,13 +88,16 @@ def get_subreddit_name(text, reverse=False):
 
     """
     subs = get_subreddit_names(text)
-    if len(subs):
+    if len(subs) > 0:
         return subs[-1] if reverse else subs[0]
-    else:
-        return None
+    return None
 
 
-def escape_markdown(text):
+@icontract.require(
+    lambda text: text is not None,
+    "text must not be None",
+)
+def escape_markdown(text: str) -> str:
     """
     Return the given text with escaped common markdown characters.
 
@@ -99,7 +119,15 @@ def escape_markdown(text):
     return telegram.utils.helpers.escape_markdown(text, version=2)
 
 
-def truncate_text(text, length=MAX_TITLE_LENGTH):
+@icontract.require(
+    lambda text, length: text is not None,
+    "text must not be None",
+)
+@icontract.require(
+    lambda text, length: length > 0,
+    "length must not be <= 0",
+)
+def truncate_text(text: str, length: int = MAX_TITLE_LENGTH) -> str:
     """
     Return the given text, truncated at `length` characters, plus ellipsis.
 
@@ -120,12 +148,14 @@ def truncate_text(text, length=MAX_TITLE_LENGTH):
         New string containing the truncated text, plus ellipsis.
 
     """
-    if length < 0:
-        return text
     return text[:length] + (text[length:] and "...")
 
 
-def polish_text(text):
+@icontract.require(
+    lambda text: text is not None and len(text) > 0,
+    "text must not be None",
+)
+def polish_text(text: str) -> str:
     """
     Return the given text without newline characters.
 
@@ -143,7 +173,11 @@ def polish_text(text):
     return text.replace("\n", " ")
 
 
-def get_urls_from_text(text):
+@icontract.require(
+    lambda text: text is not None and len(text) > 0,
+    "text must not be None",
+)
+def get_urls_from_text(text: str) -> List[str]:
     """
     Return a list of the reddit urls present in the given text.
 
@@ -160,31 +194,37 @@ def get_urls_from_text(text):
     """
     polished = polish_text(text)
     urls = list()
-    for w in polished.split(" "):
-        w_lower = w.lower()
+    for word in polished.split(" "):
+        w_lower = word.lower()
         if "reddit.com" in w_lower:
-            urls.append(w.partition("/?")[0])
+            urls.append(word.partition("/?")[0])
         if "redd.it" in w_lower:
             urls.append(
-                f'https://www.reddit.com/comments/{w.partition("redd.it/")[2]}'
+                f'https://www.reddit.com/comments/{word.partition("redd.it/")[2]}'
             )
         if "reddit.app.link" in w_lower:
             try:
-                r = requests.get(
-                    w,
+                resp: Response = requests.get(
+                    word,
                     headers={"User-agent": "telereddit_bot"},
                     allow_redirects=False,
                 )
-                start = r.text.find("https://")
-                url = r.text[start : r.text.find('"', start)]
+                start = resp.text.find("https://")
+                url = resp.text[start : resp.text.find('"', start)]
                 if len(url) > 0:
                     urls.append(url.partition("/?")[0])
-            except Exception:
+            except RequestException:
                 pass
     return urls
 
 
-def get(obj, attr, default=None):
+@icontract.require(
+    lambda obj, attr, default: obj is not None, "obj must not be None"
+)
+@icontract.require(
+    lambda obj, attr, default: attr is not None, "attr must not be None"
+)
+def get(obj: Any, attr: str, default: Any = None) -> Any:
     """
     Return the value of `attr` if it exists and is not None, default otherwise.
 
@@ -212,7 +252,14 @@ def get(obj, attr, default=None):
     return obj[attr] if attr in obj and obj[attr] is not None else default
 
 
-def chained_get(obj, attrs, default=None):
+@icontract.require(
+    lambda obj, attrs, default: obj is not None, "obj must not be None"
+)
+@icontract.require(
+    lambda obj, attrs, default: attrs is not None and len(attrs) > 0,
+    "attrs must not be None",
+)
+def chained_get(obj: object, attrs: List[str], default: Any = None) -> Any:
     """
     Get for nested objects.
 

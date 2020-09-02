@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+    - tvsw
   pull_request:
     types: [opened, synchronize, repoened, edited]
   
@@ -18,20 +19,33 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Cache CI dependencies
+    - name: Cache dependencies
       uses: actions/cache@v1
       with:
         path: ~/.cache/pip # This path is specific to Ubuntu
-        key: ${{ runner.os }}-pip-${{ hashFiles('./.github/workflows/requirements/lint.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('./requirements/lint.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
     - name: Install dependencies
       run: |
-        pip install -r ./.github/workflows/requirements/lint.txt
+        pip install -r ./requirements/lint.txt
+
+    - name: Unlock git-crypt files
+      uses: zemuldo/git-crypt-unlock@v3.0-alpha-1
+      env: 
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_KEY_GRIP: ${{ secrets.GPG_KEY_GRIP }}
+        GPG_KEY_PASS: ${{ secrets.GPG_KEY_PASS }} 
 
     - name: Check black code formatting
       run: python -m black telereddit --check
 
     - name: Check flake8 linting
       run: python -m flake8 --config setup.cfg telereddit
+    
+    - name: Check mypy linting
+      run: mypy telereddit
+
+    - name: Check icontract linting
+      run: pyicontract-lint --format verbose telereddit

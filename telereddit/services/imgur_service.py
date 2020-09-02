@@ -1,8 +1,10 @@
 """Service for Imgur images and videos."""
+import re
+from typing import Any
 import json
 from urllib.parse import urlparse
 import requests
-import re
+from requests import Response
 
 from telereddit.config.config import secret
 from telereddit.services.service import Service
@@ -14,22 +16,22 @@ class Imgur(Service):
     """Service for Imgur images and videos."""
 
     @classmethod
-    def preprocess(cls, url, json):
+    def preprocess(cls, url: str, data: Any) -> str:
         """
         Override of `telereddit.services.service.Service.preprocess` method.
 
         Gets the media hash from the url and creates the accepted provider media
         url.
         """
-        media_hash = urlparse(url).path.rpartition("/")[2]
+        media_hash: str = urlparse(url).path.rpartition("/")[2]
         r = re.compile(r"image|gallery").search(url)
-        api = r.group() if r else "image"
+        api: str = r.group() if r else "image"
         if "." in media_hash:
             media_hash = media_hash.rpartition(".")[0]
         return f"https://api.imgur.com/3/{api}/{media_hash}"
 
     @classmethod
-    def get(cls, url):
+    def get(cls, url: str) -> Response:
         """
         Override of `telereddit.services.service.Service.get` method.
 
@@ -41,14 +43,14 @@ class Imgur(Service):
         )
 
     @classmethod
-    def postprocess(cls, response):
+    def postprocess(cls, response) -> Media:
         """
         Override of `telereddit.services.service.Service.postprocess` method.
 
         Creates the right media object based on the size of provider's media.
         """
-        data = json.loads(response.content)["data"]
-        media = None
+        data: Any = json.loads(response.content)["data"]
+        media: Media
         if "images" in data:
             data = data["images"][0]
         if "image/jpeg" in data["type"] or "image/png" in data["type"]:
