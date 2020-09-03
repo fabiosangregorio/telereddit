@@ -1,0 +1,3 @@
+[submodule "telereddit/pyreddit"]
+	path = telereddit/pyreddit
+	url = https://github.com/fabiosangregorio/pyreddit

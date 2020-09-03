@@ -69,23 +69,8 @@ class Secret:
         """Set item wrapper for the setattr method."""
         setattr(self, key, value)
 
-    def __init__(
-        self,
-        from_secret=None,
-        TELEGRAM_TOKEN=None,
-        TELEREDDIT_USER_AGENT=None,
-        SENTRY_TOKEN=None,
-        GFYCAT_CLIENT_ID=None,
-        GFYCAT_CLIENT_SECRET=None,
-        IMGUR_CLIENT_ID=None,
-    ):
+    def __init__(self, from_secret=None, TELEGRAM_TOKEN=None):
         self.from_secret = from_secret
         self.set_attr("TELEGRAM_TOKEN", TELEGRAM_TOKEN)
-        self.set_attr("TELEREDDIT_USER_AGENT", TELEREDDIT_USER_AGENT)
-        self.set_attr("SENTRY_TOKEN", SENTRY_TOKEN)
-        self.set_attr("GFYCAT_CLIENT_ID", GFYCAT_CLIENT_ID)
-        self.set_attr("GFYCAT_CLIENT_SECRET", GFYCAT_CLIENT_SECRET)
-        self.set_attr("IMGUR_CLIENT_ID", IMGUR_CLIENT_ID)
-        self.set_attr("SENTRY_TOKEN", SENTRY_TOKEN)
 
         self.from_secret = None  # free from_secret pointer

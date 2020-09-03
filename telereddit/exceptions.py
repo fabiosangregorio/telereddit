@@ -57,13 +57,6 @@ class TeleredditError(Exception):
         )
 
 
-class AuthenticationError(TeleredditError):
-    """Raised when a service cannot authenticate to the API provider."""
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("Authentication failed", data, capture)
-
-
 class SubredditError(TeleredditError):
     """
     Base class for subreddit related exceptions.
@@ -103,43 +96,6 @@ class MediaError(TeleredditError):
 
     def __init__(self, msg: Any, data: Any = None, capture: bool = True):
         super().__init__(msg, data, capture)
-
-
-class SubredditPrivateError(SubredditError):
-    """Raised when the subreddit is private, and therefore cannot be fetched."""
-
-    def __init__(self, data: Any = None, capture: bool = False):
-        super().__init__("This subreddit is private.", data, capture)
-
-
-class SubredditDoesntExistError(SubredditError):
-    """Raised when the subreddit does not exist."""
-
-    def __init__(self, data: Any = None, capture: bool = False):
-        super().__init__("This subreddit doesn't exist.", data, capture)
-
-
-class PostRequestError(PostError):
-    """
-    Raised when there's an error in the post request.
-
-    .. note:: Not to be confused with `PostRetrievalError`
-    """
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("I can't find that subreddit.", data, capture)
-
-
-class PostRetrievalError(PostError):
-    """
-    Raised when there's an error in the post json.
-
-    E.g. a mandatory json field is missing or the json is not strucutred as
-    expected.
-    """
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("The retrieval of the post failed.", data, capture)
 
 
 class PostSendError(PostError):
@@ -186,10 +142,3 @@ class MediaTooBigError(MediaError):
 
     def __init__(self, data: Any = None, capture: bool = True):
         super().__init__("Media is too big to be sent.", data, capture)
-
-
-class MediaRetrievalError(MediaError):
-    """Raised when there's an error in the media retrieval request."""
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("Error in getting the media", data, capture)
