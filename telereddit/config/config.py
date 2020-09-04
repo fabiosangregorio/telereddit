@@ -12,7 +12,7 @@ import logging
 from typing import Any
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton  # type: ignore
-
+from pyreddit.pyreddit.config.config import load_secret
 
 _delete_btn = InlineKeyboardButton(text="✕", callback_data="delete")
 _edit_btn = InlineKeyboardButton(text="↻", callback_data="edit")
@@ -20,6 +20,7 @@ _edit_failed_btn = InlineKeyboardButton(text="Retry ↻", callback_data="edit")
 _more_btn = InlineKeyboardButton(text="＋", callback_data="more")
 
 # Dynamic environment secret configuration
+load_secret("pyreddit")
 secret: Any = None
 _env_key = os.environ.get("TELEREDDIT_MACHINE")
 if _env_key is not None:
@@ -38,6 +39,9 @@ else:
 
 MAX_TRIES = 4
 MAX_MEDIA_SIZE = 20000000
+MAX_POST_LENGTH = 500
+MAX_TITLE_LENGTH = 200
+REDDIT_DOMAINS = ["reddit.com", "redd.it", "reddit.app.link"]
 
 SENTRY_ENABLED = (
     secret.SENTRY_TOKEN is not None and len(secret.SENTRY_TOKEN) > 0

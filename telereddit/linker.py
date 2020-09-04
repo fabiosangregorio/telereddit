@@ -17,11 +17,11 @@ from telereddit.config.config import (
     DELETE_KEYBOARD,
     MAX_MEDIA_SIZE,
 )
-import telereddit.reddit as reddit
+from pyreddit.pyreddit import reddit
 import telereddit.helpers as helpers
-from telereddit.models.media import ContentType, Media
+from pyreddit.pyreddit.models.media import ContentType, Media
+from pyreddit.pyreddit.exceptions import RedditError, SubredditError
 from telereddit.exceptions import (
-    SubredditError,
     TeleredditError,
     MediaTooBigError,
     PostSendError,
@@ -121,7 +121,7 @@ class Linker:
         for _ in range(MAX_TRIES):
             try:
                 return self.send_post(helpers.get_random_post_url(subreddit))
-            except TeleredditError as e:
+            except (RedditError, TeleredditError) as e:
                 err = e
                 if isinstance(e, SubredditError):
                     break
@@ -144,7 +144,7 @@ class Linker:
         """
         try:
             self.send_post(post_url, from_url=True)
-        except TeleredditError as e:
+        except (RedditError, TeleredditError) as e:
             self._send_exception_message(e, keyboard=False)
 
     @icontract.require(
@@ -229,7 +229,7 @@ class Linker:
         for _ in range(MAX_TRIES):
             try:
                 return self.edit_random_post(message, subreddit)
-            except TeleredditError:
+            except (RedditError, TeleredditError):
                 pass
         self.bot.editMessageReplyMarkup(
             self.chat_id, message.message_id, reply_markup=EDIT_FAILED_KEYBOARD

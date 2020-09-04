@@ -12,14 +12,9 @@ machine.
     running after a fork.
 """
 
-from telereddit.config.secret import Secret
+from telereddit.config.secret import TeleredditSecret
+from pyreddit.pyreddit.config import secret_generic
 
-
-secret_config = Secret(
-    TELEGRAM_TOKEN="",
-    TELEREDDIT_USER_AGENT="",
-    SENTRY_TOKEN="",
-    GFYCAT_CLIENT_ID="",
-    GFYCAT_CLIENT_SECRET="",
-    IMGUR_CLIENT_ID="",
+secret_config = TeleredditSecret(
+    from_secret=secret_generic.secret_config, TELEGRAM_TOKEN="",
 )

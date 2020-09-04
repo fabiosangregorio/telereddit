@@ -57,18 +57,6 @@ class TeleredditError(Exception):
         )
 
 
-class SubredditError(TeleredditError):
-    """
-    Base class for subreddit related exceptions.
-
-    Capture
-    -------
-    Unless specified otherwise, these are not a true error of the application
-    and originate from a "correct" subreddit property, such as it being private
-    or not existing, and therfore **should not** be captured by Sentry.
-    """
-
-
 class PostError(TeleredditError):
     """
     Base class for post related exceptions.
