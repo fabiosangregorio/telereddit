@@ -276,7 +276,7 @@ class Linker:
                 media_args = dict(
                     media=post.media.url,  # type: ignore
                     caption=post.get_msg(),
-                    parse_mode="Markdown",
+                    parse_mode="MarkdownV2",
                 )
                 if post.get_type() == ContentType.GIF:
                     media = InputMediaDocument(**media_args)

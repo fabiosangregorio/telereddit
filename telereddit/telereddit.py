@@ -25,7 +25,10 @@ import icontract
 from telereddit.linker import Linker
 import telereddit.helpers as helpers
 import telereddit.config.config as config
-from telereddit.config.config import secret
+from telereddit.config.config import load_secret
+
+from pyreddit.pyreddit.services.services_wrapper import ServicesWrapper
+from pyreddit.pyreddit.config.config import load_secret as pyreddit_load_secret
 
 
 @icontract.require(
@@ -102,10 +105,15 @@ def on_callback_query(update: Update, context: CallbackContext) -> None:
 
 def main() -> None:
     """Entrypoint of telereddit. Handles configuration, setup and start of the bot."""
-    if config.SENTRY_ENABLED:
-        sentry_sdk.init(secret.SENTRY_TOKEN, environment=config.ENV)
+    load_secret()
+    pyreddit_load_secret(config.secret)
 
-    updater = Updater(token=secret.TELEGRAM_TOKEN, use_context=True)
+    if config.SENTRY_ENABLED:
+        sentry_sdk.init(config.secret.SENTRY_TOKEN, environment=config.ENV)
+
+    ServicesWrapper.init_services()
+
+    updater = Updater(token=config.secret.TELEGRAM_TOKEN, use_context=True)
     Linker.set_bot(updater.bot)
 
     print("Listening...")

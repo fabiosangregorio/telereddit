@@ -31,7 +31,22 @@ class TeleredditSecret(Secret):
 
     """
 
-    def __init__(self, from_secret=None, TELEGRAM_TOKEN=None):
-        super().__init__()
+    def __init__(
+        self,
+        from_secret=None,
+        REDDIT_USER_AGENT=None,
+        SENTRY_TOKEN=None,
+        GFYCAT_CLIENT_ID=None,
+        GFYCAT_CLIENT_SECRET=None,
+        IMGUR_CLIENT_ID=None,
+        TELEGRAM_TOKEN=None,
+    ):
+        super().__init__(
+            REDDIT_USER_AGENT=REDDIT_USER_AGENT,
+            SENTRY_TOKEN=SENTRY_TOKEN,
+            GFYCAT_CLIENT_ID=GFYCAT_CLIENT_ID,
+            GFYCAT_CLIENT_SECRET=GFYCAT_CLIENT_SECRET,
+            IMGUR_CLIENT_ID=IMGUR_CLIENT_ID,
+        )
         self.set_attr("TELEGRAM_TOKEN", TELEGRAM_TOKEN)
         self.from_secret = None  # free from_secret pointer
