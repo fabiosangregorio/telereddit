@@ -9,11 +9,20 @@ from telegram import InputMediaPhoto  # type: ignore
 from telegram import InputMediaDocument, InputMediaVideo
 from telegram.bot import Bot, Message  # type: ignore
 
-from telereddit.config.config import (DELETE_KEYBOARD, EDIT_FAILED_KEYBOARD,
-                                      EDIT_KEYBOARD, MAX_MEDIA_SIZE, MAX_TRIES,
-                                      NO_EDIT_KEYBOARD)
-from telereddit.exceptions import (MediaTooBigError, PostEqualsMessageError,
-                                   PostSendError, TeleredditError)
+from telereddit.config.config import (
+    DELETE_KEYBOARD,
+    EDIT_FAILED_KEYBOARD,
+    EDIT_KEYBOARD,
+    MAX_MEDIA_SIZE,
+    MAX_TRIES,
+    NO_EDIT_KEYBOARD,
+)
+from telereddit.exceptions import (
+    MediaTooBigError,
+    PostEqualsMessageError,
+    PostSendError,
+    TeleredditError,
+)
 
 
 class Linker:
