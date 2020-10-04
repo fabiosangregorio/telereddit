@@ -181,7 +181,10 @@ class Linker:
 
         except Exception as e:
             raise PostSendError(
-                {"post_url": post.permalink, "media_url": post.media.url}  # type: ignore
+                {
+                    "post_url": post.permalink,
+                    "media_url": helpers.get(post.media, "url"),
+                }
             ) from e
 
     def edit_result(self, message: Message) -> None:
