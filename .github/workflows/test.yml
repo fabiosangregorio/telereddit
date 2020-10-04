@@ -43,7 +43,9 @@ jobs:
         pip install -r ./requirements/test.txt
 
     - name: Run tests and generate report
-      run: | 
+      run: |
+        ls
+        ls pyreddit
         coverage run -m unittest
       env:
         REDDIT_BOTS_MACHINE: 'GITHUB'
