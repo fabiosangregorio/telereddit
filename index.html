@@ -63,7 +63,9 @@ alt="Code style: black"></a>
 <li>Install requirements
 <code>bash
 pip install -r requirements.txt</code></li>
-<li>Set up Telegram token and API keys by filling out <code>./telereddit/config/secret_generic.py</code></li>
+<li>Set up Telegram token and API keys by duplicating and filling out <code>./telereddit/config/template.env</code></li>
+<li>Set the environment variable <code>REDDIT_BOTS_MACHINE</code> to the name of the env file (e.g.: for <code>dev.env</code> set
+<code>REDDIT_BOTS_MACHINE=DEV</code>)</li>
 <li>Start the bot
 <code>bash
 python -m telereddit</code></li>
@@ -93,25 +95,9 @@ target="_blank">fabio.sangregorio.dev</a>.</p>
 <dd>
 <div class="desc"><p>Catched exceptions of the software …</p></div>
 </dd>
-<dt><code class="name"><a title="telereddit.helpers" href="helpers.html">telereddit.helpers</a></code></dt>
-<dd>
-<div class="desc"><p>Miscellaneous helpers for the whole application.</p></div>
-</dd>
 <dt><code class="name"><a title="telereddit.linker" href="linker.html">telereddit.linker</a></code></dt>
 <dd>
 <div class="desc"><p>Linker class which handles all telereddit requests.</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.models" href="models/index.html">telereddit.models</a></code></dt>
-<dd>
-<div class="desc"><p>Models used by the software to represent Reddit entities.</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.reddit" href="reddit.html">telereddit.reddit</a></code></dt>
-<dd>
-<div class="desc"><p>Reddit API interface module …</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.services" href="services/index.html">telereddit.services</a></code></dt>
-<dd>
-<div class="desc"><p>Services are used to retrieve media contents from external sources …</p></div>
 </dd>
 <dt><code class="name"><a title="telereddit.telereddit" href="telereddit.html">telereddit.telereddit</a></code></dt>
 <dd>
@@ -153,11 +139,7 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <ul>
 <li><code><a title="telereddit.config" href="config/index.html">telereddit.config</a></code></li>
 <li><code><a title="telereddit.exceptions" href="exceptions.html">telereddit.exceptions</a></code></li>
-<li><code><a title="telereddit.helpers" href="helpers.html">telereddit.helpers</a></code></li>
 <li><code><a title="telereddit.linker" href="linker.html">telereddit.linker</a></code></li>
-<li><code><a title="telereddit.models" href="models/index.html">telereddit.models</a></code></li>
-<li><code><a title="telereddit.reddit" href="reddit.html">telereddit.reddit</a></code></li>
-<li><code><a title="telereddit.services" href="services/index.html">telereddit.services</a></code></li>
 <li><code><a title="telereddit.telereddit" href="telereddit.html">telereddit.telereddit</a></code></li>
 <li><code><a title="telereddit.tests" href="tests/index.html">telereddit.tests</a></code></li>
 </ul>

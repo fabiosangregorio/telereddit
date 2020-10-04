@@ -28,8 +28,8 @@
 <code><a title="telereddit.config.config" href="config.html">telereddit.config.config</a></code>.</p>
 <p>All the API keys, identity keys and tokens are configured in the <code>secret_*.py</code>
 files. These modules are dinamically loaded when loading the configuration,
-based on the <code>TELEREDDIT_MACHINE</code> environment variable.</p>
-<p><code><a title="telereddit.config.secret_dev" href="secret_dev.html">telereddit.config.secret_dev</a></code>, <code><a title="telereddit.config.secret_prod" href="secret_prod.html">telereddit.config.secret_prod</a></code> and <code><a title="telereddit.config.secret_github" href="secret_github.html">telereddit.config.secret_github</a></code> are crypted using the GPG
+based on the <code>REDDIT_BOTS_MACHINE</code> environment variable.</p>
+<p><code>secret_dev</code>, <code>secret_prod</code> and <code>secret_github</code> are crypted using the GPG
 standard via git-crypt.</p>
 </section>
 <section>
@@ -38,26 +38,6 @@ standard via git-crypt.</p>
 <dt><code class="name"><a title="telereddit.config.config" href="config.html">telereddit.config.config</a></code></dt>
 <dd>
 <div class="desc"><p>Project-wide configuration variables …</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.config.secret" href="secret.html">telereddit.config.secret</a></code></dt>
-<dd>
-<div class="desc"><p>Base class for secret configurations.</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.config.secret_dev" href="secret_dev.html">telereddit.config.secret_dev</a></code></dt>
-<dd>
-<div class="desc"><p>Secret for development environment …</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.config.secret_generic" href="secret_generic.html">telereddit.config.secret_generic</a></code></dt>
-<dd>
-<div class="desc"><p>Secret for generic environment …</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.config.secret_github" href="secret_github.html">telereddit.config.secret_github</a></code></dt>
-<dd>
-<div class="desc"><p>Secret for Github Workflows environment …</p></div>
-</dd>
-<dt><code class="name"><a title="telereddit.config.secret_prod" href="secret_prod.html">telereddit.config.secret_prod</a></code></dt>
-<dd>
-<div class="desc"><p>Secret for production environment …</p></div>
 </dd>
 </dl>
 </section>
@@ -86,11 +66,6 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="telereddit.config.config" href="config.html">telereddit.config.config</a></code></li>
-<li><code><a title="telereddit.config.secret" href="secret.html">telereddit.config.secret</a></code></li>
-<li><code><a title="telereddit.config.secret_dev" href="secret_dev.html">telereddit.config.secret_dev</a></code></li>
-<li><code><a title="telereddit.config.secret_generic" href="secret_generic.html">telereddit.config.secret_generic</a></code></li>
-<li><code><a title="telereddit.config.secret_github" href="secret_github.html">telereddit.config.secret_github</a></code></li>
-<li><code><a title="telereddit.config.secret_prod" href="secret_prod.html">telereddit.config.secret_prod</a></code></li>
 </ul>
 </li>
 </ul>

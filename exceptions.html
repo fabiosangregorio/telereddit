@@ -67,45 +67,8 @@ Sentry is configured.</dd>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="telereddit.exceptions.AuthenticationError" href="#telereddit.exceptions.AuthenticationError">AuthenticationError</a></li>
 <li><a title="telereddit.exceptions.MediaError" href="#telereddit.exceptions.MediaError">MediaError</a></li>
 <li><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></li>
-<li><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></li>
-</ul>
-</dd>
-<dt id="telereddit.exceptions.AuthenticationError"><code class="flex name class">
-<span>class <span class="ident">AuthenticationError</span></span>
-<span>(</span><span>data: Any = None, capture: bool = True)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Raised when a service cannot authenticate to the API provider.</p></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
-</dd>
-<dt id="telereddit.exceptions.SubredditError"><code class="flex name class">
-<span>class <span class="ident">SubredditError</span></span>
-<span>(</span><span>msg: Any, data: Any = None, capture: bool = False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Base class for subreddit related exceptions.</p>
-<h2 id="capture">Capture</h2>
-<p>Unless specified otherwise, these are not a true error of the application
-and originate from a "correct" subreddit property, such as it being private
-or not existing, and therfore <strong>should not</strong> be captured by Sentry.</p></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
-<h3>Subclasses</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.SubredditDoesntExistError" href="#telereddit.exceptions.SubredditDoesntExistError">SubredditDoesntExistError</a></li>
-<li><a title="telereddit.exceptions.SubredditPrivateError" href="#telereddit.exceptions.SubredditPrivateError">SubredditPrivateError</a></li>
 </ul>
 </dd>
 <dt id="telereddit.exceptions.PostError"><code class="flex name class">
@@ -126,8 +89,6 @@ or not existing, and therfore <strong>should not</strong> be captured by Sentry.
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="telereddit.exceptions.PostEqualsMessageError" href="#telereddit.exceptions.PostEqualsMessageError">PostEqualsMessageError</a></li>
-<li><a title="telereddit.exceptions.PostRequestError" href="#telereddit.exceptions.PostRequestError">PostRequestError</a></li>
-<li><a title="telereddit.exceptions.PostRetrievalError" href="#telereddit.exceptions.PostRetrievalError">PostRetrievalError</a></li>
 <li><a title="telereddit.exceptions.PostSendError" href="#telereddit.exceptions.PostSendError">PostSendError</a></li>
 </ul>
 </dd>
@@ -149,69 +110,7 @@ For this, unless specified otherwise, they <strong>should</strong> be captured b
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="telereddit.exceptions.MediaRetrievalError" href="#telereddit.exceptions.MediaRetrievalError">MediaRetrievalError</a></li>
 <li><a title="telereddit.exceptions.MediaTooBigError" href="#telereddit.exceptions.MediaTooBigError">MediaTooBigError</a></li>
-</ul>
-</dd>
-<dt id="telereddit.exceptions.SubredditPrivateError"><code class="flex name class">
-<span>class <span class="ident">SubredditPrivateError</span></span>
-<span>(</span><span>data: Any = None, capture: bool = False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Raised when the subreddit is private, and therefore cannot be fetched.</p></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></li>
-<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
-</dd>
-<dt id="telereddit.exceptions.SubredditDoesntExistError"><code class="flex name class">
-<span>class <span class="ident">SubredditDoesntExistError</span></span>
-<span>(</span><span>data: Any = None, capture: bool = False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Raised when the subreddit does not exist.</p></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></li>
-<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
-</dd>
-<dt id="telereddit.exceptions.PostRequestError"><code class="flex name class">
-<span>class <span class="ident">PostRequestError</span></span>
-<span>(</span><span>data: Any = None, capture: bool = True)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Raised when there's an error in the post request.</p>
-<div class="admonition note">
-<p class="admonition-title">Note:&ensp;Not to be confused with <code><a title="telereddit.exceptions.PostRetrievalError" href="#telereddit.exceptions.PostRetrievalError">PostRetrievalError</a></code></p>
-</div></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></li>
-<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
-</dd>
-<dt id="telereddit.exceptions.PostRetrievalError"><code class="flex name class">
-<span>class <span class="ident">PostRetrievalError</span></span>
-<span>(</span><span>data: Any = None, capture: bool = True)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Raised when there's an error in the post json.</p>
-<p>E.g. a mandatory json field is missing or the json is not strucutred as
-expected.</p></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></li>
-<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
 </ul>
 </dd>
 <dt id="telereddit.exceptions.PostSendError"><code class="flex name class">
@@ -267,20 +166,6 @@ be captured from Sentry.</p></div>
 <li>builtins.BaseException</li>
 </ul>
 </dd>
-<dt id="telereddit.exceptions.MediaRetrievalError"><code class="flex name class">
-<span>class <span class="ident">MediaRetrievalError</span></span>
-<span>(</span><span>data: Any = None, capture: bool = True)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Raised when there's an error in the media retrieval request.</p></div>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li><a title="telereddit.exceptions.MediaError" href="#telereddit.exceptions.MediaError">MediaError</a></li>
-<li><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
-</dd>
 </dl>
 </section>
 </article>
@@ -303,28 +188,10 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 <h4><code><a title="telereddit.exceptions.TeleredditError" href="#telereddit.exceptions.TeleredditError">TeleredditError</a></code></h4>
 </li>
 <li>
-<h4><code><a title="telereddit.exceptions.AuthenticationError" href="#telereddit.exceptions.AuthenticationError">AuthenticationError</a></code></h4>
-</li>
-<li>
-<h4><code><a title="telereddit.exceptions.SubredditError" href="#telereddit.exceptions.SubredditError">SubredditError</a></code></h4>
-</li>
-<li>
 <h4><code><a title="telereddit.exceptions.PostError" href="#telereddit.exceptions.PostError">PostError</a></code></h4>
 </li>
 <li>
 <h4><code><a title="telereddit.exceptions.MediaError" href="#telereddit.exceptions.MediaError">MediaError</a></code></h4>
-</li>
-<li>
-<h4><code><a title="telereddit.exceptions.SubredditPrivateError" href="#telereddit.exceptions.SubredditPrivateError">SubredditPrivateError</a></code></h4>
-</li>
-<li>
-<h4><code><a title="telereddit.exceptions.SubredditDoesntExistError" href="#telereddit.exceptions.SubredditDoesntExistError">SubredditDoesntExistError</a></code></h4>
-</li>
-<li>
-<h4><code><a title="telereddit.exceptions.PostRequestError" href="#telereddit.exceptions.PostRequestError">PostRequestError</a></code></h4>
-</li>
-<li>
-<h4><code><a title="telereddit.exceptions.PostRetrievalError" href="#telereddit.exceptions.PostRetrievalError">PostRetrievalError</a></code></h4>
 </li>
 <li>
 <h4><code><a title="telereddit.exceptions.PostSendError" href="#telereddit.exceptions.PostSendError">PostSendError</a></code></h4>
@@ -334,9 +201,6 @@ src="https://raw.githubusercontent.com/fabiosangregorio/telereddit/master/docs/i
 </li>
 <li>
 <h4><code><a title="telereddit.exceptions.MediaTooBigError" href="#telereddit.exceptions.MediaTooBigError">MediaTooBigError</a></code></h4>
-</li>
-<li>
-<h4><code><a title="telereddit.exceptions.MediaRetrievalError" href="#telereddit.exceptions.MediaRetrievalError">MediaRetrievalError</a></code></h4>
 </li>
 </ul>
 </li>
