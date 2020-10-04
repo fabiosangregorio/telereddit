@@ -5,12 +5,12 @@ The application follows the try/catch pattern to return errors in the program
 flow between two functions.
 """
 
+import logging
+import os
 import traceback
 from typing import Any
-import logging
-import sentry_sdk as sentry
 
-import telereddit.config.config as config
+import sentry_sdk as sentry
 
 
 class TeleredditError(Exception):
@@ -41,7 +41,10 @@ class TeleredditError(Exception):
 
     def __init__(self, msg: Any, data: Any = None, capture: bool = False):
         super().__init__(msg)
-        if config.SENTRY_ENABLED:
+        if (
+            os.getenv("SENTRY_TOKEN") is not None
+            and len(os.getenv("SENTRY_TOKEN")) > 0
+        ):
             if data is not None:
                 with sentry.configure_scope() as scope:
                     for key, value in data.items():

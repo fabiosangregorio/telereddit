@@ -6,11 +6,8 @@ Project-wide configuration variables.
     for a leaner one.
 """
 
-import os
-import importlib
-import logging
 
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton  # type: ignore
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup  # type: ignore
 
 _delete_btn = InlineKeyboardButton(text="✕", callback_data="delete")
 _edit_btn = InlineKeyboardButton(text="↻", callback_data="edit")
@@ -29,28 +26,3 @@ EDIT_FAILED_KEYBOARD = InlineKeyboardMarkup(
 )
 NO_EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _more_btn]])
 DELETE_KEYBOARD = InlineKeyboardMarkup([[_delete_btn]])
-
-
-# Dynamic environment secret configuration
-def load_secret() -> None:
-    global secret, ENV, SENTRY_ENABLED
-    _env_key = os.environ.get("REDDIT_BOTS_MACHINE")
-    if _env_key is not None:
-        ENV = _env_key.lower()
-    else:
-        logging.warning(
-            'No "REDDIT_BOTS_MACHINE" environment variable found. Using generic secret.'
-        )
-        ENV = "generic"
-
-    secret = importlib.import_module(
-        f"telereddit.config.secret_{ENV}"
-    ).secret_config  # type: ignore
-    SENTRY_ENABLED = (
-        secret.SENTRY_TOKEN is not None and len(secret.SENTRY_TOKEN) > 0
-    )
-
-
-SENTRY_ENABLED: bool = False
-ENV: str = None
-secret = None

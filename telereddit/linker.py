@@ -1,36 +1,21 @@
 """Linker class which handles all telereddit requests."""
 
 from typing import Optional
-from telegram import (  # type: ignore
-    InputMediaPhoto,
-    InputMediaVideo,
-    InputMediaDocument,
-)
-from telegram.bot import Bot, Message  # type: ignore
-import icontract
 
-from telereddit.config.config import (
-    MAX_TRIES,
-    EDIT_KEYBOARD,
-    EDIT_FAILED_KEYBOARD,
-    NO_EDIT_KEYBOARD,
-    DELETE_KEYBOARD,
-    MAX_MEDIA_SIZE,
-)
-from pyreddit.pyreddit import reddit
-import telereddit.helpers as helpers
-from pyreddit.pyreddit.models.media import ContentType, Media
+from pyreddit.pyreddit import helpers, reddit
 from pyreddit.pyreddit.exceptions import RedditError, SubredditError
-from telereddit.exceptions import (
-    TeleredditError,
-    MediaTooBigError,
-    PostSendError,
-    PostEqualsMessageError,
-)
+from pyreddit.pyreddit.models.media import ContentType, Media
+from telegram import InputMediaPhoto  # type: ignore
+from telegram import InputMediaDocument, InputMediaVideo
+from telegram.bot import Bot, Message  # type: ignore
+
+from telereddit.config.config import (DELETE_KEYBOARD, EDIT_FAILED_KEYBOARD,
+                                      EDIT_KEYBOARD, MAX_MEDIA_SIZE, MAX_TRIES,
+                                      NO_EDIT_KEYBOARD)
+from telereddit.exceptions import (MediaTooBigError, PostEqualsMessageError,
+                                   PostSendError, TeleredditError)
 
 
-@icontract.invariant(lambda self: self.bot is not None)
-@icontract.invariant(lambda self: self.chat_id is not None)
 class Linker:
     """
     Handle a single telereddit request.
@@ -77,8 +62,6 @@ class Linker:
             disable_web_page_preview=True,
         )
 
-    @icontract.snapshot(lambda self: self.args, name="args")
-    @icontract.ensure(lambda OLD, self, override_dict: OLD.args == self.args)
     def get_args(self, override_dict: Optional[dict] = None) -> dict:
         """
         Get the args parameters potentially overriding some of them.
@@ -101,9 +84,6 @@ class Linker:
             args.update(override_dict)
         return args
 
-    @icontract.require(
-        lambda subreddit: subreddit is not None, "subreddit must not be None"
-    )
     def send_random_post(self, subreddit: str) -> None:
         """
         Send a random post to the chat from the given subreddit.
@@ -127,9 +107,6 @@ class Linker:
                     break
         return self._send_exception_message(err)
 
-    @icontract.require(
-        lambda post_url: post_url is not None, "post_url must not be None"
-    )
     def send_post_from_url(self, post_url: str) -> None:
         """
         Try to send the reddit post relative to post_url to the chat.
@@ -147,9 +124,6 @@ class Linker:
         except (RedditError, TeleredditError) as e:
             self._send_exception_message(e, keyboard=False)
 
-    @icontract.require(
-        lambda post_url: post_url is not None, "post_url must not be None"
-    )
     def send_post(self, post_url: str, from_url: bool = False) -> None:
         """
         Send the reddit post relative to post_url to the chat.
@@ -204,9 +178,6 @@ class Linker:
                 {"post_url": post.permalink, "media_url": post.media.url}  # type: ignore
             ) from e
 
-    @icontract.require(
-        lambda message: message is not None, "message must not be None"
-    )
     def edit_result(self, message: Message) -> None:
         """
         Edit the given message with a new post from that subreddit.
@@ -235,9 +206,6 @@ class Linker:
             self.chat_id, message.message_id, reply_markup=EDIT_FAILED_KEYBOARD
         )
 
-    @icontract.require(
-        lambda message: message is not None, "message must not be None"
-    )
     def edit_random_post(self, message: Message, subreddit: str) -> None:
         """
         Edit the current Telegram message with another random Reddit post.
@@ -291,7 +259,6 @@ class Linker:
                 {"post_url": post.permalink, "media_url": post.media.url}  # type: ignore
             ) from e
 
-    @icontract.require(lambda e: e is not None, "e must not be None")
     def _send_exception_message(
         self, e: Exception, keyboard: bool = True
     ) -> None:

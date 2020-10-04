@@ -8,35 +8,21 @@ messages and dispatch actions to the other modules.
 """
 
 import logging
+import os
 from typing import List
 
 import sentry_sdk
-
-from telegram.ext import (  # type: ignore
-    Updater,
-    CallbackContext,
-    MessageHandler,
-    CallbackQueryHandler,
-    Filters,
-)
-from telegram import Update, Message  # type: ignore
-import icontract
-
-from telereddit.linker import Linker
-import telereddit.helpers as helpers
-import telereddit.config.config as config
-from telereddit.config.config import load_secret
-
+from dotenv import load_dotenv
+from pyreddit.pyreddit import helpers
 from pyreddit.pyreddit.services.services_wrapper import ServicesWrapper
-from pyreddit.pyreddit.config.config import load_secret as pyreddit_load_secret
+from telegram import Message, Update  # type: ignore
+from telegram.ext import CallbackContext  # type: ignore
+from telegram.ext import CallbackQueryHandler, Filters, MessageHandler, Updater
+
+import telereddit.config.config as config
+from telereddit.linker import Linker
 
 
-@icontract.require(
-    lambda update, context: update is not None, "update must not be None"
-)
-@icontract.require(
-    lambda update, context: context is not None, "context must not be None"
-)
 def on_chat_message(update: Update, context: CallbackContext) -> None:
     """
     Entrypoint of the bot's logic. Handles a single update message.
@@ -65,12 +51,6 @@ def on_chat_message(update: Update, context: CallbackContext) -> None:
             linker.send_random_post(subreddit)
 
 
-@icontract.require(
-    lambda update, context: update is not None, "update must not be None"
-)
-@icontract.require(
-    lambda update, context: context is not None, "context must not be None"
-)
 def on_callback_query(update: Update, context: CallbackContext) -> None:
     """
     Handle all the several types of callback queries.
@@ -105,23 +85,31 @@ def on_callback_query(update: Update, context: CallbackContext) -> None:
 
 def main() -> None:
     """Entrypoint of telereddit. Handles configuration, setup and start of the bot."""
-    load_secret()
-    pyreddit_load_secret(config.secret)
-
-    if config.SENTRY_ENABLED:
-        sentry_sdk.init(config.secret.SENTRY_TOKEN, environment=config.ENV)
-
-    ServicesWrapper.init_services()
-
-    updater = Updater(token=config.secret.TELEGRAM_TOKEN, use_context=True)
-    Linker.set_bot(updater.bot)
-
-    print("Listening...")
-    dispatcher = updater.dispatcher
     logging.basicConfig(
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         level=logging.INFO,
     )
+
+    env = os.getenv("REDDIT_BOTS_MACHINE")
+    if env is None or len(env) == 0:
+        raise Exception("No REDDIT_BOTS_MACHINE env variable found.")
+
+    load_dotenv(
+        dotenv_path=os.path.join(
+            os.path.dirname(__file__), f"config/{env.lower()}.env"
+        )
+    )
+
+    if os.getenv("SENTRY_TOKEN"):
+        sentry_sdk.init(os.getenv("SENTRY_TOKEN"), environment=env)
+
+    ServicesWrapper.init_services()
+
+    updater = Updater(token=os.getenv("TELEGRAM_TOKEN"), use_context=True)
+    Linker.set_bot(updater.bot)
+
+    print("Listening...")
+    dispatcher = updater.dispatcher
 
     dispatcher.add_handler(MessageHandler(Filters.all, on_chat_message))
     dispatcher.add_handler(CallbackQueryHandler(on_callback_query))
