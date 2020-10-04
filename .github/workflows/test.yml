@@ -44,7 +44,6 @@ jobs:
 
     - name: Run tests and generate report
       run: |
-        ls
         ls pyreddit
         coverage run -m unittest
       env:
