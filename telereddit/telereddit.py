@@ -84,6 +84,7 @@ def on_callback_query(update: Update, context: CallbackContext) -> None:
 
 
 def init() -> str:
+    """Init environment variables and services."""
     env = os.getenv("REDDIT_BOTS_MACHINE")
     if env is None or len(env) == 0:
         raise Exception("No REDDIT_BOTS_MACHINE env variable found.")
