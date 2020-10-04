@@ -51,7 +51,9 @@ Get it on [telegram.me](https://telegram.me/tele_reddit_bot)!
     ```bash
     pip install -r requirements.txt
     ```
-1. Set up Telegram token and API keys by filling out `./telereddit/config/secret_generic.py`
+1. Set up Telegram token and API keys by duplicating and filling out `./telereddit/config/template.env`
+1. Set the environment variable `REDDIT_BOTS_MACHINE` to the name of the env file (e.g.: for `dev.env` set
+   `REDDIT_BOTS_MACHINE=DEV`)
 1. Start the bot
     ```bash
     python -m telereddit

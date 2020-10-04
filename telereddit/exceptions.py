@@ -5,12 +5,12 @@ The application follows the try/catch pattern to return errors in the program
 flow between two functions.
 """
 
+import logging
+import os
 import traceback
 from typing import Any
-import logging
-import sentry_sdk as sentry
 
-import telereddit.config.config as config
+import sentry_sdk as sentry
 
 
 class TeleredditError(Exception):
@@ -41,7 +41,10 @@ class TeleredditError(Exception):
 
     def __init__(self, msg: Any, data: Any = None, capture: bool = False):
         super().__init__(msg)
-        if config.SENTRY_ENABLED:
+        if (
+            os.getenv("SENTRY_TOKEN") is not None
+            and len(os.getenv("SENTRY_TOKEN")) > 0  # type: ignore
+        ):
             if data is not None:
                 with sentry.configure_scope() as scope:
                     for key, value in data.items():
@@ -55,25 +58,6 @@ class TeleredditError(Exception):
             self,
             data,
         )
-
-
-class AuthenticationError(TeleredditError):
-    """Raised when a service cannot authenticate to the API provider."""
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("Authentication failed", data, capture)
-
-
-class SubredditError(TeleredditError):
-    """
-    Base class for subreddit related exceptions.
-
-    Capture
-    -------
-    Unless specified otherwise, these are not a true error of the application
-    and originate from a "correct" subreddit property, such as it being private
-    or not existing, and therfore **should not** be captured by Sentry.
-    """
 
 
 class PostError(TeleredditError):
@@ -103,43 +87,6 @@ class MediaError(TeleredditError):
 
     def __init__(self, msg: Any, data: Any = None, capture: bool = True):
         super().__init__(msg, data, capture)
-
-
-class SubredditPrivateError(SubredditError):
-    """Raised when the subreddit is private, and therefore cannot be fetched."""
-
-    def __init__(self, data: Any = None, capture: bool = False):
-        super().__init__("This subreddit is private.", data, capture)
-
-
-class SubredditDoesntExistError(SubredditError):
-    """Raised when the subreddit does not exist."""
-
-    def __init__(self, data: Any = None, capture: bool = False):
-        super().__init__("This subreddit doesn't exist.", data, capture)
-
-
-class PostRequestError(PostError):
-    """
-    Raised when there's an error in the post request.
-
-    .. note:: Not to be confused with `PostRetrievalError`
-    """
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("I can't find that subreddit.", data, capture)
-
-
-class PostRetrievalError(PostError):
-    """
-    Raised when there's an error in the post json.
-
-    E.g. a mandatory json field is missing or the json is not strucutred as
-    expected.
-    """
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("The retrieval of the post failed.", data, capture)
 
 
 class PostSendError(PostError):
@@ -186,10 +133,3 @@ class MediaTooBigError(MediaError):
 
     def __init__(self, data: Any = None, capture: bool = True):
         super().__init__("Media is too big to be sent.", data, capture)
-
-
-class MediaRetrievalError(MediaError):
-    """Raised when there's an error in the media retrieval request."""
-
-    def __init__(self, data: Any = None, capture: bool = True):
-        super().__init__("Error in getting the media", data, capture)

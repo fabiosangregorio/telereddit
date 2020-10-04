@@ -1,23 +1,22 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
+
 from parameterized import parameterized
-
-
-from telereddit.linker import Linker
-from telereddit.exceptions import (
-    TeleredditError,
-    SubredditError,
-    PostEqualsMessageError,
-)
-from telereddit.models.post import Post
-from telereddit.models.media import Media
-from telereddit.models.content_type import ContentType
+from pyreddit.pyreddit.exceptions import SubredditError
+from pyreddit.pyreddit.models.content_type import ContentType
+from pyreddit.pyreddit.models.media import Media
+from pyreddit.pyreddit.models.post import Post
+from telereddit import telereddit
 from telereddit.config.config import MAX_MEDIA_SIZE
+from telereddit.exceptions import PostEqualsMessageError, TeleredditError
+from telereddit.linker import Linker
 
 
 class TestLinker(unittest.TestCase):
-    Linker.set_bot(Mock())
-    linker = Linker(0)
+    def setUp(self):
+        telereddit.init()
+        Linker.set_bot(Mock())
+        self.linker = Linker(0)
 
     def test_bot_not_none(self):
         self.assertIsNotNone(self.linker.bot)
@@ -71,31 +70,31 @@ class TestLinker(unittest.TestCase):
             [ContentType.TEXT],
         ]
     )
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_send_post(self, mock_content_type, mock_get_post):
         media = Media("", mock_content_type)
         mock_get_post.return_value = Post("", "", "", "", media)
         self.linker.send_post("")
 
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_send_post_no_type(self, mock_get_post):
         media = Media("", None)
         mock_get_post.return_value = Post("", "", "", "", media)
         self.linker.send_post("")
 
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_send_post_from_url_true(self, mock_get_post):
         media = Media("", ContentType.PHOTO)
         mock_get_post.return_value = Post("", "", "", "", media)
         self.linker.send_post("", from_url=True)
 
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_send_post_invalid(self, mock_get_post):
         mock_get_post.side_effect = TeleredditError("")
         with self.assertRaises(TeleredditError):
             self.linker.send_post("")
 
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_send_post_media_too_big(self, mock_get_post):
         media = Media("", ContentType.PHOTO, size=MAX_MEDIA_SIZE + 1)
         mock_get_post.return_value = Post("", "", "", "", media)
@@ -103,7 +102,7 @@ class TestLinker(unittest.TestCase):
             self.linker.send_post("")
 
     @patch("telereddit.linker.Linker.bot.sendMessage")
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_send_post_err(self, mock_get_post, mock_send_message):
         mock_send_message.side_effect = TeleredditError("")
         media = Media("", ContentType.TEXT)
@@ -132,7 +131,7 @@ class TestLinker(unittest.TestCase):
         mock_msg.caption = ""
         self.linker.edit_result(mock_msg)
 
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_edit_random_post_text(self, mock_get_post):
         media = Media("", ContentType.TEXT)
         mock_get_post.return_value = Post("", "", "", "", media)
@@ -141,7 +140,7 @@ class TestLinker(unittest.TestCase):
         mock_msg.caption = None
         self.linker.edit_random_post(mock_msg, "r/test")
 
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_edit_random_post_invalid(self, mock_get_post):
         media = Media("", ContentType.TEXT)
         mock_get_post.return_value = Post("", "", "", "", media)
@@ -151,7 +150,7 @@ class TestLinker(unittest.TestCase):
         with self.assertRaises(PostEqualsMessageError):
             self.linker.edit_random_post(mock_msg, "r/test")
 
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_edit_random_post_youtube(self, mock_get_post):
         media = Media("", ContentType.YOUTUBE)
         mock_get_post.return_value = Post("", "", "", "", media)
@@ -164,7 +163,7 @@ class TestLinker(unittest.TestCase):
     @parameterized.expand(
         [[ContentType.PHOTO], [ContentType.GIF], [ContentType.VIDEO]]
     )
-    @patch("telereddit.reddit.get_post")
+    @patch("pyreddit.pyreddit.reddit.get_post")
     def test_edit_random_post_types(self, mock_type, mock_get_post):
         media = Media("", mock_type)
         mock_get_post.return_value = Post("", "", "", "", media)

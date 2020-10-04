@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master 
-
+      with:
+        submodules: true
+        
     - name: Ensure git-crypt files are locked
       run: |
         grep -qsPa "\x00GITCRYPT"  $(git crypt status | grep -v '^not' | awk '{print $2}')
@@ -43,10 +45,10 @@ jobs:
         pip install -r ./requirements/test.txt
 
     - name: Run tests and generate report
-      run: | 
+      run: |
         coverage run -m unittest
       env:
-        TELEREDDIT_MACHINE: 'GITHUB'
+        REDDIT_BOTS_MACHINE: 'GITHUB'
 
     - name: Upload reports to Coveralls
       env: 
