@@ -211,9 +211,12 @@ class Linker:
                 return self.edit_random_post(message, subreddit)
             except (RedditError, TeleredditError):
                 pass
-        self.bot.editMessageReplyMarkup(
-            self.chat_id, message.message_id, reply_markup=EDIT_FAILED_KEYBOARD
-        )
+        if str(message.reply_markup) != str(EDIT_FAILED_KEYBOARD):
+            self.bot.editMessageReplyMarkup(
+                self.chat_id,
+                message.message_id,
+                reply_markup=EDIT_FAILED_KEYBOARD,
+            )
 
     def edit_random_post(self, message: Message, subreddit: str) -> None:
         """
@@ -232,8 +235,8 @@ class Linker:
         post = reddit.get_post(helpers.get_random_post_url(subreddit))
         assert post is not None
         if (
-            (msg_is_text and message.text_markdown == post.get_msg())
-            or message.caption_markdown == post.get_msg()
+            (msg_is_text and message.text_markdown_v2 == post.get_msg())
+            or message.caption_markdown_v2 == post.get_msg()
             or (
                 not msg_is_text
                 and post.get_type() in [ContentType.TEXT, ContentType.YOUTUBE]
@@ -267,6 +270,9 @@ class Linker:
             raise PostSendError(
                 {"post_url": post.permalink, "media_url": post.media.url}  # type: ignore
             ) from e
+
+    def delete_message(self, message: Message):
+        self.bot.deleteMessage(message.chat_id, message.message_id)
 
     def _send_exception_message(
         self, e: Exception, keyboard: bool = True
