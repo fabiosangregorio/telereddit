@@ -164,23 +164,20 @@ class Linker:
 
         try:
             if post.get_type() == ContentType.TEXT:
-                self.bot.sendMessage(text=post.get_msg(), **args)
+                return self.bot.sendMessage(text=post.get_msg(), **args)
             elif post.get_type() == ContentType.YOUTUBE:
                 args["disable_web_page_preview"] = False
-                self.bot.sendMessage(text=post.get_msg(), **args)
+                return self.bot.sendMessage(text=post.get_msg(), **args)
+
             assert post.media is not None
+            args["caption"] = post.get_msg()
+
             if post.get_type() == ContentType.GIF:
-                self.bot.sendDocument(
-                    document=post.media.url, caption=post.get_msg(), **args
-                )
+                self.bot.sendDocument(document=post.media.url, **args)
             elif post.get_type() == ContentType.VIDEO:
-                self.bot.sendVideo(
-                    video=post.media.url, caption=post.get_msg(), **args
-                )
+                self.bot.sendVideo(video=post.media.url, **args)
             elif post.get_type() == ContentType.PHOTO:
-                self.bot.sendPhoto(
-                    photo=post.media.url, caption=post.get_msg(), **args
-                )
+                self.bot.sendPhoto(photo=post.media.url, **args)
 
         except Exception as e:
             raise PostSendError(
