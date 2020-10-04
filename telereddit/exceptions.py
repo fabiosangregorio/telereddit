@@ -43,7 +43,7 @@ class TeleredditError(Exception):
         super().__init__(msg)
         if (
             os.getenv("SENTRY_TOKEN") is not None
-            and len(os.getenv("SENTRY_TOKEN")) > 0
+            and len(os.getenv("SENTRY_TOKEN")) > 0  # type: ignore
         ):
             if data is not None:
                 with sentry.configure_scope() as scope:
