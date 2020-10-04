@@ -46,7 +46,7 @@ jobs:
       run: | 
         coverage run -m unittest
       env:
-        TELEREDDIT_MACHINE: 'GITHUB'
+        REDDIT_BOTS_MACHINE: 'GITHUB'
 
     - name: Upload reports to Coveralls
       env: 

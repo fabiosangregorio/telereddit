@@ -83,13 +83,7 @@ def on_callback_query(update: Update, context: CallbackContext) -> None:
     context.bot.answerCallbackQuery(update.callback_query.id)
 
 
-def main() -> None:
-    """Entrypoint of telereddit. Handles configuration, setup and start of the bot."""
-    logging.basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        level=logging.INFO,
-    )
-
+def init() -> str:
     env = os.getenv("REDDIT_BOTS_MACHINE")
     if env is None or len(env) == 0:
         raise Exception("No REDDIT_BOTS_MACHINE env variable found.")
@@ -100,10 +94,20 @@ def main() -> None:
         )
     )
 
+    ServicesWrapper.init_services()
+    return env
+
+
+def main() -> None:
+    """Entrypoint of telereddit. Handles configuration, setup and start of the bot."""
+    logging.basicConfig(
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=logging.INFO,
+    )
+
+    env = init()
     if os.getenv("SENTRY_TOKEN"):
         sentry_sdk.init(os.getenv("SENTRY_TOKEN"), environment=env)
-
-    ServicesWrapper.init_services()
 
     updater = Updater(token=os.getenv("TELEGRAM_TOKEN"), use_context=True)
     Linker.set_bot(updater.bot)

@@ -45,3 +45,6 @@ jobs:
     
     - name: Check mypy linting
       run: mypy telereddit
+
+    - name: Run pydocstyle
+      run: pydocstyle telereddit

@@ -1,23 +1,22 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
+
 from parameterized import parameterized
-
-
-from telereddit.linker import Linker
-from telereddit.exceptions import (
-    TeleredditError,
-    PostEqualsMessageError,
-)
 from pyreddit.pyreddit.exceptions import SubredditError
-from pyreddit.pyreddit.models.post import Post
-from pyreddit.pyreddit.models.media import Media
 from pyreddit.pyreddit.models.content_type import ContentType
+from pyreddit.pyreddit.models.media import Media
+from pyreddit.pyreddit.models.post import Post
+from telereddit import telereddit
 from telereddit.config.config import MAX_MEDIA_SIZE
+from telereddit.exceptions import PostEqualsMessageError, TeleredditError
+from telereddit.linker import Linker
 
 
 class TestLinker(unittest.TestCase):
-    Linker.set_bot(Mock())
-    linker = Linker(0)
+    def setUp(self):
+        telereddit.init()
+        Linker.set_bot(Mock())
+        self.linker = Linker(0)
 
     def test_bot_not_none(self):
         self.assertIsNotNone(self.linker.bot)
