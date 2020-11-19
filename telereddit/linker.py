@@ -183,7 +183,7 @@ class Linker:
             raise PostSendError(
                 {
                     "post_url": post.permalink,
-                    "media_url": helpers.get(post.media, "url"),
+                    "media_url": post.media.url if post.media else "",
                 }
             ) from e
 
@@ -272,6 +272,15 @@ class Linker:
             ) from e
 
     def delete_message(self, message: Message):
+        """
+        Delete a bot's message from the chat.
+
+        Parameters
+        ----------
+        message : Message
+            python-telegram-bot's instance of the message object.
+
+        """
         self.bot.deleteMessage(message.chat_id, message.message_id)
 
     def _send_exception_message(
