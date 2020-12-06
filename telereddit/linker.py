@@ -5,8 +5,7 @@ from typing import Optional
 from pyreddit.pyreddit import helpers, reddit
 from pyreddit.pyreddit.exceptions import RedditError, SubredditError
 from pyreddit.pyreddit.models.media import ContentType, Media
-from telegram import InputMediaPhoto  # type: ignore
-from telegram import InputMediaDocument, InputMediaVideo
+from telegram import InputMediaPhoto, InputMediaDocument, InputMediaVideo
 from telegram.bot import Bot, Message  # type: ignore
 
 from telereddit.config.config import (
@@ -151,9 +150,17 @@ class Linker:
             from the random post.
 
         """
-        post = reddit.get_post(post_url)
-        assert post is not None
-        if post.media and post.media.size and post.media.size > MAX_MEDIA_SIZE:
+        posts = reddit.get_posts(post_url)
+        assert posts is not None and len(posts) > 0
+
+        if any(
+            [
+                post.media
+                and post.media.size
+                and post.media.size > MAX_MEDIA_SIZE
+                for post in posts
+            ]
+        ):
             raise MediaTooBigError()
 
         args = self.get_args()
@@ -163,29 +170,54 @@ class Linker:
             args["reply_markup"] = NO_EDIT_KEYBOARD
 
         try:
-            if post.get_type() == ContentType.TEXT:
-                return self.bot.sendMessage(text=post.get_msg(), **args)
-            elif post.get_type() == ContentType.YOUTUBE:
-                args["disable_web_page_preview"] = False
-                return self.bot.sendMessage(text=post.get_msg(), **args)
+            if len(posts) > 1:
+                media_group = []
+                first = True
+                for post in posts:
+                    assert post.media is not None
+                    media_args = dict(
+                        media=post.media.url,  # type: ignore
+                        parse_mode="MarkdownV2",
+                    )
+                    if first:
+                        # Caption must be added only to first post in order to
+                        # be sent as the album caption
+                        # Source: https://stackoverflow.com/a/58895281/6404781
+                        first = False
+                        media_args["caption"] = post.get_msg()
+                    if post.get_type() == ContentType.VIDEO:
+                        media_group.append(InputMediaVideo(**media_args))
+                    elif post.get_type() == ContentType.PHOTO:
+                        media_group.append(InputMediaPhoto(**media_args))
+                    else:
+                        # Documents are not supported by sendMediaGroup
+                        continue
 
-            assert post.media is not None
-            args["caption"] = post.get_msg()
+                self.bot.sendMediaGroup(media=media_group, **args)
 
-            if post.get_type() == ContentType.GIF:
-                self.bot.sendDocument(document=post.media.url, **args)
-            elif post.get_type() == ContentType.VIDEO:
-                self.bot.sendVideo(video=post.media.url, **args)
-            elif post.get_type() == ContentType.PHOTO:
-                self.bot.sendPhoto(photo=post.media.url, **args)
+            else:
+                post = posts[0]
+                if post.get_type() == ContentType.TEXT:
+                    return self.bot.sendMessage(text=post.get_msg(), **args)
+                elif post.get_type() == ContentType.YOUTUBE:
+                    args["disable_web_page_preview"] = False
+                    return self.bot.sendMessage(text=post.get_msg(), **args)
+                 if post.get_type() == ContentType.GIF:
+                    self.bot.sendDocument(document=post.media.url, **args)
+                elif post.get_type() == ContentType.VIDEO:
+                    self.bot.sendVideo(video=post.media.url, **args)
+                elif post.get_type() == ContentType.PHOTO:
+                    self.bot.sendPhoto(photo=post.media.url, **args)
 
         except Exception as e:
             raise PostSendError(
                 {
-                    "post_url": post.permalink,
-                    "media_url": helpers.get(post.media, "url"),
+                    # "post_url": post.permalink,
+                    # "media_url": helpers.get(post.media, "url"),
                 }
             ) from e
+
+           
 
     def edit_result(self, message: Message) -> None:
         """

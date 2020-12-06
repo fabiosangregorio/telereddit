@@ -96,7 +96,7 @@ class PostSendError(PostError):
 
     def __init__(self, data: Any = None, capture: bool = True):
         super().__init__(
-            "There has been an error in sending the post.", data, capture
+            "There was an error in sending the post.", data, capture
         )
 
 
