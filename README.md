@@ -74,4 +74,4 @@ We follow Semantic Versioning. The version X.Y.Z indicates:
 ## License
 **[GPL v3](https://www.gnu.org/licenses/gpl-3.0)** - Copyright 2020 © <a href="http://fabio.sangregorio.dev"
   target="_blank">fabio.sangregorio.dev</a>.
- 
+  

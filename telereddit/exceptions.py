@@ -52,11 +52,8 @@ class TeleredditError(Exception):
             if capture:
                 sentry.capture_exception()
         traceback.print_exc()
-        logging.exception(
-            "\nEXCEPTION: %s, MESSAGE: %s, DATA: %s",
-            self.__class__.__name__,
-            self,
-            data,
+        logging.error(
+            f"{self.__class__.__name__}, {('data: '+ str(data)) if data else ''}"
         )
 
 

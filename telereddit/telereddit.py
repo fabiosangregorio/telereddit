@@ -67,7 +67,6 @@ def on_callback_query(update: Update, context: CallbackContext) -> None:
     """
     query_data = update.callback_query.data
     message = update.effective_message
-    message_id = message.message_id
     text = (message.caption or message.text) + "\n"
 
     linker = Linker(message.chat_id)
@@ -78,7 +77,7 @@ def on_callback_query(update: Update, context: CallbackContext) -> None:
     elif query_data == "edit":
         linker.edit_result(message)
     elif query_data == "delete":
-        context.bot.deleteMessage(message.chat_id, message_id)
+        linker.delete_message(message)
 
     context.bot.answerCallbackQuery(update.callback_query.id)
 

@@ -164,27 +164,27 @@ class Linker:
 
         try:
             if post.get_type() == ContentType.TEXT:
-                self.bot.sendMessage(text=post.get_msg(), **args)
+                return self.bot.sendMessage(text=post.get_msg(), **args)
             elif post.get_type() == ContentType.YOUTUBE:
                 args["disable_web_page_preview"] = False
-                self.bot.sendMessage(text=post.get_msg(), **args)
+                return self.bot.sendMessage(text=post.get_msg(), **args)
+
             assert post.media is not None
+            args["caption"] = post.get_msg()
+
             if post.get_type() == ContentType.GIF:
-                self.bot.sendDocument(
-                    document=post.media.url, caption=post.get_msg(), **args
-                )
+                self.bot.sendDocument(document=post.media.url, **args)
             elif post.get_type() == ContentType.VIDEO:
-                self.bot.sendVideo(
-                    video=post.media.url, caption=post.get_msg(), **args
-                )
+                self.bot.sendVideo(video=post.media.url, **args)
             elif post.get_type() == ContentType.PHOTO:
-                self.bot.sendPhoto(
-                    photo=post.media.url, caption=post.get_msg(), **args
-                )
+                self.bot.sendPhoto(photo=post.media.url, **args)
 
         except Exception as e:
             raise PostSendError(
-                {"post_url": post.permalink, "media_url": post.media.url}  # type: ignore
+                {
+                    "post_url": post.permalink,
+                    "media_url": post.media.url if post.media else "",
+                }
             ) from e
 
     def edit_result(self, message: Message) -> None:
@@ -211,9 +211,12 @@ class Linker:
                 return self.edit_random_post(message, subreddit)
             except (RedditError, TeleredditError):
                 pass
-        self.bot.editMessageReplyMarkup(
-            self.chat_id, message.message_id, reply_markup=EDIT_FAILED_KEYBOARD
-        )
+        if str(message.reply_markup) != str(EDIT_FAILED_KEYBOARD):
+            self.bot.editMessageReplyMarkup(
+                self.chat_id,
+                message.message_id,
+                reply_markup=EDIT_FAILED_KEYBOARD,
+            )
 
     def edit_random_post(self, message: Message, subreddit: str) -> None:
         """
@@ -232,8 +235,8 @@ class Linker:
         post = reddit.get_post(helpers.get_random_post_url(subreddit))
         assert post is not None
         if (
-            (msg_is_text and message.text_markdown == post.get_msg())
-            or message.caption_markdown == post.get_msg()
+            (msg_is_text and message.text_markdown_v2 == post.get_msg())
+            or message.caption_markdown_v2 == post.get_msg()
             or (
                 not msg_is_text
                 and post.get_type() in [ContentType.TEXT, ContentType.YOUTUBE]
@@ -267,6 +270,18 @@ class Linker:
             raise PostSendError(
                 {"post_url": post.permalink, "media_url": post.media.url}  # type: ignore
             ) from e
+
+    def delete_message(self, message: Message):
+        """
+        Delete a bot's message from the chat.
+
+        Parameters
+        ----------
+        message : Message
+            python-telegram-bot's instance of the message object.
+
+        """
+        self.bot.deleteMessage(message.chat_id, message.message_id)
 
     def _send_exception_message(
         self, e: Exception, keyboard: bool = True
