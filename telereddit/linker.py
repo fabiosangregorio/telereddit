@@ -9,12 +9,13 @@ from telegram import InputMediaPhoto, InputMediaDocument, InputMediaVideo
 from telegram.bot import Bot, Message  # type: ignore
 
 from telereddit.config.config import (
-    DELETE_KEYBOARD,
-    EDIT_FAILED_KEYBOARD,
-    EDIT_KEYBOARD,
+    get_keyboard,
+    DELETE_LAYOUT,
+    EDIT_FAILED_LAYOUT,
+    EDIT_LAYOUT,
+    NO_EDIT_LAYOUT,
     MAX_MEDIA_SIZE,
     MAX_TRIES,
-    NO_EDIT_KEYBOARD,
 )
 from telereddit.exceptions import (
     MediaTooBigError,
@@ -66,7 +67,7 @@ class Linker:
         self.args: dict = dict(
             chat_id=chat_id,
             parse_mode="MarkdownV2",
-            reply_markup=EDIT_KEYBOARD,
+            reply_markup=get_keyboard(EDIT_LAYOUT),
             disable_web_page_preview=True,
         )
 
@@ -167,23 +168,21 @@ class Linker:
         if from_url:
             # if it is not a random post (e.g. shared via link) don't show the
             # edit custom keyboard
-            args["reply_markup"] = NO_EDIT_KEYBOARD
+            args["reply_markup"] = get_keyboard(NO_EDIT_LAYOUT)
 
         try:
             if len(posts) > 1:
                 media_group = []
-                first = True
                 for post in posts:
                     assert post.media is not None
                     media_args = dict(
                         media=post.media.url,  # type: ignore
                         parse_mode="MarkdownV2",
                     )
-                    if first:
+                    if len(media_group) == 0:
                         # Caption must be added only to first post in order to
                         # be sent as the album caption
                         # Source: https://stackoverflow.com/a/58895281/6404781
-                        first = False
                         media_args["caption"] = post.get_msg()
                     if post.get_type() == ContentType.VIDEO:
                         media_group.append(InputMediaVideo(**media_args))
@@ -202,7 +201,10 @@ class Linker:
                 elif post.get_type() == ContentType.YOUTUBE:
                     args["disable_web_page_preview"] = False
                     return self.bot.sendMessage(text=post.get_msg(), **args)
-                 if post.get_type() == ContentType.GIF:
+
+                args["caption"] = post.get_msg()
+
+                if post.get_type() == ContentType.GIF:
                     self.bot.sendDocument(document=post.media.url, **args)
                 elif post.get_type() == ContentType.VIDEO:
                     self.bot.sendVideo(video=post.media.url, **args)
@@ -216,8 +218,6 @@ class Linker:
                     # "media_url": helpers.get(post.media, "url"),
                 }
             ) from e
-
-           
 
     def edit_result(self, message: Message) -> None:
         """
@@ -243,11 +243,11 @@ class Linker:
                 return self.edit_random_post(message, subreddit)
             except (RedditError, TeleredditError):
                 pass
-        if str(message.reply_markup) != str(EDIT_FAILED_KEYBOARD):
+        if str(message.reply_markup) != str(get_keyboard(EDIT_FAILED_LAYOUT)):
             self.bot.editMessageReplyMarkup(
                 self.chat_id,
                 message.message_id,
-                reply_markup=EDIT_FAILED_KEYBOARD,
+                reply_markup=get_keyboard(EDIT_FAILED_LAYOUT),
             )
 
     def edit_random_post(self, message: Message, subreddit: str) -> None:
@@ -323,5 +323,5 @@ class Linker:
         """
         args = dict(chat_id=self.chat_id, text=str(e), parse_mode="Markdown")
         if keyboard:
-            args["reply_markup"] = DELETE_KEYBOARD
+            args["reply_markup"] = get_keyboard(DELETE_LAYOUT)
         self.bot.sendMessage(**args)

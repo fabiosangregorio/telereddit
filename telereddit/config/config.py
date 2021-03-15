@@ -9,10 +9,6 @@ Project-wide configuration variables.
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup  # type: ignore
 
-_delete_btn = InlineKeyboardButton(text="✕", callback_data="delete")
-_edit_btn = InlineKeyboardButton(text="↻", callback_data="edit")
-_edit_failed_btn = InlineKeyboardButton(text="Retry ↻", callback_data="edit")
-_more_btn = InlineKeyboardButton(text="＋", callback_data="more")
 
 MAX_TRIES = 4
 MAX_MEDIA_SIZE = 20000000
@@ -20,9 +16,29 @@ MAX_POST_LENGTH = 500
 MAX_TITLE_LENGTH = 200
 REDDIT_DOMAINS = ["reddit.com", "redd.it", "reddit.app.link"]
 
-EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _edit_btn, _more_btn]])
-EDIT_FAILED_KEYBOARD = InlineKeyboardMarkup(
-    [[_delete_btn, _edit_failed_btn, _more_btn]]
-)
-NO_EDIT_KEYBOARD = InlineKeyboardMarkup([[_delete_btn, _more_btn]])
-DELETE_KEYBOARD = InlineKeyboardMarkup([[_delete_btn]])
+
+DELETE_BTN = {"text": "✕", "callback": "delete"}
+EDIT_BTN = {"text": "↻", "callback": "edit"}
+EDIT_FAILED_BTN = {"text": "Retry ↻", "callback": "edit"}
+MORE_BTN = {"text": "＋", "callback": "more"}
+
+EDIT_LAYOUT = [[DELETE_BTN, EDIT_BTN, MORE_BTN]]
+EDIT_FAILED_LAYOUT = [[DELETE_BTN, EDIT_FAILED_BTN, MORE_BTN]]
+NO_EDIT_LAYOUT = [[DELETE_BTN, MORE_BTN]]
+DELETE_LAYOUT = [[DELETE_BTN]]
+
+
+def get_keyboard(layout: str, message_id=None):
+    rows_list = []
+    for row in layout:
+        cols_list = []
+        for btn in row:
+            if message_id is not None:
+                callback = f"{btn['callback']}@{message_id}"
+            else:
+                callback = btn["callback"]
+            cols_list.append(
+                InlineKeyboardButton(text=btn["text"], callback_data=callback)
+            )
+        rows_list.append(cols_list)
+    return InlineKeyboardMarkup(rows_list)
