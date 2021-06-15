@@ -88,11 +88,14 @@ def init() -> str:
     if env is None or len(env) == 0:
         raise Exception("No REDDIT_BOTS_MACHINE env variable found.")
 
-    load_dotenv(
-        dotenv_path=os.path.join(
-            os.path.dirname(__file__), f"config/{env.lower()}.env"
+    try:
+        load_dotenv(
+            dotenv_path=os.path.join(
+                os.path.dirname(__file__), f"config/{env.lower()}.env"
+            )
         )
-    )
+    except Exception as e:
+        print(e)
 
     ServicesWrapper.init_services()
     return env
@@ -118,9 +121,9 @@ def main() -> None:
     dispatcher.add_handler(MessageHandler(Filters.all, on_chat_message))
     dispatcher.add_handler(CallbackQueryHandler(on_callback_query))
     updater.start_webhook(
-        listen="0.0.0.0", port=5000, url_path=os.getenv("TELEGRAM_TOKEN")
-    )
-    updater.bot.setWebhook(
-        "https://telereddit.herokuapp.com/" + os.getenv("TELEGRAM_TOKEN")
+        listen="0.0.0.0",
+        port=int(os.environ.get("PORT", "8443")),
+        url_path=os.getenv("TELEGRAM_TOKEN"),
+        webhook_url=f"https://telereddit.herokuapp.com/{os.getenv('TELEGRAM_TOKEN')}",
     )
     updater.idle()

@@ -1,2 +1,1 @@
--r pyreddit/requirements/requirements.txt
--r telereddit/requirements/requirements.txt
+-r requirements/requirements.txt
