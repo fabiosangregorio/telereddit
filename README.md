@@ -19,6 +19,9 @@
   <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"
       alt="Code style: black"></a>
 </p>
+
+## Temporarily unavailable
+The cost of the VPS where I was hosting Telereddit was too high to maintain it. I am currently moving the bot to Heroku: it will be unavailable until I deploy it there.
   
 Add this bot on Telegram: [telegram.me](https://telegram.me/tele_reddit_bot)!
 
