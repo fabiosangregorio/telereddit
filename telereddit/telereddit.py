@@ -117,4 +117,10 @@ def main() -> None:
 
     dispatcher.add_handler(MessageHandler(Filters.all, on_chat_message))
     dispatcher.add_handler(CallbackQueryHandler(on_callback_query))
-    updater.start_polling()
+    updater.start_webhook(
+        listen="0.0.0.0", port=5000, url_path=os.getenv("TELEGRAM_TOKEN")
+    )
+    updater.bot.setWebhook(
+        "https://telereddit.herokuapp.com/" + os.getenv("TELEGRAM_TOKEN")
+    )
+    updater.idle()
