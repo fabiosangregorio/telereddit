@@ -20,9 +20,6 @@
       alt="Code style: black"></a>
 </p>
 
-## Temporarily unavailable
-The cost of the VPS where I was hosting Telereddit was too high to maintain it. I am currently moving the bot to Heroku: it will be unavailable until I deploy it there.
-  
 Add this bot on Telegram: [telegram.me](https://telegram.me/tele_reddit_bot)!
 
 Telereddit is a Telegram bot which lets you easily see shared Reddit posts previews directly in the group chat. This bot will also automatically send a random post from a subreddit when you name it.
